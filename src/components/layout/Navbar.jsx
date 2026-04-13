@@ -46,8 +46,8 @@ const Navbar = memo(function Navbar() {
           {/* ---------- Logo ---------- */}
           <a href="#home" className="flex items-center gap-2 group">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-cyan-500 flex items-center justify-center font-bold text-white text-lg font-display shadow-lg shadow-indigo-500/25">
-              M
-            </div>
+              MK
+            </div>                       
             <span className="text-xl font-bold font-display text-white">
               Mcreati
               <span className="text-indigo-400 group-hover:text-cyan-400 transition-colors">
@@ -62,7 +62,7 @@ const Navbar = memo(function Navbar() {
               <a
                 key={label}
                 href={href}
-                className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white rounded-lg hover:bg-white/5 transition-all duration-200"
+                className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-sky-400 rounded-lg hover:bg-[rgba(56,189,248,0.15)] transition-all duration-200"
               >
                 {label}
               </a>
@@ -79,7 +79,7 @@ const Navbar = memo(function Navbar() {
           {/* ---------- Mobile Toggle ---------- */}
           <button
             onClick={() => setIsMobileOpen((prev) => !prev)}
-            className="md:hidden w-10 h-10 rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+            className="md:hidden w-10 h-10 rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
             aria-label="Toggle menu"
           >
             {isMobileOpen ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
@@ -113,7 +113,7 @@ const Navbar = memo(function Navbar() {
                     key={label}
                     href={href}
                     onClick={closeMobile}
-                    className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-colors text-base font-medium"
+                    className="block px-4 py-3 text-gray-300 hover:text-sky-400 hover:bg-sky-400/15 rounded-xl transition-colors text-base font-medium"
                   >
                     {label}
                   </a>
