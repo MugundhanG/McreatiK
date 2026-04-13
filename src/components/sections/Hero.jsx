@@ -106,21 +106,7 @@ const Hero = memo(function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-      >
-        <div className="w-6 h-10 rounded-full border-2 border-gray-600 flex justify-center pt-2">
-          <motion.div
-            className="w-1 h-2 rounded-full bg-gray-400"
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-          />
-        </div>
-      </motion.div>
+      {/* Scroll indicator */}  
     </section>
   )
 })
