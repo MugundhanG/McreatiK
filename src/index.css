@@ -1,0 +1,86 @@
+/* ============================================
+   McreatiK - Global Styles
+   Imports Tailwind CSS and defines custom
+   base styles, fonts, and utility classes.
+   ============================================ */
+
+@import "tailwindcss";
+
+/* ---------- Custom CSS Layer ---------- */
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #030712;
+    color: #f9fafb;
+    overflow-x: hidden;
+  }
+
+  /* Custom scrollbar for webkit browsers */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #111827;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #4f46e5;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #6366f1;
+  }
+}
+
+@layer components {
+  /* Gradient text utility used across headings */
+  .gradient-text {
+    background: linear-gradient(135deg, #818cf8 0%, #06b6d4 50%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glass-morphism card effect */
+  .glass-card {
+    background: rgba(17, 24, 39, 0.6);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(79, 70, 229, 0.15);
+  }
+
+  /* Animated gradient border on hover */
+  .glow-border {
+    position: relative;
+  }
+  .glow-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, #4f46e5, #06b6d4, #8b5cf6);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+  .glow-border:hover::before {
+    opacity: 1;
+  }
+}
+
+@layer utilities {
+  /* Heading font family override */
+  .font-display {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+  }
+}
