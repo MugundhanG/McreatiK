@@ -84,9 +84,9 @@ const Contact = memo(function Contact() {
             transition={{ duration: 0.6 }}
           >
             {[
-              { icon: FiMail, label: 'Email', value: 'hello@mcreatik.com', href: 'mailto:hello@mcreatik.com' },
-              { icon: FiPhone, label: 'Phone', value: '+1 (234) 567-890', href: 'tel:+1234567890' },
-              { icon: FiMapPin, label: 'Location', value: 'Remote — Worldwide', href: null },
+              { icon: FiMail, label: 'Email', value: 'connect@mcreatik.com', href: 'mailto:connect@mcreatik.com' },
+              { icon: FiPhone, label: 'Phone', value: '+91 9600-129-267', href: 'tel:+919600129267' },
+              { icon: FiMapPin, label: 'Location', value: 'Remote — Global', href: null },
             ].map(({ icon: Icon, label, value, href }) => (
               <div key={label} className="glass-card rounded-2xl p-6 flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600/20 to-cyan-500/20 flex items-center justify-center border border-indigo-500/20 shrink-0">

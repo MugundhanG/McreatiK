@@ -32,12 +32,12 @@ const Footer = memo(function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* ---------- Brand Column ---------- */}
           <div className="lg:col-span-1">
-            <a href="#home" className="flex items-center gap-2 mb-4">
+            <a href="#home" className="flex items-center gap-2 mb-4 group">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-cyan-500 flex items-center justify-center font-bold text-white text-lg font-display">
-                M
+                MK
               </div>
               <span className="text-xl font-bold font-display text-white">
-                Mcreati<span className="text-indigo-400">K</span>
+                <span className="text-indigo-400 group-hover:text-cyan-400 transition-colors">M</span>creati<span className="text-indigo-400 group-hover:text-cyan-400 transition-colors">K</span>
               </span>
             </a>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">

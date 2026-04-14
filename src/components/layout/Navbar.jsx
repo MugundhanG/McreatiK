@@ -51,7 +51,8 @@ const Navbar = memo(function Navbar() {
               MK
             </div>
             <span className="text-base font-bold font-display text-white">
-              Mcreati
+              <span className="text-indigo-400 group-hover:text-cyan-400 transition-colors">M</span>
+              creati
               <span className="text-indigo-400 group-hover:text-cyan-400 transition-colors">K</span>
             </span>
           </a>
