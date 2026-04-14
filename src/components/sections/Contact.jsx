@@ -190,11 +190,12 @@ const Contact = memo(function Contact() {
                   value={values.service}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className={`${inputBase} ${errors.service ? inputErr : inputOk} appearance-none`}
+                  className={`${inputBase} ${errors.service ? inputErr : inputOk} appearance-none cursor-pointer [&>option]:bg-gray-900 [&>option]:text-white`}
+                  style={{ backgroundColor: '#111827', color: values.service ? '#ffffff' : '#6b7280' }}
                 >
-                  <option value="">Select a service</option>
+                  <option value="" disabled style={{ color: '#6b7280' }}>Select a service</option>
                   {SERVICE_OPTIONS.map((opt) => (
-                    <option key={opt} value={opt}>
+                    <option key={opt} value={opt} style={{ backgroundColor: '#111827', color: '#ffffff' }}>
                       {opt}
                     </option>
                   ))}

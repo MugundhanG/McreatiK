@@ -34,7 +34,7 @@ export const SERVICES = [
     icon: FiGlobe,
     title: 'Website Development',
     description:
-      'Custom-built, responsive websites that deliver exceptional user experiences and drive conversions.',
+      'Custom-built, responsive websites that deliver exceptional user experiences and drive conversions and business growth.',
   },
   {
     icon: FiCreditCard,
@@ -80,7 +80,7 @@ export const PORTFOLIO_ITEMS = [
     category: 'Website',
     image: photographyThumbnail,
     link: 'https://mugundhang.github.io/Heeswar-photography/',
-    description: 'A full-stack SaaS platform with modern dashboard and analytics.',
+    description: 'Fully responsive photography website with modern design and seamless user experience with contact form.',
   },
   {
     id: 2,
@@ -136,8 +136,8 @@ export const STATS = [
 export const SOCIAL_LINKS = [
   { label: 'Instagram', href: 'https://instagram.com/mcreatik', icon: 'instagram' },
   { label: 'LinkedIn', href: 'https://linkedin.com/company/mcreatik', icon: 'linkedin' },
-  { label: 'Twitter', href: 'https://twitter.com/mcreatik', icon: 'twitter' },
-  { label: 'Facebook', href: 'https://facebook.com/mcreatik', icon: 'facebook' },
+  // { label: 'Twitter', href: 'https://twitter.com/mcreatik', icon: 'twitter' },
+  // { label: 'Facebook', href: 'https://facebook.com/mcreatik', icon: 'facebook' },
 ]
 
 /* ---------- Contact Form Fields ---------- */

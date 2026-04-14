@@ -70,7 +70,7 @@ const Footer = memo(function Footer() {
               {NAV_LINKS.map(({ label, href }) => (
                 <li key={label}>
                   <a
-                    href={href}
+                    href='https://www.instagram.com/mcreatik?igsh=Z2U5MGFpYW9tZmNh'
                     className="text-gray-400 hover:text-indigo-400 text-sm transition-colors"
                   >
                     {label}

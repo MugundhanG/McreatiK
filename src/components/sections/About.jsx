@@ -46,9 +46,9 @@ const About = memo(function About() {
           >
             <h3 className="text-2xl font-bold font-display text-white mb-4">Our Mission</h3>
             <p className="text-gray-400 leading-relaxed">
-              To empower businesses of all sizes with world-class digital solutions
-              that combine stunning design, cutting-edge technology, and strategic
-              thinking — making premium quality accessible and impactful.
+              To empower businesses and individuals with innovative, 
+              high-quality digital solutions by delivering modern websites, 
+              creative designs, and smart technology services that enhance their brand presence, efficiency, and growth.
             </p>
           </motion.div>
 
@@ -63,7 +63,7 @@ const About = memo(function About() {
             <p className="text-gray-400 leading-relaxed">
               To be the go-to digital partner for ambitious brands worldwide —
               recognized for transforming ideas into exceptional digital experiences
-              that leave lasting impressions and drive measurable results.
+              and helping businesses thrive in the digital era.
             </p>
           </motion.div>
         </div>
