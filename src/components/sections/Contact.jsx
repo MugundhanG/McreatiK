@@ -27,7 +27,7 @@ const INITIAL_VALUES = {
   message: '',
 }
 
-/* Read EmailJS credentials from .env */
+/* EmailJS credentials from .env */
 const SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID
 const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
 const PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
@@ -36,23 +36,23 @@ const Contact = memo(function Contact() {
   /**
    * Submit handler — sends form data via EmailJS
    * to connect@mcreatik.com.
-   * The template variables ({{name}}, {{email}} etc.)
-   * must match the EmailJS template you create.
+   * Template variables must match your EmailJS template:
+   * {{from_name}}, {{from_email}}, {{phone}}, {{service}}, {{message}}
    */
   const onSubmit = useCallback(async (data) => {
-    await emailjs.send(
+    const result = await emailjs.send(
       SERVICE_ID,
       TEMPLATE_ID,
       {
-        from_name:    data.name,
-        from_email:   data.email,
-        phone:        data.phone,
-        service:      data.service,
-        message:      data.message,
-        to_email:     'connect@mcreatik.com',
+        from_name:  data.name,
+        from_email: data.email,
+        phone:      data.phone,
+        service:    data.service,
+        message:    data.message,
       },
       PUBLIC_KEY
     )
+    if (result.status !== 200) throw new Error('Failed to send')
   }, [])
 
   const {
