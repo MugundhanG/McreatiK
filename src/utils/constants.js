@@ -15,6 +15,8 @@ import {
   FiLayout,
 } from 'react-icons/fi'
 
+import photographyThumbnail from '../assets/photography_website_thumbnail.jpg'
+
 /* ---------- Navigation Links ---------- */
 export const NAV_LINKS = [
   { label: 'Home', href: '#home' },
@@ -74,10 +76,10 @@ export const SERVICES = [
 export const PORTFOLIO_ITEMS = [
   {
     id: 1,
-    title: 'Horizon SaaS Platform',
+    title: 'Photography Business Website',
     category: 'Website',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop',
-    link: '#',
+    image: photographyThumbnail,
+    link: 'https://mugundhang.github.io/Heeswar-photography/',
     description: 'A full-stack SaaS platform with modern dashboard and analytics.',
   },
   {
@@ -124,9 +126,9 @@ export const PORTFOLIO_ITEMS = [
 
 /* ---------- Company Stats ---------- */
 export const STATS = [
-  { value: '150+', label: 'Projects Delivered' },
-  { value: '50+', label: 'Happy Clients' },
-  { value: '5+', label: 'Years Experience' },
+  { value: '50+', label: 'Projects Delivered' },
+  { value: '40+', label: 'Happy Clients' },
+  { value: '3+', label: 'Years Experience' },
   { value: '99%', label: 'Client Satisfaction' },
 ]
 
