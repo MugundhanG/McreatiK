@@ -9,7 +9,7 @@
 
 import React, { memo } from 'react'
 import { motion } from 'framer-motion'
-import { FiArrowRight, FiGlobe, FiPenTool, FiCreditCard, FiFileText, FiMenu } from 'react-icons/fi'
+import { FiArrowRight, FiGlobe, FiPenTool, FiCreditCard, FiFileText, FiLayout, FiImage } from 'react-icons/fi'
 import Button from '../ui/Button'
 
 const fadeUp = (delay = 0) => ({
@@ -25,11 +25,11 @@ const fadeLeft = (delay = 0) => ({
 /* Small floating service pills shown on right panel */
 const PREVIEW_SERVICES = [
   { icon: FiGlobe, label: 'Website Design & Development', color: 'text-indigo-400' },
-  { icon: FiPaint, label: 'UI & UX Design', color: 'text-indigo-400' },
+  { icon: FiLayout, label: 'UI & UX Design', color: 'text-indigo-400' },
   { icon: FiPenTool, label: 'Brand Logo Design', color: 'text-cyan-400' },
   { icon: FiCreditCard, label: 'Business Digital Cards', color: 'text-violet-400' },
   { icon: FiFileText, label: 'Resume Design & Makeover', color: 'text-sky-400' },
-  { icon: FiMenu, label: 'Photo Album Design', color: 'text-sky-400' },
+  { icon: FiImage, label: 'Photo Album Design', color: 'text-sky-400' },
 ]
 
 const Hero = memo(function Hero() {
