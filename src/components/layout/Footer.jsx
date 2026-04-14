@@ -102,16 +102,16 @@ const Footer = memo(function Footer() {
             <h4 className="text-white font-semibold mb-4 font-display">Contact</h4>
             <ul className="space-y-3 text-sm text-gray-400">
               <li>
-                <a href="mailto:hello@mcreatik.com" className="hover:text-indigo-400 transition-colors">
-                  hello@mcreatik.com
+                <a href="mailto:connect@mcreatik.com" className="hover:text-indigo-400 transition-colors">
+                  connect@mcreatik.com
                 </a>
               </li>
               <li>
-                <a href="tel:+1234567890" className="hover:text-indigo-400 transition-colors">
-                  +1 (234) 567-890
+                <a href="tel:+919600129267" className="hover:text-indigo-400 transition-colors">
+                  +91 9600-129-267
                 </a>
               </li>
-              <li>Available Mon – Fri, 9 AM – 6 PM</li>
+              <li>Available Sun – Sat, 8 AM – 10 PM</li>
             </ul>
           </div>
         </div>

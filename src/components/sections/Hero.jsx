@@ -9,7 +9,7 @@
 
 import React, { memo } from 'react'
 import { motion } from 'framer-motion'
-import { FiArrowRight, FiGlobe, FiPenTool, FiCreditCard, FiFileText } from 'react-icons/fi'
+import { FiArrowRight, FiGlobe, FiPenTool, FiCreditCard, FiFileText, FiMenu } from 'react-icons/fi'
 import Button from '../ui/Button'
 
 const fadeUp = (delay = 0) => ({
@@ -24,10 +24,12 @@ const fadeLeft = (delay = 0) => ({
 
 /* Small floating service pills shown on right panel */
 const PREVIEW_SERVICES = [
-  { icon: FiGlobe, label: 'Website Development', color: 'text-indigo-400' },
-  { icon: FiPenTool, label: 'Logo Design', color: 'text-cyan-400' },
-  { icon: FiCreditCard, label: 'Digital Cards', color: 'text-violet-400' },
-  { icon: FiFileText, label: 'Resume Design', color: 'text-sky-400' },
+  { icon: FiGlobe, label: 'Website Design & Development', color: 'text-indigo-400' },
+  { icon: FiPaint, label: 'UI & UX Design', color: 'text-indigo-400' },
+  { icon: FiPenTool, label: 'Brand Logo Design', color: 'text-cyan-400' },
+  { icon: FiCreditCard, label: 'Business Digital Cards', color: 'text-violet-400' },
+  { icon: FiFileText, label: 'Resume Design & Makeover', color: 'text-sky-400' },
+  { icon: FiMenu, label: 'Photo Album Design', color: 'text-sky-400' },
 ]
 
 const Hero = memo(function Hero() {
@@ -113,11 +115,11 @@ const Hero = memo(function Hero() {
             >
               <span className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-                150+ Projects
+                50+ Projects
               </span>
               <span className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-500" />
-                50+ Happy Clients
+                40+ Happy Clients
               </span>
               <span className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-violet-500" />
@@ -154,9 +156,9 @@ const Hero = memo(function Hero() {
             {/* Stats row */}
             <div className="grid grid-cols-3 gap-4">
               {[
-                { value: '150+', label: 'Projects' },
-                { value: '50+', label: 'Clients' },
-                { value: '5+', label: 'Years' },
+                { value: '50+', label: 'Projects' },
+                { value: '40+', label: 'Happy Clients' },
+                { value: '3+', label: 'Years of experience' },
               ].map(({ value, label }) => (
                 <div
                   key={label}
