@@ -145,8 +145,8 @@ export const SERVICE_OPTIONS = [
   'Website Development',
   'Digital Cards',
   'Logo Design',
-  'Photo Albums',
-  'Resume Design',
+  'Album Design',
+  'Resume Creation/Makeover',
   'UI/UX Design',
   'Other',
 ]

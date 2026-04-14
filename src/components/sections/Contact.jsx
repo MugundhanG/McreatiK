@@ -3,14 +3,16 @@
    Fully functional contact form with:
      - Real-time field validation on blur
      - Error messages per field
+     - EmailJS integration — sends form data
+       directly to connect@mcreatik.com
      - Success / error submission feedback
-     - API integration placeholder (see onSubmit)
    Uses the useForm hook for state management.
    ============================================ */
 
 import React, { memo, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { FiSend, FiMail, FiPhone, FiMapPin } from 'react-icons/fi'
+import emailjs from '@emailjs/browser'
 import { SERVICE_OPTIONS } from '../../utils/constants'
 import { useForm } from '../../hooks/useForm'
 import SectionHeading from '../ui/SectionHeading'
@@ -25,25 +27,32 @@ const INITIAL_VALUES = {
   message: '',
 }
 
+/* Read EmailJS credentials from .env */
+const SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+const PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+
 const Contact = memo(function Contact() {
   /**
-   * Submit handler — replace the setTimeout with a real
-   * API call (e.g., fetch('/api/contact', { method: 'POST', body: ... }))
+   * Submit handler — sends form data via EmailJS
+   * to connect@mcreatik.com.
+   * The template variables ({{name}}, {{email}} etc.)
+   * must match the EmailJS template you create.
    */
   const onSubmit = useCallback(async (data) => {
-    /* ---------- API Integration Placeholder ----------
-       Replace the simulated delay below with your
-       actual backend endpoint:
-
-       const res = await fetch('/api/contact', {
-         method: 'POST',
-         headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify(data),
-       })
-       if (!res.ok) throw new Error('Failed to send')
-    -------------------------------------------------- */
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    console.log('Form submitted:', data)
+    await emailjs.send(
+      SERVICE_ID,
+      TEMPLATE_ID,
+      {
+        from_name:    data.name,
+        from_email:   data.email,
+        phone:        data.phone,
+        service:      data.service,
+        message:      data.message,
+        to_email:     'connect@mcreatik.com',
+      },
+      PUBLIC_KEY
+    )
   }, [])
 
   const {
@@ -59,7 +68,7 @@ const Contact = memo(function Contact() {
   /* Shared input class names */
   const inputBase =
     'w-full bg-white/5 border rounded-xl px-4 py-3.5 text-white placeholder-gray-500 outline-none transition-all duration-200 focus:ring-2 focus:ring-indigo-500/40 text-sm'
-  const inputOk = 'border-white/10 hover:border-white/20'
+  const inputOk  = 'border-white/10 hover:border-white/20'
   const inputErr = 'border-red-500/50 focus:ring-red-500/40'
 
   return (
@@ -84,9 +93,9 @@ const Contact = memo(function Contact() {
             transition={{ duration: 0.6 }}
           >
             {[
-              { icon: FiMail, label: 'Email', value: 'connect@mcreatik.com', href: 'mailto:connect@mcreatik.com' },
-              { icon: FiPhone, label: 'Phone', value: '+91 9600-129-267', href: 'tel:+919600129267' },
-              { icon: FiMapPin, label: 'Location', value: 'Remote — Global', href: null },
+              { icon: FiMail,   label: 'Email',    value: 'connect@mcreatik.com', href: 'mailto:connect@mcreatik.com' },
+              { icon: FiPhone,  label: 'Phone',    value: '+91 9600-129-267',      href: 'tel:+919600129267' },
+              { icon: FiMapPin, label: 'Location', value: 'Remote — Global',       href: null },
             ].map(({ icon: Icon, label, value, href }) => (
               <div key={label} className="glass-card rounded-2xl p-6 flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600/20 to-cyan-500/20 flex items-center justify-center border border-indigo-500/20 shrink-0">
@@ -190,7 +199,7 @@ const Contact = memo(function Contact() {
                   value={values.service}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className={`${inputBase} ${errors.service ? inputErr : inputOk} appearance-none cursor-pointer [&>option]:bg-gray-900 [&>option]:text-white`}
+                  className={`${inputBase} ${errors.service ? inputErr : inputOk} appearance-none cursor-pointer`}
                   style={{ backgroundColor: '#111827', color: values.service ? '#ffffff' : '#6b7280' }}
                 >
                   <option value="" disabled style={{ color: '#6b7280' }}>Select a service</option>
@@ -246,7 +255,7 @@ const Contact = memo(function Contact() {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                 >
-                  Message sent successfully! We'll be in touch soon.
+                  Message sent! We'll get back to you soon.
                 </motion.p>
               )}
               {submitStatus === 'error' && (
