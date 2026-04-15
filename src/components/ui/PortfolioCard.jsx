@@ -3,12 +3,15 @@
    Displays a portfolio project as a clickable
    card. Features lazy-loaded image, overlay
    with project details, and a category badge.
-   Clicking opens the project link.
+
+   Behavior:
+   - category === "Logo" → opens Lightbox popup
+   - all others          → opens external link
    ============================================ */
 
-import React, { memo } from 'react'
+import React, { memo, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { FiExternalLink } from 'react-icons/fi'
+import { FiExternalLink, FiZoomIn } from 'react-icons/fi'
 
 const PortfolioCard = memo(function PortfolioCard({
   title,
@@ -17,13 +20,28 @@ const PortfolioCard = memo(function PortfolioCard({
   link,
   description,
   index,
+  onImageClick,
 }) {
+  const isLightbox = category === 'Logo'
+
+  /* For lightbox cards, intercept click and open popup */
+  const handleClick = useCallback(
+    (e) => {
+      if (isLightbox) {
+        e.preventDefault()
+        onImageClick?.(image, title)
+      }
+    },
+    [isLightbox, image, title, onImageClick]
+  )
+
   return (
     <motion.a
-      href={link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group block relative overflow-hidden rounded-2xl glass-card"
+      href={isLightbox ? '#' : link}
+      target={isLightbox ? undefined : '_blank'}
+      rel={isLightbox ? undefined : 'noopener noreferrer'}
+      onClick={handleClick}
+      className="group block relative overflow-hidden rounded-2xl glass-card cursor-pointer"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-30px' }}
@@ -43,9 +61,12 @@ const PortfolioCard = memo(function PortfolioCard({
         {/* Dark overlay that reveals on hover */}
         <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/60 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300" />
 
-        {/* External link icon — fades in on hover */}
+        {/* Action icon — zoom for lightbox, external link for others */}
         <div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
-          <FiExternalLink className="w-4 h-4 text-white" />
+          {isLightbox
+            ? <FiZoomIn className="w-4 h-4 text-white" />
+            : <FiExternalLink className="w-4 h-4 text-white" />
+          }
         </div>
 
         {/* Category badge */}

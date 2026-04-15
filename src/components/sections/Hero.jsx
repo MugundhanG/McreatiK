@@ -115,11 +115,11 @@ const Hero = memo(function Hero() {
             >
               <span className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-                50+ Projects
+                30+ Projects Delivered
               </span>
               <span className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-500" />
-                40+ Happy Clients
+                2+ Years of Experience
               </span>
               <span className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-violet-500" />
@@ -156,9 +156,9 @@ const Hero = memo(function Hero() {
             {/* Stats row */}
             <div className="grid grid-cols-3 gap-4">
               {[
-                { value: '50+', label: 'Projects' },
-                { value: '40+', label: 'Happy Clients' },
-                { value: '3+', label: 'Years of experience' },
+                { value: '30+', label: 'Projects Delivered' },
+                { value: '2+', label: 'Years of Experience' },
+                { value: '99%', label: 'Satisfaction Rate' },
               ].map(({ value, label }) => (
                 <div
                   key={label}

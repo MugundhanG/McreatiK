@@ -70,7 +70,7 @@ const Footer = memo(function Footer() {
               {NAV_LINKS.map(({ label, href }) => (
                 <li key={label}>
                   <a
-                    href='https://www.instagram.com/mcreatik?igsh=Z2U5MGFpYW9tZmNh'
+                    href='https://www.instagram.com/mcreatik?igsh=Z2U5MGFpYW9tZmNh' 
                     className="text-gray-400 hover:text-indigo-400 text-sm transition-colors"
                   >
                     {label}
@@ -111,7 +111,7 @@ const Footer = memo(function Footer() {
                   +91 9600-129-267
                 </a>
               </li>
-              <li>Available Sun – Sat, 8 AM – 10 PM</li>
+              <li>Available Mon – Sat, 8 AM – 10 PM</li>
             </ul>
           </div>
         </div>

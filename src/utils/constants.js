@@ -16,6 +16,7 @@ import {
 } from 'react-icons/fi'
 
 import photographyThumbnail from '../assets/photography_website_thumbnail.jpg'
+import logoDesignThumbnail from '../assets/logo_design.webp'
 
 /* ---------- Navigation Links ---------- */
 export const NAV_LINKS = [
@@ -84,9 +85,9 @@ export const PORTFOLIO_ITEMS = [
   },
   {
     id: 2,
-    title: 'Luxe Brand Identity',
+    title: 'Luxury Brand Identity',
     category: 'Logo',
-    image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=600&h=400&fit=crop',
+    image: logoDesignThumbnail,
     link: '#',
     description: 'Complete brand identity system for a luxury fashion label.',
   },
@@ -126,9 +127,8 @@ export const PORTFOLIO_ITEMS = [
 
 /* ---------- Company Stats ---------- */
 export const STATS = [
-  { value: '50+', label: 'Projects Delivered' },
-  { value: '40+', label: 'Happy Clients' },
-  { value: '3+', label: 'Years Experience' },
+  { value: '30+', label: 'Projects Delivered' },  
+  { value: '2+', label: 'Years of Experience' },
   { value: '99%', label: 'Client Satisfaction' },
 ]
 
