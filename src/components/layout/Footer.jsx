@@ -11,6 +11,7 @@
 import React, { memo } from 'react'
 import { FiInstagram, FiLinkedin, FiTwitter, FiFacebook } from 'react-icons/fi'
 import { NAV_LINKS, SERVICES, SOCIAL_LINKS } from '../../utils/constants'
+import mcreatiKLogo from '../../assets/mcreatik logo.jpeg'
 
 /* Map icon name strings from constants to actual components */
 const ICON_MAP = {
@@ -33,11 +34,13 @@ const Footer = memo(function Footer() {
           {/* ---------- Brand Column ---------- */}
           <div className="lg:col-span-1">
             <a href="#home" className="flex items-center gap-2 mb-4 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-cyan-500 flex items-center justify-center font-bold text-white text-lg font-display">
-                MK
-              </div>
+              <img
+                src={mcreatiKLogo}
+                alt="McreatiK Logo"
+                className="w-10 h-10 rounded-xl object-cover"
+              />
               <span className="text-xl font-bold font-display text-white">
-                <span className="text-indigo-400 group-hover:text-cyan-400 transition-colors">M</span>creati<span className="text-indigo-400 group-hover:text-cyan-400 transition-colors">K</span>
+                <span className="text-[#D4AF37] group-hover:text-cyan-400 transition-colors">M</span>creati<span className="text-cyan-400 group-hover:text-[#D4AF37] transition-colors">K</span>
               </span>
             </a>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">

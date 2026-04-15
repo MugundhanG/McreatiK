@@ -11,6 +11,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FiMenu, FiX } from 'react-icons/fi'
 import { NAV_LINKS } from '../../utils/constants'
 import Button from '../ui/Button'
+import mcreatiKLogo from '../../assets/mcreatik logo.jpeg'
 
 const Navbar = memo(function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -47,13 +48,15 @@ const Navbar = memo(function Navbar() {
 
           {/* Logo */}
           <a href="#home" className="flex items-center gap-2 group shrink-0">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-600 to-cyan-500 flex items-center justify-center font-bold text-white text-sm font-display shadow-lg shadow-indigo-500/25">
-              MK
-            </div>
+            <img
+              src={mcreatiKLogo}
+              alt="McreatiK Logo"
+              className="w-8 h-8 rounded-lg object-cover shadow-lg shadow-indigo-500/25"
+            />
             <span className="text-base font-bold font-display text-white">
-              <span className="text-indigo-400 group-hover:text-cyan-400 transition-colors">M</span>
+              <span className="text-[#D4AF37] group-hover:text-cyan-400 transition-colors">M</span>
               creati
-              <span className="text-indigo-400 group-hover:text-cyan-400 transition-colors">K</span>
+              <span className="text-cyan-400 group-hover:text-[#D4AF37] transition-colors">K</span>
             </span>
           </a>
 

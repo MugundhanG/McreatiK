@@ -18,6 +18,7 @@ import {
 import photographyThumbnail from '../assets/photography_website_thumbnail.jpg'
 import logoDesignThumbnail from '../assets/logo_design.webp'
 
+
 /* ---------- Navigation Links ---------- */
 export const NAV_LINKS = [
   { label: 'Home', href: '#home' },
