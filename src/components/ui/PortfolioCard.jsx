@@ -11,7 +11,7 @@
 
 import React, { memo, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { FiExternalLink, FiZoomIn } from 'react-icons/fi'
+import { FiExternalLink, FiZoomIn, FiMonitor } from 'react-icons/fi'
 
 const PortfolioCard = memo(function PortfolioCard({
   title,
@@ -23,10 +23,10 @@ const PortfolioCard = memo(function PortfolioCard({
   index,
   onImageClick,
 }) {
-  /* Logo → image lightbox | Resume → PDF lightbox */
-  const isLightbox = category === 'Logo' || category === 'Resume'
-  const lightboxType = category === 'Resume' ? 'pdf' : 'image'
-  const lightboxSrc  = category === 'Resume' ? pdf : image
+  /* Logo → image | Resume → PDF | Website → website iframe */
+  const isLightbox   = category === 'Logo' || category === 'Resume' || category === 'Website'
+  const lightboxType = category === 'Resume' ? 'pdf' : category === 'Website' ? 'website' : 'image'
+  const lightboxSrc  = category === 'Website' ? link : category === 'Resume' ? pdf : image
 
   /* Intercept click and open popup for lightbox cards */
   const handleClick = useCallback(
@@ -65,9 +65,11 @@ const PortfolioCard = memo(function PortfolioCard({
         {/* Dark overlay that reveals on hover */}
         <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/60 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300" />
 
-        {/* Action icon — zoom for lightbox, external link for others */}
+        {/* Action icon — monitor for website, zoom for logo, external for others */}
         <div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
-          {isLightbox
+          {category === 'Website'
+            ? <FiMonitor className="w-4 h-4 text-white" />
+            : category === 'Logo'
             ? <FiZoomIn className="w-4 h-4 text-white" />
             : <FiExternalLink className="w-4 h-4 text-white" />
           }
