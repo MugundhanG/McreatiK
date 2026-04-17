@@ -17,6 +17,7 @@ import {
 
 import photographyThumbnail from '../assets/photography_website_thumbnail.jpg'
 import logoDesignThumbnail from '../assets/logo_design.webp'
+import adThumbnail from '../assets/ADthumbnail.jpg'
 
 
 /* ---------- Navigation Links ---------- */
@@ -92,35 +93,36 @@ export const PORTFOLIO_ITEMS = [
     link: '#',
     description: 'Complete brand identity system for a luxury fashion label.',
   },
+  // {
+  //   id: 3,
+  //   title: 'TechVault Digital Card',
+  //   category: 'Digital Card',
+  //   image: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&h=400&fit=crop',
+  //   link: '#',
+  //   description: 'Interactive digital business card with NFC integration.',
+  // },
+  // {
+  //   id: 4,
+  //   title: 'Wanderlust Photo Album',
+  //   category: 'Album',
+  //   image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop',
+  //   link: '#',
+  //   description: 'A cinematic travel album with immersive gallery experience.',
+  // },
   {
     id: 3,
-    title: 'TechVault Digital Card',
-    category: 'Digital Card',
-    image: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&h=400&fit=crop',
-    link: '#',
-    description: 'Interactive digital business card with NFC integration.',
-  },
-  {
-    id: 4,
-    title: 'Wanderlust Photo Album',
-    category: 'Album',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop',
-    link: '#',
-    description: 'A cinematic travel album with immersive gallery experience.',
-  },
-  {
-    id: 5,
-    title: 'FinFlow Dashboard',
+    title: 'Engeering Solutions Website',
     category: 'Website',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
-    link: '#',
-    description: 'Real-time financial dashboard with data visualization.',
+    image: adThumbnail,
+    link: 'https://MugundhanG.github.io/ArtificerDynamics',
+    description: 'A modern business website built with clean design and seamless user experience.',
   },
   {
     id: 6,
     title: 'Elegance Resume Suite',
     category: 'Resume',
     image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=600&h=400&fit=crop',
+    pdf: '/sampleresume.pdf',
     link: '#',
     description: 'Professional resume templates with modern, clean layouts.',
   },

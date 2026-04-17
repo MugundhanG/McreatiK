@@ -14,10 +14,10 @@ import Lightbox from '../ui/Lightbox'
 
 const Portfolio = memo(function Portfolio() {
   /* Track which image is open in the lightbox (null = closed) */
-  const [lightbox, setLightbox] = useState(null) // { image, title }
+  const [lightbox, setLightbox] = useState(null) // { src, title, type }
 
-  const openLightbox = useCallback((image, title) => {
-    setLightbox({ image, title })
+  const openLightbox = useCallback((src, title, type = 'image') => {
+    setLightbox({ src, title, type })
   }, [])
 
   const closeLightbox = useCallback(() => {
@@ -37,7 +37,7 @@ const Portfolio = memo(function Portfolio() {
         />
 
         {/* Portfolio grid — 1 col mobile, 2 tablet, 3 desktop */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
           {PORTFOLIO_ITEMS.map((item, index) => (
             <PortfolioCard
               key={item.id}
@@ -53,8 +53,9 @@ const Portfolio = memo(function Portfolio() {
       {/* Lightbox popup */}
       {lightbox && (
         <Lightbox
-          image={lightbox.image}
+          src={lightbox.src}
           title={lightbox.title}
+          type={lightbox.type}
           onClose={closeLightbox}
         />
       )}

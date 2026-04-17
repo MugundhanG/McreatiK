@@ -17,22 +17,26 @@ const PortfolioCard = memo(function PortfolioCard({
   title,
   category,
   image,
+  pdf,
   link,
   description,
   index,
   onImageClick,
 }) {
-  const isLightbox = category === 'Logo'
+  /* Logo → image lightbox | Resume → PDF lightbox */
+  const isLightbox = category === 'Logo' || category === 'Resume'
+  const lightboxType = category === 'Resume' ? 'pdf' : 'image'
+  const lightboxSrc  = category === 'Resume' ? pdf : image
 
-  /* For lightbox cards, intercept click and open popup */
+  /* Intercept click and open popup for lightbox cards */
   const handleClick = useCallback(
     (e) => {
       if (isLightbox) {
         e.preventDefault()
-        onImageClick?.(image, title)
+        onImageClick?.(lightboxSrc, title, lightboxType)
       }
     },
-    [isLightbox, image, title, onImageClick]
+    [isLightbox, lightboxSrc, title, lightboxType, onImageClick]
   )
 
   return (

@@ -1,22 +1,21 @@
 /* ============================================
    Lightbox Component
-   Full-screen image popup triggered when a
-   portfolio card image is clicked.
-   - Backdrop click closes it
-   - ESC key closes it
-   - Smooth fade + scale animation
+   Full-screen popup that supports two modes:
+     - "image" : renders an <img> tag
+     - "pdf"   : renders an <iframe> PDF viewer
+   Triggered by clicking portfolio cards.
+   Closes on: ✕ button, backdrop click, ESC key.
    ============================================ */
 
 import React, { useEffect, memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiX } from 'react-icons/fi'
 
-const Lightbox = memo(function Lightbox({ image, title, onClose }) {
-  /* Close on ESC key */
+const Lightbox = memo(function Lightbox({ src, title, type = 'image', onClose }) {
+  /* Close on ESC key + lock body scroll */
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') onClose() }
     window.addEventListener('keydown', onKey)
-    /* Lock body scroll while open */
     document.body.style.overflow = 'hidden'
     return () => {
       window.removeEventListener('keydown', onKey)
@@ -39,9 +38,9 @@ const Lightbox = memo(function Lightbox({ image, title, onClose }) {
           onClick={onClose}
         />
 
-        {/* Image container */}
+        {/* Content container */}
         <motion.div
-          className="relative z-10 max-w-4xl w-full"
+          className={`relative z-10 w-full ${type === 'pdf' ? 'max-w-4xl h-[90vh]' : 'max-w-4xl'}`}
           initial={{ scale: 0.85, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.85, opacity: 0 }}
@@ -56,14 +55,26 @@ const Lightbox = memo(function Lightbox({ image, title, onClose }) {
             <FiX className="w-5 h-5" />
           </button>
 
-          {/* Image */}
-          <img
-            src={image}
-            alt={title}
-            className="w-full h-auto max-h-[85vh] object-contain rounded-2xl shadow-2xl"
-          />
+          {/* ---------- Image mode ---------- */}
+          {type === 'image' && (
+            <img
+              src={src}
+              alt={title}
+              className="w-full h-auto max-h-[85vh] object-contain rounded-2xl shadow-2xl"
+            />
+          )}
 
-          {/* Title caption */}
+          {/* ---------- PDF mode ---------- */}
+          {type === 'pdf' && (
+            <iframe
+              src={src}
+              title={title}
+              className="w-full h-full rounded-2xl shadow-2xl border-0"
+              style={{ minHeight: '80vh' }}
+            />
+          )}
+
+          {/* Caption */}
           {title && (
             <p className="text-center text-gray-400 text-sm mt-4">{title}</p>
           )}

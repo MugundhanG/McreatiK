@@ -18,6 +18,8 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    max-width: 100%;
   }
 
   body {
@@ -25,6 +27,7 @@
     background-color: #030712;
     color: #f9fafb;
     overflow-x: hidden;
+    max-width: 100%;
   }
 
   /* Custom scrollbar for webkit browsers */
