@@ -1,0 +1,12 @@
+# robots.txt — McreatiK
+# Tells search engines what to crawl
+
+User-agent: *
+Allow: /
+
+# Block access to private files
+Disallow: /src/
+Disallow: /.env
+
+# Sitemap location
+Sitemap: https://mcreatik.com/sitemap.xml
