@@ -138,7 +138,7 @@ export const STATS = [
 /* ---------- Social Media Links ---------- */
 export const SOCIAL_LINKS = [
   { label: 'Instagram', href: 'https://instagram.com/mcreatik', icon: 'instagram' },
-  { label: 'LinkedIn', href: 'https://linkedin.com/company/mcreatik', icon: 'linkedin' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/mcreatik', icon: 'linkedin' },
   // { label: 'Twitter', href: 'https://twitter.com/mcreatik', icon: 'twitter' },
   // { label: 'Facebook', href: 'https://facebook.com/mcreatik', icon: 'facebook' },
 ]
