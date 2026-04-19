@@ -137,7 +137,7 @@ const Contact = memo(function Contact() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
                 <label htmlFor="name" className="block text-sm text-gray-300 mb-1.5 font-medium">
-                  Full Name
+                  Full Name <span className="text-red-400">*</span>
                 </label>
                 <input
                   id="name"
@@ -154,7 +154,7 @@ const Contact = memo(function Contact() {
 
               <div>
                 <label htmlFor="email" className="block text-sm text-gray-300 mb-1.5 font-medium">
-                  Email Address
+                  Email Address <span className="text-red-400">*</span>
                 </label>
                 <input
                   id="email"
@@ -174,7 +174,7 @@ const Contact = memo(function Contact() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
                 <label htmlFor="phone" className="block text-sm text-gray-300 mb-1.5 font-medium">
-                  Phone Number
+                  Phone Number <span className="text-red-400">*</span>
                 </label>
                 <input
                   id="phone"
@@ -191,7 +191,7 @@ const Contact = memo(function Contact() {
 
               <div>
                 <label htmlFor="service" className="block text-sm text-gray-300 mb-1.5 font-medium">
-                  Service Required
+                  Service Required <span className="text-red-400">*</span>
                 </label>
                 <select
                   id="service"

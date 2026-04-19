@@ -41,8 +41,6 @@ export function validateField(name, value) {
       return ''
 
     case 'message':
-      if (!trimmed) return 'Message is required'
-      if (trimmed.length < 10) return 'Message must be at least 10 characters'
       return ''
 
     default:
