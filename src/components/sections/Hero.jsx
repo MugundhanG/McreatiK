@@ -75,7 +75,16 @@ const Hero = memo(function Hero() {
               initial="hidden"
               animate="visible"
             >
-              We Craft{' '}
+              At{' '}
+              <span className="relative inline-block">
+                <span
+                  className="bg-gradient-to-r from-cyan-400 via-indigo-400 to-violet-400 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(99,102,241,0.5)]"
+                  style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontWeight: 700, fontSize: '1.15em' }}
+                >
+                  McreatiK
+                </span>
+              </span>
+              ,{' '}We Craft{' '}
               <span className="gradient-text">Digital Experiences</span>{' '}
               That Drive Growth
             </motion.h1>

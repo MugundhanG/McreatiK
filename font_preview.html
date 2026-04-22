@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>McreatiK Font Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Cinzel:wght@700&family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@1,700&family=Righteous&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0a14;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      padding: 60px 20px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    h2 {
+      color: #ffffff;
+      font-size: 14px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.4;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 36px 48px;
+      width: 100%;
+      max-width: 640px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .preview {
+      font-size: 52px;
+      background: linear-gradient(90deg, #67e8f9, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+
+    .context {
+      font-size: 16px;
+      color: rgba(255,255,255,0.5);
+      font-family: 'Inter', sans-serif;
+      margin-top: 4px;
+    }
+
+    .context span {
+      background: linear-gradient(90deg, #67e8f9, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(99,102,241,0.15);
+      border: 1px solid rgba(99,102,241,0.3);
+      color: #818cf8;
+      font-size: 10px;
+      letter-spacing: 1px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      width: fit-content;
+      margin-top: 4px;
+    }
+
+    .recommended .badge {
+      background: rgba(34,211,238,0.15);
+      border-color: rgba(34,211,238,0.3);
+      color: #22d3ee;
+    }
+
+    .recommended {
+      border-color: rgba(34,211,238,0.25);
+      box-shadow: 0 0 30px rgba(34,211,238,0.07);
+    }
+
+    /* Fonts */
+    .font-playfair  { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; }
+    .font-cinzel    { font-family: 'Cinzel', serif; font-weight: 700; }
+    .font-bebas     { font-family: 'Bebas Neue', cursive; letter-spacing: 4px; }
+    .font-cormorant { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 700; font-size: 64px; }
+    .font-righteous { font-family: 'Righteous', cursive; }
+  </style>
+</head>
+<body>
+
+  <h2>McreatiK — Font Preview</h2>
+
+  <!-- 1. Playfair Display -->
+  <div class="card recommended">
+    <div class="label">Option 1 — Playfair Display</div>
+    <div class="preview font-playfair">McreatiK</div>
+    <div class="context">At <span class="font-playfair" style="font-size:18px;">McreatiK</span>, We Craft Digital Experiences That Drive Growth</div>
+    <div class="badge">⭐ Recommended — Luxury & Premium</div>
+  </div>
+
+  <!-- 2. Cinzel -->
+  <div class="card">
+    <div class="label">Option 2 — Cinzel</div>
+    <div class="preview font-cinzel">McreatiK</div>
+    <div class="context">At <span class="font-cinzel" style="font-size:18px;">McreatiK</span>, We Craft Digital Experiences That Drive Growth</div>
+    <div class="badge">Bold & Authoritative</div>
+  </div>
+
+  <!-- 3. Bebas Neue -->
+  <div class="card">
+    <div class="label">Option 3 — Bebas Neue</div>
+    <div class="preview font-bebas">McreatiK</div>
+    <div class="context">At <span class="font-bebas" style="font-size:20px;">McreatiK</span>, We Craft Digital Experiences That Drive Growth</div>
+    <div class="badge">Strong & Modern</div>
+  </div>
+
+  <!-- 4. Cormorant Garamond -->
+  <div class="card">
+    <div class="label">Option 4 — Cormorant Garamond</div>
+    <div class="preview font-cormorant">McreatiK</div>
+    <div class="context">At <span class="font-cormorant" style="font-size:22px;">McreatiK</span>, We Craft Digital Experiences That Drive Growth</div>
+    <div class="badge">Elegant & Sophisticated</div>
+  </div>
+
+  <!-- 5. Righteous -->
+  <div class="card">
+    <div class="label">Option 5 — Righteous</div>
+    <div class="preview font-righteous">McreatiK</div>
+    <div class="context">At <span class="font-righteous" style="font-size:18px;">McreatiK</span>, We Craft Digital Experiences That Drive Growth</div>
+    <div class="badge">Creative & Friendly</div>
+  </div>
+
+</body>
+</html>

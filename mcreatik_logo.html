@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>McreatiK Logo</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #1a1a2e;
+    }
+  </style>
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 420" width="400" height="420">
+    <defs>
+      <!-- Teal gradient for main elements -->
+      <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%"   stop-color="#a8f0e8"/>
+        <stop offset="30%"  stop-color="#4dd9c8"/>
+        <stop offset="60%"  stop-color="#00b4d8"/>
+        <stop offset="100%" stop-color="#48cae4"/>
+      </linearGradient>
+
+      <!-- Arrow gradient -->
+      <linearGradient id="arrowGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+        <stop offset="0%"   stop-color="#48cae4"/>
+        <stop offset="50%"  stop-color="#90e0ef"/>
+        <stop offset="100%" stop-color="#caf0f8"/>
+      </linearGradient>
+
+      <!-- Text gradient -->
+      <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%"   stop-color="#7fffd4"/>
+        <stop offset="50%"  stop-color="#40e0d0"/>
+        <stop offset="100%" stop-color="#7fffd4"/>
+      </linearGradient>
+
+      <!-- Glow filter -->
+      <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="4" result="blur"/>
+        <feMerge>
+          <feMergeNode in="blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+
+      <!-- Strong glow for arrow -->
+      <filter id="strongGlow" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="6" result="blur"/>
+        <feMerge>
+          <feMergeNode in="blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+
+      <!-- Clip for rounded square background -->
+      <clipPath id="bgClip">
+        <rect x="10" y="10" width="380" height="400" rx="50" ry="50"/>
+      </clipPath>
+    </defs>
+
+    <!-- Background rounded square -->
+    <rect x="10" y="10" width="380" height="400" rx="50" ry="50" fill="#0a0a0a"/>
+    <rect x="10" y="10" width="380" height="400" rx="50" ry="50" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+
+    <!-- Orbit ring -->
+    <ellipse cx="200" cy="185" rx="120" ry="120"
+      fill="none"
+      stroke="url(#tealGrad)"
+      stroke-width="6"
+      filter="url(#glow)"
+      opacity="0.85"
+    />
+
+    <!-- Inner orbit ring (smaller, tilted feel) -->
+    <ellipse cx="200" cy="185" rx="95" ry="95"
+      fill="none"
+      stroke="url(#tealGrad)"
+      stroke-width="2"
+      opacity="0.3"
+    />
+
+    <!-- M Letter -->
+    <text
+      x="200" y="230"
+      text-anchor="middle"
+      font-family="Georgia, 'Times New Roman', serif"
+      font-size="130"
+      font-weight="bold"
+      fill="url(#tealGrad)"
+      filter="url(#glow)"
+      letter-spacing="-5"
+    >MK</text>
+
+    <!-- Arrow (diagonal, bottom-left to top-right) -->
+    <!-- Arrow shaft -->
+    <line
+      x1="110" y1="280"
+      x2="295" y2="68"
+      stroke="url(#arrowGrad)"
+      stroke-width="14"
+      stroke-linecap="round"
+      filter="url(#strongGlow)"
+    />
+    <!-- Arrow head -->
+    <polygon
+      points="295,68 255,75 280,108"
+      fill="url(#arrowGrad)"
+      filter="url(#strongGlow)"
+    />
+
+    <!-- Sparkle top (4-point star) -->
+    <g transform="translate(300, 65)" filter="url(#strongGlow)">
+      <polygon points="0,-18 3,-3 18,0 3,3 0,18 -3,3 -18,0 -3,-3"
+        fill="white" opacity="0.95"/>
+    </g>
+
+    <!-- Sparkle small top-right -->
+    <g transform="translate(328, 45)" filter="url(#glow)">
+      <polygon points="0,-10 2,-2 10,0 2,2 0,10 -2,2 -10,0 -2,-2"
+        fill="white" opacity="0.8"/>
+    </g>
+
+    <!-- Sparkle tiny -->
+    <g transform="translate(315, 88)" filter="url(#glow)">
+      <polygon points="0,-6 1,-1 6,0 1,1 0,6 -1,1 -6,0 -1,-1"
+        fill="#90e0ef" opacity="0.7"/>
+    </g>
+
+    <!-- Dot on arrow (like the logo detail) -->
+    <circle cx="258" cy="122" r="6" fill="white" opacity="0.9" filter="url(#glow)"/>
+    <circle cx="238" cy="148" r="4" fill="white" opacity="0.6" filter="url(#glow)"/>
+
+    <!-- McreatiK Text -->
+    <text
+      x="200" y="358"
+      text-anchor="middle"
+      font-family="Georgia, 'Times New Roman', serif"
+      font-size="42"
+      font-weight="bold"
+      fill="url(#textGrad)"
+      filter="url(#glow)"
+      letter-spacing="2"
+    >
+      <tspan font-style="italic">M</tspan><tspan font-size="34">CREATI</tspan><tspan font-style="italic">K</tspan>
+    </text>
+
+  </svg>
+</body>
+</html>
