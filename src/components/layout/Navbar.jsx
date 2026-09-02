@@ -11,6 +11,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FiMenu, FiX } from 'react-icons/fi'
 import { TECH_NAV_LINKS } from '../../utils/constants'
 import Button from '../ui/Button'
+import DepartmentSwitcher from '../ui/DepartmentSwitcher'
 import mcreatiKLogo from '../../assets/tech-logo-dark-bg.png'
 
 const Navbar = memo(function Navbar() {
@@ -75,25 +76,29 @@ const Navbar = memo(function Navbar() {
               ))}
             </div>
 
-            {/* Desktop: CTA */}
-            <div className="hidden md:flex items-center gap-4 shrink-0">
+            {/* Desktop: department switcher + CTA */}
+            <div className="hidden md:flex items-center gap-3 shrink-0">
+              <DepartmentSwitcher compact className="text-gray-300" />
               <Button href="#contact" className="text-xs px-4 py-2">
                 Get Started
               </Button>
             </div>
 
-            {/* Mobile: compact logo + toggle, in-line so nothing overlaps the floating logo (which is hidden below md) */}
+            {/* Mobile: compact logo + switcher + toggle, in-line so nothing overlaps the floating logo (which is hidden below md) */}
             <div className="md:hidden flex items-center justify-between w-full">
               <Link to="/" className="flex items-center">
                 <img src={mcreatiKLogo} alt="McreatiK" className="h-8 w-auto object-contain" />
               </Link>
-              <button
-                onClick={() => setIsMobileOpen((prev) => !prev)}
-                className="w-8 h-8 rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-                aria-label="Toggle menu"
-              >
-                {isMobileOpen ? <FiX className="w-4 h-4" /> : <FiMenu className="w-4 h-4" />}
-              </button>
+              <div className="flex items-center gap-2">
+                <DepartmentSwitcher compact className="text-gray-300" />
+                <button
+                  onClick={() => setIsMobileOpen((prev) => !prev)}
+                  className="w-8 h-8 rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                  aria-label="Toggle menu"
+                >
+                  {isMobileOpen ? <FiX className="w-4 h-4" /> : <FiMenu className="w-4 h-4" />}
+                </button>
+              </div>
             </div>
 
           </div>

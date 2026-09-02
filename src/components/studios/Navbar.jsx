@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiMenu, FiX } from 'react-icons/fi'
 import { STUDIOS_NAV_LINKS } from '../../utils/constants'
+import DepartmentSwitcher from '../ui/DepartmentSwitcher'
 import studiosLogo from '../../assets/studios-logo-light-bg.png'
 
 const StudiosNavbar = memo(function StudiosNavbar() {
@@ -43,27 +44,33 @@ const StudiosNavbar = memo(function StudiosNavbar() {
           <img src={studiosLogo} alt="McreatiK Studios" className="h-11 w-auto object-contain" />
         </Link>
 
-        {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-8">
-          {STUDIOS_NAV_LINKS.map(({ label, href }) => (
-            <a
-              key={label}
-              href={href}
-              className="font-body text-sm text-[#4A4438] hover:text-[#C9971F] transition-colors"
-            >
-              {label}
-            </a>
-          ))}
+        {/* Desktop links + department switcher */}
+        <div className="hidden md:flex items-center gap-6">
+          <div className="flex items-center gap-8">
+            {STUDIOS_NAV_LINKS.map(({ label, href }) => (
+              <a
+                key={label}
+                href={href}
+                className="font-body text-sm text-[#4A4438] hover:text-[#C9971F] transition-colors"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+          <DepartmentSwitcher compact className="text-[#4A4438]" />
         </div>
 
-        {/* Mobile toggle */}
-        <button
-          onClick={() => setIsMobileOpen((prev) => !prev)}
-          className="md:hidden w-9 h-9 flex items-center justify-center text-[#1C1710] cursor-pointer"
-          aria-label="Toggle menu"
-        >
-          {isMobileOpen ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
-        </button>
+        {/* Mobile: switcher + toggle */}
+        <div className="md:hidden flex items-center gap-2">
+          <DepartmentSwitcher compact className="text-[#4A4438]" />
+          <button
+            onClick={() => setIsMobileOpen((prev) => !prev)}
+            className="w-9 h-9 flex items-center justify-center text-[#1C1710] cursor-pointer"
+            aria-label="Toggle menu"
+          >
+            {isMobileOpen ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile drawer */}
