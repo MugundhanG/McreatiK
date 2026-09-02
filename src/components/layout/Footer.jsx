@@ -90,7 +90,7 @@ const Footer = memo(function Footer() {
           {/* ---------- Services Links ---------- */}
           <div>
             <h4 className="text-white font-semibold mb-4 font-display">Services</h4>
-            <ul className="space-y-3">
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-3">
               {TECH_SERVICES.map(({ title }) => (
                 <li key={title}>
                   <a
