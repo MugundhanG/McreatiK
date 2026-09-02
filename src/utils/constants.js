@@ -12,10 +12,26 @@ import {
   FiPenTool,
   FiFileText,
   FiRefreshCw,
+  FiLayout,
+  FiSearch,
+  FiTool,
+  FiServer,
+  FiMapPin,
+  FiBriefcase,
+  FiClipboard,
+  FiCoffee,
+  FiUserCheck,
   FiCamera,
   FiHeart,
   FiUsers,
-  FiBox,
+  FiCalendar,
+  FiSun,
+  FiAperture,
+  FiGift,
+  FiStar,
+  FiCircle,
+  FiHome,
+  FiBook,
 } from 'react-icons/fi'
 
 import photographyThumbnail from '../assets/photography_website_thumbnail.jpg'
@@ -64,6 +80,60 @@ export const TECH_SERVICES = [
     title: 'Resume Design & Makeover',
     description:
       'Professional, ATS-friendly resumes that highlight your strengths and open doors.',
+  },
+  {
+    icon: FiLayout,
+    title: 'Landing Page Design',
+    description:
+      'Focused, conversion-ready single pages for a campaign, launch, or offer that needs its own spotlight.',
+  },
+  {
+    icon: FiSearch,
+    title: 'SEO Optimization',
+    description:
+      'On-page and technical SEO that helps the right customers actually find your site on Google.',
+  },
+  {
+    icon: FiTool,
+    title: 'Website Maintenance',
+    description:
+      'Ongoing updates, backups, and fixes so your site stays fast, secure, and reliably online.',
+  },
+  {
+    icon: FiServer,
+    title: 'Domain & Hosting Setup',
+    description:
+      'Domain registration, DNS, and hosting configured correctly the first time — no guesswork.',
+  },
+  {
+    icon: FiMapPin,
+    title: 'Google Business Profile',
+    description:
+      'A fully set up, optimized Google Business listing so local customers can find and trust you.',
+  },
+  {
+    icon: FiBriefcase,
+    title: 'Portfolio Websites',
+    description:
+      'Clean, personal portfolio sites that put your best work front and center.',
+  },
+  {
+    icon: FiClipboard,
+    title: 'Invoice & Quotation Design',
+    description:
+      'Branded invoice and quotation templates that look professional and get you paid faster.',
+  },
+  {
+    icon: FiCoffee,
+    title: 'Menu Card Design',
+    description:
+      'Appetizing, easy-to-read menu designs for cafes, restaurants, and food businesses.',
+  },
+  {
+    icon: FiUserCheck,
+    title: 'LinkedIn Profile Makeover',
+    description:
+      'A sharper LinkedIn presence — photo, headline, and summary that reflect where you\'re headed.',
   },
 ]
 
@@ -115,6 +185,15 @@ export const TECH_SERVICE_OPTIONS = [
   'Business Card Design',
   'Website Enhancement',
   'Resume Design & Makeover',
+  'Landing Page Design',
+  'SEO Optimization',
+  'Website Maintenance',
+  'Domain & Hosting Setup',
+  'Google Business Profile',
+  'Portfolio Websites',
+  'Invoice & Quotation Design',
+  'Menu Card Design',
+  'LinkedIn Profile Makeover',
   'Other',
 ]
 
@@ -144,14 +223,49 @@ export const STUDIOS_SERVICES = [
     description: 'Placeholder — describe your wedding coverage packages here.',
   },
   {
-    icon: FiUsers,
-    title: 'Event Coverage',
-    description: 'Placeholder — describe your event/corporate photography packages here.',
+    icon: FiCalendar,
+    title: 'Pre and Post Wedding',
+    description: 'Placeholder — describe your pre-wedding and post-wedding shoot packages here.',
   },
   {
-    icon: FiBox,
-    title: 'Product Photography',
-    description: 'Placeholder — describe your product/commercial photography packages here.',
+    icon: FiSun,
+    title: 'Baby & Kids Outdoor Shoots',
+    description: 'Placeholder — describe your baby and kids outdoor photography packages here.',
+  },
+  {
+    icon: FiAperture,
+    title: 'Model Outdoor Shoots',
+    description: 'Placeholder — describe your model and portfolio outdoor shoot packages here.',
+  },
+  {
+    icon: FiGift,
+    title: 'Maternity and Baby Shower',
+    description: 'Placeholder — describe your maternity and baby shower shoot packages here.',
+  },
+  {
+    icon: FiStar,
+    title: 'Birthday Parties',
+    description: 'Placeholder — describe your birthday party photography packages here.',
+  },
+  {
+    icon: FiUsers,
+    title: 'All Traditional Events',
+    description: 'Placeholder — describe your traditional and cultural event coverage here.',
+  },
+  {
+    icon: FiCircle,
+    title: 'Ring Ceremony',
+    description: 'Placeholder — describe your ring ceremony/engagement shoot packages here.',
+  },
+  {
+    icon: FiHome,
+    title: 'House Warming',
+    description: 'Placeholder — describe your house warming event coverage packages here.',
+  },
+  {
+    icon: FiBook,
+    title: 'Photo Album Design',
+    description: 'Placeholder — describe your photo album design and printing packages here.',
   },
 ]
 
@@ -173,8 +287,15 @@ export const STUDIOS_STATS = [
 export const STUDIOS_SERVICE_OPTIONS = [
   'Portrait Session',
   'Wedding Photography',
-  'Event Coverage',
-  'Product Photography',
+  'Pre and Post Wedding',
+  'Baby & Kids Outdoor Shoots',
+  'Model Outdoor Shoots',
+  'Maternity and Baby Shower',
+  'Birthday Parties',
+  'All Traditional Events',
+  'Ring Ceremony',
+  'House Warming',
+  'Photo Album Design',
   'Other',
 ]
 
