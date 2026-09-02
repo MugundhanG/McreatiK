@@ -4,10 +4,11 @@
    soft gradient and a badge watermark (sized in
    % of the panel so the full circle stays inside
    the frame on any device) even at rest,
-   intensifying on hover. Hovering reveals the
-   service list, centered beneath the description.
-   The panel itself is inert — only the Enter link
-   navigates.
+   intensifying on hover. Hovering slides the
+   service list up from below the description as
+   solid chips that stay legible over any
+   background. The panel itself is inert — only
+   the CTA link navigates.
    ============================================ */
 
 import React, { memo, useEffect } from 'react'
@@ -47,7 +48,7 @@ const Landing = memo(function Landing() {
             src={techBadge}
             alt=""
             aria-hidden="true"
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[42%] max-w-[360px] min-w-[220px] opacity-[0.16] pointer-events-none select-none"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[58%] max-w-[480px] min-w-[260px] opacity-[0.18] pointer-events-none select-none"
           />
 
           {/* Centered mark + hover-revealed services, all centered as one block */}
@@ -60,12 +61,14 @@ const Landing = memo(function Landing() {
               Websites, brand identity, and digital design for businesses that want to look as good as they perform.
             </p>
 
+            {/* Service list — slides up from below on hover, solid chips stay legible on any bg */}
             <div className="w-full max-h-0 opacity-0 group-hover:max-h-[420px] group-hover:opacity-100 overflow-hidden transition-all duration-500 ease-out">
               <div className="flex flex-col items-center gap-2.5 pt-5">
-                {TECH_SERVICES.map(({ title }) => (
+                {TECH_SERVICES.map(({ title }, i) => (
                   <span
                     key={title}
-                    className="text-sm sm:text-base font-medium text-white bg-white/10 border border-white/20 rounded-full px-5 py-2.5"
+                    style={{ transitionDelay: `${i * 60}ms` }}
+                    className="translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400 ease-out text-sm sm:text-base font-medium text-white bg-[#14121f] border border-white/25 rounded-full px-5 py-2.5 shadow-lg shadow-black/40"
                   >
                     {title}
                   </span>
@@ -74,13 +77,13 @@ const Landing = memo(function Landing() {
             </div>
           </div>
 
-          {/* Enter — always available, pinned to the bottom */}
+          {/* CTA — always available, pinned to the bottom */}
           <div className="absolute inset-x-0 bottom-0 z-20 bg-black/50 backdrop-blur-md border-t border-white/10">
             <Link
               to="/tech"
               className="flex items-center justify-center gap-1.5 py-4 text-sm font-semibold text-white hover:bg-white/5 transition-colors"
             >
-              Enter <FiArrowUpRight className="w-4 h-4" />
+              Discover <FiArrowUpRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
@@ -103,7 +106,7 @@ const Landing = memo(function Landing() {
             src={studiosBadge}
             alt=""
             aria-hidden="true"
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[42%] max-w-[360px] min-w-[220px] opacity-[0.14] pointer-events-none select-none"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[58%] max-w-[480px] min-w-[260px] opacity-[0.16] pointer-events-none select-none"
           />
 
           {/* Centered mark + hover-revealed services, all centered as one block */}
@@ -116,12 +119,14 @@ const Landing = memo(function Landing() {
               Photography for the moments worth keeping — portraits, weddings, and events.
             </p>
 
+            {/* Service list — slides up from below on hover, solid chips stay legible on any bg */}
             <div className="w-full max-h-0 opacity-0 group-hover:max-h-[420px] group-hover:opacity-100 overflow-hidden transition-all duration-500 ease-out">
               <div className="flex flex-col items-center gap-2.5 pt-5">
-                {STUDIOS_SERVICES.map(({ title }) => (
+                {STUDIOS_SERVICES.map(({ title }, i) => (
                   <span
                     key={title}
-                    className="text-sm sm:text-base font-medium text-[#1C1710] bg-[#1C1710]/[0.06] border border-[#1C1710]/20 rounded-full px-5 py-2.5"
+                    style={{ transitionDelay: `${i * 60}ms` }}
+                    className="translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400 ease-out text-sm sm:text-base font-medium text-[#1C1710] bg-white border border-black/15 rounded-full px-5 py-2.5 shadow-lg shadow-black/10"
                   >
                     {title}
                   </span>
@@ -130,13 +135,13 @@ const Landing = memo(function Landing() {
             </div>
           </div>
 
-          {/* Enter — always available, pinned to the bottom */}
+          {/* CTA — always available, pinned to the bottom */}
           <div className="absolute inset-x-0 bottom-0 z-20 bg-white/60 backdrop-blur-md border-t border-black/10">
             <Link
               to="/studios"
               className="flex items-center justify-center gap-1.5 py-4 text-sm font-semibold text-[#1C1710] hover:bg-black/5 transition-colors"
             >
-              Enter <FiArrowUpRight className="w-4 h-4" />
+              Explore <FiArrowUpRight className="w-4 h-4" />
             </Link>
           </div>
         </div>

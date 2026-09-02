@@ -33,12 +33,16 @@ const Hero = memo(function Hero() {
       {/* Background orbs */}
       <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-[#5B5FEF]/15 rounded-full blur-[128px] pointer-events-none" />
       <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] bg-[#FF6B35]/10 rounded-full blur-[100px] pointer-events-none" />
-      {/* Badge watermark */}
+      {/* Badge watermark — fades toward the text column so copy stays legible */}
       <img
         src={techBadge}
         alt=""
         aria-hidden="true"
-        className="absolute -right-16 sm:-right-24 top-1/2 -translate-y-1/2 w-[420px] sm:w-[680px] max-w-none opacity-[0.14] pointer-events-none select-none"
+        className="absolute -right-10 sm:-right-16 top-1/2 -translate-y-1/2 w-[500px] sm:w-[820px] max-w-none opacity-[0.22] pointer-events-none select-none"
+        style={{
+          WebkitMaskImage: 'linear-gradient(to left, black 45%, transparent 88%)',
+          maskImage: 'linear-gradient(to left, black 45%, transparent 88%)',
+        }}
       />
       {/* Grid overlay */}
       <div

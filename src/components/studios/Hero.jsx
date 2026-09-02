@@ -26,12 +26,16 @@ const StudiosHero = memo(function StudiosHero() {
       />
       <div className="film-grain" />
 
-      {/* Badge watermark */}
+      {/* Badge watermark — fades toward the text column so copy stays legible */}
       <img
         src={studiosBadge}
         alt=""
         aria-hidden="true"
-        className="absolute -right-16 sm:-right-32 top-1/2 -translate-y-1/2 w-[420px] sm:w-[680px] max-w-none opacity-[0.13] pointer-events-none select-none"
+        className="absolute -right-10 sm:-right-24 top-1/2 -translate-y-1/2 w-[500px] sm:w-[820px] max-w-none opacity-[0.2] pointer-events-none select-none"
+        style={{
+          WebkitMaskImage: 'linear-gradient(to left, black 45%, transparent 88%)',
+          maskImage: 'linear-gradient(to left, black 45%, transparent 88%)',
+        }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full pt-32 pb-20">
