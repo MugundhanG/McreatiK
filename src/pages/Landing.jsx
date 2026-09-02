@@ -53,7 +53,7 @@ const Landing = memo(function Landing() {
 
           {/* Centered mark + hover-revealed services, all centered as one block */}
           <div className="relative z-10 flex flex-col items-center text-center gap-4 px-8 pb-16 max-w-lg">
-            <img src={techLogo} alt="McreatiK Tech & Creative" className="h-16 sm:h-20 w-auto object-contain" />
+            <img src={techLogo} alt="McreatiK Tech & Creative" className="h-28 sm:h-36 lg:h-40 w-auto object-contain" />
             <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight tracking-tight text-white">
               Tech &amp; Creative Solutions
             </h2>
@@ -111,7 +111,7 @@ const Landing = memo(function Landing() {
 
           {/* Centered mark + hover-revealed services, all centered as one block */}
           <div className="relative z-10 flex flex-col items-center text-center gap-4 px-8 pb-16 max-w-lg">
-            <img src={studiosLogo} alt="McreatiK Studios" className="h-16 sm:h-20 w-auto object-contain" />
+            <img src={studiosLogo} alt="McreatiK Studios" className="h-28 sm:h-36 lg:h-40 w-auto object-contain" />
             <h2 className="font-display italic font-normal text-3xl sm:text-4xl lg:text-5xl leading-tight tracking-tight text-[#1C1710]">
               Studios
             </h2>
