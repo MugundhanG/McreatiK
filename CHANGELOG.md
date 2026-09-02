@@ -5,6 +5,33 @@ Format: `[Version] — Date — Summary`
 
 ---
 
+## [v2.0.0] — 2026-09-02 — Two-Department Multipage Rebuild
+
+### Architecture
+- Restructured from a single-page site into a multipage app with React Router:
+  - `/` — Landing, a split-screen department picker
+  - `/tech` — McreatiK Tech & Creative Solutions (existing business: websites, logos, business cards, resumes, website revamps)
+  - `/studios` — McreatiK Studios, a new photography department (portraits, weddings, events) — **content is placeholder**, no real photos/copy yet
+- `vercel.json` added (SPA rewrite) so direct links to `/tech` / `/studios` resolve correctly
+- Deployment moved from GitHub Pages to **Vercel**, connected to GitHub repo `MugundhanG/McreatiK`; `mcreatik.com` DNS now points to Vercel (GitHub Pages/`gh-pages` branch is vestigial, no longer live)
+- Every push to `main` auto-deploys to production; `mcreatikv1.3` kept fast-forward-synced with `main` throughout
+
+### Branding
+- New logo set integrated: dark-bg and light-bg wordmark variants, plus circular badges for both departments
+- Per-route favicon swapping (`src/utils/setFavicon.js`) — Tech and Studios each show their own badge as the browser tab icon
+- Real hero photos (user-supplied) added for both departments, used on the Landing panels and each department's Hero section
+
+### Design systems
+- **Tech & Creative** — dark theme, indigo `#5B5FEF` + orange spot color `#FF6B35`, Archivo display font, "build spec" identity (registration-mark corner ticks, numbered service manifest)
+- **Studios** — light theme on its own page (cream `#FAF7F0`, gold `#C9971F` + darkroom red `#8B2E2A`, Fraunces italic display font, "film-frame" sprocket-tick motif on images). Note: the Landing page's Studios *panel* specifically uses a dark treatment instead (the real hero photo is dark and unreadable through a light veil) — this is Landing-only, the actual `/studios` page is unaffected
+
+### Known follow-ups
+- Studios needs real content: service descriptions, gallery photos, about bio/stats are all placeholder (see `STUDIOS_*` in `src/utils/constants.js`)
+- `src/components/ui/TechHeroGraphic.jsx` (an earlier abstract-SVG hero graphic) and the circular badge webp files are now unused for hero backgrounds (kept for favicons / in case they're wanted again) — safe to remove later if not needed
+- ESLint reports 22 `no-unused-vars` errors (`motion`, `Icon`) across most components — confirmed pre-existing (present before this session's changes too, verified via `git stash`), likely an eslint config issue, not yet fixed
+
+---
+
 ## [v1.1.0] — 2026-04-18 — SEO & Deployment
 
 ### Added
