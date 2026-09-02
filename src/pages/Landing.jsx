@@ -4,11 +4,14 @@
    soft gradient and a badge watermark (sized in
    % of the panel so the full circle stays inside
    the frame on any device) even at rest,
-   intensifying on hover. Below lg the service
-   icon grid is always shown in normal flow (hover
-   isn't reliable on touch); at lg+ it becomes a
-   hover-only overlay that slides up below the
-   description without disturbing it. The panel
+   intensifying on hover. The service icon grid is
+   always shown in normal flow at every breakpoint
+   — a hover-only reveal can't be relied on for
+   touch devices, and real browser chrome eats
+   enough vertical space on laptop screens that an
+   absolutely-positioned overlay risked clipping
+   under the CTA bar. The panel grows taller than
+   one screen if the content needs it. The panel
    itself is inert — only the CTA link navigates.
    ============================================ */
 
@@ -43,7 +46,7 @@ const Landing = memo(function Landing() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
       >
-        <div className="theme-tech group relative flex h-full min-h-[50vh] items-center justify-center bg-[#0a0b10] overflow-hidden cursor-default">
+        <div className="theme-tech group relative flex flex-col h-full min-h-[50vh] bg-[#0a0b10] overflow-hidden cursor-default">
           {/* Hero photo — blurred so the baked-in on-screen text never fights the real headline overlaid on top */}
           <img
             src={techHeroPhoto}
@@ -57,29 +60,25 @@ const Landing = memo(function Landing() {
           <div className="pointer-events-none absolute -inset-1/4 bg-[radial-gradient(circle_at_50%_50%,rgba(91,95,239,0.55),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0b10]/85 via-transparent to-[#0a0b10]/25" />
 
-          {/* Centered mark — fixed in place, never shifts when services reveal on hover */}
-          <div className="relative z-10 flex flex-col items-center text-center gap-4 px-8 max-w-lg">
-            <img src={techLogo} alt="McreatiK Tech & Creative" className="h-28 sm:h-36 lg:h-72 w-auto object-contain" />
-            <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight tracking-tight text-white">
-              Tech &amp; Creative Solutions
-            </h2>
-            <p className="text-gray-300 leading-relaxed">
-              Websites, brand identity, and digital design for businesses that want to look as good as they perform.
-            </p>
+          {/* Content area — grows to fill the space above the CTA (normal flow, so it can never overlap it), centers its content */}
+          <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center gap-4 px-8 py-10">
+            <div className="w-full max-w-lg flex flex-col items-center gap-4">
+              <img src={techLogo} alt="McreatiK Tech & Creative" className="h-28 sm:h-36 lg:h-72 w-auto object-contain" />
+              <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight tracking-tight text-white">
+                Tech &amp; Creative Solutions
+              </h2>
+              <p className="text-gray-300 leading-relaxed">
+                Websites, brand identity, and digital design for businesses that want to look as good as they perform.
+              </p>
 
-            {/* Service list — always visible on touch/smaller screens (hover can't be relied on there); on lg+ it becomes a hover-only overlay anchored right below the description */}
-            <div className="static mt-6 pointer-events-none lg:absolute lg:top-full lg:inset-x-0 lg:mt-0 lg:pt-6">
-              <div className="opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-6 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-500 ease-out">
+              {/* Service list — always visible in normal flow, at every breakpoint */}
+              <div className="mt-2 w-full">
                 <div
                   className="grid justify-items-center gap-x-4 gap-y-4"
                   style={{ gridTemplateColumns: `repeat(${techCols}, minmax(0, 1fr))` }}
                 >
-                  {TECH_SERVICES.map(({ icon: Icon, title }, i) => (
-                    <div
-                      key={title}
-                      style={{ transitionDelay: `${i * 60}ms` }}
-                      className="opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-3 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-400 ease-out flex flex-col items-center gap-2.5"
-                    >
+                  {TECH_SERVICES.map(({ icon: Icon, title }) => (
+                    <div key={title} className="flex flex-col items-center gap-2.5">
                       <span className="flex items-center justify-center w-16 h-16 rounded-xl border border-[#A5A8FF]/40 text-[#A5A8FF]">
                         <Icon className="w-7 h-7" />
                       </span>
@@ -91,8 +90,8 @@ const Landing = memo(function Landing() {
             </div>
           </div>
 
-          {/* CTA — always available, pinned to the bottom, tinted with the department's indigo */}
-          <div className="absolute inset-x-0 bottom-0 z-20 bg-[#5B5FEF]/20 backdrop-blur-md border-t border-[#5B5FEF]/40">
+          {/* CTA — normal flow, always the last thing in the panel, so it can never overlap the content above it */}
+          <div className="relative z-20 bg-[#5B5FEF]/20 backdrop-blur-md border-t border-[#5B5FEF]/40">
             <Link
               to="/tech"
               className="flex items-center justify-center gap-1.5 py-4 text-sm font-semibold text-white hover:bg-[#5B5FEF]/25 transition-colors"
@@ -110,7 +109,7 @@ const Landing = memo(function Landing() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.12, ease: 'easeOut' }}
       >
-        <div className="theme-studios group relative flex h-full min-h-[50vh] items-center justify-center bg-[#1C1710] overflow-hidden cursor-default">
+        <div className="theme-studios group relative flex flex-col h-full min-h-[50vh] bg-[#1C1710] overflow-hidden cursor-default">
           {/* Hero photo — vivid, warm-dark scrim keeps text legible without hiding it; positioned so the camera and lenses stay fully in frame */}
           <img
             src={studiosHeroPhoto}
@@ -125,29 +124,25 @@ const Landing = memo(function Landing() {
           <div className="pointer-events-none absolute -inset-1/4 bg-[radial-gradient(circle_at_50%_50%,rgba(201,151,31,0.45),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C1710]/85 via-transparent to-[#1C1710]/30" />
 
-          {/* Centered mark — fixed in place, never shifts when services reveal on hover */}
-          <div className="relative z-10 flex flex-col items-center text-center gap-4 px-8 max-w-lg">
-            <img src={studiosLogoDark} alt="McreatiK Studios" className="h-28 sm:h-36 lg:h-72 w-auto object-contain" />
-            <h2 className="font-display italic font-normal text-3xl sm:text-4xl lg:text-5xl leading-tight tracking-tight text-white">
-              Studios
-            </h2>
-            <p className="text-[#D8D0C2] leading-relaxed">
-              Photography for the moments worth keeping — portraits, weddings, and events.
-            </p>
+          {/* Content area — grows to fill the space above the CTA (normal flow, so it can never overlap it), centers its content */}
+          <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center gap-4 px-8 py-10">
+            <div className="w-full max-w-lg flex flex-col items-center gap-4">
+              <img src={studiosLogoDark} alt="McreatiK Studios" className="h-28 sm:h-36 lg:h-72 w-auto object-contain" />
+              <h2 className="font-display italic font-normal text-3xl sm:text-4xl lg:text-5xl leading-tight tracking-tight text-white">
+                Studios
+              </h2>
+              <p className="text-[#D8D0C2] leading-relaxed">
+                Photography for the moments worth keeping — portraits, weddings, and events.
+              </p>
 
-            {/* Service list — always visible on touch/smaller screens (hover can't be relied on there); on lg+ it becomes a hover-only overlay anchored right below the description */}
-            <div className="static mt-6 pointer-events-none lg:absolute lg:top-full lg:inset-x-0 lg:mt-0 lg:pt-6">
-              <div className="opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-6 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-500 ease-out">
+              {/* Service list — always visible in normal flow, at every breakpoint */}
+              <div className="mt-2 w-full">
                 <div
                   className="grid justify-items-center gap-x-4 gap-y-4"
                   style={{ gridTemplateColumns: `repeat(${studiosCols}, minmax(0, 1fr))` }}
                 >
-                  {STUDIOS_SERVICES.map(({ icon: Icon, title }, i) => (
-                    <div
-                      key={title}
-                      style={{ transitionDelay: `${i * 60}ms` }}
-                      className="opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-3 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-400 ease-out flex flex-col items-center gap-2.5"
-                    >
+                  {STUDIOS_SERVICES.map(({ icon: Icon, title }) => (
+                    <div key={title} className="flex flex-col items-center gap-2.5">
                       <span className="flex items-center justify-center w-16 h-16 rounded-xl border border-[#C9971F]/50 text-[#C9971F]">
                         <Icon className="w-7 h-7" />
                       </span>
@@ -159,8 +154,8 @@ const Landing = memo(function Landing() {
             </div>
           </div>
 
-          {/* CTA — always available, pinned to the bottom, tinted with the department's gold */}
-          <div className="absolute inset-x-0 bottom-0 z-20 bg-[#C9971F]/20 backdrop-blur-md border-t border-[#C9971F]/40">
+          {/* CTA — normal flow, always the last thing in the panel, so it can never overlap the content above it */}
+          <div className="relative z-20 bg-[#C9971F]/20 backdrop-blur-md border-t border-[#C9971F]/40">
             <Link
               to="/studios"
               className="flex items-center justify-center gap-1.5 py-4 text-sm font-semibold text-white hover:bg-[#C9971F]/25 transition-colors"
