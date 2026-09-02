@@ -49,6 +49,16 @@ const Navbar = memo(function Navbar() {
         </Link>
       </motion.div>
 
+      {/* ---------- Department Switcher — a separate floating badge, not part of the pill nav ---------- */}
+      <motion.div
+        className="fixed top-20 right-4 sm:right-6 z-30"
+        initial={{ opacity: 0, y: -12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
+      >
+        <DepartmentSwitcher className="text-gray-300 bg-gray-950/70 backdrop-blur-md shadow-lg shadow-black/20" />
+      </motion.div>
+
       {/* ---------- Floating Pill Navbar — Centered ---------- */}
       <div className="fixed top-0 left-0 right-0 z-40 flex justify-center pt-4 px-4 md:pl-32 lg:pl-4">
         <motion.nav
@@ -76,29 +86,25 @@ const Navbar = memo(function Navbar() {
               ))}
             </div>
 
-            {/* Desktop: department switcher + CTA */}
-            <div className="hidden md:flex items-center gap-3 shrink-0">
-              <DepartmentSwitcher compact className="text-gray-300" />
+            {/* Desktop: CTA */}
+            <div className="hidden md:flex items-center gap-4 shrink-0">
               <Button href="#contact" className="text-xs px-4 py-2">
                 Get Started
               </Button>
             </div>
 
-            {/* Mobile: compact logo + switcher + toggle, in-line so nothing overlaps the floating logo (which is hidden below md) */}
+            {/* Mobile: compact logo + toggle, in-line so nothing overlaps the floating logo (which is hidden below md) */}
             <div className="md:hidden flex items-center justify-between w-full">
               <Link to="/" className="flex items-center">
                 <img src={mcreatiKLogo} alt="McreatiK" className="h-8 w-auto object-contain" />
               </Link>
-              <div className="flex items-center gap-2">
-                <DepartmentSwitcher compact className="text-gray-300" />
-                <button
-                  onClick={() => setIsMobileOpen((prev) => !prev)}
-                  className="w-8 h-8 rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-                  aria-label="Toggle menu"
-                >
-                  {isMobileOpen ? <FiX className="w-4 h-4" /> : <FiMenu className="w-4 h-4" />}
-                </button>
-              </div>
+              <button
+                onClick={() => setIsMobileOpen((prev) => !prev)}
+                className="w-8 h-8 rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                aria-label="Toggle menu"
+              >
+                {isMobileOpen ? <FiX className="w-4 h-4" /> : <FiMenu className="w-4 h-4" />}
+              </button>
             </div>
 
           </div>

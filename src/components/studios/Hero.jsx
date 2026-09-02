@@ -40,7 +40,7 @@ const StudiosHero = memo(function StudiosHero() {
       />
       <div className="absolute inset-0 bg-gradient-to-t from-[#FAF7F0] via-transparent to-[#FAF7F0]/30 pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full pt-32 pb-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full pt-40 pb-20">
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}

@@ -31,46 +31,51 @@ const StudiosNavbar = memo(function StudiosNavbar() {
   const closeMobile = useCallback(() => setIsMobileOpen(false), [])
 
   return (
-    <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
-        isScrolled ? 'bg-[#FAF7F0]/92 backdrop-blur-md border-b border-black/5' : 'bg-transparent'
-      }`}
-      initial={{ y: -40, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
-    >
+    <>
+      {/* ---------- Department Switcher — a separate floating badge, not part of the header bar ---------- */}
+      <motion.div
+        className="fixed top-24 right-4 sm:right-6 z-40"
+        initial={{ opacity: 0, y: -12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
+      >
+        <DepartmentSwitcher className="text-[#4A4438] bg-[#FAF7F0]/80 backdrop-blur-md shadow-lg shadow-black/10" />
+      </motion.div>
+
+      <motion.header
+        className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
+          isScrolled ? 'bg-[#FAF7F0]/92 backdrop-blur-md border-b border-black/5' : 'bg-transparent'
+        }`}
+        initial={{ y: -40, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: 'easeOut' }}
+      >
       <div className="max-w-7xl mx-auto px-5 sm:px-8 h-20 flex items-center justify-between">
         <Link to="/" className="flex items-center">
           <img src={studiosLogo} alt="McreatiK Studios" className="h-11 w-auto object-contain" />
         </Link>
 
-        {/* Desktop links + department switcher */}
-        <div className="hidden md:flex items-center gap-6">
-          <div className="flex items-center gap-8">
-            {STUDIOS_NAV_LINKS.map(({ label, href }) => (
-              <a
-                key={label}
-                href={href}
-                className="font-body text-sm text-[#4A4438] hover:text-[#C9971F] transition-colors"
-              >
-                {label}
-              </a>
-            ))}
-          </div>
-          <DepartmentSwitcher compact className="text-[#4A4438]" />
+        {/* Desktop links */}
+        <div className="hidden md:flex items-center gap-8">
+          {STUDIOS_NAV_LINKS.map(({ label, href }) => (
+            <a
+              key={label}
+              href={href}
+              className="font-body text-sm text-[#4A4438] hover:text-[#C9971F] transition-colors"
+            >
+              {label}
+            </a>
+          ))}
         </div>
 
-        {/* Mobile: switcher + toggle */}
-        <div className="md:hidden flex items-center gap-2">
-          <DepartmentSwitcher compact className="text-[#4A4438]" />
-          <button
-            onClick={() => setIsMobileOpen((prev) => !prev)}
-            className="w-9 h-9 flex items-center justify-center text-[#1C1710] cursor-pointer"
-            aria-label="Toggle menu"
-          >
-            {isMobileOpen ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
-          </button>
-        </div>
+        {/* Mobile toggle */}
+        <button
+          onClick={() => setIsMobileOpen((prev) => !prev)}
+          className="md:hidden w-9 h-9 flex items-center justify-center text-[#1C1710] cursor-pointer"
+          aria-label="Toggle menu"
+        >
+          {isMobileOpen ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
+        </button>
       </div>
 
       {/* Mobile drawer */}
@@ -96,7 +101,8 @@ const StudiosNavbar = memo(function StudiosNavbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+      </motion.header>
+    </>
   )
 })
 
