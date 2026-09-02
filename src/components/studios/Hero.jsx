@@ -33,6 +33,7 @@ const StudiosHero = memo(function StudiosHero() {
         aria-hidden="true"
         className="film-frame hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-[58%] min-w-[400px] max-w-[840px] h-[78%] object-cover pointer-events-none select-none"
         style={{
+          objectPosition: '75% center',
           WebkitMaskImage: 'linear-gradient(to left, black 55%, transparent 96%)',
           maskImage: 'linear-gradient(to left, black 55%, transparent 96%)',
         }}

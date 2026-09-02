@@ -28,6 +28,10 @@ const Landing = memo(function Landing() {
     setFavicon('/favicon-tech.png')
   }, [])
 
+  // Grid columns track the service count, capped at 5 per row — anything beyond that wraps onto its own line
+  const techCols = Math.min(TECH_SERVICES.length, 5)
+  const studiosCols = Math.min(STUDIOS_SERVICES.length, 5)
+
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
 
@@ -39,21 +43,21 @@ const Landing = memo(function Landing() {
         transition={{ duration: 0.6, ease: 'easeOut' }}
       >
         <div className="theme-tech group relative flex h-full min-h-[50vh] items-center justify-center bg-[#0a0b10] overflow-hidden cursor-default">
-          {/* Hero photo */}
+          {/* Hero photo — blurred so the baked-in on-screen text never fights the real headline overlaid on top */}
           <img
             src={techHeroPhoto}
             alt=""
             aria-hidden="true"
-            className="absolute inset-0 w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
+            className="absolute inset-0 w-full h-full object-cover scale-110 group-hover:scale-[1.16] transition-transform duration-700 ease-out blur-[6px]"
           />
-          <div className="pointer-events-none absolute inset-0 bg-black/15" />
+          <div className="pointer-events-none absolute inset-0 bg-black/25" />
           {/* Gradient wash — present at rest, intensifies on hover */}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#5B5FEF]/35 via-transparent to-[#FF6B35]/30 scale-100 group-hover:scale-110 transition-transform duration-500 ease-out" />
           <div className="pointer-events-none absolute -inset-1/4 bg-[radial-gradient(circle_at_50%_50%,rgba(91,95,239,0.55),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0b10]/85 via-transparent to-[#0a0b10]/25" />
 
-          {/* Centered mark + hover-revealed services, all centered as one block */}
-          <div className="relative z-10 flex flex-col items-center text-center gap-4 px-8 pb-16 max-w-lg">
+          {/* Centered mark — fixed in place, never shifts when services reveal on hover */}
+          <div className="relative z-10 flex flex-col items-center text-center gap-4 px-8 max-w-lg">
             <img src={techLogo} alt="McreatiK Tech & Creative" className="h-28 sm:h-36 lg:h-72 w-auto object-contain" />
             <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight tracking-tight text-white">
               Tech &amp; Creative Solutions
@@ -62,29 +66,37 @@ const Landing = memo(function Landing() {
               Websites, brand identity, and digital design for businesses that want to look as good as they perform.
             </p>
 
-            {/* Service list — slides up from below on hover, solid chips stay legible on any bg */}
-            <div className="w-full max-h-0 opacity-0 group-hover:max-h-[420px] group-hover:opacity-100 overflow-hidden transition-all duration-500 ease-out">
-              <div className="flex flex-col items-center gap-2.5 pt-5">
-                {TECH_SERVICES.map(({ title }, i) => (
-                  <span
-                    key={title}
-                    style={{ transitionDelay: `${i * 60}ms` }}
-                    className="translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400 ease-out text-sm sm:text-base font-medium text-white bg-[#14121f] border border-white/25 rounded-full px-5 py-2.5 shadow-lg shadow-black/40"
-                  >
-                    {title}
-                  </span>
-                ))}
+            {/* Service list — anchored right below the description, slides up + fades in on hover without disturbing the centered content above */}
+            <div className="absolute top-full inset-x-0 pt-6 pointer-events-none">
+              <div className="translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">
+                <div
+                  className="grid justify-items-center gap-x-4 gap-y-4"
+                  style={{ gridTemplateColumns: `repeat(${techCols}, minmax(0, 1fr))` }}
+                >
+                  {TECH_SERVICES.map(({ icon: Icon, title }, i) => (
+                    <div
+                      key={title}
+                      style={{ transitionDelay: `${i * 60}ms` }}
+                      className="translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400 ease-out flex flex-col items-center gap-2.5"
+                    >
+                      <span className="flex items-center justify-center w-16 h-16 rounded-xl border border-[#A5A8FF]/40 text-[#A5A8FF]">
+                        <Icon className="w-7 h-7" />
+                      </span>
+                      <span className="text-xs font-medium text-white leading-tight text-center">{title}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
 
-          {/* CTA — always available, pinned to the bottom */}
-          <div className="absolute inset-x-0 bottom-0 z-20 bg-black/50 backdrop-blur-md border-t border-white/10">
+          {/* CTA — always available, pinned to the bottom, tinted with the department's indigo */}
+          <div className="absolute inset-x-0 bottom-0 z-20 bg-[#5B5FEF]/20 backdrop-blur-md border-t border-[#5B5FEF]/40">
             <Link
               to="/tech"
-              className="flex items-center justify-center gap-1.5 py-4 text-sm font-semibold text-white hover:bg-white/5 transition-colors"
+              className="flex items-center justify-center gap-1.5 py-4 text-sm font-semibold text-white hover:bg-[#5B5FEF]/25 transition-colors"
             >
-              Discover <FiArrowUpRight className="w-4 h-4" />
+              Discover <FiArrowUpRight className="w-4 h-4 text-[#FF6B35]" />
             </Link>
           </div>
         </div>
@@ -98,12 +110,13 @@ const Landing = memo(function Landing() {
         transition={{ duration: 0.6, delay: 0.12, ease: 'easeOut' }}
       >
         <div className="theme-studios group relative flex h-full min-h-[50vh] items-center justify-center bg-[#1C1710] overflow-hidden cursor-default">
-          {/* Hero photo — vivid, warm-dark scrim keeps text legible without hiding it */}
+          {/* Hero photo — vivid, warm-dark scrim keeps text legible without hiding it; positioned so the camera and lenses stay fully in frame */}
           <img
             src={studiosHeroPhoto}
             alt=""
             aria-hidden="true"
             className="absolute inset-0 w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
+            style={{ objectPosition: '90% center' }}
           />
           <div className="pointer-events-none absolute inset-0 bg-[#1C1710]/20" />
           {/* Gradient wash — present at rest, intensifies on hover */}
@@ -111,8 +124,8 @@ const Landing = memo(function Landing() {
           <div className="pointer-events-none absolute -inset-1/4 bg-[radial-gradient(circle_at_50%_50%,rgba(201,151,31,0.45),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C1710]/85 via-transparent to-[#1C1710]/30" />
 
-          {/* Centered mark + hover-revealed services, all centered as one block */}
-          <div className="relative z-10 flex flex-col items-center text-center gap-4 px-8 pb-16 max-w-lg">
+          {/* Centered mark — fixed in place, never shifts when services reveal on hover */}
+          <div className="relative z-10 flex flex-col items-center text-center gap-4 px-8 max-w-lg">
             <img src={studiosLogoDark} alt="McreatiK Studios" className="h-28 sm:h-36 lg:h-72 w-auto object-contain" />
             <h2 className="font-display italic font-normal text-3xl sm:text-4xl lg:text-5xl leading-tight tracking-tight text-white">
               Studios
@@ -121,29 +134,37 @@ const Landing = memo(function Landing() {
               Photography for the moments worth keeping — portraits, weddings, and events.
             </p>
 
-            {/* Service list — slides up from below on hover, solid chips stay legible on any bg */}
-            <div className="w-full max-h-0 opacity-0 group-hover:max-h-[420px] group-hover:opacity-100 overflow-hidden transition-all duration-500 ease-out">
-              <div className="flex flex-col items-center gap-2.5 pt-5">
-                {STUDIOS_SERVICES.map(({ title }, i) => (
-                  <span
-                    key={title}
-                    style={{ transitionDelay: `${i * 60}ms` }}
-                    className="translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400 ease-out text-sm sm:text-base font-medium text-white bg-[#1C1710] border border-[#C9971F]/40 rounded-full px-5 py-2.5 shadow-lg shadow-black/40"
-                  >
-                    {title}
-                  </span>
-                ))}
+            {/* Service list — anchored right below the description, slides up + fades in on hover without disturbing the centered content above */}
+            <div className="absolute top-full inset-x-0 pt-6 pointer-events-none">
+              <div className="translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">
+                <div
+                  className="grid justify-items-center gap-x-4 gap-y-4"
+                  style={{ gridTemplateColumns: `repeat(${studiosCols}, minmax(0, 1fr))` }}
+                >
+                  {STUDIOS_SERVICES.map(({ icon: Icon, title }, i) => (
+                    <div
+                      key={title}
+                      style={{ transitionDelay: `${i * 60}ms` }}
+                      className="translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400 ease-out flex flex-col items-center gap-2.5"
+                    >
+                      <span className="flex items-center justify-center w-16 h-16 rounded-xl border border-[#C9971F]/50 text-[#C9971F]">
+                        <Icon className="w-7 h-7" />
+                      </span>
+                      <span className="text-xs font-medium text-white leading-tight text-center">{title}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
 
-          {/* CTA — always available, pinned to the bottom */}
-          <div className="absolute inset-x-0 bottom-0 z-20 bg-black/50 backdrop-blur-md border-t border-white/10">
+          {/* CTA — always available, pinned to the bottom, tinted with the department's gold */}
+          <div className="absolute inset-x-0 bottom-0 z-20 bg-[#C9971F]/20 backdrop-blur-md border-t border-[#C9971F]/40">
             <Link
               to="/studios"
-              className="flex items-center justify-center gap-1.5 py-4 text-sm font-semibold text-white hover:bg-white/5 transition-colors"
+              className="flex items-center justify-center gap-1.5 py-4 text-sm font-semibold text-white hover:bg-[#C9971F]/25 transition-colors"
             >
-              Explore <FiArrowUpRight className="w-4 h-4" />
+              Explore <FiArrowUpRight className="w-4 h-4 text-[#C9971F]" />
             </Link>
           </div>
         </div>
