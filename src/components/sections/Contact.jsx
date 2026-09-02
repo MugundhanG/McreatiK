@@ -17,6 +17,7 @@ import { TECH_SERVICE_OPTIONS } from '../../utils/constants'
 import { useForm } from '../../hooks/useForm'
 import SectionHeading from '../ui/SectionHeading'
 import Button from '../ui/Button'
+import MultiSelect from '../ui/MultiSelect'
 
 /* Initial empty state for the form */
 const INITIAL_VALUES = {
@@ -192,24 +193,18 @@ const Contact = memo(function Contact() {
 
               <div>
                 <label htmlFor="service" className="block text-sm text-gray-300 mb-1.5 font-medium">
-                  Service Required <span className="text-red-400">*</span>
+                  Service(s) Required <span className="text-red-400">*</span>
                 </label>
-                <select
+                <MultiSelect
                   id="service"
                   name="service"
+                  options={TECH_SERVICE_OPTIONS}
                   value={values.service}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className={`${inputBase} ${errors.service ? inputErr : inputOk} appearance-none cursor-pointer`}
-                  style={{ backgroundColor: '#111827', color: values.service ? '#ffffff' : '#6b7280' }}
-                >
-                  <option value="" disabled style={{ color: '#6b7280' }}>Select a service</option>
-                  {TECH_SERVICE_OPTIONS.map((opt) => (
-                    <option key={opt} value={opt} style={{ backgroundColor: '#111827', color: '#ffffff' }}>
-                      {opt}
-                    </option>
-                  ))}
-                </select>
+                  placeholder="Select services"
+                  className={`${inputBase} ${errors.service ? inputErr : inputOk}`}
+                />
                 {errors.service && <p className="mt-1 text-xs text-red-400">{errors.service}</p>}
               </div>
             </div>

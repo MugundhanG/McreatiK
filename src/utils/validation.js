@@ -37,7 +37,7 @@ export function validateField(name, value) {
       return ''
 
     case 'service':
-      if (!trimmed) return 'Please select a service'
+      if (!trimmed) return 'Please select at least one service'
       return ''
 
     case 'message':

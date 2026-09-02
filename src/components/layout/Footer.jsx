@@ -10,7 +10,7 @@
 
 import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
-import { FiInstagram, FiLinkedin, FiTwitter, FiFacebook, FiArrowUpRight } from 'react-icons/fi'
+import { FiInstagram, FiLinkedin, FiTwitter, FiFacebook, FiArrowUpRight, FiCamera } from 'react-icons/fi'
 import { TECH_NAV_LINKS, TECH_SERVICES, SOCIAL_LINKS } from '../../utils/constants'
 import mcreatiKLogo from '../../assets/tech-logo-dark-bg.png'
 
@@ -41,15 +41,9 @@ const Footer = memo(function Footer() {
                 className="h-40 sm:h-40 w-auto object-contain"
               />
             </Link>
-            <p className="text-gray-400 text-sm leading-relaxed mb-4">
+            <p className="text-gray-400 text-sm leading-relaxed mb-6">
               Crafting premium digital experiences that elevate brands and drive measurable business growth.
             </p>
-            <Link
-              to="/studios"
-              className="font-mono-label inline-flex items-center gap-1 text-xs uppercase text-gray-500 hover:text-[#FF6B35] transition-colors mb-6"
-            >
-              Looking for photography? McreatiK Studios <FiArrowUpRight className="w-3 h-3" />
-            </Link>
             {/* Social icons */}
             <div className="flex gap-3">
               {SOCIAL_LINKS.map(({ label, href, icon }) => {
@@ -122,6 +116,18 @@ const Footer = memo(function Footer() {
             </ul>
           </div>
         </div>
+
+        {/* ---------- Studios Cross-Promo Bar ---------- */}
+        <Link
+          to="/studios"
+          className="flex items-center justify-center gap-2 text-center rounded-lg py-4 px-6 mb-12 bg-gradient-to-r from-[#C9971F]/15 to-[#8B2E2A]/15 border border-[#C9971F]/30 hover:border-[#C9971F]/50 transition-colors"
+        >
+          <FiCamera className="w-4 h-4 text-[#C9971F] shrink-0" />
+          <span className="text-sm sm:text-base font-medium text-white">
+            McreatiK also offers photography — Explore McreatiK Studios
+          </span>
+          <FiArrowUpRight className="w-4 h-4 text-[#C9971F] shrink-0" />
+        </Link>
 
         {/* ---------- Bottom Bar ---------- */}
         <div className="border-t border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">

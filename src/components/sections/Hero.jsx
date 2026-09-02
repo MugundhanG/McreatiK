@@ -12,7 +12,7 @@ import { FiArrowRight } from 'react-icons/fi'
 import Button from '../ui/Button'
 import RegMark from '../ui/RegMark'
 import techHeroPhoto from '../../assets/tech-hero-photo.webp'
-import { TECH_SERVICES, TECH_STATS } from '../../utils/constants'
+import { TECH_SERVICES } from '../../utils/constants'
 
 const fadeUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 28 },
@@ -55,7 +55,7 @@ const Hero = memo(function Hero() {
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-28 pb-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-36 pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
           {/* ===== LEFT — Text Content ===== */}
@@ -72,7 +72,7 @@ const Hero = memo(function Hero() {
 
             {/* Badge */}
             <motion.span
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium bg-[#5B5FEF]/10 text-[#a5a8ff] border border-[#5B5FEF]/20 mb-7"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium bg-[#5B5FEF]/10 backdrop-blur-md text-[#a5a8ff] border border-[#5B5FEF]/20 mb-7"
               variants={fadeUp(0.05)}
               initial="hidden"
               animate="visible"
@@ -118,21 +118,6 @@ const Hero = memo(function Hero() {
                 View Our Work
               </Button>
             </motion.div>
-
-            {/* Trust indicators */}
-            <motion.div
-              className="mt-12 flex flex-wrap gap-6 text-sm text-gray-500"
-              variants={fadeUp(0.4)}
-              initial="hidden"
-              animate="visible"
-            >
-              {TECH_STATS.map(({ value, label }) => (
-                <span key={label} className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#5B5FEF]" />
-                  {value} {label}
-                </span>
-              ))}
-            </motion.div>
           </div>
 
           {/* ===== RIGHT — Build Manifest Panel ===== */}
@@ -142,8 +127,8 @@ const Hero = memo(function Hero() {
             initial="hidden"
             animate="visible"
           >
-            {/* Service manifest card */}
-            <div className="relative glass-card rounded-lg p-6">
+            {/* Service manifest card — glassmorphism: translucent, blurred, thin light border */}
+            <div className="relative bg-white/[0.06] backdrop-blur-xl border border-white/15 shadow-xl shadow-black/20 rounded-lg p-6">
               <RegMark position="top-left" />
               <RegMark position="bottom-right" />
               <div className="grid grid-cols-2 gap-x-5">
@@ -153,7 +138,7 @@ const Hero = memo(function Hero() {
                   return (
                     <div
                       key={title}
-                      className={`flex items-center gap-2.5 py-2.5 ${isLastRow ? '' : 'border-b border-white/5'}`}
+                      className={`flex items-center gap-2.5 py-2.5 ${isLastRow ? '' : 'border-b border-white/10'}`}
                     >
                       <Icon className="w-4 h-4 shrink-0 text-[#a5a8ff]" />
                       <span className="text-sm text-gray-300 font-medium leading-tight">{title}</span>
@@ -163,18 +148,8 @@ const Hero = memo(function Hero() {
               </div>
             </div>
 
-            {/* Stats row */}
-            <div className="grid grid-cols-3 gap-4">
-              {TECH_STATS.map(({ value, label }) => (
-                <div key={label} className="glass-card rounded-lg p-5 text-center">
-                  <div className="text-2xl font-bold gradient-text font-display">{value}</div>
-                  <div className="text-xs text-gray-400 mt-1">{label}</div>
-                </div>
-              ))}
-            </div>
-
-            {/* CTA teaser card */}
-            <div className="glass-card rounded-lg p-5 flex items-center justify-between">
+            {/* CTA teaser card — glassmorphism */}
+            <div className="bg-white/[0.06] backdrop-blur-xl border border-white/15 shadow-xl shadow-black/20 rounded-lg p-5 flex items-center justify-between">
               <div>
                 <p className="text-sm font-semibold text-white">Ready to start?</p>
                 <p className="text-xs text-gray-400 mt-0.5">We reply within 24 hours</p>

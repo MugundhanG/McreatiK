@@ -4,7 +4,7 @@
 
 import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
-import { FiInstagram, FiLinkedin, FiTwitter, FiFacebook, FiArrowUpRight } from 'react-icons/fi'
+import { FiInstagram, FiLinkedin, FiTwitter, FiFacebook, FiArrowUpRight, FiCode } from 'react-icons/fi'
 import { STUDIOS_NAV_LINKS, SOCIAL_LINKS } from '../../utils/constants'
 import studiosLogo from '../../assets/studios-logo-light-bg.png'
 
@@ -26,15 +26,9 @@ const StudiosFooter = memo(function StudiosFooter() {
             <Link to="/" className="flex items-center mb-4">
               <img src={studiosLogo} alt="McreatiK Studios" className="h-11 w-auto object-contain" />
             </Link>
-            <p className="font-body text-[#6B6153] text-sm leading-relaxed max-w-sm mb-4">
+            <p className="font-body text-[#6B6153] text-sm leading-relaxed max-w-sm">
               Photography for portraits, weddings, and events.
             </p>
-            <Link
-              to="/tech"
-              className="font-mono-label inline-flex items-center gap-1 text-xs uppercase text-[#6B6153] hover:text-[#1B2A4A] transition-colors"
-            >
-              Need a website or brand identity? McreatiK Tech &amp; Creative <FiArrowUpRight className="w-3 h-3" />
-            </Link>
           </div>
 
           <div className="flex flex-wrap gap-x-12 gap-y-8">
@@ -73,6 +67,18 @@ const StudiosFooter = memo(function StudiosFooter() {
             </div>
           </div>
         </div>
+
+        {/* ---------- Tech & Creative Cross-Promo Bar ---------- */}
+        <Link
+          to="/tech"
+          className="flex items-center justify-center gap-2 text-center rounded-lg py-4 px-6 mb-10 bg-gradient-to-r from-[#5B5FEF]/10 to-[#1B2A4A]/10 border border-[#5B5FEF]/25 hover:border-[#5B5FEF]/40 transition-colors"
+        >
+          <FiCode className="w-4 h-4 text-[#5B5FEF] shrink-0" />
+          <span className="font-body text-sm sm:text-base font-medium text-[#1C1710]">
+            McreatiK also builds websites &amp; brands — Explore McreatiK Tech &amp; Creative
+          </span>
+          <FiArrowUpRight className="w-4 h-4 text-[#5B5FEF] shrink-0" />
+        </Link>
 
         <div className="border-t border-black/10 pt-6 text-center">
           <p className="font-mono-label text-[11px] uppercase text-[#A89A88]">&copy; {year} McreatiK Studios</p>

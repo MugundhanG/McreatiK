@@ -35,7 +35,6 @@ import {
 } from 'react-icons/fi'
 
 import photographyThumbnail from '../assets/photography_website_thumbnail.jpg'
-import logoDesignThumbnail from '../assets/logo_design.webp'
 import adThumbnail from '../assets/ADthumbnail.jpg'
 
 /* =================================================
@@ -145,14 +144,6 @@ export const TECH_PORTFOLIO_ITEMS = [
     image: photographyThumbnail,
     link: 'https://mugundhang.github.io/Heeswar-photography/',
     description: 'Fully responsive photography website with modern design and seamless user experience with contact form.',
-  },
-  {
-    id: 2,
-    title: 'Luxury Brand Identity',
-    category: 'Logo',
-    image: logoDesignThumbnail,
-    link: '#',
-    description: 'Complete brand identity system for a luxury fashion label.',
   },
   {
     id: 3,
