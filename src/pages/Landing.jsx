@@ -32,7 +32,11 @@ const Landing = memo(function Landing() {
     setFavicon('/favicon-tech.png')
   }, [])
 
-  // Grid columns track the service count, capped at 5 per row — anything beyond that wraps onto its own line
+  // Below lg the panel is narrow (full-width on mobile, half-width side-by-side on tablet) so
+  // services always wrap at 3 per row there; at lg+ (wide desktop panels) they fit in one row,
+  // capped at 5 — anything beyond that wraps onto its own line. Literal classes (Tailwind needs
+  // the full class name in source to generate it, not an interpolated number).
+  const LG_COLS_CLASS = { 1: 'lg:grid-cols-1', 2: 'lg:grid-cols-2', 3: 'lg:grid-cols-3', 4: 'lg:grid-cols-4', 5: 'lg:grid-cols-5' }
   const techCols = Math.min(TECH_SERVICES.length, 5)
   const studiosCols = Math.min(STUDIOS_SERVICES.length, 5)
 
@@ -71,18 +75,15 @@ const Landing = memo(function Landing() {
                 Websites, brand identity, and digital design for businesses that want to look as good as they perform.
               </p>
 
-              {/* Service list — always visible in normal flow, at every breakpoint */}
+              {/* Service list — always visible in normal flow, at every breakpoint. 3 per row until the panel is wide enough (lg+) to fit them all in one line */}
               <div className="mt-2 w-full">
-                <div
-                  className="grid justify-items-center gap-x-2 gap-y-3 sm:gap-x-4 sm:gap-y-4"
-                  style={{ gridTemplateColumns: `repeat(${techCols}, minmax(0, 1fr))` }}
-                >
+                <div className={`grid grid-cols-3 ${LG_COLS_CLASS[techCols]} justify-items-center gap-x-3 gap-y-4 lg:gap-x-4 lg:gap-y-4`}>
                   {TECH_SERVICES.map(({ icon: Icon, title }) => (
-                    <div key={title} className="flex flex-col items-center gap-1.5 sm:gap-2.5 w-14 sm:w-16">
-                      <span className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl border border-[#A5A8FF]/40 text-[#A5A8FF]">
-                        <Icon className="w-5 h-5 sm:w-7 sm:h-7" />
+                    <div key={title} className="flex flex-col items-center gap-2 lg:gap-2.5 w-full lg:w-16">
+                      <span className="flex items-center justify-center w-14 h-14 lg:w-16 lg:h-16 rounded-lg lg:rounded-xl border border-[#A5A8FF]/40 text-[#A5A8FF]">
+                        <Icon className="w-6 h-6 lg:w-7 lg:h-7" />
                       </span>
-                      <span className="w-full break-words text-[10px] sm:text-xs font-medium text-white leading-tight text-center">{title}</span>
+                      <span className="w-full text-xs font-medium text-white leading-tight text-center">{title}</span>
                     </div>
                   ))}
                 </div>
@@ -135,18 +136,15 @@ const Landing = memo(function Landing() {
                 Photography for the moments worth keeping — portraits, weddings, and events.
               </p>
 
-              {/* Service list — always visible in normal flow, at every breakpoint */}
+              {/* Service list — always visible in normal flow, at every breakpoint. 3 per row until the panel is wide enough (lg+) to fit them all in one line */}
               <div className="mt-2 w-full">
-                <div
-                  className="grid justify-items-center gap-x-2 gap-y-3 sm:gap-x-4 sm:gap-y-4"
-                  style={{ gridTemplateColumns: `repeat(${studiosCols}, minmax(0, 1fr))` }}
-                >
+                <div className={`grid grid-cols-3 ${LG_COLS_CLASS[studiosCols]} justify-items-center gap-x-3 gap-y-4 lg:gap-x-4 lg:gap-y-4`}>
                   {STUDIOS_SERVICES.map(({ icon: Icon, title }) => (
-                    <div key={title} className="flex flex-col items-center gap-1.5 sm:gap-2.5 w-14 sm:w-16">
-                      <span className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl border border-[#C9971F]/50 text-[#C9971F]">
-                        <Icon className="w-5 h-5 sm:w-7 sm:h-7" />
+                    <div key={title} className="flex flex-col items-center gap-2 lg:gap-2.5 w-full lg:w-16">
+                      <span className="flex items-center justify-center w-14 h-14 lg:w-16 lg:h-16 rounded-lg lg:rounded-xl border border-[#C9971F]/50 text-[#C9971F]">
+                        <Icon className="w-6 h-6 lg:w-7 lg:h-7" />
                       </span>
-                      <span className="w-full break-words text-[10px] sm:text-xs font-medium text-white leading-tight text-center">{title}</span>
+                      <span className="w-full text-xs font-medium text-white leading-tight text-center">{title}</span>
                     </div>
                   ))}
                 </div>
