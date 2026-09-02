@@ -11,7 +11,7 @@ import { motion } from 'framer-motion'
 import { FiArrowRight } from 'react-icons/fi'
 import Button from '../ui/Button'
 import RegMark from '../ui/RegMark'
-import TechHeroGraphic from '../ui/TechHeroGraphic'
+import techHeroPhoto from '../../assets/tech-hero-photo.webp'
 import { TECH_SERVICES, TECH_STATS } from '../../utils/constants'
 
 const fadeUp = (delay = 0) => ({
@@ -33,14 +33,18 @@ const Hero = memo(function Hero() {
       {/* Background orbs */}
       <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-[#5B5FEF]/15 rounded-full blur-[128px] pointer-events-none" />
       <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] bg-[#FF6B35]/10 rounded-full blur-[100px] pointer-events-none" />
-      {/* Hero graphic — fades toward the text column so copy stays legible */}
-      <TechHeroGraphic
-        className="absolute -right-10 sm:-right-16 top-1/2 -translate-y-1/2 w-[500px] sm:w-[780px] max-w-none opacity-[0.5] pointer-events-none select-none"
+      {/* Hero photo — hidden on mobile so it never collides with the headline; fades toward the text column so copy stays legible */}
+      <img
+        src={techHeroPhoto}
+        alt=""
+        aria-hidden="true"
+        className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-[62%] min-w-[420px] max-w-[900px] h-[85%] object-cover rounded-l-2xl pointer-events-none select-none"
         style={{
-          WebkitMaskImage: 'linear-gradient(to left, black 45%, transparent 88%)',
-          maskImage: 'linear-gradient(to left, black 45%, transparent 88%)',
+          WebkitMaskImage: 'linear-gradient(to left, black 55%, transparent 96%)',
+          maskImage: 'linear-gradient(to left, black 55%, transparent 96%)',
         }}
       />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0b10] via-transparent to-[#0a0b10]/30 pointer-events-none" />
       {/* Grid overlay */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.03]"

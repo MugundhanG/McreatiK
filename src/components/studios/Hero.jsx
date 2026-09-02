@@ -10,7 +10,7 @@ import React, { memo } from 'react'
 import { motion } from 'framer-motion'
 import { FiArrowRight } from 'react-icons/fi'
 import Button from '../ui/Button'
-import studiosBadge from '../../assets/studios-badge.webp'
+import studiosHeroPhoto from '../../assets/studios-hero-photo.webp'
 
 const StudiosHero = memo(function StudiosHero() {
   return (
@@ -26,17 +26,18 @@ const StudiosHero = memo(function StudiosHero() {
       />
       <div className="film-grain" />
 
-      {/* Badge watermark — fades toward the text column so copy stays legible */}
+      {/* Hero photo — hidden on mobile so it never collides with the headline; framed like a strip of film, fades toward the text column */}
       <img
-        src={studiosBadge}
+        src={studiosHeroPhoto}
         alt=""
         aria-hidden="true"
-        className="absolute -right-10 sm:-right-24 top-1/2 -translate-y-1/2 w-[500px] sm:w-[820px] max-w-none opacity-[0.2] pointer-events-none select-none"
+        className="film-frame hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-[58%] min-w-[400px] max-w-[840px] h-[78%] object-cover pointer-events-none select-none"
         style={{
-          WebkitMaskImage: 'linear-gradient(to left, black 45%, transparent 88%)',
-          maskImage: 'linear-gradient(to left, black 45%, transparent 88%)',
+          WebkitMaskImage: 'linear-gradient(to left, black 55%, transparent 96%)',
+          maskImage: 'linear-gradient(to left, black 55%, transparent 96%)',
         }}
       />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#FAF7F0] via-transparent to-[#FAF7F0]/30 pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full pt-32 pb-20">
         <motion.p

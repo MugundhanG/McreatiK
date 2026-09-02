@@ -18,8 +18,8 @@ import { FiArrowUpRight } from 'react-icons/fi'
 import { setFavicon } from '../utils/setFavicon'
 import techLogo from '../assets/tech-logo-dark-bg.png'
 import studiosLogo from '../assets/studios-logo-light-bg.png'
-import studiosBadge from '../assets/studios-badge.webp'
-import TechHeroGraphic from '../components/ui/TechHeroGraphic'
+import techHeroPhoto from '../assets/tech-hero-photo.webp'
+import studiosHeroPhoto from '../assets/studios-hero-photo.webp'
 import { TECH_SERVICES, STUDIOS_SERVICES } from '../utils/constants'
 
 const Landing = memo(function Landing() {
@@ -39,14 +39,18 @@ const Landing = memo(function Landing() {
         transition={{ duration: 0.6, ease: 'easeOut' }}
       >
         <div className="theme-tech group relative flex h-full min-h-[50vh] items-center justify-center bg-[#0a0b10] overflow-hidden cursor-default">
-          {/* Gradient wash — present at rest, intensifies on hover */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#5B5FEF]/35 via-[#5B5FEF]/5 to-[#FF6B35]/30 scale-100 group-hover:scale-110 transition-transform duration-500 ease-out" />
-          <div className="pointer-events-none absolute -inset-1/4 bg-[radial-gradient(circle_at_50%_50%,rgba(91,95,239,0.55),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-          {/* Hero graphic — sized to the panel so it never crowds the mark */}
-          <TechHeroGraphic
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] max-w-[560px] min-w-[300px] opacity-[0.45] pointer-events-none select-none"
+          {/* Hero photo */}
+          <img
+            src={techHeroPhoto}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
           />
+          <div className="pointer-events-none absolute inset-0 bg-black/60" />
+          {/* Gradient wash — present at rest, intensifies on hover */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#5B5FEF]/45 via-[#0a0b10]/40 to-[#FF6B35]/35 scale-100 group-hover:scale-110 transition-transform duration-500 ease-out" />
+          <div className="pointer-events-none absolute -inset-1/4 bg-[radial-gradient(circle_at_50%_50%,rgba(91,95,239,0.55),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0b10] via-[#0a0b10]/20 to-[#0a0b10]/50" />
 
           {/* Centered mark + hover-revealed services, all centered as one block */}
           <div className="relative z-10 flex flex-col items-center text-center gap-4 px-8 pb-16 max-w-lg">
@@ -94,17 +98,18 @@ const Landing = memo(function Landing() {
         transition={{ duration: 0.6, delay: 0.12, ease: 'easeOut' }}
       >
         <div className="theme-studios group relative flex h-full min-h-[50vh] items-center justify-center bg-[#FAF7F0] overflow-hidden cursor-default">
-          {/* Gradient wash — present at rest, intensifies on hover */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#C9971F]/22 via-[#C9971F]/5 to-[#8B2E2A]/16 scale-100 group-hover:scale-110 transition-transform duration-500 ease-out" />
-          <div className="pointer-events-none absolute -inset-1/4 bg-[radial-gradient(circle_at_50%_50%,rgba(201,151,31,0.45),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-          {/* Badge watermark — sized to the panel so the full circle always fits */}
+          {/* Hero photo, seen through a warm paper veil so the light theme holds */}
           <img
-            src={studiosBadge}
+            src={studiosHeroPhoto}
             alt=""
             aria-hidden="true"
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[58%] max-w-[480px] min-w-[260px] opacity-[0.10] pointer-events-none select-none"
+            className="absolute inset-0 w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
           />
+          <div className="pointer-events-none absolute inset-0 bg-[#FAF7F0]/78" />
+          {/* Gradient wash — present at rest, intensifies on hover */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#C9971F]/30 via-[#FAF7F0]/10 to-[#8B2E2A]/22 scale-100 group-hover:scale-110 transition-transform duration-500 ease-out" />
+          <div className="pointer-events-none absolute -inset-1/4 bg-[radial-gradient(circle_at_50%_50%,rgba(201,151,31,0.45),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#FAF7F0] via-[#FAF7F0]/25 to-[#FAF7F0]/55" />
 
           {/* Centered mark + hover-revealed services, all centered as one block */}
           <div className="relative z-10 flex flex-col items-center text-center gap-4 px-8 pb-16 max-w-lg">
