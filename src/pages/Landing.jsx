@@ -17,7 +17,7 @@ import { motion } from 'framer-motion'
 import { FiArrowUpRight } from 'react-icons/fi'
 import { setFavicon } from '../utils/setFavicon'
 import techLogo from '../assets/tech-logo-dark-bg.png'
-import studiosLogo from '../assets/studios-logo-light-bg.png'
+import studiosLogoDark from '../assets/studios-logo-dark-bg.png'
 import techHeroPhoto from '../assets/tech-hero-photo.webp'
 import studiosHeroPhoto from '../assets/studios-hero-photo.webp'
 import { TECH_SERVICES, STUDIOS_SERVICES } from '../utils/constants'
@@ -46,11 +46,11 @@ const Landing = memo(function Landing() {
             aria-hidden="true"
             className="absolute inset-0 w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
           />
-          <div className="pointer-events-none absolute inset-0 bg-black/60" />
+          <div className="pointer-events-none absolute inset-0 bg-black/15" />
           {/* Gradient wash — present at rest, intensifies on hover */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#5B5FEF]/45 via-[#0a0b10]/40 to-[#FF6B35]/35 scale-100 group-hover:scale-110 transition-transform duration-500 ease-out" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#5B5FEF]/35 via-transparent to-[#FF6B35]/30 scale-100 group-hover:scale-110 transition-transform duration-500 ease-out" />
           <div className="pointer-events-none absolute -inset-1/4 bg-[radial-gradient(circle_at_50%_50%,rgba(91,95,239,0.55),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0b10] via-[#0a0b10]/20 to-[#0a0b10]/50" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0b10]/85 via-transparent to-[#0a0b10]/25" />
 
           {/* Centered mark + hover-revealed services, all centered as one block */}
           <div className="relative z-10 flex flex-col items-center text-center gap-4 px-8 pb-16 max-w-lg">
@@ -90,34 +90,34 @@ const Landing = memo(function Landing() {
         </div>
       </motion.div>
 
-      {/* ===== RIGHT — Studios (light) ===== */}
+      {/* ===== RIGHT — Studios ===== */}
       <motion.div
         className="flex-1 min-h-[50vh]"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.12, ease: 'easeOut' }}
       >
-        <div className="theme-studios group relative flex h-full min-h-[50vh] items-center justify-center bg-[#FAF7F0] overflow-hidden cursor-default">
-          {/* Hero photo, seen through a warm paper veil so the light theme holds */}
+        <div className="theme-studios group relative flex h-full min-h-[50vh] items-center justify-center bg-[#1C1710] overflow-hidden cursor-default">
+          {/* Hero photo — vivid, warm-dark scrim keeps text legible without hiding it */}
           <img
             src={studiosHeroPhoto}
             alt=""
             aria-hidden="true"
             className="absolute inset-0 w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
           />
-          <div className="pointer-events-none absolute inset-0 bg-[#FAF7F0]/78" />
+          <div className="pointer-events-none absolute inset-0 bg-[#1C1710]/20" />
           {/* Gradient wash — present at rest, intensifies on hover */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#C9971F]/30 via-[#FAF7F0]/10 to-[#8B2E2A]/22 scale-100 group-hover:scale-110 transition-transform duration-500 ease-out" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#C9971F]/30 via-transparent to-[#8B2E2A]/35 scale-100 group-hover:scale-110 transition-transform duration-500 ease-out" />
           <div className="pointer-events-none absolute -inset-1/4 bg-[radial-gradient(circle_at_50%_50%,rgba(201,151,31,0.45),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#FAF7F0] via-[#FAF7F0]/25 to-[#FAF7F0]/55" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C1710]/85 via-transparent to-[#1C1710]/30" />
 
           {/* Centered mark + hover-revealed services, all centered as one block */}
           <div className="relative z-10 flex flex-col items-center text-center gap-4 px-8 pb-16 max-w-lg">
-            <img src={studiosLogo} alt="McreatiK Studios" className="h-28 sm:h-36 lg:h-72 w-auto object-contain" />
-            <h2 className="font-display italic font-normal text-3xl sm:text-4xl lg:text-5xl leading-tight tracking-tight text-[#1C1710]">
+            <img src={studiosLogoDark} alt="McreatiK Studios" className="h-28 sm:h-36 lg:h-72 w-auto object-contain" />
+            <h2 className="font-display italic font-normal text-3xl sm:text-4xl lg:text-5xl leading-tight tracking-tight text-white">
               Studios
             </h2>
-            <p className="text-[#4A4438] leading-relaxed">
+            <p className="text-[#D8D0C2] leading-relaxed">
               Photography for the moments worth keeping — portraits, weddings, and events.
             </p>
 
@@ -128,7 +128,7 @@ const Landing = memo(function Landing() {
                   <span
                     key={title}
                     style={{ transitionDelay: `${i * 60}ms` }}
-                    className="translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400 ease-out text-sm sm:text-base font-medium text-[#1C1710] bg-white border border-black/15 rounded-full px-5 py-2.5 shadow-lg shadow-black/10"
+                    className="translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400 ease-out text-sm sm:text-base font-medium text-white bg-[#1C1710] border border-[#C9971F]/40 rounded-full px-5 py-2.5 shadow-lg shadow-black/40"
                   >
                     {title}
                   </span>
@@ -138,10 +138,10 @@ const Landing = memo(function Landing() {
           </div>
 
           {/* CTA — always available, pinned to the bottom */}
-          <div className="absolute inset-x-0 bottom-0 z-20 bg-white/60 backdrop-blur-md border-t border-black/10">
+          <div className="absolute inset-x-0 bottom-0 z-20 bg-black/50 backdrop-blur-md border-t border-white/10">
             <Link
               to="/studios"
-              className="flex items-center justify-center gap-1.5 py-4 text-sm font-semibold text-[#1C1710] hover:bg-black/5 transition-colors"
+              className="flex items-center justify-center gap-1.5 py-4 text-sm font-semibold text-white hover:bg-white/5 transition-colors"
             >
               Explore <FiArrowUpRight className="w-4 h-4" />
             </Link>
