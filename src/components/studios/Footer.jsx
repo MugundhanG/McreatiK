@@ -4,9 +4,10 @@
 
 import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
-import { FiInstagram, FiLinkedin, FiTwitter, FiFacebook, FiArrowUpRight, FiCode } from 'react-icons/fi'
+import { FiInstagram, FiLinkedin, FiTwitter, FiFacebook, FiArrowUpRight } from 'react-icons/fi'
 import { STUDIOS_NAV_LINKS, SOCIAL_LINKS } from '../../utils/constants'
 import studiosLogo from '../../assets/studios-logo-light-bg.png'
+import techHeroPhoto from '../../assets/tech-hero-photo.webp'
 
 const ICON_MAP = {
   instagram: FiInstagram,
@@ -68,16 +69,24 @@ const StudiosFooter = memo(function StudiosFooter() {
           </div>
         </div>
 
-        {/* ---------- Tech & Creative Cross-Promo Bar ---------- */}
+        {/* ---------- Tech & Creative Cross-Promo Teaser Card ---------- */}
         <Link
           to="/tech"
-          className="flex items-center justify-center gap-2 text-center rounded-lg py-4 px-6 mb-10 bg-gradient-to-r from-[#5B5FEF]/10 to-[#1B2A4A]/10 border border-[#5B5FEF]/25 hover:border-[#5B5FEF]/40 transition-colors"
+          className="group flex items-center gap-4 rounded-lg p-4 mb-10 bg-black/[0.02] border border-black/10 hover:border-[#5B5FEF]/40 transition-colors"
         >
-          <FiCode className="w-4 h-4 text-[#5B5FEF] shrink-0" />
-          <span className="font-body text-sm sm:text-base font-medium text-[#1C1710]">
-            McreatiK also builds websites &amp; brands — Explore McreatiK Tech &amp; Creative
-          </span>
-          <FiArrowUpRight className="w-4 h-4 text-[#5B5FEF] shrink-0" />
+          <img
+            src={techHeroPhoto}
+            alt=""
+            aria-hidden="true"
+            className="w-16 h-16 rounded-md object-cover shrink-0"
+          />
+          <div className="flex-1 min-w-0">
+            <p className="font-mono-label text-[11px] uppercase text-[#8B8070] mb-0.5">Also from McreatiK</p>
+            <p className="font-body text-[#1C1710] font-semibold group-hover:text-[#5B5FEF] transition-colors">
+              Tech &amp; Creative — Websites &amp; brand identity
+            </p>
+          </div>
+          <FiArrowUpRight className="w-5 h-5 text-[#8B8070] group-hover:text-[#5B5FEF] transition-colors shrink-0" />
         </Link>
 
         <div className="border-t border-black/10 pt-6 text-center">

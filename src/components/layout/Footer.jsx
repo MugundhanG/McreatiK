@@ -10,9 +10,10 @@
 
 import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
-import { FiInstagram, FiLinkedin, FiTwitter, FiFacebook, FiArrowUpRight, FiCamera } from 'react-icons/fi'
+import { FiInstagram, FiLinkedin, FiTwitter, FiFacebook, FiArrowUpRight } from 'react-icons/fi'
 import { TECH_NAV_LINKS, TECH_SERVICES, SOCIAL_LINKS } from '../../utils/constants'
 import mcreatiKLogo from '../../assets/tech-logo-dark-bg.png'
+import studiosHeroPhoto from '../../assets/studios-hero-photo.webp'
 
 /* Map icon name strings from constants to actual components */
 const ICON_MAP = {
@@ -117,16 +118,24 @@ const Footer = memo(function Footer() {
           </div>
         </div>
 
-        {/* ---------- Studios Cross-Promo Bar ---------- */}
+        {/* ---------- Studios Cross-Promo Teaser Card ---------- */}
         <Link
           to="/studios"
-          className="flex items-center justify-center gap-2 text-center rounded-lg py-4 px-6 mb-12 bg-gradient-to-r from-[#C9971F]/15 to-[#8B2E2A]/15 border border-[#C9971F]/30 hover:border-[#C9971F]/50 transition-colors"
+          className="group flex items-center gap-4 rounded-lg p-4 mb-12 bg-white/[0.03] border border-white/10 hover:border-[#C9971F]/40 transition-colors"
         >
-          <FiCamera className="w-4 h-4 text-[#C9971F] shrink-0" />
-          <span className="text-sm sm:text-base font-medium text-white">
-            McreatiK also offers photography — Explore McreatiK Studios
-          </span>
-          <FiArrowUpRight className="w-4 h-4 text-[#C9971F] shrink-0" />
+          <img
+            src={studiosHeroPhoto}
+            alt=""
+            aria-hidden="true"
+            className="w-16 h-16 rounded-md object-cover shrink-0"
+          />
+          <div className="flex-1 min-w-0">
+            <p className="font-mono-label text-[11px] uppercase text-gray-500 mb-0.5">Also from McreatiK</p>
+            <p className="text-white font-semibold group-hover:text-[#C9971F] transition-colors">
+              Studios — Photography for your favorite moments
+            </p>
+          </div>
+          <FiArrowUpRight className="w-5 h-5 text-gray-500 group-hover:text-[#C9971F] transition-colors shrink-0" />
         </Link>
 
         {/* ---------- Bottom Bar ---------- */}

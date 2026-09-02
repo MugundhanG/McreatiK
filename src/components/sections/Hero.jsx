@@ -7,11 +7,13 @@
    ============================================ */
 
 import React, { memo } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { FiArrowRight } from 'react-icons/fi'
+import { FiArrowRight, FiArrowUpRight } from 'react-icons/fi'
 import Button from '../ui/Button'
 import RegMark from '../ui/RegMark'
 import techHeroPhoto from '../../assets/tech-hero-photo.webp'
+import studiosHeroPhoto from '../../assets/studios-hero-photo.webp'
 import { TECH_SERVICES } from '../../utils/constants'
 
 const fadeUp = (delay = 0) => ({
@@ -55,7 +57,7 @@ const Hero = memo(function Hero() {
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-36 pb-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-28 pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
           {/* ===== LEFT — Text Content ===== */}
@@ -117,6 +119,33 @@ const Hero = memo(function Hero() {
               <Button href="#portfolio" variant="outline">
                 View Our Work
               </Button>
+            </motion.div>
+
+            {/* Studios cross-promo teaser — a small card, not a banner, so it reads as a feature highlight */}
+            <motion.div
+              className="mt-8"
+              variants={fadeUp(0.4)}
+              initial="hidden"
+              animate="visible"
+            >
+              <Link
+                to="/studios"
+                className="group flex items-center gap-4 p-3 pr-5 rounded-xl bg-white/[0.04] backdrop-blur-md border border-white/10 hover:border-[#C9971F]/40 transition-colors max-w-sm"
+              >
+                <img
+                  src={studiosHeroPhoto}
+                  alt=""
+                  aria-hidden="true"
+                  className="w-14 h-14 rounded-lg object-cover shrink-0"
+                />
+                <div className="flex-1 min-w-0">
+                  <p className="font-mono-label text-[11px] uppercase text-gray-500">Also from McreatiK</p>
+                  <p className="text-sm font-semibold text-white group-hover:text-[#C9971F] transition-colors">
+                    Studios — Photography
+                  </p>
+                </div>
+                <FiArrowUpRight className="w-4 h-4 text-gray-500 group-hover:text-[#C9971F] transition-colors shrink-0" />
+              </Link>
             </motion.div>
           </div>
 

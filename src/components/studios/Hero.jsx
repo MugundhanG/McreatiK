@@ -7,10 +7,12 @@
    ============================================ */
 
 import React, { memo } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { FiArrowRight } from 'react-icons/fi'
+import { FiArrowRight, FiArrowUpRight } from 'react-icons/fi'
 import Button from '../ui/Button'
 import studiosHeroPhoto from '../../assets/studios-hero-photo.webp'
+import techHeroPhoto from '../../assets/tech-hero-photo.webp'
 
 const StudiosHero = memo(function StudiosHero() {
   return (
@@ -40,7 +42,7 @@ const StudiosHero = memo(function StudiosHero() {
       />
       <div className="absolute inset-0 bg-gradient-to-t from-[#FAF7F0] via-transparent to-[#FAF7F0]/30 pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full pt-44 pb-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full pt-32 pb-20">
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -81,6 +83,33 @@ const StudiosHero = memo(function StudiosHero() {
           <Button theme="studios" variant="outline" href="#gallery">
             View Gallery
           </Button>
+        </motion.div>
+
+        {/* Tech & Creative cross-promo teaser — a small card, not a banner, so it reads as a feature highlight */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-8"
+        >
+          <Link
+            to="/tech"
+            className="group flex items-center gap-4 p-3 pr-5 rounded-xl bg-black/[0.02] border border-black/10 hover:border-[#5B5FEF]/40 transition-colors max-w-sm"
+          >
+            <img
+              src={techHeroPhoto}
+              alt=""
+              aria-hidden="true"
+              className="w-14 h-14 rounded-lg object-cover shrink-0"
+            />
+            <div className="flex-1 min-w-0">
+              <p className="font-mono-label text-[11px] uppercase text-[#8B8070]">Also from McreatiK</p>
+              <p className="font-body text-sm font-semibold text-[#1C1710] group-hover:text-[#5B5FEF] transition-colors">
+                Tech &amp; Creative Solutions
+              </p>
+            </div>
+            <FiArrowUpRight className="w-4 h-4 text-[#8B8070] group-hover:text-[#5B5FEF] transition-colors shrink-0" />
+          </Link>
         </motion.div>
       </div>
     </section>

@@ -1,17 +1,14 @@
 /* ============================================
    Navbar Component — Tech & Creative
-   A slim Studios cross-promo bar sits above
-   everything, always visible regardless of
-   breakpoint. Below it, a floating pill-style
-   navbar centered on screen, with the logo fixed
-   separately in the top-left corner (desktop) or
-   inline in the pill (mobile).
+   Floating pill-style navbar centered on screen.
+   Logo fixed separately in top-left corner and
+   links back to the department picker.
    ============================================ */
 
 import React, { useState, useEffect, useCallback, memo } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiMenu, FiX, FiArrowUpRight, FiCamera } from 'react-icons/fi'
+import { FiMenu, FiX } from 'react-icons/fi'
 import { TECH_NAV_LINKS } from '../../utils/constants'
 import Button from '../ui/Button'
 import mcreatiKLogo from '../../assets/tech-logo-dark-bg.png'
@@ -35,22 +32,9 @@ const Navbar = memo(function Navbar() {
 
   return (
     <>
-      {/* ---------- Studios Announcement Bar — always visible, above the nav, on every screen size ---------- */}
-      <Link
-        to="/studios"
-        className="fixed top-0 inset-x-0 z-50 h-9 flex items-center justify-center gap-1.5 sm:gap-2 px-4 bg-gradient-to-r from-[#C9971F] to-[#8B2E2A] text-white hover:brightness-110 transition-all"
-      >
-        <FiCamera className="w-3.5 h-3.5 shrink-0" />
-        <span className="truncate text-[11px] sm:text-sm font-medium">
-          <span className="sm:hidden">We also shoot photography — McreatiK Studios</span>
-          <span className="hidden sm:inline">McreatiK also offers photography — explore McreatiK Studios</span>
-        </span>
-        <FiArrowUpRight className="w-3.5 h-3.5 shrink-0" />
-      </Link>
-
       {/* ---------- Fixed Logo — Top Left (tablet/desktop only; mobile shows a compact logo inside the pill instead, see below) ---------- */}
       <motion.div
-        className="hidden md:block fixed top-12 left-4 z-50"
+        className="hidden md:block fixed top-3 left-4 z-50"
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -65,7 +49,7 @@ const Navbar = memo(function Navbar() {
       </motion.div>
 
       {/* ---------- Floating Pill Navbar — Centered ---------- */}
-      <div className="fixed top-9 left-0 right-0 z-40 flex justify-center pt-4 px-4 md:pl-32 lg:pl-4">
+      <div className="fixed top-0 left-0 right-0 z-40 flex justify-center pt-4 px-4 md:pl-32 lg:pl-4">
         <motion.nav
           className={`w-full max-w-2xl rounded-lg transition-all duration-300 ${
             isScrolled
@@ -91,7 +75,7 @@ const Navbar = memo(function Navbar() {
               ))}
             </div>
 
-            {/* Desktop: CTA — the Studios cross-promo now lives in the bar above, always visible */}
+            {/* Desktop: CTA */}
             <div className="hidden md:flex items-center gap-4 shrink-0">
               <Button href="#contact" className="text-xs px-4 py-2">
                 Get Started
@@ -129,7 +113,7 @@ const Navbar = memo(function Navbar() {
               />
               {/* Drawer */}
               <motion.div
-                className="fixed top-32 left-4 right-4 bg-gray-950/95 backdrop-blur-xl border border-white/10 rounded-lg shadow-xl md:hidden"
+                className="fixed top-20 left-4 right-4 bg-gray-950/95 backdrop-blur-xl border border-white/10 rounded-lg shadow-xl md:hidden"
                 initial={{ opacity: 0, y: -12 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
