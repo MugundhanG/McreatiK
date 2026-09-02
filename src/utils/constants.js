@@ -1,27 +1,32 @@
 /* ============================================
    Constants
-   Central data store for all static content
-   used across the website. Edit these values
-   to update text, links, and service listings
-   without touching component code.
+   Central data store for all static content,
+   split by department:
+     TECH_*     — McreatiK Tech & Creative Solutions
+     STUDIOS_*  — McreatiK Studios (photography)
    ============================================ */
 
 import {
   FiGlobe,
   FiCreditCard,
   FiPenTool,
-  FiImage,
   FiFileText,
-  FiLayout,
+  FiRefreshCw,
+  FiCamera,
+  FiHeart,
+  FiUsers,
+  FiBox,
 } from 'react-icons/fi'
 
 import photographyThumbnail from '../assets/photography_website_thumbnail.jpg'
 import logoDesignThumbnail from '../assets/logo_design.webp'
 import adThumbnail from '../assets/ADthumbnail.jpg'
 
+/* =================================================
+   MCREATIK TECH & CREATIVE SOLUTIONS
+   ================================================= */
 
-/* ---------- Navigation Links ---------- */
-export const NAV_LINKS = [
+export const TECH_NAV_LINKS = [
   { label: 'Home', href: '#home' },
   { label: 'Services', href: '#services' },
   { label: 'Portfolio', href: '#portfolio' },
@@ -29,21 +34,12 @@ export const NAV_LINKS = [
   { label: 'Contact', href: '#contact' },
 ]
 
-/* ---------- Services Offered ----------
-   Each service has an icon component, title,
-   and a short description shown on service cards. */
-export const SERVICES = [
+export const TECH_SERVICES = [
   {
     icon: FiGlobe,
     title: 'Website Development',
     description:
       'Custom-built, responsive websites that deliver exceptional user experiences and drive conversions and business growth.',
-  },
-  {
-    icon: FiCreditCard,
-    title: 'Digital Cards',
-    description:
-      'Modern digital business cards that make lasting impressions and simplify networking.',
   },
   {
     icon: FiPenTool,
@@ -52,31 +48,26 @@ export const SERVICES = [
       'Distinctive brand identities crafted to communicate your vision and stand out in the market.',
   },
   {
-    icon: FiImage,
-    title: 'Photo Albums',
+    icon: FiCreditCard,
+    title: 'Business Card Design',
     description:
-      'Beautifully designed digital albums that showcase your memories and creative work.',
+      'Print-ready business card designs that make a sharp first impression and reinforce your brand.',
+  },
+  {
+    icon: FiRefreshCw,
+    title: 'Website Enhancement',
+    description:
+      'Revamp and modernize an existing website — improved design, performance, and user experience.',
   },
   {
     icon: FiFileText,
-    title: 'Resume Design',
+    title: 'Resume Design & Makeover',
     description:
       'Professional, ATS-friendly resumes that highlight your strengths and open doors.',
   },
-  {
-    icon: FiLayout,
-    title: 'UI/UX Design',
-    description:
-      'Intuitive interfaces designed through research, testing, and a deep focus on the user journey.',
-  },
 ]
 
-/* ---------- Portfolio Projects ----------
-   Each entry renders as a clickable card.
-   `image` uses a placeholder; replace with
-   real thumbnails in /public/portfolio/.
-   `link` points to the live project URL. */
-export const PORTFOLIO_ITEMS = [
+export const TECH_PORTFOLIO_ITEMS = [
   {
     id: 1,
     title: 'Photography Business Website',
@@ -93,32 +84,16 @@ export const PORTFOLIO_ITEMS = [
     link: '#',
     description: 'Complete brand identity system for a luxury fashion label.',
   },
-  // {
-  //   id: 3,
-  //   title: 'TechVault Digital Card',
-  //   category: 'Digital Card',
-  //   image: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&h=400&fit=crop',
-  //   link: '#',
-  //   description: 'Interactive digital business card with NFC integration.',
-  // },
-  // {
-  //   id: 4,
-  //   title: 'Wanderlust Photo Album',
-  //   category: 'Album',
-  //   image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop',
-  //   link: '#',
-  //   description: 'A cinematic travel album with immersive gallery experience.',
-  // },
   {
     id: 3,
     title: 'Engeering Solutions Website',
     category: 'Website',
     image: adThumbnail,
-    link: 'https://MugundhanG.github.io/ArtificerDynamics',
+    link: 'https://mugundhang.github.io/ArtificerDynamics/',
     description: 'A modern business website built with clean design and seamless user experience.',
   },
   {
-    id: 6,
+    id: 4,
     title: 'Elegance Resume Suite',
     category: 'Resume',
     image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=600&h=400&fit=crop',
@@ -128,28 +103,86 @@ export const PORTFOLIO_ITEMS = [
   },
 ]
 
-/* ---------- Company Stats ---------- */
-export const STATS = [
-  { value: '30+', label: 'Projects Delivered' },  
+export const TECH_STATS = [
+  { value: '30+', label: 'Projects Delivered' },
   { value: '2+', label: 'Years of Experience' },
   { value: '99%', label: 'Client Satisfaction' },
 ]
 
-/* ---------- Social Media Links ---------- */
+export const TECH_SERVICE_OPTIONS = [
+  'Website Development',
+  'Logo Design',
+  'Business Card Design',
+  'Website Enhancement',
+  'Resume Design & Makeover',
+  'Other',
+]
+
+/* =================================================
+   MCREATIK STUDIOS (photography)
+   PLACEHOLDER CONTENT — swap in real services,
+   gallery images, and copy before launch.
+   ================================================= */
+
+export const STUDIOS_NAV_LINKS = [
+  { label: 'Home', href: '#home' },
+  { label: 'Offerings', href: '#offerings' },
+  { label: 'Gallery', href: '#gallery' },
+  { label: 'About', href: '#about' },
+  { label: 'Book', href: '#book' },
+]
+
+export const STUDIOS_SERVICES = [
+  {
+    icon: FiCamera,
+    title: 'Portrait Sessions',
+    description: 'Placeholder — describe your portrait/headshot session packages here.',
+  },
+  {
+    icon: FiHeart,
+    title: 'Wedding Photography',
+    description: 'Placeholder — describe your wedding coverage packages here.',
+  },
+  {
+    icon: FiUsers,
+    title: 'Event Coverage',
+    description: 'Placeholder — describe your event/corporate photography packages here.',
+  },
+  {
+    icon: FiBox,
+    title: 'Product Photography',
+    description: 'Placeholder — describe your product/commercial photography packages here.',
+  },
+]
+
+/* Gallery entries — no real photos yet, rendered as labeled
+   placeholder frames until real images are supplied. */
+export const STUDIOS_GALLERY_ITEMS = [
+  { id: 1, category: 'Portrait', title: 'Portrait Session — placeholder' },
+  { id: 2, category: 'Wedding', title: 'Wedding Coverage — placeholder' },
+  { id: 3, category: 'Event', title: 'Event Coverage — placeholder' },
+  { id: 4, category: 'Product', title: 'Product Shoot — placeholder' },
+]
+
+export const STUDIOS_STATS = [
+  { value: '—', label: 'Shoots Delivered' },
+  { value: '—', label: 'Years Behind the Lens' },
+  { value: '—', label: 'Happy Clients' },
+]
+
+export const STUDIOS_SERVICE_OPTIONS = [
+  'Portrait Session',
+  'Wedding Photography',
+  'Event Coverage',
+  'Product Photography',
+  'Other',
+]
+
+/* =================================================
+   SHARED
+   ================================================= */
+
 export const SOCIAL_LINKS = [
   { label: 'Instagram', href: 'https://instagram.com/mcreatik', icon: 'instagram' },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/mcreatik', icon: 'linkedin' },
-  // { label: 'Twitter', href: 'https://twitter.com/mcreatik', icon: 'twitter' },
-  // { label: 'Facebook', href: 'https://facebook.com/mcreatik', icon: 'facebook' },
-]
-
-/* ---------- Contact Form Fields ---------- */
-export const SERVICE_OPTIONS = [
-  'Website Development',
-  'Digital Cards',
-  'Logo Design',
-  'Album Design',
-  'Resume Creation/Makeover',
-  'UI/UX Design',
-  'Other',
 ]

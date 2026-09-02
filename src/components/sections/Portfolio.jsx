@@ -7,7 +7,7 @@
    ============================================ */
 
 import React, { useState, useCallback, memo } from 'react'
-import { PORTFOLIO_ITEMS } from '../../utils/constants'
+import { TECH_PORTFOLIO_ITEMS } from '../../utils/constants'
 import SectionHeading from '../ui/SectionHeading'
 import PortfolioCard from '../ui/PortfolioCard'
 import Lightbox from '../ui/Lightbox'
@@ -27,7 +27,7 @@ const Portfolio = memo(function Portfolio() {
   return (
     <section id="portfolio" className="relative py-24 lg:py-32">
       {/* Background accent */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#FF6B35]/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
@@ -38,7 +38,7 @@ const Portfolio = memo(function Portfolio() {
 
         {/* Portfolio grid — 1 col mobile, 2 tablet, 3 desktop */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-          {PORTFOLIO_ITEMS.map((item, index) => (
+          {TECH_PORTFOLIO_ITEMS.map((item, index) => (
             <PortfolioCard
               key={item.id}
               {...item}

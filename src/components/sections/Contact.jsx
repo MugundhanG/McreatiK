@@ -13,7 +13,7 @@ import React, { memo, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { FiSend, FiMail, FiPhone, FiMapPin } from 'react-icons/fi'
 import emailjs from '@emailjs/browser'
-import { SERVICE_OPTIONS } from '../../utils/constants'
+import { TECH_SERVICE_OPTIONS } from '../../utils/constants'
 import { useForm } from '../../hooks/useForm'
 import SectionHeading from '../ui/SectionHeading'
 import Button from '../ui/Button'
@@ -49,6 +49,7 @@ const Contact = memo(function Contact() {
         phone:      data.phone,
         service:    data.service,
         message:    data.message,
+        department: 'McreatiK Tech & Creative',
       },
       PUBLIC_KEY
     )
@@ -67,14 +68,14 @@ const Contact = memo(function Contact() {
 
   /* Shared input class names */
   const inputBase =
-    'w-full bg-white/5 border rounded-xl px-4 py-3.5 text-white placeholder-gray-500 outline-none transition-all duration-200 focus:ring-2 focus:ring-indigo-500/40 text-sm'
+    'w-full bg-white/5 border rounded-md px-4 py-3.5 text-white placeholder-gray-500 outline-none transition-all duration-200 focus:ring-2 focus:ring-indigo-500/40 text-sm'
   const inputOk  = 'border-white/10 hover:border-white/20'
   const inputErr = 'border-red-500/50 focus:ring-red-500/40'
 
   return (
     <section id="contact" className="relative py-24 lg:py-32">
       {/* Background accent */}
-      <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-indigo-600/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-[#5B5FEF]/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
@@ -97,14 +98,14 @@ const Contact = memo(function Contact() {
               { icon: FiPhone,  label: 'Phone',    value: '+91 9600-129-267',      href: 'tel:+919600129267' },
               { icon: FiMapPin, label: 'Location', value: 'Remote — Global',       href: null },
             ].map(({ icon: Icon, label, value, href }) => (
-              <div key={label} className="glass-card rounded-2xl p-6 flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600/20 to-cyan-500/20 flex items-center justify-center border border-indigo-500/20 shrink-0">
-                  <Icon className="w-5 h-5 text-indigo-400" />
+              <div key={label} className="glass-card rounded-lg p-6 flex items-start gap-4">
+                <div className="w-12 h-12 rounded-md bg-gradient-to-br from-[#5B5FEF]/20 to-[#FF6B35]/10 flex items-center justify-center border border-[#5B5FEF]/20 shrink-0">
+                  <Icon className="w-5 h-5 text-[#a5a8ff]" />
                 </div>
                 <div>
                   <div className="text-gray-400 text-sm mb-0.5">{label}</div>
                   {href ? (
-                    <a href={href} className="text-white font-medium hover:text-indigo-300 transition-colors text-sm">
+                    <a href={href} className="text-white font-medium hover:text-[#a5a8ff] transition-colors text-sm">
                       {value}
                     </a>
                   ) : (
@@ -115,7 +116,7 @@ const Contact = memo(function Contact() {
             ))}
 
             {/* Response time note */}
-            <div className="glass-card rounded-2xl p-6">
+            <div className="glass-card rounded-lg p-6">
               <p className="text-gray-400 text-sm leading-relaxed">
                 <span className="text-white font-medium">Quick response guaranteed.</span>{' '}
                 We typically reply within a few hours during business days. For urgent requests, feel free to call us directly.
@@ -126,7 +127,7 @@ const Contact = memo(function Contact() {
           {/* ---------- Contact Form ---------- */}
           <motion.form
             onSubmit={handleSubmit}
-            className="lg:col-span-3 glass-card rounded-2xl p-8 lg:p-10 space-y-5"
+            className="lg:col-span-3 glass-card rounded-lg p-8 lg:p-10 space-y-5"
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -203,7 +204,7 @@ const Contact = memo(function Contact() {
                   style={{ backgroundColor: '#111827', color: values.service ? '#ffffff' : '#6b7280' }}
                 >
                   <option value="" disabled style={{ color: '#6b7280' }}>Select a service</option>
-                  {SERVICE_OPTIONS.map((opt) => (
+                  {TECH_SERVICE_OPTIONS.map((opt) => (
                     <option key={opt} value={opt} style={{ backgroundColor: '#111827', color: '#ffffff' }}>
                       {opt}
                     </option>

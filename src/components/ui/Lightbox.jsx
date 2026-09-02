@@ -55,7 +55,7 @@ const Lightbox = memo(function Lightbox({ src, title, type = 'image', onClose })
 
           {/* ---- Browser-style top bar (website + pdf) ---- */}
           {isFullHeight && (
-            <div className="flex items-center gap-3 bg-gray-900 border border-white/10 rounded-t-2xl px-4 py-2.5">
+            <div className="flex items-center gap-3 bg-gray-900 border border-white/10 rounded-t-lg px-4 py-2.5">
               {/* Traffic lights */}
               <div className="flex gap-1.5 shrink-0">
                 <button onClick={onClose} className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400 transition-colors cursor-pointer" />
@@ -112,7 +112,7 @@ const Lightbox = memo(function Lightbox({ src, title, type = 'image', onClose })
               <img
                 src={src}
                 alt={title}
-                className="w-full h-auto max-h-[85vh] object-contain rounded-2xl shadow-2xl"
+                className="w-full h-auto max-h-[85vh] object-contain rounded-lg shadow-2xl"
               />
               {title && (
                 <p className="text-center text-gray-400 text-sm mt-4">{title}</p>
@@ -122,7 +122,7 @@ const Lightbox = memo(function Lightbox({ src, title, type = 'image', onClose })
 
           {/* ---- PDF / Website iframe ---- */}
           {isFullHeight && (
-            <div className="relative flex-1 bg-white rounded-b-2xl overflow-hidden">
+            <div className="relative flex-1 bg-white rounded-b-lg overflow-hidden">
               {/* Loading spinner */}
               {loading && (
                 <div className="absolute inset-0 flex items-center justify-center bg-gray-950 z-10">

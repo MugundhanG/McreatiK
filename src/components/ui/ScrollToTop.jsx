@@ -9,7 +9,7 @@ import React, { useState, useEffect, memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiArrowUp } from 'react-icons/fi'
 
-const ScrollToTop = memo(function ScrollToTop() {
+const ScrollToTop = memo(function ScrollToTop({ accentClass = 'bg-indigo-600 text-white shadow-indigo-500/30 hover:bg-indigo-500' }) {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const ScrollToTop = memo(function ScrollToTop() {
       {visible && (
         <motion.button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 flex items-center justify-center hover:bg-indigo-500 transition-colors cursor-pointer"
+          className={`fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-colors cursor-pointer ${accentClass}`}
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.5 }}

@@ -9,9 +9,10 @@
    ============================================ */
 
 import React, { memo } from 'react'
-import { FiInstagram, FiLinkedin, FiTwitter, FiFacebook } from 'react-icons/fi'
-import { NAV_LINKS, SERVICES, SOCIAL_LINKS } from '../../utils/constants'
-import mcreatiKLogo from '../../assets/mcreatik_logo_new.png'
+import { Link } from 'react-router-dom'
+import { FiInstagram, FiLinkedin, FiTwitter, FiFacebook, FiArrowUpRight } from 'react-icons/fi'
+import { TECH_NAV_LINKS, TECH_SERVICES, SOCIAL_LINKS } from '../../utils/constants'
+import mcreatiKLogo from '../../assets/tech-logo-dark-bg.png'
 
 /* Map icon name strings from constants to actual components */
 const ICON_MAP = {
@@ -33,16 +34,22 @@ const Footer = memo(function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* ---------- Brand Column ---------- */}
           <div className="lg:col-span-1">
-            <a href="#home" className="flex items-center mb-4">
+            <Link to="/" className="flex items-center mb-4">
               <img
                 src={mcreatiKLogo}
                 alt="McreatiK Logo"
-                className="h-40 sm:h-40 w-auto object-contain drop-shadow-[0_0_10px_rgba(45,212,191,0.6)]"
+                className="h-40 sm:h-40 w-auto object-contain"
               />
-            </a>
-            <p className="text-gray-400 text-sm leading-relaxed mb-6">
+            </Link>
+            <p className="text-gray-400 text-sm leading-relaxed mb-4">
               Crafting premium digital experiences that elevate brands and drive measurable business growth.
             </p>
+            <Link
+              to="/studios"
+              className="font-mono-label inline-flex items-center gap-1 text-xs uppercase text-gray-500 hover:text-[#FF6B35] transition-colors mb-6"
+            >
+              Looking for photography? McreatiK Studios <FiArrowUpRight className="w-3 h-3" />
+            </Link>
             {/* Social icons */}
             <div className="flex gap-3">
               {SOCIAL_LINKS.map(({ label, href, icon }) => {
@@ -67,7 +74,7 @@ const Footer = memo(function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-4 font-display">Quick Links</h4>
             <ul className="space-y-3">
-              {NAV_LINKS.map(({ label, href }) => (
+              {TECH_NAV_LINKS.map(({ label, href }) => (
                 <li key={label}>
                   <a
                     href={href}
@@ -84,7 +91,7 @@ const Footer = memo(function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-4 font-display">Services</h4>
             <ul className="space-y-3">
-              {SERVICES.map(({ title }) => (
+              {TECH_SERVICES.map(({ title }) => (
                 <li key={title}>
                   <a
                     href="#services"

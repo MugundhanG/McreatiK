@@ -1,16 +1,18 @@
 /* ============================================
-   Hero Section
-   Split layout — text left, visual panel right.
-   Left: badge, headline, subtext, CTA buttons,
-         trust indicators.
-   Right: floating glass cards showing services
-          and a stat summary panel.
+   Hero Section — Tech & Creative
+   Split layout — text left, a "build manifest"
+   spec panel right, itemizing what ships out of
+   this department. Registration marks (this
+   department's signature) anchor the panel.
    ============================================ */
 
 import React, { memo } from 'react'
 import { motion } from 'framer-motion'
-import { FiArrowRight, FiGlobe, FiPenTool, FiCreditCard, FiFileText, FiLayout, FiImage } from 'react-icons/fi'
+import { FiArrowRight } from 'react-icons/fi'
 import Button from '../ui/Button'
+import RegMark from '../ui/RegMark'
+import techBadge from '../../assets/tech-badge.webp'
+import { TECH_SERVICES, TECH_STATS } from '../../utils/constants'
 
 const fadeUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 28 },
@@ -22,16 +24,6 @@ const fadeLeft = (delay = 0) => ({
   visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: 'easeOut', delay } },
 })
 
-/* Small floating service pills shown on right panel */
-const PREVIEW_SERVICES = [
-  { icon: FiGlobe, label: 'Website Design & Development', color: 'text-indigo-400' },
-  { icon: FiLayout, label: 'UI & UX Design', color: 'text-indigo-400' },
-  { icon: FiPenTool, label: 'Brand Logo Design', color: 'text-cyan-400' },
-  { icon: FiCreditCard, label: 'Business Digital Cards', color: 'text-violet-400' },
-  { icon: FiFileText, label: 'Resume Design & Makeover', color: 'text-sky-400' },
-  { icon: FiImage, label: 'Photo Album Design', color: 'text-sky-400' },
-]
-
 const Hero = memo(function Hero() {
   return (
     <section
@@ -39,8 +31,15 @@ const Hero = memo(function Hero() {
       className="relative min-h-screen flex items-center overflow-hidden"
     >
       {/* Background orbs */}
-      <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-indigo-600/20 rounded-full blur-[128px] pointer-events-none" />
-      <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] bg-cyan-500/15 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-[#5B5FEF]/15 rounded-full blur-[128px] pointer-events-none" />
+      <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] bg-[#FF6B35]/10 rounded-full blur-[100px] pointer-events-none" />
+      {/* Badge watermark */}
+      <img
+        src={techBadge}
+        alt=""
+        aria-hidden="true"
+        className="absolute -right-24 top-1/2 -translate-y-1/2 w-[600px] max-w-none opacity-[0.06] pointer-events-none select-none"
+      />
       {/* Grid overlay */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
@@ -57,15 +56,24 @@ const Hero = memo(function Hero() {
           {/* ===== LEFT — Text Content ===== */}
           <div className="flex flex-col items-start">
 
-            {/* Badge */}
             <motion.span
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 mb-7"
+              className="font-mono-label text-xs uppercase text-[#FF6B35] mb-4"
               variants={fadeUp(0)}
               initial="hidden"
               animate="visible"
             >
+              McreatiK — Tech &amp; Creative Solutions
+            </motion.span>
+
+            {/* Badge */}
+            <motion.span
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium bg-[#5B5FEF]/10 text-[#a5a8ff] border border-[#5B5FEF]/20 mb-7"
+              variants={fadeUp(0.05)}
+              initial="hidden"
+              animate="visible"
+            >
               <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              Now accepting new projects for 2026
+              <span className="font-mono-label">Now accepting new projects for 2026</span>
             </motion.span>
 
             {/* Headline */}
@@ -75,18 +83,9 @@ const Hero = memo(function Hero() {
               initial="hidden"
               animate="visible"
             >
-              At{' '}
-              <span className="relative inline-block">
-                <span
-                  className="bg-gradient-to-r from-cyan-400 via-indigo-400 to-violet-400 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(99,102,241,0.5)]"
-                  style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontWeight: 700, fontSize: '1.15em' }}
-                >
-                  McreatiK
-                </span>
-              </span>
-              ,{' '}We Craft{' '}
-              <span className="gradient-text">Digital Experiences</span>{' '}
-              That Drive Growth
+              We build the digital{' '}
+              <span className="gradient-text">deliverables</span>{' '}
+              your business ships with
             </motion.h1>
 
             {/* Subtext */}
@@ -96,8 +95,8 @@ const Hero = memo(function Hero() {
               initial="hidden"
               animate="visible"
             >
-              From stunning websites to powerful brand identities, McreatiK delivers
-              premium digital solutions that transform businesses and captivate audiences.
+              Websites, brand identity, business cards, and resumes — designed and built
+              with the same discipline as a production spec, from first draft to final file.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -122,41 +121,37 @@ const Hero = memo(function Hero() {
               initial="hidden"
               animate="visible"
             >
-              <span className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-                30+ Projects Delivered
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-500" />
-                2+ Years of Experience
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-violet-500" />
-                99% Satisfaction
-              </span>
+              {TECH_STATS.map(({ value, label }) => (
+                <span key={label} className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#5B5FEF]" />
+                  {value} {label}
+                </span>
+              ))}
             </motion.div>
           </div>
 
-          {/* ===== RIGHT — Visual Panel ===== */}
+          {/* ===== RIGHT — Build Manifest Panel ===== */}
           <motion.div
             className="hidden lg:flex flex-col gap-4"
             variants={fadeLeft(0.3)}
             initial="hidden"
             animate="visible"
           >
-            {/* Services preview card */}
-            <div className="glass-card rounded-2xl p-6">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-4">
-                What We Do
+            {/* Service manifest card */}
+            <div className="relative glass-card rounded-lg p-6">
+              <RegMark position="top-left" />
+              <RegMark position="bottom-right" />
+              <p className="font-mono-label text-xs text-gray-500 uppercase mb-4">
+                Service Manifest — {String(TECH_SERVICES.length).padStart(2, '0')} items
               </p>
-              <div className="grid grid-cols-2 gap-3">
-                {PREVIEW_SERVICES.map(({ icon: Icon, label, color }) => (
-                  <div
-                    key={label}
-                    className="flex items-center gap-3 bg-white/[0.03] border border-white/5 rounded-xl px-4 py-3 hover:border-indigo-500/20 transition-colors"
-                  >
-                    <Icon className={`w-4 h-4 shrink-0 ${color}`} />
-                    <span className="text-xs text-gray-300 font-medium leading-tight">{label}</span>
+              <div className="divide-y divide-white/5">
+                {TECH_SERVICES.map(({ icon: Icon, title }, i) => (
+                  <div key={title} className="flex items-center gap-3 py-2.5">
+                    <span className="font-mono-label text-xs text-[#FF6B35] shrink-0 w-5">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <Icon className="w-4 h-4 shrink-0 text-[#a5a8ff]" />
+                    <span className="text-sm text-gray-300 font-medium leading-tight">{title}</span>
                   </div>
                 ))}
               </div>
@@ -164,15 +159,8 @@ const Hero = memo(function Hero() {
 
             {/* Stats row */}
             <div className="grid grid-cols-3 gap-4">
-              {[
-                { value: '30+', label: 'Projects Delivered' },
-                { value: '2+', label: 'Years of Experience' },
-                { value: '99%', label: 'Satisfaction Rate' },
-              ].map(({ value, label }) => (
-                <div
-                  key={label}
-                  className="glass-card rounded-2xl p-5 text-center"
-                >
+              {TECH_STATS.map(({ value, label }) => (
+                <div key={label} className="glass-card rounded-lg p-5 text-center">
                   <div className="text-2xl font-bold gradient-text font-display">{value}</div>
                   <div className="text-xs text-gray-400 mt-1">{label}</div>
                 </div>
@@ -180,7 +168,7 @@ const Hero = memo(function Hero() {
             </div>
 
             {/* CTA teaser card */}
-            <div className="glass-card rounded-2xl p-5 flex items-center justify-between">
+            <div className="glass-card rounded-lg p-5 flex items-center justify-between">
               <div>
                 <p className="text-sm font-semibold text-white">Ready to start?</p>
                 <p className="text-xs text-gray-400 mt-0.5">We reply within 24 hours</p>

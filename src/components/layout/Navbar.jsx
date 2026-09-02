@@ -1,16 +1,18 @@
 /* ============================================
-   Navbar Component
+   Navbar Component — Tech & Creative
    Floating pill-style navbar centered on screen.
-   Logo fixed separately in top-left corner.
-   Mobile: full-width slide-down drawer.
+   Logo fixed separately in top-left corner and
+   links back to the department picker. Carries a
+   small cross-link to McreatiK Studios.
    ============================================ */
 
 import React, { useState, useEffect, useCallback, memo } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiMenu, FiX } from 'react-icons/fi'
-import { NAV_LINKS } from '../../utils/constants'
+import { FiMenu, FiX, FiArrowUpRight } from 'react-icons/fi'
+import { TECH_NAV_LINKS } from '../../utils/constants'
 import Button from '../ui/Button'
-import mcreatiKLogo from '../../assets/mcreatik_logo_new.png'
+import mcreatiKLogo from '../../assets/tech-logo-dark-bg.png'
 
 const Navbar = memo(function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -32,24 +34,25 @@ const Navbar = memo(function Navbar() {
   return (
     <>
       {/* ---------- Fixed Logo — Top Left ---------- */}
-      <motion.a
-        href="#home"
+      <motion.div
         className="fixed top-3 left-4 z-50"
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
       >
-        <img
-          src={mcreatiKLogo}
-          alt="McreatiK Logo"
-          className="h-16 sm:h-20 md:h-24 w-auto object-contain drop-shadow-[0_0_12px_rgba(45,212,191,0.7)]"
-        />
-      </motion.a>
+        <Link to="/">
+          <img
+            src={mcreatiKLogo}
+            alt="McreatiK"
+            className="h-16 sm:h-20 md:h-24 w-auto object-contain"
+          />
+        </Link>
+      </motion.div>
 
       {/* ---------- Floating Pill Navbar — Centered ---------- */}
       <div className="fixed top-0 left-0 right-0 z-40 flex justify-center pt-4 px-4 md:pl-32 lg:pl-4">
         <motion.nav
-          className={`w-full max-w-2xl rounded-2xl transition-all duration-300 ${
+          className={`w-full max-w-2xl rounded-lg transition-all duration-300 ${
             isScrolled
               ? 'bg-gray-950/80 backdrop-blur-xl border border-white/10 shadow-xl shadow-black/20'
               : 'bg-gray-950/50 backdrop-blur-md border border-white/5'
@@ -62,19 +65,25 @@ const Navbar = memo(function Navbar() {
 
             {/* Desktop nav links */}
             <div className="hidden md:flex items-center gap-0.5">
-              {NAV_LINKS.map(({ label, href }) => (
+              {TECH_NAV_LINKS.map(({ label, href }) => (
                 <a
                   key={label}
                   href={href}
-                  className="px-3.5 py-1.5 text-sm font-medium text-gray-300 hover:text-sky-400 rounded-lg hover:bg-[rgba(56,189,248,0.15)] transition-all duration-200"
+                  className="px-3.5 py-1.5 text-sm font-medium text-gray-300 hover:text-[#a5a8ff] rounded-lg hover:bg-[#5B5FEF]/15 transition-all duration-200"
                 >
                   {label}
                 </a>
               ))}
             </div>
 
-            {/* Desktop CTA */}
-            <div className="hidden md:block shrink-0">
+            {/* Desktop: cross-link + CTA */}
+            <div className="hidden md:flex items-center gap-4 shrink-0">
+              <Link
+                to="/studios"
+                className="font-mono-label text-[11px] uppercase text-gray-500 hover:text-[#FF6B35] transition-colors inline-flex items-center gap-1"
+              >
+                Studios <FiArrowUpRight className="w-3 h-3" />
+              </Link>
               <Button href="#contact" className="text-xs px-4 py-2">
                 Get Started
               </Button>
@@ -108,23 +117,30 @@ const Navbar = memo(function Navbar() {
               />
               {/* Drawer */}
               <motion.div
-                className="fixed top-20 left-4 right-4 bg-gray-950/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl md:hidden"
+                className="fixed top-20 left-4 right-4 bg-gray-950/95 backdrop-blur-xl border border-white/10 rounded-lg shadow-xl md:hidden"
                 initial={{ opacity: 0, y: -12 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.2 }}
               >
                 <div className="px-4 py-5 space-y-1">
-                  {NAV_LINKS.map(({ label, href }) => (
+                  {TECH_NAV_LINKS.map(({ label, href }) => (
                     <a
                       key={label}
                       href={href}
                       onClick={closeMobile}
-                      className="block px-4 py-2.5 text-gray-300 hover:text-sky-400 hover:bg-[rgba(56,189,248,0.15)] rounded-xl transition-colors text-sm font-medium"
+                      className="block px-4 py-2.5 text-gray-300 hover:text-[#a5a8ff] hover:bg-[#5B5FEF]/15 rounded-md transition-colors text-sm font-medium"
                     >
                       {label}
                     </a>
                   ))}
+                  <Link
+                    to="/studios"
+                    onClick={closeMobile}
+                    className="font-mono-label flex items-center gap-1 px-4 py-2.5 text-[11px] uppercase text-gray-500"
+                  >
+                    Studios <FiArrowUpRight className="w-3 h-3" />
+                  </Link>
                   <div className="pt-3">
                     <Button href="#contact" onClick={closeMobile} className="w-full text-center">
                       Get Started

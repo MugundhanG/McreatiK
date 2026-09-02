@@ -10,7 +10,7 @@
 import React, { memo } from 'react'
 import { motion } from 'framer-motion'
 import { FiTarget, FiZap, FiHeart, FiShield, FiArrowRight } from 'react-icons/fi'
-import { STATS } from '../../utils/constants'
+import { TECH_STATS } from '../../utils/constants'
 import SectionHeading from '../ui/SectionHeading'
 
 const VALUES = [
@@ -24,8 +24,8 @@ const About = memo(function About() {
   return (
     <section id="about" className="relative py-24 lg:py-32">
       {/* Background accents */}
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-violet-600/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-indigo-600/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#FF6B35]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#5B5FEF]/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
@@ -46,8 +46,8 @@ const About = memo(function About() {
             transition={{ duration: 0.6 }}
           >
             {/* Story text */}
-            <div className="glass-card rounded-2xl p-8">
-              <span className="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-widest uppercase rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+            <div className="glass-card rounded-lg p-8">
+              <span className="inline-block px-3 py-1 mb-4 text-xs font-mono-label uppercase rounded-full bg-[#5B5FEF]/10 text-[#a5a8ff] border border-[#5B5FEF]/20">
                 Our Story
               </span>
               <p className="text-gray-300 leading-relaxed mb-4">
@@ -56,17 +56,17 @@ const About = memo(function About() {
               <p className="text-gray-400 leading-relaxed">
                 Today we help entrepreneurs, startups, and established brands craft digital experiences that are not just beautiful, but built to perform and convert.
               </p>
-              <a href="#contact" className="inline-flex items-center gap-2 mt-6 text-sm font-medium text-indigo-400 hover:text-cyan-400 transition-colors">
+              <a href="#contact" className="inline-flex items-center gap-2 mt-6 text-sm font-medium text-[#a5a8ff] hover:text-[#FF6B35] transition-colors">
                 Work with us <FiArrowRight className="w-4 h-4" />
               </a>
             </div>
 
             {/* Stats row */}
             <div className="grid grid-cols-3 gap-4">
-              {STATS.map(({ value, label }, index) => (
+              {TECH_STATS.map(({ value, label }, index) => (
                 <motion.div
                   key={label}
-                  className="glass-card rounded-2xl p-5 text-center"
+                  className="glass-card rounded-lg p-5 text-center"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -90,10 +90,10 @@ const About = memo(function About() {
             transition={{ duration: 0.6 }}
           >
             {/* Mission */}
-            <div className="glass-card rounded-2xl p-8 flex-1">
+            <div className="glass-card rounded-lg p-8 flex-1">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600/30 to-cyan-500/20 flex items-center justify-center border border-indigo-500/20">
-                  <FiTarget className="w-5 h-5 text-indigo-400" />
+                <div className="w-10 h-10 rounded-md bg-gradient-to-br from-[#5B5FEF]/30 to-[#FF6B35]/15 flex items-center justify-center border border-[#5B5FEF]/20">
+                  <FiTarget className="w-5 h-5 text-[#a5a8ff]" />
                 </div>
                 <h3 className="text-xl font-bold font-display text-white">Our Mission</h3>
               </div>
@@ -103,10 +103,10 @@ const About = memo(function About() {
             </div>
 
             {/* Vision */}
-            <div className="glass-card rounded-2xl p-8 flex-1">
+            <div className="glass-card rounded-lg p-8 flex-1">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-600/30 to-cyan-500/20 flex items-center justify-center border border-violet-500/20">
-                  <FiZap className="w-5 h-5 text-violet-400" />
+                <div className="w-10 h-10 rounded-md bg-gradient-to-br from-[#FF6B35]/25 to-[#5B5FEF]/15 flex items-center justify-center border border-[#FF6B35]/20">
+                  <FiZap className="w-5 h-5 text-[#FF6B35]" />
                 </div>
                 <h3 className="text-xl font-bold font-display text-white">Our Vision</h3>
               </div>
@@ -122,15 +122,15 @@ const About = memo(function About() {
           {VALUES.map(({ icon: Icon, title, text }, index) => (
             <motion.div
               key={title}
-              className="glass-card rounded-2xl p-6 flex items-start gap-4 hover:border-indigo-500/30 transition-colors duration-300"
+              className="glass-card rounded-lg p-6 flex items-start gap-4 hover:border-[#5B5FEF]/30 transition-colors duration-300"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ y: -4, transition: { duration: 0.2 } }}
             >
-              <div className="w-10 h-10 shrink-0 rounded-xl bg-gradient-to-br from-indigo-600/20 to-cyan-500/20 flex items-center justify-center border border-indigo-500/20 mt-0.5">
-                <Icon className="w-4 h-4 text-indigo-400" />
+              <div className="w-10 h-10 shrink-0 rounded-md bg-gradient-to-br from-[#5B5FEF]/20 to-[#FF6B35]/10 flex items-center justify-center border border-[#5B5FEF]/20 mt-0.5">
+                <Icon className="w-4 h-4 text-[#a5a8ff]" />
               </div>
               <div>
                 <h4 className="text-white font-semibold font-display mb-1">{title}</h4>

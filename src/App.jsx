@@ -1,27 +1,25 @@
 /* ============================================
-   App Component — Root Layout
-   Assembles the full page from section
-   components. Uses React.lazy + Suspense
-   for code-split loading of heavy sections
-   below the fold.
+   App Component — Route Table
+   McreatiK is two departments under one domain:
+     /         Landing — pick a department
+     /tech     McreatiK Tech & Creative Solutions
+     /studios  McreatiK Studios (photography)
+   Each department page is lazy-loaded so a visitor
+   only ever downloads the one they chose.
    ============================================ */
 
 import React, { lazy, Suspense } from 'react'
-import Navbar from './components/layout/Navbar'
-import Hero from './components/sections/Hero'
-import Footer from './components/layout/Footer'
-import ScrollToTop from './components/ui/ScrollToTop'
+import { Routes, Route } from 'react-router-dom'
 
-/* Lazy-load below-the-fold sections for faster initial paint */
-const Services = lazy(() => import('./components/sections/Services'))
-const Portfolio = lazy(() => import('./components/sections/Portfolio'))
-const About = lazy(() => import('./components/sections/About'))
-const Contact = lazy(() => import('./components/sections/Contact'))
+const Landing = lazy(() => import('./pages/Landing'))
+const TechPage = lazy(() => import('./pages/TechPage'))
+const StudiosPage = lazy(() => import('./pages/StudiosPage'))
+const NotFound = lazy(() => import('./pages/NotFound'))
 
-/* Minimal loading placeholder shown while chunks load */
-function SectionLoader() {
+/* Full-screen loading placeholder shown while a page chunk loads */
+function PageLoader() {
   return (
-    <div className="flex items-center justify-center py-32">
+    <div className="fixed inset-0 flex items-center justify-center bg-[#0a0b10]">
       <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
     </div>
   )
@@ -29,20 +27,14 @@ function SectionLoader() {
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-950 text-white overflow-x-hidden w-full">
-      <Navbar />
-      <main>
-        <Hero />
-        <Suspense fallback={<SectionLoader />}>
-          <Services />
-          <Portfolio />
-          <About />
-          <Contact />
-        </Suspense>
-      </main>
-      <Footer />
-      <ScrollToTop />
-    </div>
+    <Suspense fallback={<PageLoader />}>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/tech" element={<TechPage />} />
+        <Route path="/studios" element={<StudiosPage />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Suspense>
   )
 }
 
