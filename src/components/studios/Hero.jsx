@@ -31,7 +31,7 @@ const StudiosHero = memo(function StudiosHero() {
         src={studiosBadge}
         alt=""
         aria-hidden="true"
-        className="absolute -right-32 top-1/2 -translate-y-1/2 w-[640px] max-w-none opacity-[0.07] pointer-events-none select-none"
+        className="absolute -right-16 sm:-right-32 top-1/2 -translate-y-1/2 w-[420px] sm:w-[680px] max-w-none opacity-[0.13] pointer-events-none select-none"
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full pt-32 pb-20">

@@ -38,7 +38,7 @@ const Hero = memo(function Hero() {
         src={techBadge}
         alt=""
         aria-hidden="true"
-        className="absolute -right-24 top-1/2 -translate-y-1/2 w-[600px] max-w-none opacity-[0.06] pointer-events-none select-none"
+        className="absolute -right-16 sm:-right-24 top-1/2 -translate-y-1/2 w-[420px] sm:w-[680px] max-w-none opacity-[0.14] pointer-events-none select-none"
       />
       {/* Grid overlay */}
       <div
