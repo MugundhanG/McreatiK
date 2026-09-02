@@ -31,9 +31,9 @@ const Footer = memo(function Footer() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 mb-12">
           {/* ---------- Brand Column ---------- */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-2">
             <Link to="/" className="flex items-center mb-4">
               <img
                 src={mcreatiKLogo}
@@ -71,7 +71,7 @@ const Footer = memo(function Footer() {
           </div>
 
           {/* ---------- Quick Links ---------- */}
-          <div>
+          <div className="lg:col-span-1">
             <h4 className="text-white font-semibold mb-4 font-display">Quick Links</h4>
             <ul className="space-y-3">
               {TECH_NAV_LINKS.map(({ label, href }) => (
@@ -88,9 +88,9 @@ const Footer = memo(function Footer() {
           </div>
 
           {/* ---------- Services Links ---------- */}
-          <div>
+          <div className="lg:col-span-2">
             <h4 className="text-white font-semibold mb-4 font-display">Services</h4>
-            <ul className="grid grid-cols-2 gap-x-4 gap-y-3">
+            <ul className="grid grid-cols-2 gap-x-8 gap-y-3">
               {TECH_SERVICES.map(({ title }) => (
                 <li key={title}>
                   <a
@@ -105,7 +105,7 @@ const Footer = memo(function Footer() {
           </div>
 
           {/* ---------- Contact Info ---------- */}
-          <div>
+          <div className="lg:col-span-1">
             <h4 className="text-white font-semibold mb-4 font-display">Contact</h4>
             <ul className="space-y-3 text-sm text-gray-400">
               <li>

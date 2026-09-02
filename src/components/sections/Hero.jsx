@@ -146,9 +146,6 @@ const Hero = memo(function Hero() {
             <div className="relative glass-card rounded-lg p-6">
               <RegMark position="top-left" />
               <RegMark position="bottom-right" />
-              <p className="font-mono-label text-xs text-gray-500 uppercase mb-4">
-                Service Manifest — {String(TECH_SERVICES.length).padStart(2, '0')} items
-              </p>
               <div className="grid grid-cols-2 gap-x-5">
                 {TECH_SERVICES.map(({ icon: Icon, title }, i) => {
                   const rows = Math.ceil(TECH_SERVICES.length / 2)
@@ -158,9 +155,6 @@ const Hero = memo(function Hero() {
                       key={title}
                       className={`flex items-center gap-2.5 py-2.5 ${isLastRow ? '' : 'border-b border-white/5'}`}
                     >
-                      <span className="font-mono-label text-xs text-[#FF6B35] shrink-0 w-5">
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
                       <Icon className="w-4 h-4 shrink-0 text-[#a5a8ff]" />
                       <span className="text-sm text-gray-300 font-medium leading-tight">{title}</span>
                     </div>
