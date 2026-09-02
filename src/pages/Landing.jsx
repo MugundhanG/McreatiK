@@ -18,8 +18,8 @@ import { FiArrowUpRight } from 'react-icons/fi'
 import { setFavicon } from '../utils/setFavicon'
 import techLogo from '../assets/tech-logo-dark-bg.png'
 import studiosLogo from '../assets/studios-logo-light-bg.png'
-import techBadge from '../assets/tech-badge.webp'
 import studiosBadge from '../assets/studios-badge.webp'
+import TechHeroGraphic from '../components/ui/TechHeroGraphic'
 import { TECH_SERVICES, STUDIOS_SERVICES } from '../utils/constants'
 
 const Landing = memo(function Landing() {
@@ -43,17 +43,14 @@ const Landing = memo(function Landing() {
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#5B5FEF]/35 via-[#5B5FEF]/5 to-[#FF6B35]/30 scale-100 group-hover:scale-110 transition-transform duration-500 ease-out" />
           <div className="pointer-events-none absolute -inset-1/4 bg-[radial-gradient(circle_at_50%_50%,rgba(91,95,239,0.55),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-          {/* Badge watermark — sized to the panel so the full circle always fits */}
-          <img
-            src={techBadge}
-            alt=""
-            aria-hidden="true"
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[58%] max-w-[480px] min-w-[260px] opacity-[0.18] pointer-events-none select-none"
+          {/* Hero graphic — sized to the panel so it never crowds the mark */}
+          <TechHeroGraphic
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] max-w-[560px] min-w-[300px] opacity-[0.45] pointer-events-none select-none"
           />
 
           {/* Centered mark + hover-revealed services, all centered as one block */}
           <div className="relative z-10 flex flex-col items-center text-center gap-4 px-8 pb-16 max-w-lg">
-            <img src={techLogo} alt="McreatiK Tech & Creative" className="h-28 sm:h-36 lg:h-40 w-auto object-contain" />
+            <img src={techLogo} alt="McreatiK Tech & Creative" className="h-28 sm:h-36 lg:h-72 w-auto object-contain" />
             <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight tracking-tight text-white">
               Tech &amp; Creative Solutions
             </h2>
@@ -106,12 +103,12 @@ const Landing = memo(function Landing() {
             src={studiosBadge}
             alt=""
             aria-hidden="true"
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[58%] max-w-[480px] min-w-[260px] opacity-[0.16] pointer-events-none select-none"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[58%] max-w-[480px] min-w-[260px] opacity-[0.10] pointer-events-none select-none"
           />
 
           {/* Centered mark + hover-revealed services, all centered as one block */}
           <div className="relative z-10 flex flex-col items-center text-center gap-4 px-8 pb-16 max-w-lg">
-            <img src={studiosLogo} alt="McreatiK Studios" className="h-28 sm:h-36 lg:h-40 w-auto object-contain" />
+            <img src={studiosLogo} alt="McreatiK Studios" className="h-28 sm:h-36 lg:h-72 w-auto object-contain" />
             <h2 className="font-display italic font-normal text-3xl sm:text-4xl lg:text-5xl leading-tight tracking-tight text-[#1C1710]">
               Studios
             </h2>
