@@ -4,11 +4,12 @@
    soft gradient and a badge watermark (sized in
    % of the panel so the full circle stays inside
    the frame on any device) even at rest,
-   intensifying on hover. Hovering slides the
-   service list up from below the description as
-   solid chips that stay legible over any
-   background. The panel itself is inert — only
-   the CTA link navigates.
+   intensifying on hover. Below lg the service
+   icon grid is always shown in normal flow (hover
+   isn't reliable on touch); at lg+ it becomes a
+   hover-only overlay that slides up below the
+   description without disturbing it. The panel
+   itself is inert — only the CTA link navigates.
    ============================================ */
 
 import React, { memo, useEffect } from 'react'
@@ -66,9 +67,9 @@ const Landing = memo(function Landing() {
               Websites, brand identity, and digital design for businesses that want to look as good as they perform.
             </p>
 
-            {/* Service list — anchored right below the description, slides up + fades in on hover without disturbing the centered content above */}
-            <div className="absolute top-full inset-x-0 pt-6 pointer-events-none">
-              <div className="translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">
+            {/* Service list — always visible on touch/smaller screens (hover can't be relied on there); on lg+ it becomes a hover-only overlay anchored right below the description */}
+            <div className="static mt-6 pointer-events-none lg:absolute lg:top-full lg:inset-x-0 lg:mt-0 lg:pt-6">
+              <div className="opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-6 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-500 ease-out">
                 <div
                   className="grid justify-items-center gap-x-4 gap-y-4"
                   style={{ gridTemplateColumns: `repeat(${techCols}, minmax(0, 1fr))` }}
@@ -77,7 +78,7 @@ const Landing = memo(function Landing() {
                     <div
                       key={title}
                       style={{ transitionDelay: `${i * 60}ms` }}
-                      className="translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400 ease-out flex flex-col items-center gap-2.5"
+                      className="opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-3 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-400 ease-out flex flex-col items-center gap-2.5"
                     >
                       <span className="flex items-center justify-center w-16 h-16 rounded-xl border border-[#A5A8FF]/40 text-[#A5A8FF]">
                         <Icon className="w-7 h-7" />
@@ -134,9 +135,9 @@ const Landing = memo(function Landing() {
               Photography for the moments worth keeping — portraits, weddings, and events.
             </p>
 
-            {/* Service list — anchored right below the description, slides up + fades in on hover without disturbing the centered content above */}
-            <div className="absolute top-full inset-x-0 pt-6 pointer-events-none">
-              <div className="translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">
+            {/* Service list — always visible on touch/smaller screens (hover can't be relied on there); on lg+ it becomes a hover-only overlay anchored right below the description */}
+            <div className="static mt-6 pointer-events-none lg:absolute lg:top-full lg:inset-x-0 lg:mt-0 lg:pt-6">
+              <div className="opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-6 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-500 ease-out">
                 <div
                   className="grid justify-items-center gap-x-4 gap-y-4"
                   style={{ gridTemplateColumns: `repeat(${studiosCols}, minmax(0, 1fr))` }}
@@ -145,7 +146,7 @@ const Landing = memo(function Landing() {
                     <div
                       key={title}
                       style={{ transitionDelay: `${i * 60}ms` }}
-                      className="translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400 ease-out flex flex-col items-center gap-2.5"
+                      className="opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-3 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-400 ease-out flex flex-col items-center gap-2.5"
                     >
                       <span className="flex items-center justify-center w-16 h-16 rounded-xl border border-[#C9971F]/50 text-[#C9971F]">
                         <Icon className="w-7 h-7" />

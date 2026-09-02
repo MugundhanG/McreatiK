@@ -33,9 +33,9 @@ const Navbar = memo(function Navbar() {
 
   return (
     <>
-      {/* ---------- Fixed Logo — Top Left ---------- */}
+      {/* ---------- Fixed Logo — Top Left (tablet/desktop only; mobile shows a compact logo inside the pill instead, see below) ---------- */}
       <motion.div
-        className="fixed top-3 left-4 z-50"
+        className="hidden md:block fixed top-3 left-4 z-50"
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -76,11 +76,11 @@ const Navbar = memo(function Navbar() {
               ))}
             </div>
 
-            {/* Desktop: cross-link + CTA */}
+            {/* Desktop: cross-link + CTA — the Studios cross-link only appears at lg+, where the pill has room to breathe */}
             <div className="hidden md:flex items-center gap-4 shrink-0">
               <Link
                 to="/studios"
-                className="font-mono-label text-[11px] uppercase text-gray-500 hover:text-[#FF6B35] transition-colors inline-flex items-center gap-1"
+                className="hidden lg:inline-flex font-mono-label text-[11px] uppercase text-gray-500 hover:text-[#FF6B35] transition-colors items-center gap-1"
               >
                 Studios <FiArrowUpRight className="w-3 h-3" />
               </Link>
@@ -89,8 +89,11 @@ const Navbar = memo(function Navbar() {
               </Button>
             </div>
 
-            {/* Mobile: toggle only */}
-            <div className="md:hidden flex items-center justify-end w-full">
+            {/* Mobile: compact logo + toggle, in-line so nothing overlaps the floating logo (which is hidden below md) */}
+            <div className="md:hidden flex items-center justify-between w-full">
+              <Link to="/" className="flex items-center">
+                <img src={mcreatiKLogo} alt="McreatiK" className="h-8 w-auto object-contain" />
+              </Link>
               <button
                 onClick={() => setIsMobileOpen((prev) => !prev)}
                 className="w-8 h-8 rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
