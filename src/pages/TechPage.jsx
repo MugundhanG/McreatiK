@@ -27,7 +27,7 @@ function SectionLoader() {
 
 function TechPage() {
   useEffect(() => {
-    document.title = 'McreatiK Tech & Creative Solutions | Websites, Logos, Business Cards & Resumes'
+    document.title = 'McreatiK Tech & Creative | Website & Logo Design in Chennai'
     setFavicon('/favicon-tech.png')
   }, [])
 

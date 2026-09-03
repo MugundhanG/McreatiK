@@ -113,6 +113,7 @@ const Footer = memo(function Footer() {
                   +91 9600-129-267
                 </a>
               </li>
+              <li>Based in Chennai, TN</li>
               <li>Available Mon – Sat, 8 AM – 10 PM</li>
             </ul>
           </div>

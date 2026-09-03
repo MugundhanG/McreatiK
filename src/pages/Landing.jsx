@@ -28,7 +28,7 @@ import { TECH_SERVICES, STUDIOS_SERVICES } from '../utils/constants'
 
 const Landing = memo(function Landing() {
   useEffect(() => {
-    document.title = 'McreatiK | Tech & Creative Solutions and Studios'
+    document.title = 'McreatiK | Websites, Branding & Photography in Chennai'
     setFavicon('/favicon-tech.png')
   }, [])
 

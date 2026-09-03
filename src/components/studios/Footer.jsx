@@ -51,6 +51,7 @@ const StudiosFooter = memo(function StudiosFooter() {
               <ul className="space-y-2.5 text-sm font-body text-[#6B6153]">
                 <li><a href="mailto:connect@mcreatik.com" className="hover:text-[#C9971F] transition-colors">connect@mcreatik.com</a></li>
                 <li><a href="tel:+919600129267" className="hover:text-[#C9971F] transition-colors">+91 9600-129-267</a></li>
+                <li>Based in Chennai, serving Tamil Nadu &amp; beyond</li>
               </ul>
               <div className="flex gap-3 mt-4">
                 {SOCIAL_LINKS.map(({ label, href, icon }) => {

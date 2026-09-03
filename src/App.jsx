@@ -10,6 +10,7 @@
 
 import React, { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import WhatsAppButton from './components/ui/WhatsAppButton'
 
 const Landing = lazy(() => import('./pages/Landing'))
 const TechPage = lazy(() => import('./pages/TechPage'))
@@ -27,14 +28,17 @@ function PageLoader() {
 
 function App() {
   return (
-    <Suspense fallback={<PageLoader />}>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/tech" element={<TechPage />} />
-        <Route path="/studios" element={<StudiosPage />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Suspense>
+    <>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/tech" element={<TechPage />} />
+          <Route path="/studios" element={<StudiosPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
+      <WhatsAppButton />
+    </>
   )
 }
 

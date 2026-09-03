@@ -27,7 +27,7 @@ function SectionLoader() {
 
 function StudiosPage() {
   useEffect(() => {
-    document.title = 'McreatiK Studios | Photography — Portraits, Weddings & Events'
+    document.title = 'McreatiK Studios | Wedding, Portrait & Event Photography in Chennai'
     setFavicon('/favicon-studios.png')
   }, [])
 
