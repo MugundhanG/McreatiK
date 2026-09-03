@@ -32,7 +32,23 @@ import {
   FiCircle,
   FiHome,
   FiBook,
+  FiActivity,
+  FiScissors,
+  FiShoppingBag,
+  FiPlusCircle,
+  FiSmartphone,
+  FiTarget,
+  FiZap,
+  FiLifeBuoy,
+  FiCheckCircle,
+  FiEdit3,
+  FiCode,
+  FiEye,
+  FiSend,
 } from 'react-icons/fi'
+
+/* Shared contact number used for WhatsApp CTAs across both departments */
+export const WHATSAPP_NUMBER = '919600129267'
 
 import photographyThumbnail from '../assets/photography_website_thumbnail.jpg'
 import adThumbnail from '../assets/ADthumbnail.jpg'
@@ -44,95 +60,162 @@ import adThumbnail from '../assets/ADthumbnail.jpg'
 export const TECH_NAV_LINKS = [
   { label: 'Home', href: '#home' },
   { label: 'Services', href: '#services' },
-  { label: 'Portfolio', href: '#portfolio' },
+  { label: 'Industries', href: '#industries' },
+  { label: 'Work', href: '#portfolio' },
+  { label: 'Process', href: '#process' },
   { label: 'About', href: '#about' },
   { label: 'Contact', href: '#contact' },
 ]
+
+export const TECH_TARGET_INDUSTRIES = [
+  {
+    icon: FiActivity,
+    title: 'Dental Clinics',
+    description: 'Professional websites that showcase treatments, doctors and facilities, and make appointment enquiries easier.',
+  },
+  {
+    icon: FiPlusCircle,
+    title: 'Medical Clinics',
+    description: 'Clear, trustworthy sites that present your specialities and make it simple for patients to reach you.',
+  },
+  {
+    icon: FiCoffee,
+    title: 'Restaurants & Cafés',
+    description: 'Menus, ambience and location made easy to find, so hungry customers choose you first.',
+  },
+  {
+    icon: FiScissors,
+    title: 'Salons & Spas',
+    description: 'Showcase your services and let clients browse and enquire before they even walk in.',
+  },
+  {
+    icon: FiCamera,
+    title: 'Photography Studios',
+    description: 'A polished portfolio site that does justice to the work you already deliver.',
+  },
+  {
+    icon: FiHeart,
+    title: 'Gyms & Fitness Centers',
+    description: 'Show off your space, trainers and plans in a way that turns browsers into members.',
+  },
+  {
+    icon: FiShoppingBag,
+    title: 'Retail Businesses',
+    description: 'Put your products and store details online, where local shoppers are already looking.',
+  },
+  {
+    icon: FiBriefcase,
+    title: 'Professional Services',
+    description: 'Build the credibility clients expect to see before they pick up the phone.',
+  },
+  {
+    icon: FiHome,
+    title: 'Local Businesses',
+    description: "Whatever you run, a clear, modern website makes it easier for customers to find and trust you.",
+  },
+]
+
+export const TECH_SERVICE_CATEGORIES = ['Websites', 'Branding', 'Digital Design']
 
 export const TECH_SERVICES = [
   {
     icon: FiGlobe,
     title: 'Website Development',
     description:
-      'Custom-built, responsive websites that deliver exceptional user experiences and drive conversions and business growth.',
-  },
-  {
-    icon: FiPenTool,
-    title: 'Logo Design',
-    description:
-      'Distinctive brand identities crafted to communicate your vision and stand out in the market.',
-  },
-  {
-    icon: FiCreditCard,
-    title: 'Business Card Design',
-    description:
-      'Print-ready business card designs that make a sharp first impression and reinforce your brand.',
+      'A professional website that gives your business credibility and makes it easy for customers to find and contact you.',
+    category: 'Websites',
+    featured: true,
   },
   {
     icon: FiRefreshCw,
-    title: 'Website Enhancement',
+    title: 'Website Redesign',
     description:
-      'Revamp and modernize an existing website — improved design, performance, and user experience.',
-  },
-  {
-    icon: FiFileText,
-    title: 'Resume Design & Makeover',
-    description:
-      'Professional, ATS-friendly resumes that highlight your strengths and open doors.',
+      'Turn an outdated site into a modern one — refreshed design, better performance, and a clearer user experience.',
+    category: 'Websites',
   },
   {
     icon: FiLayout,
     title: 'Landing Page Design',
     description:
-      'Focused, conversion-ready single pages for a campaign, launch, or offer that needs its own spotlight.',
+      'A focused, conversion-ready page for a campaign, launch, or offer that needs its own spotlight.',
+    category: 'Websites',
+  },
+  {
+    icon: FiBriefcase,
+    title: 'Portfolio Websites',
+    description:
+      'A clean, personal site that puts your best work front and center for clients and employers.',
+    category: 'Websites',
   },
   {
     icon: FiSearch,
     title: 'SEO Optimization',
     description:
       'On-page and technical SEO that helps the right customers actually find your site on Google.',
+    category: 'Websites',
   },
   {
     icon: FiTool,
     title: 'Website Maintenance',
     description:
       'Ongoing updates, backups, and fixes so your site stays fast, secure, and reliably online.',
+    category: 'Websites',
   },
   {
     icon: FiServer,
     title: 'Domain & Hosting Setup',
     description:
       'Domain registration, DNS, and hosting configured correctly the first time — no guesswork.',
+    category: 'Websites',
   },
   {
     icon: FiMapPin,
     title: 'Google Business Profile',
     description:
       'A fully set up, optimized Google Business listing so local customers can find and trust you.',
+    category: 'Websites',
   },
   {
-    icon: FiBriefcase,
-    title: 'Portfolio Websites',
+    icon: FiPenTool,
+    title: 'Logo Design',
     description:
-      'Clean, personal portfolio sites that put your best work front and center.',
+      'A distinctive identity that communicates your business and stands out in the market.',
+    category: 'Branding',
   },
   {
-    icon: FiClipboard,
-    title: 'Invoice & Quotation Design',
+    icon: FiCreditCard,
+    title: 'Business Card Design',
     description:
-      'Branded invoice and quotation templates that look professional and get you paid faster.',
+      'A print-ready card that makes a sharp first impression and reinforces your brand.',
+    category: 'Branding',
+  },
+  {
+    icon: FiFileText,
+    title: 'Resume Design & Makeover',
+    description:
+      'A professional, ATS-friendly resume that highlights your strengths and opens doors.',
+    category: 'Digital Design',
   },
   {
     icon: FiCoffee,
     title: 'Menu Card Design',
     description:
-      'Appetizing, easy-to-read menu designs for cafes, restaurants, and food businesses.',
+      'An appetizing, easy-to-read menu for cafes, restaurants, and food businesses.',
+    category: 'Digital Design',
+  },
+  {
+    icon: FiClipboard,
+    title: 'Invoice & Quotation Design',
+    description:
+      'A branded invoice and quotation template that looks professional and gets you paid faster.',
+    category: 'Digital Design',
   },
   {
     icon: FiUserCheck,
     title: 'LinkedIn Profile Makeover',
     description:
-      'A sharper LinkedIn presence — photo, headline, and summary that reflect where you\'re headed.',
+      "A sharper LinkedIn presence — photo, headline, and summary that reflect where you're headed.",
+    category: 'Digital Design',
   },
 ]
 
@@ -141,26 +224,145 @@ export const TECH_PORTFOLIO_ITEMS = [
     id: 1,
     title: 'Photography Business Website',
     category: 'Website',
+    industry: 'Photography Studio',
     image: photographyThumbnail,
     link: 'https://mugundhang.github.io/Heeswar-photography/',
     description: 'Fully responsive photography website with modern design and seamless user experience with contact form.',
+    features: ['Responsive Design', 'Contact Form', 'Portfolio Gallery'],
   },
   {
     id: 3,
     title: 'Engeering Solutions Website',
     category: 'Website',
+    industry: 'Professional Services',
     image: adThumbnail,
     link: 'https://mugundhang.github.io/ArtificerDynamics/',
     description: 'A modern business website built with clean design and seamless user experience.',
+    features: ['Responsive Design', 'Service Pages', 'Modern UI'],
   },
   {
     id: 4,
     title: 'Elegance Resume Suite',
     category: 'Resume',
+    industry: 'Digital Design',
     image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=600&h=400&fit=crop',
     pdf: '/sampleresume.pdf',
     link: '#',
     description: 'Professional resume templates with modern, clean layouts.',
+    features: ['ATS-Friendly', 'Print-Ready', 'Modern Layout'],
+  },
+]
+
+/* =================================================
+   Sales-focused sections — Why Us, What You Get,
+   Packages, Process
+   ================================================= */
+
+export const TECH_WHY_CHOOSE_US = [
+  {
+    icon: FiLayout,
+    title: 'Modern & Professional',
+    description: 'Websites designed to make your business look credible from the first click.',
+  },
+  {
+    icon: FiSmartphone,
+    title: 'Mobile First',
+    description: 'Optimized for the customers browsing you from their phones — most of them.',
+  },
+  {
+    icon: FiTarget,
+    title: 'Built Around Your Business',
+    description: 'Every website is tailored to your business instead of a generic template.',
+  },
+  {
+    icon: FiZap,
+    title: 'Conversion Focused',
+    description: 'Clear calls-to-action designed to turn visitors into enquiries.',
+  },
+  {
+    icon: FiCheckCircle,
+    title: 'Fast & Reliable',
+    description: 'Optimized for a smooth experience so visitors don\'t bounce before they see what you offer.',
+  },
+  {
+    icon: FiLifeBuoy,
+    title: 'Ongoing Support',
+    description: 'Assistance after launch whenever your business needs updates.',
+  },
+]
+
+export const TECH_TRUST_STATEMENTS = [
+  'Custom-designed websites',
+  'Mobile-first experiences',
+  'Business-focused design',
+  'Direct client communication',
+  'Post-launch support',
+]
+
+export const TECH_WHAT_YOU_GET = [
+  'Responsive design',
+  'Mobile optimization',
+  'WhatsApp integration',
+  'Contact forms',
+  'Google Maps integration',
+  'Social media integration',
+  'Service pages',
+  'Gallery',
+  'FAQ section',
+  'SEO-friendly structure',
+  'Performance optimization',
+  'Domain & hosting guidance',
+  'Post-launch support',
+]
+
+export const TECH_PACKAGES = [
+  {
+    name: 'Starter',
+    tagline: 'For businesses that need a professional online presence.',
+    highlight: false,
+  },
+  {
+    name: 'Professional',
+    tagline: 'For businesses that want a complete business website.',
+    highlight: true,
+  },
+  {
+    name: 'Premium',
+    tagline: 'For businesses that need a highly customized digital experience.',
+    highlight: false,
+  },
+]
+
+export const TECH_PROCESS_STEPS = [
+  {
+    icon: FiEye,
+    step: '01',
+    title: 'Discovery',
+    description: 'We understand your business, customers and goals.',
+  },
+  {
+    icon: FiEdit3,
+    step: '02',
+    title: 'Design',
+    description: 'We create a modern design tailored to your brand.',
+  },
+  {
+    icon: FiCode,
+    step: '03',
+    title: 'Development',
+    description: 'We build a responsive, fast and functional website.',
+  },
+  {
+    icon: FiCheckCircle,
+    step: '04',
+    title: 'Review',
+    description: 'You review the website and request changes.',
+  },
+  {
+    icon: FiSend,
+    step: '05',
+    title: 'Launch',
+    description: 'Your website goes live and is ready for customers.',
   },
 ]
 
@@ -174,7 +376,7 @@ export const TECH_SERVICE_OPTIONS = [
   'Website Development',
   'Logo Design',
   'Business Card Design',
-  'Website Enhancement',
+  'Website Redesign',
   'Resume Design & Makeover',
   'Landing Page Design',
   'SEO Optimization',

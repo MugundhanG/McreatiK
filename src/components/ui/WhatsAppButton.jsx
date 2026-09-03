@@ -7,13 +7,13 @@
 
 import React from 'react'
 import { FaWhatsapp } from 'react-icons/fa'
+import { getWhatsAppHref } from '../../utils/whatsapp'
 
-const WHATSAPP_NUMBER = '919600129267'
 const PREFILL_MESSAGE = "Hi McreatiK, I'd like to know more about your services."
 
 const WhatsAppButton = () => (
   <a
-    href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(PREFILL_MESSAGE)}`}
+    href={getWhatsAppHref(PREFILL_MESSAGE)}
     target="_blank"
     rel="noopener noreferrer"
     aria-label="Chat with McreatiK on WhatsApp"

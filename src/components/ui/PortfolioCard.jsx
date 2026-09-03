@@ -16,11 +16,14 @@ import { FiExternalLink, FiZoomIn, FiMonitor } from 'react-icons/fi'
 const PortfolioCard = memo(function PortfolioCard({
   title,
   category,
+  industry,
+  features,
   image,
   pdf,
   link,
   description,
   index,
+  large = false,
   onImageClick,
 }) {
   /* Logo → image lightbox | Resume → PDF lightbox | Website → new tab */
@@ -45,7 +48,7 @@ const PortfolioCard = memo(function PortfolioCard({
       target="_blank"
       rel="noopener noreferrer"
       onClick={handleClick}
-      className="group block relative overflow-hidden rounded-lg glass-card cursor-pointer"
+      className={`group block relative overflow-hidden rounded-lg glass-card cursor-pointer ${large ? 'lg:flex lg:items-stretch' : ''}`}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-30px' }}
@@ -53,7 +56,7 @@ const PortfolioCard = memo(function PortfolioCard({
       whileHover={{ y: -4, transition: { duration: 0.25 } }}
     >
       {/* Project thumbnail with lazy loading */}
-      <div className="relative aspect-[3/2] overflow-hidden">
+      <div className={`relative overflow-hidden ${large ? 'aspect-[3/2] lg:aspect-auto lg:w-3/5' : 'aspect-[3/2]'}`}>
         <img
           src={image}
           alt={title}
@@ -80,14 +83,36 @@ const PortfolioCard = memo(function PortfolioCard({
       </div>
 
       {/* Text content */}
-      <div className="p-6">
+      <div className={`p-6 ${large ? 'lg:w-2/5 lg:p-10 flex flex-col justify-center' : ''}`}>
         <div className="flex items-center justify-between mb-2">
-          <h3 className="text-lg font-semibold text-white font-display group-hover:text-[#a5a8ff] transition-colors">
+          <h3 className={`font-semibold text-white font-display group-hover:text-[#a5a8ff] transition-colors ${large ? 'text-2xl' : 'text-lg'}`}>
             {title}
           </h3>
           <span className="font-mono-label text-xs text-[#FF6B35] shrink-0 ml-3">#{String(index + 1).padStart(2, '0')}</span>
         </div>
-        <p className="text-sm text-gray-400 leading-relaxed">{description}</p>
+        {industry && (
+          <p className="text-xs font-mono-label uppercase text-[#a5a8ff] mb-2">{industry}</p>
+        )}
+        <p className="text-sm text-gray-400 leading-relaxed mb-4">{description}</p>
+
+        {features?.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {features.map((feature) => (
+              <span
+                key={feature}
+                className="px-2.5 py-1 text-xs rounded-full bg-white/5 text-gray-300 border border-white/10"
+              >
+                {feature}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Always-visible CTA — hover reveal alone can't be relied on for touch devices */}
+        <span className="inline-flex items-center gap-1.5 text-sm font-medium text-[#a5a8ff] group-hover:text-[#FF6B35] transition-colors">
+          {category === 'Logo' ? 'View Design' : 'View Project'}
+          <FiExternalLink className="w-3.5 h-3.5" />
+        </span>
       </div>
     </motion.a>
   )

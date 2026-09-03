@@ -10,9 +10,12 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiMenu, FiX } from 'react-icons/fi'
 import { TECH_NAV_LINKS } from '../../utils/constants'
+import { getWhatsAppHref } from '../../utils/whatsapp'
 import Button from '../ui/Button'
 import DepartmentSwitcher from '../ui/DepartmentSwitcher'
 import mcreatiKLogo from '../../assets/tech-logo-dark-bg.png'
+
+const WHATSAPP_HREF = getWhatsAppHref("Hi McreatiK, I'm interested in getting a website for my business.")
 
 const Navbar = memo(function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -88,7 +91,7 @@ const Navbar = memo(function Navbar() {
 
             {/* Desktop: CTA */}
             <div className="hidden md:flex items-center gap-4 shrink-0">
-              <Button href="#contact" className="text-xs px-4 py-2">
+              <Button href={WHATSAPP_HREF} className="text-xs px-4 py-2">
                 Get Started
               </Button>
             </div>
@@ -142,7 +145,7 @@ const Navbar = memo(function Navbar() {
                     </a>
                   ))}
                   <div className="pt-3">
-                    <Button href="#contact" onClick={closeMobile} className="w-full text-center">
+                    <Button href={WHATSAPP_HREF} onClick={closeMobile} className="w-full text-center">
                       Get Started
                     </Button>
                   </div>

@@ -36,17 +36,28 @@ const Portfolio = memo(function Portfolio() {
           subtitle="A selection of projects that showcase our commitment to quality, creativity, and results."
         />
 
-        {/* Portfolio grid — 1 col mobile, 2 tablet, 3 desktop */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-          {TECH_PORTFOLIO_ITEMS.map((item, index) => (
+        {/* Asymmetric layout — lead case study full-width, the rest side by side */}
+        <div className="flex flex-col gap-6">
+          {TECH_PORTFOLIO_ITEMS[0] && (
             <PortfolioCard
-              key={item.id}
-              {...item}
-              index={index}
-              /* Pass lightbox opener — PortfolioCard uses it when category is Logo */
+              {...TECH_PORTFOLIO_ITEMS[0]}
+              index={0}
+              large
               onImageClick={openLightbox}
             />
-          ))}
+          )}
+          {TECH_PORTFOLIO_ITEMS.length > 1 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {TECH_PORTFOLIO_ITEMS.slice(1).map((item, index) => (
+                <PortfolioCard
+                  key={item.id}
+                  {...item}
+                  index={index + 1}
+                  onImageClick={openLightbox}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

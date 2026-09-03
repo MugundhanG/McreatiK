@@ -12,9 +12,15 @@ import Footer from '../components/layout/Footer'
 import ScrollToTop from '../components/ui/ScrollToTop'
 import { setFavicon } from '../utils/setFavicon'
 
+const WhyChooseUs = lazy(() => import('../components/sections/WhyChooseUs'))
+const TargetIndustries = lazy(() => import('../components/sections/TargetIndustries'))
 const Services = lazy(() => import('../components/sections/Services'))
+const WhatYouGet = lazy(() => import('../components/sections/WhatYouGet'))
 const Portfolio = lazy(() => import('../components/sections/Portfolio'))
+const Packages = lazy(() => import('../components/sections/Packages'))
+const Process = lazy(() => import('../components/sections/Process'))
 const About = lazy(() => import('../components/sections/About'))
+const FinalCTA = lazy(() => import('../components/sections/FinalCTA'))
 const Contact = lazy(() => import('../components/sections/Contact'))
 
 function SectionLoader() {
@@ -37,9 +43,15 @@ function TechPage() {
       <main>
         <Hero />
         <Suspense fallback={<SectionLoader />}>
+          <WhyChooseUs />
+          <TargetIndustries />
           <Services />
+          <WhatYouGet />
           <Portfolio />
+          <Packages />
+          <Process />
           <About />
+          <FinalCTA />
           <Contact />
         </Suspense>
       </main>

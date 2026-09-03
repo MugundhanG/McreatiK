@@ -9,10 +9,14 @@
 import React, { memo } from 'react'
 import { motion } from 'framer-motion'
 import { FiArrowRight } from 'react-icons/fi'
+import { FaWhatsapp } from 'react-icons/fa'
 import Button from '../ui/Button'
 import RegMark from '../ui/RegMark'
 import techHeroPhoto from '../../assets/tech-hero-photo.webp'
 import { TECH_SERVICES } from '../../utils/constants'
+import { getWhatsAppHref } from '../../utils/whatsapp'
+
+const WHATSAPP_HREF = getWhatsAppHref("Hi McreatiK, I'd like a free consultation for my business.")
 
 const fadeUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 28 },
@@ -88,9 +92,9 @@ const Hero = memo(function Hero() {
               initial="hidden"
               animate="visible"
             >
-              We build the digital{' '}
-              <span className="gradient-text">deliverables</span>{' '}
-              your business ships with
+              Build a stronger{' '}
+              <span className="gradient-text">digital presence</span>{' '}
+              for your business
             </motion.h1>
 
             {/* Subtext */}
@@ -100,8 +104,8 @@ const Hero = memo(function Hero() {
               initial="hidden"
               animate="visible"
             >
-              Websites, brand identity, business cards, and resumes — designed and built
-              with the same discipline as a production spec, from first draft to final file.
+              Modern websites, branding, and digital design that help local businesses
+              look professional online — and get more customers.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -111,11 +115,11 @@ const Hero = memo(function Hero() {
               initial="hidden"
               animate="visible"
             >
-              <Button href="#contact">
-                Get Started <FiArrowRight className="w-4 h-4" />
+              <Button href={WHATSAPP_HREF}>
+                <FaWhatsapp className="w-4 h-4" /> Get a Free Consultation
               </Button>
               <Button href="#portfolio" variant="outline">
-                View Our Work
+                View Our Work <FiArrowRight className="w-4 h-4" />
               </Button>
             </motion.div>
           </div>
@@ -154,8 +158,8 @@ const Hero = memo(function Hero() {
                 <p className="text-sm font-semibold text-white">Ready to start?</p>
                 <p className="text-xs text-gray-400 mt-0.5">We reply within 24 hours</p>
               </div>
-              <Button href="#contact" className="text-xs px-4 py-2 shrink-0">
-                Let's Talk <FiArrowRight className="w-3 h-3" />
+              <Button href={WHATSAPP_HREF} className="text-xs px-4 py-2 shrink-0">
+                <FaWhatsapp className="w-3.5 h-3.5" /> Let's Talk
               </Button>
             </div>
           </motion.div>
