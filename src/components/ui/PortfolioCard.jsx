@@ -22,6 +22,8 @@ const PortfolioCard = memo(function PortfolioCard({
   pdf,
   link,
   description,
+  challenge,
+  result,
   index,
   large = false,
   onImageClick,
@@ -94,6 +96,23 @@ const PortfolioCard = memo(function PortfolioCard({
           <p className="text-xs font-mono-label uppercase text-[#a5a8ff] mb-2">{industry}</p>
         )}
         <p className="text-sm text-gray-400 leading-relaxed mb-4">{description}</p>
+
+        {(challenge || result) && (
+          <div className="space-y-3 mb-4 border-l-2 border-[#5B5FEF]/30 pl-4">
+            {challenge && (
+              <div>
+                <p className="font-mono-label text-[11px] uppercase text-[#FF6B35] mb-0.5">The Challenge</p>
+                <p className="text-sm text-gray-400 leading-relaxed">{challenge}</p>
+              </div>
+            )}
+            {result && (
+              <div>
+                <p className="font-mono-label text-[11px] uppercase text-[#FF6B35] mb-0.5">The Result</p>
+                <p className="text-sm text-gray-400 leading-relaxed">{result}</p>
+              </div>
+            )}
+          </div>
+        )}
 
         {features?.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-4">

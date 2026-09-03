@@ -45,6 +45,8 @@ import {
   FiCode,
   FiEye,
   FiSend,
+  FiMessageCircle,
+  FiShare2,
 } from 'react-icons/fi'
 
 /* Shared contact number used for WhatsApp CTAs across both departments */
@@ -64,6 +66,7 @@ export const TECH_NAV_LINKS = [
   { label: 'Work', href: '#portfolio' },
   { label: 'Process', href: '#process' },
   { label: 'About', href: '#about' },
+  { label: 'FAQ', href: '#faq' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -156,7 +159,7 @@ export const TECH_SERVICES = [
   },
   {
     icon: FiTool,
-    title: 'Website Maintenance',
+    title: 'Website Care & Maintenance',
     description:
       'Ongoing updates, backups, and fixes so your site stays fast, secure, and reliably online.',
     category: 'Websites',
@@ -173,6 +176,13 @@ export const TECH_SERVICES = [
     title: 'Google Business Profile',
     description:
       'A fully set up, optimized Google Business listing so local customers can find and trust you.',
+    category: 'Websites',
+  },
+  {
+    icon: FiMessageCircle,
+    title: 'WhatsApp Business Setup',
+    description:
+      'Your WhatsApp Business profile, catalog, and quick replies set up so enquiries turn into conversations fast.',
     category: 'Websites',
   },
   {
@@ -217,6 +227,13 @@ export const TECH_SERVICES = [
       "A sharper LinkedIn presence — photo, headline, and summary that reflect where you're headed.",
     category: 'Digital Design',
   },
+  {
+    icon: FiShare2,
+    title: 'Social Media Creatives',
+    description:
+      'Branded post templates and graphics so your social pages look as professional as your website.',
+    category: 'Digital Design',
+  },
 ]
 
 export const TECH_PORTFOLIO_ITEMS = [
@@ -228,6 +245,8 @@ export const TECH_PORTFOLIO_ITEMS = [
     image: photographyThumbnail,
     link: 'https://mugundhang.github.io/Heeswar-photography/',
     description: 'Fully responsive photography website with modern design and seamless user experience with contact form.',
+    challenge: 'Needed a professional home online to showcase their work and give potential clients an easy way to get in touch.',
+    result: 'A fully responsive site with a built-in enquiry form, live and ready to take visitor contact.',
     features: ['Responsive Design', 'Contact Form', 'Portfolio Gallery'],
   },
   {
@@ -238,6 +257,8 @@ export const TECH_PORTFOLIO_ITEMS = [
     image: adThumbnail,
     link: 'https://mugundhang.github.io/ArtificerDynamics/',
     description: 'A modern business website built with clean design and seamless user experience.',
+    challenge: 'Needed a credible online presence that matched the quality of their engineering work.',
+    result: 'A clean, modern site that presents their services clearly to prospective clients.',
     features: ['Responsive Design', 'Service Pages', 'Modern UI'],
   },
   {
@@ -249,6 +270,8 @@ export const TECH_PORTFOLIO_ITEMS = [
     pdf: '/sampleresume.pdf',
     link: '#',
     description: 'Professional resume templates with modern, clean layouts.',
+    challenge: 'Job seekers needed resumes that stood out without looking gimmicky or hard to scan.',
+    result: 'ATS-friendly templates with a modern, professional layout, ready to customize.',
     features: ['ATS-Friendly', 'Print-Ready', 'Modern Layout'],
   },
 ]
@@ -366,6 +389,37 @@ export const TECH_PROCESS_STEPS = [
   },
 ]
 
+export const TECH_FAQ = [
+  {
+    question: 'How long does it take to build my website?',
+    answer: 'It depends on your requirements and how quickly you can share content like text and images. We\'ll give you a clear timeline during our first conversation, before any work begins.',
+  },
+  {
+    question: 'Do I own my website and domain?',
+    answer: 'Yes. Once the project is complete, the domain and website are yours — you\'re not locked into us to keep using them.',
+  },
+  {
+    question: 'Can I request changes during the design process?',
+    answer: 'Yes — that\'s exactly what the Review step in our process is for. You review the site and request changes before it goes live.',
+  },
+  {
+    question: 'I don\'t have content or photos ready — can you still help?',
+    answer: 'Yes. We can guide you on what\'s needed, or connect you with McreatiK Studios for professional product and team photography.',
+  },
+  {
+    question: 'What happens after my website goes live?',
+    answer: 'We offer Website Care & Maintenance plans for ongoing updates, backups, and small changes, so your site keeps working for you after launch.',
+  },
+  {
+    question: 'How much will my website cost?',
+    answer: 'Pricing depends on scope — request a quote on WhatsApp and we\'ll give you a clear number before any work begins.',
+  },
+  {
+    question: 'How do I get started?',
+    answer: 'Message us on WhatsApp with a bit about your business, and we\'ll set up a free consultation to understand what you need.',
+  },
+]
+
 export const TECH_STATS = [
   { value: '30+', label: 'Projects Delivered' },
   { value: '2+', label: 'Years of Experience' },
@@ -380,12 +434,14 @@ export const TECH_SERVICE_OPTIONS = [
   'Resume Design & Makeover',
   'Landing Page Design',
   'SEO Optimization',
-  'Website Maintenance',
+  'Website Care & Maintenance',
   'Domain & Hosting Setup',
   'Google Business Profile',
+  'WhatsApp Business Setup',
   'Portfolio Websites',
   'Invoice & Quotation Design',
   'Menu Card Design',
+  'Social Media Creatives',
   'LinkedIn Profile Makeover',
   'Other',
 ]

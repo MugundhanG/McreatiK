@@ -7,7 +7,6 @@
 
 import React, { memo } from 'react'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import { FiArrowRight } from 'react-icons/fi'
 import { TECH_STATS } from '../../utils/constants'
 import SectionHeading from '../ui/SectionHeading'
@@ -42,9 +41,6 @@ const About = memo(function About() {
               <a href="#contact" className="inline-flex items-center gap-2 text-sm font-medium text-[#a5a8ff] hover:text-[#FF6B35] transition-colors">
                 Work with us <FiArrowRight className="w-4 h-4" />
               </a>
-              <Link to="/studios" className="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-[#a5a8ff] transition-colors">
-                Looking for photography? Visit McreatiK Studios <FiArrowRight className="w-4 h-4" />
-              </Link>
             </div>
 
             {/* Stats — inline masthead numbers, not boxed tiles */}

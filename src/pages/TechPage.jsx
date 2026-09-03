@@ -17,9 +17,12 @@ const TargetIndustries = lazy(() => import('../components/sections/TargetIndustr
 const Services = lazy(() => import('../components/sections/Services'))
 const WhatYouGet = lazy(() => import('../components/sections/WhatYouGet'))
 const Portfolio = lazy(() => import('../components/sections/Portfolio'))
+const StudiosCrossSell = lazy(() => import('../components/sections/StudiosCrossSell'))
 const Packages = lazy(() => import('../components/sections/Packages'))
 const Process = lazy(() => import('../components/sections/Process'))
 const About = lazy(() => import('../components/sections/About'))
+const Testimonials = lazy(() => import('../components/sections/Testimonials'))
+const FAQ = lazy(() => import('../components/sections/FAQ'))
 const FinalCTA = lazy(() => import('../components/sections/FinalCTA'))
 const Contact = lazy(() => import('../components/sections/Contact'))
 
@@ -48,9 +51,12 @@ function TechPage() {
           <Services />
           <WhatYouGet />
           <Portfolio />
+          <StudiosCrossSell />
           <Packages />
           <Process />
           <About />
+          <Testimonials />
+          <FAQ />
           <FinalCTA />
           <Contact />
         </Suspense>

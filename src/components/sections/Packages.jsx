@@ -9,6 +9,7 @@
 import React, { memo } from 'react'
 import { motion } from 'framer-motion'
 import { FaWhatsapp } from 'react-icons/fa'
+import { FiLifeBuoy } from 'react-icons/fi'
 import { TECH_PACKAGES } from '../../utils/constants'
 import { getWhatsAppHref } from '../../utils/whatsapp'
 import SectionHeading from '../ui/SectionHeading'
@@ -16,6 +17,10 @@ import Button from '../ui/Button'
 
 const WHATSAPP_HREF = getWhatsAppHref(
   "Hi McreatiK, I'd like a quote for a website package for my business."
+)
+
+const CARE_PLAN_WHATSAPP_HREF = getWhatsAppHref(
+  "Hi McreatiK, I'd like to know more about your Care Plans for ongoing website support."
 )
 
 const Packages = memo(function Packages() {
@@ -59,6 +64,28 @@ const Packages = memo(function Packages() {
               </Button>
             </div>
           ))}
+        </motion.div>
+
+        {/* Care Plan — ongoing support, separate from the one-time build tiers above */}
+        <motion.div
+          className="mt-6 rounded-lg border border-white/10 p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-5 sm:gap-6 text-center sm:text-left"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-20px' }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          <span className="flex items-center justify-center w-12 h-12 shrink-0 rounded-lg border border-[#5B5FEF]/30 text-[#a5a8ff]">
+            <FiLifeBuoy className="w-5 h-5" />
+          </span>
+          <div className="flex-1">
+            <h3 className="text-white font-semibold font-display">Need ongoing support after launch?</h3>
+            <p className="text-gray-400 text-sm mt-1">
+              Ask about our Care Plans — regular updates, backups, and small changes so your site stays fresh.
+            </p>
+          </div>
+          <Button href={CARE_PLAN_WHATSAPP_HREF} variant="outline" className="shrink-0">
+            <FaWhatsapp className="w-4 h-4" /> Ask About Care Plans
+          </Button>
         </motion.div>
       </div>
     </section>
