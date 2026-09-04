@@ -579,6 +579,7 @@ export const HOME_EXPLORE_AREAS = [
   {
     key: 'tech',
     icon: FiGlobe,
+    kicker: 'Build Your Online Presence',
     name: 'McreatiK Tech',
     tagline: 'Digital solutions for businesses and professionals.',
     longDescription: 'Websites, branding and digital solutions designed to build your online presence and grow your business.',
@@ -590,8 +591,9 @@ export const HOME_EXPLORE_AREAS = [
   {
     key: 'studios',
     icon: FiCamera,
+    kicker: 'Capture What Matters',
     name: 'McreatiK Studios',
-    tagline: 'Creative services and visual experiences.',
+    tagline: 'Photography, album design and visual experiences.',
     longDescription: 'Photography and creative services that tell your story and create lasting impact.',
     bullets: ['Photography', 'Albums', 'Event coverage'],
     cta: 'Explore Studios',
@@ -601,8 +603,9 @@ export const HOME_EXPLORE_AREAS = [
   {
     key: 'store',
     icon: FiPackage,
+    kicker: 'Start With Something Ready',
     name: 'McreatiK Store',
-    tagline: 'Digital products and creative resources.',
+    tagline: 'Digital products and creative resources to help you get moving faster.',
     longDescription: 'Digital products, templates and creative resources to help you create, launch and grow.',
     bullets: ['Templates', 'Digital downloads', 'Creative resources'],
     cta: 'Coming Soon',

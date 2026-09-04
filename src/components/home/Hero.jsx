@@ -75,37 +75,31 @@ const Hero = memo(function Hero() {
               <span className="text-[#D8AE55]">K</span>
             </motion.h1>
 
-            <motion.p
-              className="mt-4 font-display font-bold text-2xl sm:text-3xl"
-              variants={fadeUp(0.1)}
-              initial="hidden"
-              animate="visible"
-            >
-              <span className="text-[#F4F2EA]">Digital. </span>
-              <span className="text-[#D8AE55]">Creative. </span>
-              <span className="text-[#F4F2EA]">Complete.</span>
-            </motion.p>
-
-            <motion.p
-              className="mt-5 text-base sm:text-lg text-[#8890AE] max-w-lg leading-relaxed"
-              variants={fadeUp(0.2)}
-              initial="hidden"
-              animate="visible"
-            >
-              McreatiK brings digital and creative solutions together — helping businesses, professionals and creators build, present and grow their presence.
-            </motion.p>
-
             <motion.div
-              className="mt-6 flex flex-wrap items-center gap-2 text-xs font-mono-label uppercase text-[#D8AE55]"
-              variants={fadeUp(0.3)}
+              className="mt-6 w-full max-w-lg border-t border-white/10"
+              variants={fadeUp(0.15)}
               initial="hidden"
               animate="visible"
             >
-              <span>Tech</span>
-              <span className="text-[#4C5FA8]">·</span>
-              <span>Studios</span>
-              <span className="text-[#4C5FA8]">·</span>
-              <span>Store</span>
+              {HOME_EXPLORE_AREAS.map(({ key, kicker, name, tagline, accent, comingSoon }) => (
+                <div key={key} className="py-5 border-b border-white/10">
+                  <span
+                    className="text-xs font-mono-label uppercase tracking-wide"
+                    style={{ color: accent }}
+                  >
+                    {kicker}
+                  </span>
+                  <h3 className="font-display font-bold text-lg text-white mt-1">
+                    {name}
+                    {comingSoon && (
+                      <span className="ml-2 text-xs font-mono-label uppercase text-[#D8AE55] align-middle">
+                        Coming Soon
+                      </span>
+                    )}
+                  </h3>
+                  <p className="text-sm text-[#8890AE] mt-1 leading-relaxed">{tagline}</p>
+                </div>
+              ))}
             </motion.div>
 
             <motion.div
