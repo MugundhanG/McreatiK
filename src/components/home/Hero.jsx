@@ -9,12 +9,14 @@
    ============================================ */
 
 import React, { memo } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FiArrowRight } from 'react-icons/fi'
 import Button from '../ui/Button'
 import { getWhatsAppHref } from '../../utils/whatsapp'
 import { HOME_EXPLORE_AREAS } from '../../utils/constants'
 import mkMark from '../../assets/mcreatik-mk-mark.png'
+import homeHeroPhoto from '../../assets/home-hero-photo.png'
 
 const WHATSAPP_HREF = getWhatsAppHref("Hi McreatiK, I have a project in mind — I'd like to talk.")
 
@@ -57,6 +59,17 @@ const MiniCard = memo(function MiniCard({ icon: Icon, name, tagline, accent, com
 const Hero = memo(function Hero() {
   return (
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden pt-24 pb-16">
+      {/* Background photo — heavily blurred and dimmed to a faint texture so the copy stays fully legible */}
+      <div className="absolute inset-0 pointer-events-none">
+        <img
+          src={homeHeroPhoto}
+          alt=""
+          aria-hidden="true"
+          className="w-full h-full object-cover scale-110 blur-lg opacity-90"
+        />
+        <div className="absolute inset-0 bg-[#0A1128]/40" />
+      </div>
+
       <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-[#D8AE55]/10 rounded-full blur-[128px] pointer-events-none" />
       <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] bg-[#4C5FA8]/20 rounded-full blur-[100px] pointer-events-none" />
 
@@ -81,23 +94,34 @@ const Hero = memo(function Hero() {
               initial="hidden"
               animate="visible"
             >
-              {HOME_EXPLORE_AREAS.map(({ key, kicker, name, tagline, accent, comingSoon }) => (
-                <div key={key} className="py-5 border-b border-white/10">
-                  <span
-                    className="text-xs font-mono-label uppercase tracking-wide"
-                    style={{ color: accent }}
-                  >
-                    {kicker}
-                  </span>
-                  <h3 className="font-display font-bold text-lg text-white mt-1">
-                    {name}
-                    {comingSoon && (
-                      <span className="ml-2 text-xs font-mono-label uppercase text-[#D8AE55] align-middle">
-                        Coming Soon
-                      </span>
-                    )}
-                  </h3>
-                  <p className="text-sm text-[#8890AE] mt-1 leading-relaxed">{tagline}</p>
+              {HOME_EXPLORE_AREAS.map(({ key, kicker, name, tagline, accent, comingSoon, cta, href }) => (
+                <div key={key} className="py-5 border-b border-white/10 flex items-center justify-between gap-4">
+                  <div>
+                    <span
+                      className="text-xs font-mono-label uppercase tracking-wide"
+                      style={{ color: accent }}
+                    >
+                      {kicker}
+                    </span>
+                    <h3 className="font-display font-bold text-lg text-white mt-1">
+                      {name}
+                    </h3>
+                    <p className="text-sm text-[#8890AE] mt-1 leading-relaxed">{tagline}</p>
+                  </div>
+                  {comingSoon ? (
+                    <span className="shrink-0 text-xs font-mono-label uppercase text-[#D8AE55]">
+                      {cta}
+                    </span>
+                  ) : (
+                    <Link
+                      to={href}
+                      className="shrink-0 inline-flex items-center gap-1.5 text-sm font-semibold whitespace-nowrap"
+                      style={{ color: accent }}
+                    >
+                      <span className="underline underline-offset-4">{cta}</span>
+                      <FiArrowRight className="w-4 h-4" />
+                    </Link>
+                  )}
                 </div>
               ))}
             </motion.div>
