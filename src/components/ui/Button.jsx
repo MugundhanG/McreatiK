@@ -1,8 +1,8 @@
 /* ============================================
    Button Component
    Reusable CTA button with two variants
-   ("primary" / "outline") across two department
-   themes ("tech" / "studios"). Supports click
+   ("primary" / "outline") across three themes
+   ("tech" / "studios" / "home"). Supports click
    handlers, custom classes, and an optional href.
    ============================================ */
 
@@ -20,6 +20,12 @@ const THEMES = {
       'bg-[#C9971F] text-white border border-black/5 hover:bg-[#b3860f]',
     outline:
       'border border-[#C9971F]/60 text-[#1C1710] hover:bg-[#C9971F]/10 hover:border-[#C9971F]',
+  },
+  home: {
+    primary:
+      'bg-[#D8AE55] text-[#0A1128] border border-black/5 hover:bg-[#F0CB7E]',
+    outline:
+      'border border-[#D8AE55]/50 text-[#D8AE55] hover:bg-[#D8AE55]/10 hover:border-[#D8AE55]',
   },
 }
 

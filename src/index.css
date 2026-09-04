@@ -73,6 +73,15 @@
     --font-body: 'Work Sans', sans-serif;
     --font-mono: 'Space Mono', monospace;
   }
+  /* McreatiK master brand — the homepage's own identity, distinct from
+     both departments, grounded in the real logo's navy + gold. */
+  .theme-home {
+    background: #0a1128;
+    color: #f4f2ea;
+    --font-display: 'Archivo', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
 
   /* Indigo → spot-orange gradient text, Tech only */
   .gradient-text {
@@ -82,10 +91,24 @@
     background-clip: text;
   }
 
+  /* Gold → periwinkle gradient text, McreatiK home only */
+  .gradient-text-home {
+    background: linear-gradient(90deg, #f0cb7e 0%, #8fa3e0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
   /* Flat card surface — Tech only */
   .glass-card {
     background: #12141c;
     border: 1px solid rgba(91, 95, 239, 0.22);
+  }
+
+  /* Flat card surface — McreatiK home only, gold-tinted border */
+  .glass-card-home {
+    background: #121a3d;
+    border: 1px solid rgba(216, 174, 85, 0.2);
   }
 
   /* ---------- Tech registration-mark motif ----------
@@ -145,6 +168,30 @@
   .film-frame::after {
     bottom: -10px;
   }
+
+  /* ---------- McreatiK home "K-mark" ----------
+     Three thin diagonal strokes, lifted from the K
+     glyph in the real McreatiK logo — this page's
+     own signature, distinct from Tech's reg-marks
+     and Studios' film-sprocket ticks. */
+  .k-mark {
+    position: relative;
+    display: inline-flex;
+    width: 14px;
+    height: 14px;
+  }
+  .k-mark::before,
+  .k-mark::after {
+    content: '';
+    position: absolute;
+    top: 1px;
+    bottom: 1px;
+    width: 1.5px;
+    background: #d8ae55;
+    transform: rotate(24deg);
+  }
+  .k-mark::before { left: 3px; }
+  .k-mark::after { left: 8px; }
 
   /* Subtle paper-grain texture overlay, Studios only */
   .film-grain {

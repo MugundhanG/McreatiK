@@ -47,6 +47,11 @@ import {
   FiSend,
   FiMessageCircle,
   FiShare2,
+  FiMessageSquare,
+  FiCompass,
+  FiFeather,
+  FiPackage,
+  FiUser,
 } from 'react-icons/fi'
 
 /* Shared contact number used for WhatsApp CTAs across both departments */
@@ -555,4 +560,156 @@ export const STUDIOS_SERVICE_OPTIONS = [
 export const SOCIAL_LINKS = [
   { label: 'Instagram', href: 'https://instagram.com/mcreatik', icon: 'instagram' },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/mcreatik', icon: 'linkedin' },
+]
+
+/* =================================================
+   MCREATIK — HOME (umbrella-brand homepage)
+   ================================================= */
+
+export const HOME_NAV_LINKS = [
+  { label: 'Home', href: '#home', type: 'anchor' },
+  { label: 'Tech', href: '/tech', type: 'route' },
+  { label: 'Studios', href: '/studios', type: 'route' },
+  { label: 'Store', type: 'disabled' },
+  { label: 'About', href: '#about', type: 'anchor' },
+  { label: 'Contact', href: '#contact', type: 'anchor' },
+]
+
+export const HOME_EXPLORE_AREAS = [
+  {
+    key: 'tech',
+    icon: FiGlobe,
+    name: 'McreatiK Tech',
+    tagline: 'Digital solutions for businesses and professionals.',
+    longDescription: 'Websites, branding and digital solutions designed to build your online presence and grow your business.',
+    bullets: ['Websites', 'Branding', 'Digital services'],
+    cta: 'Explore Tech',
+    href: '/tech',
+    accent: '#5B5FEF',
+  },
+  {
+    key: 'studios',
+    icon: FiCamera,
+    name: 'McreatiK Studios',
+    tagline: 'Creative services and visual experiences.',
+    longDescription: 'Photography and creative services that tell your story and create lasting impact.',
+    bullets: ['Photography', 'Albums', 'Event coverage'],
+    cta: 'Explore Studios',
+    href: '/studios',
+    accent: '#C9971F',
+  },
+  {
+    key: 'store',
+    icon: FiPackage,
+    name: 'McreatiK Store',
+    tagline: 'Digital products and creative resources.',
+    longDescription: 'Digital products, templates and creative resources to help you create, launch and grow.',
+    bullets: ['Templates', 'Digital downloads', 'Creative resources'],
+    cta: 'Coming Soon',
+    href: null,
+    accent: '#8B7FE8',
+    comingSoon: true,
+  },
+]
+
+export const HOME_WHO_WE_HELP = [
+  {
+    icon: FiBriefcase,
+    title: 'Businesses',
+    description: 'Build a professional digital presence and grow with confidence.',
+  },
+  {
+    icon: FiUser,
+    title: 'Professionals',
+    description: 'Present yourself better and unlock new opportunities.',
+  },
+  {
+    icon: FiCamera,
+    title: 'Creators',
+    description: 'Bring your ideas to life with powerful visual storytelling.',
+  },
+  {
+    icon: FiCalendar,
+    title: 'Event & Wedding',
+    description: 'Make your special moments beautiful, memorable and shareable.',
+  },
+  {
+    icon: FiShoppingBag,
+    title: 'Small & Local Brands',
+    description: 'Stand out in your local market with a modern digital identity.',
+  },
+]
+
+export const HOME_WHAT_WE_CREATE = [
+  {
+    category: 'Digital',
+    icon: FiCode,
+    accent: '#5B5FEF',
+    items: ['Websites', 'Website Redesign', 'Landing Pages', 'Digital Solutions'],
+  },
+  {
+    category: 'Brand',
+    icon: FiPenTool,
+    accent: '#D8AE55',
+    items: ['Logo & Identity', 'Business Cards', 'Brand Assets', 'Social Media Design'],
+  },
+  {
+    category: 'Creative',
+    icon: FiCamera,
+    accent: '#9B7FE8',
+    items: ['Photography', 'Portraits', 'Event Coverage', 'Albums & More'],
+  },
+  {
+    category: 'Products',
+    icon: FiShoppingBag,
+    accent: '#4FBFA0',
+    items: ['Templates', 'Digital Downloads', 'Creative Resources'],
+    comingSoon: true,
+  },
+]
+
+export const HOME_WHY_MCREATIK = [
+  {
+    title: 'Digital and creative, under one brand',
+    description: 'Your website and your photography can come from the same place, speaking the same language.',
+  },
+  {
+    title: 'Modern, purposeful design',
+    description: "Nothing added just to look busy — every choice is there because it earns its place.",
+  },
+  {
+    title: 'Built around what you actually need',
+    description: 'No generic templates forced onto your business — the work is shaped around your goals.',
+  },
+  {
+    title: 'Comfortable across different kinds of work',
+    description: 'From a business website to a wedding shoot, the same care and standards apply.',
+  },
+]
+
+export const HOME_HOW_IT_WORKS = [
+  {
+    icon: FiMessageSquare,
+    step: '01',
+    title: 'Tell us what you need',
+    description: 'Reach out on WhatsApp with what you have in mind.',
+  },
+  {
+    icon: FiCompass,
+    step: '02',
+    title: 'We understand and plan',
+    description: "We ask the right questions and map out what needs to happen.",
+  },
+  {
+    icon: FiFeather,
+    step: '03',
+    title: 'We create',
+    description: 'Design, development, or a shoot — whatever the work calls for.',
+  },
+  {
+    icon: FiSend,
+    step: '04',
+    title: 'You launch or use it',
+    description: 'Your website goes live, or your photos and files are delivered.',
+  },
 ]
