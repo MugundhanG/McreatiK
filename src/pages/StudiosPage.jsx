@@ -11,6 +11,7 @@ import StudiosHero from '../components/studios/Hero'
 import StudiosFooter from '../components/studios/Footer'
 import ScrollToTop from '../components/ui/ScrollToTop'
 import { setFavicon } from '../utils/setFavicon'
+import { useScrollToHash } from '../hooks/useScrollToHash'
 
 const StudiosOfferings = lazy(() => import('../components/studios/Offerings'))
 const StudiosGallery = lazy(() => import('../components/studios/Gallery'))
@@ -30,6 +31,8 @@ function StudiosPage() {
     document.title = 'McreatiK Studios | Wedding, Portrait & Event Photography in Chennai'
     setFavicon('/favicon-studios.png')
   }, [])
+
+  useScrollToHash()
 
   return (
     <div className="theme-studios min-h-screen overflow-x-hidden w-full">

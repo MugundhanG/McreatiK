@@ -21,6 +21,7 @@ const WhatWeCreate = lazy(() => import('../components/home/WhatWeCreate'))
 const WhyMcreatik = lazy(() => import('../components/home/WhyMcreatik'))
 const HowItWorks = lazy(() => import('../components/home/HowItWorks'))
 const FinalCTA = lazy(() => import('../components/home/FinalCTA'))
+const Contact = lazy(() => import('../components/home/Contact'))
 
 function SectionLoader() {
   return (
@@ -49,6 +50,7 @@ const Landing = function Landing() {
           <WhyMcreatik />
           <HowItWorks />
           <FinalCTA />
+          <Contact />
         </Suspense>
       </main>
       <Footer />

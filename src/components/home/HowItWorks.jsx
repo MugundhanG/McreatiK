@@ -9,10 +9,22 @@ import React, { memo } from 'react'
 import { motion } from 'framer-motion'
 import { HOME_HOW_IT_WORKS } from '../../utils/constants'
 import SectionHeading from './SectionHeading'
+import howItWorksBg from '../../assets/how-it-works-bg.png'
 
 const HowItWorks = memo(function HowItWorks() {
   return (
-    <section className="relative py-24 lg:py-28">
+    <section className="relative py-24 lg:py-28 overflow-hidden">
+      {/* Background photo — blurred and dimmed to a faint texture so the steps stay fully legible */}
+      <div className="absolute inset-0 pointer-events-none">
+        <img
+          src={howItWorksBg}
+          alt=""
+          aria-hidden="true"
+          className="w-full h-full object-cover scale-110 blur-lg opacity-90"
+        />
+        <div className="absolute inset-0 bg-[#0A1128]/40" />
+      </div>
+
       <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading label="How It Works" title="From First Message to Delivery" />
 

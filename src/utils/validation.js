@@ -21,6 +21,10 @@ export function validateField(name, value) {
   const trimmed = value.trim()
 
   switch (name) {
+    case 'department':
+      if (!trimmed) return 'Please choose a department'
+      return ''
+
     case 'name':
       if (!trimmed) return 'Name is required'
       if (trimmed.length < 2) return 'Name must be at least 2 characters'

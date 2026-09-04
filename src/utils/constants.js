@@ -52,6 +52,8 @@ import {
   FiFeather,
   FiPackage,
   FiUser,
+  FiLayers,
+  FiGrid,
 } from 'react-icons/fi'
 
 /* Shared contact number used for WhatsApp CTAs across both departments */
@@ -560,6 +562,9 @@ export const STUDIOS_SERVICE_OPTIONS = [
 export const SOCIAL_LINKS = [
   { label: 'Instagram', href: 'https://instagram.com/mcreatik', icon: 'instagram' },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/mcreatik', icon: 'linkedin' },
+  { label: 'Facebook', href: '#', icon: 'facebook' },
+  { label: 'Twitter', href: '#', icon: 'twitter' },
+  { label: 'YouTube', href: '#', icon: 'youtube' },
 ]
 
 /* =================================================
@@ -570,7 +575,7 @@ export const HOME_NAV_LINKS = [
   { label: 'Home', href: '#home', type: 'anchor' },
   { label: 'Tech', href: '/tech', type: 'route' },
   { label: 'Studios', href: '/studios', type: 'route' },
-  { label: 'Store', type: 'disabled' },
+  { label: 'Digital Store', type: 'disabled' },
   { label: 'About', href: '#about', type: 'anchor' },
   { label: 'Contact', href: '#contact', type: 'anchor' },
 ]
@@ -604,7 +609,7 @@ export const HOME_EXPLORE_AREAS = [
     key: 'store',
     icon: FiPackage,
     kicker: 'Start With Something Ready',
-    name: 'McreatiK Store',
+    name: 'McreatiK Digital Store',
     tagline: 'Digital products and creative resources to help you get moving faster.',
     longDescription: 'Digital products, templates and creative resources to help you create, launch and grow.',
     bullets: ['Templates', 'Digital downloads', 'Creative resources'],
@@ -648,13 +653,13 @@ export const HOME_WHAT_WE_CREATE = [
     category: 'Digital',
     icon: FiCode,
     accent: '#5B5FEF',
-    items: ['Websites', 'Website Redesign', 'Landing Pages', 'Digital Solutions'],
+    items: ['Website Development', 'Website Redesign', 'Landing Pages', 'Digital Solutions'],
   },
   {
     category: 'Brand',
     icon: FiPenTool,
     accent: '#D8AE55',
-    items: ['Logo & Identity', 'Business Cards', 'Brand Assets', 'Social Media Design'],
+    items: ['Logo & Identity', 'Business Cards', 'Identity Cards'],
   },
   {
     category: 'Creative',
@@ -673,18 +678,22 @@ export const HOME_WHAT_WE_CREATE = [
 
 export const HOME_WHY_MCREATIK = [
   {
+    icon: FiLayers,
     title: 'Digital and creative, under one brand',
     description: 'Your website and your photography can come from the same place, speaking the same language.',
   },
   {
+    icon: FiPenTool,
     title: 'Modern, purposeful design',
     description: "Nothing added just to look busy — every choice is there because it earns its place.",
   },
   {
+    icon: FiTarget,
     title: 'Built around what you actually need',
     description: 'No generic templates forced onto your business — the work is shaped around your goals.',
   },
   {
+    icon: FiGrid,
     title: 'Comfortable across different kinds of work',
     description: 'From a business website to a wedding shoot, the same care and standards apply.',
   },

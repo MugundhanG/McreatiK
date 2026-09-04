@@ -10,7 +10,7 @@
 
 import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
-import { FiInstagram, FiLinkedin, FiTwitter, FiFacebook } from 'react-icons/fi'
+import { FiInstagram, FiLinkedin, FiTwitter, FiFacebook, FiYoutube } from 'react-icons/fi'
 import { TECH_NAV_LINKS, TECH_SERVICES, SOCIAL_LINKS } from '../../utils/constants'
 import DepartmentSwitcher from '../ui/DepartmentSwitcher'
 import mcreatiKLogo from '../../assets/tech-logo-dark-bg.png'
@@ -21,6 +21,7 @@ const ICON_MAP = {
   linkedin: FiLinkedin,
   twitter: FiTwitter,
   facebook: FiFacebook,
+  youtube: FiYoutube,
 }
 
 const Footer = memo(function Footer() {

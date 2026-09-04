@@ -11,6 +11,7 @@ import Hero from '../components/sections/Hero'
 import Footer from '../components/layout/Footer'
 import ScrollToTop from '../components/ui/ScrollToTop'
 import { setFavicon } from '../utils/setFavicon'
+import { useScrollToHash } from '../hooks/useScrollToHash'
 
 const WhyChooseUs = lazy(() => import('../components/sections/WhyChooseUs'))
 const TargetIndustries = lazy(() => import('../components/sections/TargetIndustries'))
@@ -39,6 +40,8 @@ function TechPage() {
     document.title = 'McreatiK Tech & Creative | Website & Logo Design in Chennai'
     setFavicon('/favicon-tech.png')
   }, [])
+
+  useScrollToHash()
 
   return (
     <div className="theme-tech min-h-screen text-white overflow-x-hidden w-full">
