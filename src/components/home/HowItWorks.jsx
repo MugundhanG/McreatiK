@@ -43,7 +43,7 @@ const HowItWorks = memo(function HowItWorks() {
                 <div className="relative z-10 w-12 h-12 rounded-full bg-[#0A1128] border border-[#D8AE55]/40 flex items-center justify-center mb-5">
                   <Icon className="w-5 h-5 text-[#D8AE55]" />
                 </div>
-                <span className="font-mono-label text-xs text-gray-600">{step}</span>
+                <span className="font-mono-label text-xs text-gray-400">{step}</span>
                 <h3 className="text-white font-semibold font-display mt-1 mb-1.5">{title}</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">{description}</p>
               </motion.div>
@@ -67,7 +67,7 @@ const HowItWorks = memo(function HowItWorks() {
                 <div className="absolute -left-9 top-0 w-8 h-8 rounded-full bg-[#0A1128] border border-[#D8AE55]/40 flex items-center justify-center">
                   <Icon className="w-3.5 h-3.5 text-[#D8AE55]" />
                 </div>
-                <span className="font-mono-label text-xs text-gray-600">{step}</span>
+                <span className="font-mono-label text-xs text-gray-400">{step}</span>
                 <h3 className="text-white font-semibold font-display mt-1 mb-1.5">{title}</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">{description}</p>
               </motion.div>

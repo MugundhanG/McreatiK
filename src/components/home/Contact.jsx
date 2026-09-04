@@ -153,7 +153,7 @@ const HomeContact = memo(function HomeContact() {
                     <h4 className="text-white font-semibold font-display text-sm">
                       {label.replace('McreatiK ', '')}
                     </h4>
-                    <p className="text-gray-500 text-xs mt-1">{tagline}</p>
+                    <p className="text-gray-400 text-xs mt-1">{tagline}</p>
                   </button>
                 )
               })}

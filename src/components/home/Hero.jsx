@@ -41,12 +41,14 @@ const MiniCard = memo(function MiniCard({ icon: Icon, name, tagline, accent, com
         <Icon className="w-4 h-4" />
       </span>
       <div>
-        <h4
+        {/* Not a heading — this card duplicates the department names already
+            headed in the list on the left; it's a desktop-only decorative echo. */}
+        <p
           className="font-semibold font-display text-sm"
           style={{ color: isStudios ? accent : '#F4F2EA' }}
         >
           {name.replace('McreatiK ', '')}
-        </h4>
+        </p>
         <p className="text-xs text-[#8890AE] mt-0.5 leading-snug">{tagline}</p>
         {comingSoon && (
           <span className="text-[10px] font-mono-label uppercase text-[#D8AE55] mt-1 inline-block">Coming Soon</span>
@@ -103,9 +105,9 @@ const Hero = memo(function Hero() {
                     >
                       {kicker}
                     </span>
-                    <h3 className="font-display font-bold text-lg text-white mt-1">
+                    <h2 className="font-display font-bold text-lg text-white mt-1">
                       {name}
-                    </h3>
+                    </h2>
                     <p className="text-sm text-[#8890AE] mt-1 leading-relaxed">{tagline}</p>
                   </div>
                   {comingSoon ? (

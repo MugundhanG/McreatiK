@@ -29,10 +29,10 @@ const DEPT_MENUS = {
 function NavLink({ label, href, type, className, onClick }) {
   if (type === 'disabled') {
     return (
-      <span className={`${className} text-gray-600 cursor-not-allowed`}>
+      <span className={`${className} text-gray-400 cursor-not-allowed`}>
         <span className="inline-flex items-center gap-1.5">
           {label}
-          <span className="text-[10px] font-mono-label uppercase text-gray-600 border border-white/10 rounded-full px-1.5 py-0.5">Soon</span>
+          <span className="text-[10px] font-mono-label uppercase text-gray-400 border border-white/10 rounded-full px-1.5 py-0.5">Soon</span>
         </span>
       </span>
     )
@@ -53,16 +53,18 @@ function NavLink({ label, href, type, className, onClick }) {
 
 /* Desktop-only hover dropdown for Tech / Studios — pure CSS hover via
    the `group` wrapper, so the panel stays open across the visual gap
-   between the label and the menu (no JS/mouseleave handling needed). */
+   between the label and the menu (no JS/mouseleave handling needed).
+   `focus-within` mirrors every `hover` state so keyboard users tabbing
+   to the trigger (or into the panel itself) get the same reveal. */
 function DeptNavItem({ label, href, className, menu }) {
   return (
     <div className="relative group">
       <Link to={href} className={`${className} inline-flex items-center gap-1`}>
         {label}
-        <FiChevronDown className="w-3 h-3 text-gray-500 group-hover:rotate-180 transition-transform duration-200" />
+        <FiChevronDown aria-hidden="true" className="w-3 h-3 text-gray-500 group-hover:rotate-180 group-focus-within:rotate-180 transition-transform duration-200" />
       </Link>
 
-      <div className="absolute left-0 top-full pt-2 opacity-0 invisible -translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-150 z-50">
+      <div className="absolute left-0 top-full pt-2 opacity-0 invisible -translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 transition-all duration-150 z-50">
         <div className="w-max max-w-[90vw] rounded-lg border border-white/10 bg-[#0A1128] shadow-xl shadow-black/40 px-5 py-3.5">
           <div className="flex flex-wrap items-center justify-center gap-x-1 gap-y-1.5">
             {menu.sections.map((section, i) => (

@@ -33,7 +33,7 @@ const WhatIsMcreatik = memo(function WhatIsMcreatik() {
             >
               What is McreatiK?
             </motion.span>
-            <motion.p
+            <motion.h2
               className="text-2xl sm:text-3xl font-display font-medium leading-snug text-white text-balance"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -41,7 +41,7 @@ const WhatIsMcreatik = memo(function WhatIsMcreatik() {
               transition={{ duration: 0.6, delay: 0.1 }}
             >
               One brand behind two crafts — your website one week, your wedding photos the next.
-            </motion.p>
+            </motion.h2>
             <motion.p
               className="mt-6 text-gray-400 leading-relaxed max-w-xl mx-auto lg:mx-0"
               initial={{ opacity: 0, y: 16 }}
@@ -84,7 +84,7 @@ const WhatIsMcreatik = memo(function WhatIsMcreatik() {
                     <h3 className="text-white font-semibold font-display text-sm leading-tight">
                       {label.replace('McreatiK ', '')}
                     </h3>
-                    <p className="text-gray-500 text-xs mt-1 leading-snug">{tagline}</p>
+                    <p className="text-gray-400 text-xs mt-1 leading-snug">{tagline}</p>
                   </div>
                 </div>
               </React.Fragment>

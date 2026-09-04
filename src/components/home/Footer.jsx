@@ -43,7 +43,7 @@ const Footer = memo(function Footer() {
             <Link to="/" className="flex items-center">
               <img src={mcreatiKLogo} alt="McreatiK" className="h-9 w-auto object-contain" />
             </Link>
-            <span className="text-gray-500 text-sm">&copy; {year}</span>
+            <span className="text-gray-400 text-sm">&copy; {year}</span>
           </div>
           <div className="flex gap-3">
             {SOCIAL_LINKS.map(({ label, href, icon }) => {
@@ -64,7 +64,7 @@ const Footer = memo(function Footer() {
           </div>
         </div>
 
-        <p className="text-gray-500 text-sm leading-relaxed mt-5 max-w-sm">
+        <p className="text-gray-400 text-sm leading-relaxed mt-5 max-w-sm">
           A digital and creative brand — Tech, Studios, and more, under one roof.
         </p>
 
@@ -99,7 +99,7 @@ const Footer = memo(function Footer() {
                       {label}
                     </Link>
                   ) : (
-                    <span className="text-gray-600 text-sm cursor-not-allowed">{label}</span>
+                    <span className="text-gray-400 text-sm cursor-not-allowed">{label}</span>
                   )}
                 </li>
               ))}
@@ -126,8 +126,8 @@ const Footer = memo(function Footer() {
 
         {/* ---------- Bottom bar ---------- */}
         <div className="border-t border-white/5 mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-gray-500 text-sm">McreatiK. All rights reserved.</p>
-          <div className="flex gap-6 text-sm text-gray-500">
+          <p className="text-gray-400 text-sm">McreatiK. All rights reserved.</p>
+          <div className="flex gap-6 text-sm text-gray-400">
             <a href="#" className="hover:text-gray-300 transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-gray-300 transition-colors">Terms of Service</a>
           </div>
