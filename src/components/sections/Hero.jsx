@@ -5,19 +5,31 @@
    drives a ColorWheel's hue angle through the
    library's built-in "map" prop driver) in a slow
    flowing blue gradient — the same signal-blue used
-   in the site's CTAs — with two floating glass cards
-   and a stat chip layered on top.
+   in the site's CTAs — with our services listed
+   directly on it as a continuously scrolling ticker.
    ============================================ */
 
 import React, { memo, lazy, Suspense } from 'react'
 import { Link } from 'react-router-dom'
 import { FaWhatsapp } from 'react-icons/fa'
+import { FiCheck } from 'react-icons/fi'
 import { TECH_STATS, TECH_TARGET_INDUSTRIES } from '../../utils/constants'
 import { getWhatsAppHref } from '../../utils/whatsapp'
 
 const TechHeroShaderPanel = lazy(() => import('./TechHeroShaderPanel'))
 
 const WHATSAPP_HREF = getWhatsAppHref("Hi McreatiK, I'd like a free consultation for my business.")
+
+const HERO_SERVICES_TICKER = [
+  'Website Development',
+  'Website Redesign',
+  'Logo Design',
+  'Business Card Design',
+  'SEO Optimization',
+  'WhatsApp Business Setup',
+  'Resume Design & Makeover',
+  'Landing Page Design',
+]
 
 const Hero = memo(function Hero() {
   return (
@@ -81,7 +93,7 @@ const Hero = memo(function Hero() {
             </dl>
           </div>
 
-          {/* ===== RIGHT — Shader panel + glass cards ===== */}
+          {/* ===== RIGHT — Shader panel with an animated services ticker ===== */}
           <div className="mth-reveal relative h-100 sm:h-120 lg:h-140" style={{ animationDelay: '0.2s' }}>
             <div className="absolute inset-y-0 left-4 right-0 rotate-3 overflow-hidden rounded-[2rem] bg-[#1E4FD9] shadow-2xl shadow-[#1E4FD9]/20 lg:-right-16 lg:rotate-6">
               <Suspense fallback={null}>
@@ -93,46 +105,32 @@ const Hero = memo(function Hero() {
                   background: 'radial-gradient(ellipse 70% 50% at 25% 10%, rgba(255,255,255,0.35), transparent 65%)',
                 }}
               />
-            </div>
 
-            {/* Glass card — project health */}
-            <div className="mth-float-a absolute top-10 left-0 w-72 rounded-2xl bg-white/70 p-5 shadow-xl shadow-black/10 ring-1 ring-white/60 backdrop-blur-[24px] sm:top-16">
-              <div className="flex items-center justify-between text-xs font-medium text-neutral-500">
-                <span>Performance score</span>
-                <span className="flex items-center gap-1.5 text-[#1E4FD9]">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#1E4FD9]" />
-                  Live
-                </span>
-              </div>
-              <p className="mt-2 text-3xl font-semibold tracking-tight tabular-nums text-neutral-950">
-                98<span className="text-lg text-neutral-400">.2</span>
-              </p>
-              <p className="text-sm font-medium text-[#1E4FD9]">+14 pts this sprint</p>
-              <div className="mt-4 flex justify-between border-t border-black/5 pt-4 text-sm">
-                <span className="text-neutral-500">Pages delivered</span>
-                <span className="font-medium tabular-nums text-neutral-950">12/12</span>
-              </div>
-              <div className="mt-2 flex justify-between text-sm">
-                <span className="text-neutral-500">Auto-backups</span>
-                <span className="font-medium text-[#1E4FD9]">On</span>
-              </div>
-            </div>
-
-            {/* Glass card — enquiry toast */}
-            <div className="mth-float-b absolute bottom-16 right-0 w-64 rounded-xl bg-white/80 p-4 shadow-lg shadow-black/10 ring-1 ring-white/60 backdrop-blur-[24px] sm:bottom-24 sm:right-6">
-              <div className="flex items-start gap-3">
-                <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-[#1E4FD9]" />
-                <div className="text-sm">
-                  <p className="font-bold text-neutral-950">New enquiry received</p>
-                  <p className="text-neutral-500">WhatsApp &middot; Local Dental Clinic</p>
-                  <p className="mt-0.5 text-xs text-neutral-400">Just now</p>
+              {/* Services — shown directly on the gradient as a vertical ticker */}
+              <div className="absolute inset-0 flex flex-col p-8 sm:p-12">
+                <p className="font-mono-label text-xs font-semibold uppercase text-white/70">Our Services</p>
+                <p className="mt-1.5 font-display text-lg font-semibold text-white sm:text-xl">
+                  What we build for you
+                </p>
+                <div className="mth-ticker-mask relative mt-6 flex-1 overflow-hidden">
+                  <div className="mth-ticker absolute inset-x-0 top-0 flex flex-col">
+                    {[...HERO_SERVICES_TICKER, ...HERO_SERVICES_TICKER].map((service, i) => (
+                      <div key={`${service}-${i}`} className="flex items-center gap-3 py-3">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/15 text-white">
+                          <FiCheck className="h-3.5 w-3.5" strokeWidth={3} />
+                        </span>
+                        <span className="text-base font-medium text-white sm:text-lg">{service}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
+                <Link
+                  to="/tech/services"
+                  className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-white transition-colors duration-150 hover:text-white/80"
+                >
+                  View all services <span aria-hidden="true">&rarr;</span>
+                </Link>
               </div>
-            </div>
-
-            {/* Stat chip */}
-            <div className="absolute bottom-4 left-8 rounded-full bg-neutral-950 px-4 py-2 text-xs font-semibold tabular-nums text-white sm:bottom-8">
-              99% &middot; client satisfaction
             </div>
           </div>
         </div>

@@ -213,35 +213,34 @@
     background-size: 16px 16px;
   }
 
-  /* ---------- McreatiK Tech Hero (shaders demo) ----------
-     Staggered entrance fade + perpetual card float for the
-     WebGPU shader hero preview. Scoped to its own page. */
+  /* ---------- McreatiK Tech Hero (shader gradient hero) ----------
+     Staggered entrance fade for the hero content, plus a vertical
+     ticker that continuously scrolls the services list directly on
+     the shader panel. The list is rendered twice back-to-back and
+     the track scrolls exactly one copy's height (translateY -50%)
+     so the loop is seamless. A mask fades the ticker's top/bottom
+     edges into the panel instead of cutting rows off sharply. */
   .mth-reveal {
     animation: mth-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
-  .mth-float-a {
-    animation: mth-float-a 7s ease-in-out infinite;
+  .mth-ticker {
+    animation: mth-ticker 14s linear infinite;
   }
-  .mth-float-b {
-    animation: mth-float-b 8s ease-in-out infinite;
-    animation-delay: 1s;
+  .mth-ticker-mask {
+    mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
   }
   @keyframes mth-reveal {
     from { opacity: 0; transform: translateY(14px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  @keyframes mth-float-a {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-  }
-  @keyframes mth-float-b {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(8px); }
+  @keyframes mth-ticker {
+    from { transform: translateY(0); }
+    to { transform: translateY(-50%); }
   }
   @media (prefers-reduced-motion: reduce) {
     .mth-reveal,
-    .mth-float-a,
-    .mth-float-b {
+    .mth-ticker {
       animation: none;
     }
   }
