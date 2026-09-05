@@ -1,118 +1,159 @@
 /* ============================================
    Hero Section — Tech & Creative (light theme)
-   Text left; right is the department's signature
-   visual — a blueprint-style line drawing of the
-   four deliverable "sheets" a project actually
-   ships (website, card, logo, resume) — in place
-   of a generic stock photo.
+   Text left; right is a WebGPU shader panel (the
+   `shaders` library: a hidden ChromaFlow fluid sim
+   drives a ColorWheel's hue angle through the
+   library's built-in "map" prop driver) in a slow
+   flowing blue gradient — the same signal-blue used
+   in the site's CTAs — with two floating glass cards
+   and a stat chip layered on top.
    ============================================ */
 
-import React, { memo } from 'react'
+import React, { memo, lazy, Suspense } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { FiArrowRight } from 'react-icons/fi'
 import { FaWhatsapp } from 'react-icons/fa'
-import Button from '../ui/Button'
-import TechHeroGraphic from '../ui/TechHeroGraphic'
+import { TECH_STATS, TECH_TARGET_INDUSTRIES } from '../../utils/constants'
 import { getWhatsAppHref } from '../../utils/whatsapp'
+
+const TechHeroShaderPanel = lazy(() => import('./TechHeroShaderPanel'))
 
 const WHATSAPP_HREF = getWhatsAppHref("Hi McreatiK, I'd like a free consultation for my business.")
 
-const fadeUp = (delay = 0) => ({
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: 'easeOut', delay } },
-})
-
 const Hero = memo(function Hero() {
   return (
-    <section
-      id="home"
-      className="relative min-h-screen flex items-center overflow-hidden bg-stone-50 blueprint-grid"
-    >
-      {/* Paper fades the grid out toward the edges so it reads as texture, not a pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#FAFAF9_75%)] pointer-events-none" />
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-32 pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-
-          {/* ===== LEFT — Text Content ===== */}
-          <div className="flex flex-col items-start">
-
-            <motion.span
-              className="font-display text-xl sm:text-2xl font-semibold uppercase tracking-tight text-[#A8460A] mb-6"
-              variants={fadeUp(0)}
-              initial="hidden"
-              animate="visible"
+    <>
+      <section className="relative isolate overflow-x-clip bg-white">
+        <div className="max-w-7xl mx-auto grid items-center gap-16 px-4 sm:px-6 lg:px-8 pt-28 pb-16 sm:pt-32 lg:grid-cols-2">
+          {/* ===== LEFT — Copy ===== */}
+          <div className="relative z-10">
+            <p
+              className="mth-reveal inline-flex items-center gap-2 rounded-full py-1 pl-1 pr-3 text-sm font-medium shadow-[0_0_0_1px_rgba(10,10,10,0.10)]"
+              style={{ animationDelay: '0.05s' }}
             >
-              McreatiK — Tech &amp; Creative Solutions
-            </motion.span>
+              <span className="rounded-full bg-[#1E4FD9]/10 px-2 py-0.5 text-xs font-semibold text-[#1E4FD9]">
+                New
+              </span>
+              Modern websites &amp; branding for local businesses
+            </p>
 
-            {/* Headline */}
-            <motion.h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold font-display leading-[1.1] tracking-tight text-left text-stone-900"
-              variants={fadeUp(0.1)}
-              initial="hidden"
-              animate="visible"
+            <h1
+              className="mth-reveal mt-8 max-w-[22ch] text-balance font-display text-4xl font-bold leading-[1.1] tracking-tight text-stone-900 sm:text-5xl lg:text-6xl"
+              style={{ animationDelay: '0.12s' }}
             >
-              Build a stronger{' '}
-              <span className="text-[#1E4FD9]">digital presence</span>{' '}
-              for your business
-            </motion.h1>
+              Build a stronger <span className="text-[#1E4FD9]">digital presence</span> for your business
+            </h1>
 
-            {/* Subtext */}
-            <motion.p
-              className="mt-6 text-base sm:text-lg text-stone-600 max-w-lg leading-relaxed text-left"
-              variants={fadeUp(0.2)}
-              initial="hidden"
-              animate="visible"
+            <p
+              className="mth-reveal mt-6 max-w-[48ch] text-pretty text-base text-stone-600 sm:text-lg"
+              style={{ animationDelay: '0.2s' }}
             >
               Modern websites, branding, and digital design that help local businesses
               look professional online — and get more customers.
-            </motion.p>
+            </p>
 
-            {/* CTA Buttons */}
-            <motion.div
-              className="mt-9 flex flex-wrap gap-4"
-              variants={fadeUp(0.3)}
-              initial="hidden"
-              animate="visible"
-            >
-              <Button href={WHATSAPP_HREF}>
+            <div className="mth-reveal mt-9 flex flex-wrap items-center gap-6" style={{ animationDelay: '0.28s' }}>
+              <a
+                href={WHATSAPP_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-neutral-950 px-6 py-3 text-sm font-semibold text-white transition-colors duration-150 hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1E4FD9] focus-visible:outline-offset-2"
+              >
                 <FaWhatsapp className="w-4 h-4" /> Get a Free Consultation
-              </Button>
+              </a>
               <Link
                 to="/tech/services"
-                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-md font-semibold text-sm tracking-wide transition-all duration-300 cursor-pointer border border-[#14161C]/15 text-[#14161C] hover:border-[#1E4FD9] hover:text-[#1E4FD9]"
+                className="text-sm font-semibold text-stone-900 transition-colors duration-150 hover:text-[#1E4FD9]"
               >
-                View Our Services <FiArrowRight className="w-4 h-4" />
+                View Our Services <span aria-hidden="true">&rarr;</span>
               </Link>
-            </motion.div>
+            </div>
+
+            <dl
+              className="mth-reveal mt-14 flex flex-col gap-4 text-sm sm:flex-row sm:gap-0"
+              style={{ animationDelay: '0.36s' }}
+            >
+              {TECH_STATS.map((stat, i) => (
+                <div key={stat.label} className={i === 0 ? 'sm:pr-8' : 'sm:border-l sm:border-black/10 sm:px-8'}>
+                  <dt className="text-stone-500">{stat.label}</dt>
+                  <dd className="mt-1 text-lg font-semibold tabular-nums text-stone-900">{stat.value}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
 
-          {/* ===== RIGHT — Signature blueprint graphic ===== */}
-          <motion.div
-            className="hidden lg:flex flex-col items-center gap-6"
-            initial={{ opacity: 0, scale: 0.94 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: 'easeOut', delay: 0.25 }}
-          >
-            <TechHeroGraphic className="w-full max-w-md" />
-
-            {/* CTA teaser card — overlaps the graphic slightly for depth */}
-            <div className="relative -mt-10 w-full max-w-sm bg-white border border-stone-200 shadow-md shadow-stone-900/5 rounded-lg p-5 flex items-center justify-between">
-              <div>
-                <p className="text-sm font-semibold text-stone-900">Ready to start?</p>
-                <p className="text-xs text-stone-500 mt-0.5">We reply within 24 hours</p>
-              </div>
-              <Button href={WHATSAPP_HREF} className="text-xs px-4 py-2 shrink-0">
-                <FaWhatsapp className="w-3.5 h-3.5" /> Let's Talk
-              </Button>
+          {/* ===== RIGHT — Shader panel + glass cards ===== */}
+          <div className="mth-reveal relative h-100 sm:h-120 lg:h-140" style={{ animationDelay: '0.2s' }}>
+            <div className="absolute inset-y-0 left-4 right-0 rotate-3 overflow-hidden rounded-[2rem] bg-[#1E4FD9] shadow-2xl shadow-[#1E4FD9]/20 lg:-right-16 lg:rotate-6">
+              <Suspense fallback={null}>
+                <TechHeroShaderPanel />
+              </Suspense>
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: 'radial-gradient(ellipse 70% 50% at 25% 10%, rgba(255,255,255,0.35), transparent 65%)',
+                }}
+              />
             </div>
-          </motion.div>
 
+            {/* Glass card — project health */}
+            <div className="mth-float-a absolute top-10 left-0 w-72 rounded-2xl bg-white/70 p-5 shadow-xl shadow-black/10 ring-1 ring-white/60 backdrop-blur-[24px] sm:top-16">
+              <div className="flex items-center justify-between text-xs font-medium text-neutral-500">
+                <span>Performance score</span>
+                <span className="flex items-center gap-1.5 text-[#1E4FD9]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#1E4FD9]" />
+                  Live
+                </span>
+              </div>
+              <p className="mt-2 text-3xl font-semibold tracking-tight tabular-nums text-neutral-950">
+                98<span className="text-lg text-neutral-400">.2</span>
+              </p>
+              <p className="text-sm font-medium text-[#1E4FD9]">+14 pts this sprint</p>
+              <div className="mt-4 flex justify-between border-t border-black/5 pt-4 text-sm">
+                <span className="text-neutral-500">Pages delivered</span>
+                <span className="font-medium tabular-nums text-neutral-950">12/12</span>
+              </div>
+              <div className="mt-2 flex justify-between text-sm">
+                <span className="text-neutral-500">Auto-backups</span>
+                <span className="font-medium text-[#1E4FD9]">On</span>
+              </div>
+            </div>
+
+            {/* Glass card — enquiry toast */}
+            <div className="mth-float-b absolute bottom-16 right-0 w-64 rounded-xl bg-white/80 p-4 shadow-lg shadow-black/10 ring-1 ring-white/60 backdrop-blur-[24px] sm:bottom-24 sm:right-6">
+              <div className="flex items-start gap-3">
+                <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-[#1E4FD9]" />
+                <div className="text-sm">
+                  <p className="font-bold text-neutral-950">New enquiry received</p>
+                  <p className="text-neutral-500">WhatsApp &middot; Local Dental Clinic</p>
+                  <p className="mt-0.5 text-xs text-neutral-400">Just now</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Stat chip */}
+            <div className="absolute bottom-4 left-8 rounded-full bg-neutral-950 px-4 py-2 text-xs font-semibold tabular-nums text-white sm:bottom-8">
+              99% &middot; client satisfaction
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* ===== Trust strip — industries served ===== */}
+      <section
+        aria-label="Industries"
+        className="mth-reveal max-w-7xl mx-auto border-t border-black/5 px-4 py-10 sm:px-6 lg:px-8"
+        style={{ animationDelay: '0.45s' }}
+      >
+        <div className="flex flex-wrap items-baseline gap-x-12 gap-y-4 text-stone-400">
+          <p className="text-sm">Built for businesses across</p>
+          {TECH_TARGET_INDUSTRIES.slice(0, 5).map((industry, i) => (
+            <span key={industry.title} className={`font-semibold ${i === 4 ? 'hidden sm:inline' : ''}`}>
+              {industry.title}
+            </span>
+          ))}
+        </div>
+      </section>
+    </>
   )
 })
 

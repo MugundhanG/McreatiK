@@ -5,6 +5,9 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   base: '/',
+  optimizeDeps: {
+    include: ['shaders/react'],
+  },
   build: {
     rollupOptions: {
       output: {
