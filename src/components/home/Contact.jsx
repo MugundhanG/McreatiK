@@ -16,6 +16,10 @@ import { TECH_SERVICE_OPTIONS, STUDIOS_SERVICE_OPTIONS } from '../../utils/const
 import { useForm } from '../../hooks/useForm'
 import SectionHeading from './SectionHeading'
 import Button from '../ui/Button'
+import EventDatePicker from '../ui/EventDatePicker'
+import { formatDisplay } from '../../utils/eventDate'
+
+const WEDDING_SERVICE = 'Wedding Photography'
 
 const DEPARTMENTS = [
   {
@@ -36,7 +40,16 @@ const DEPARTMENTS = [
   },
 ]
 
-const INITIAL_VALUES = { department: 'tech', name: '', email: '', phone: '', service: '', message: '' }
+const INITIAL_VALUES = {
+  department: 'tech',
+  name: '',
+  email: '',
+  phone: '',
+  service: '',
+  message: '',
+  eventDate: '',
+  eventDateEnd: '',
+}
 
 const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
 const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
@@ -45,6 +58,12 @@ const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 const HomeContact = memo(function HomeContact() {
   const onSubmit = useCallback(async (data) => {
     const dept = DEPARTMENTS.find((d) => d.key === data.department)
+    const eventDate =
+      data.department === 'studios'
+        ? data.eventDateEnd
+          ? `${formatDisplay(data.eventDate)} – ${formatDisplay(data.eventDateEnd)}`
+          : formatDisplay(data.eventDate)
+        : ''
     const result = await emailjs.send(
       SERVICE_ID,
       TEMPLATE_ID,
@@ -55,6 +74,7 @@ const HomeContact = memo(function HomeContact() {
         service: data.service,
         message: data.message,
         department: dept ? dept.label : 'McreatiK',
+        event_date: eventDate,
       },
       PUBLIC_KEY
     )
@@ -71,19 +91,41 @@ const HomeContact = memo(function HomeContact() {
       if (key === values.department) return
       handleChange({ target: { name: 'department', value: key } })
       handleChange({ target: { name: 'service', value: '' } })
+      handleChange({ target: { name: 'eventDate', value: '' } })
+      handleChange({ target: { name: 'eventDateEnd', value: '' } })
     },
     [values.department, handleChange]
   )
 
+  const isStudios = values.department === 'studios'
   const selectedServices = values.service ? values.service.split(', ').filter(Boolean) : []
+  const isWeddingRangeMode = selectedServices.includes(WEDDING_SERVICE)
   const toggleService = useCallback(
     (opt) => {
+      /* Studios books one shoot type per enquiry — single-select (radio),
+         unlike Tech's checkbox grid where several services can apply. */
+      if (isStudios) {
+        handleChange({ target: { name: 'service', value: opt } })
+        if (opt !== WEDDING_SERVICE) {
+          handleChange({ target: { name: 'eventDateEnd', value: '' } })
+        }
+        return
+      }
+
       const next = selectedServices.includes(opt)
         ? selectedServices.filter((o) => o !== opt)
         : [...selectedServices, opt]
       handleChange({ target: { name: 'service', value: next.join(', ') } })
     },
-    [selectedServices, handleChange]
+    [isStudios, selectedServices, handleChange]
+  )
+
+  const handleDateApply = useCallback(
+    (start, end) => {
+      handleChange({ target: { name: 'eventDate', value: start } })
+      handleChange({ target: { name: 'eventDateEnd', value: end } })
+    },
+    [handleChange]
   )
 
   const inputBase =
@@ -236,7 +278,8 @@ const HomeContact = memo(function HomeContact() {
                       />
                     </div>
 
-                    {/* Services — checkbox grid, options depend on the chosen department */}
+                    {/* Services — a checkbox grid for Tech (multiple apply), a radio
+                        group for Studios (one shoot type per enquiry) */}
                     <div>
                       <label className="block text-sm text-gray-300 mb-2.5 font-medium">
                         Services <span className="text-red-400">*</span>
@@ -247,21 +290,26 @@ const HomeContact = memo(function HomeContact() {
                           return (
                             <label key={opt} className="flex items-center gap-2.5 cursor-pointer select-none">
                               <input
-                                type="checkbox"
+                                type={isStudios ? 'radio' : 'checkbox'}
                                 className="sr-only"
                                 checked={checked}
                                 onChange={() => toggleService(opt)}
                                 onBlur={handleBlur}
-                                name="service"
+                                name={isStudios ? 'service-radio' : 'service'}
                               />
                               <span
-                                className="w-4 h-4 rounded border flex items-center justify-center shrink-0 transition-colors"
+                                className={`w-4 h-4 border flex items-center justify-center shrink-0 transition-colors ${
+                                  isStudios ? 'rounded-full' : 'rounded'
+                                }`}
                                 style={{
                                   borderColor: checked ? activeDept.accent : 'rgba(255,255,255,0.2)',
-                                  backgroundColor: checked ? activeDept.accent : 'transparent',
+                                  backgroundColor: !isStudios && checked ? activeDept.accent : 'transparent',
                                 }}
                               >
-                                {checked && <FiCheck className="w-3 h-3 text-white" />}
+                                {checked && isStudios && (
+                                  <span className="w-2 h-2 rounded-full" style={{ backgroundColor: activeDept.accent }} />
+                                )}
+                                {checked && !isStudios && <FiCheck className="w-3 h-3 text-white" />}
                               </span>
                               <span className="text-sm text-gray-300">{opt}</span>
                             </label>
@@ -270,6 +318,31 @@ const HomeContact = memo(function HomeContact() {
                       </div>
                       {errors.service && <p className="mt-1.5 text-xs text-red-400">{errors.service}</p>}
                     </div>
+
+                    {/* Event date — Studios only; range mode kicks in for Wedding Photography */}
+                    {values.department === 'studios' && (
+                      <div>
+                        <label htmlFor="h-event-date" className="block text-sm text-gray-300 mb-1.5 font-medium">
+                          {isWeddingRangeMode ? 'Event dates' : 'Event date'} <span className="text-red-400">*</span>
+                        </label>
+                        <EventDatePicker
+                          id="h-event-date"
+                          rangeMode={isWeddingRangeMode}
+                          startDate={values.eventDate}
+                          endDate={values.eventDateEnd}
+                          onApply={handleDateApply}
+                          error={errors.eventDate || errors.eventDateEnd}
+                        />
+                        {isWeddingRangeMode && (
+                          <p className="mt-1.5 text-xs text-gray-500">
+                            Pick a date range to cover both the wedding and reception.
+                          </p>
+                        )}
+                        {(errors.eventDate || errors.eventDateEnd) && (
+                          <p className="mt-1.5 text-xs text-red-400">{errors.eventDate || errors.eventDateEnd}</p>
+                        )}
+                      </div>
+                    )}
 
                     <div className="pt-1">
                       <Button type="submit" theme="home" disabled={isSubmitting} className="w-full justify-center">

@@ -11,6 +11,10 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 /* Regex: digits, spaces, dashes, parens, plus — 7-15 chars */
 const PHONE_REGEX = /^[+]?[\d\s()-]{7,15}$/
 
+/* Only this Studios service spans more than one day (wedding + reception),
+   so it's the one that switches the date picker into range mode. */
+const WEDDING_SERVICE = 'Wedding Photography'
+
 /**
  * Validates a single form field by name.
  * @param {string} name  - field name (matches form state keys)
@@ -65,6 +69,22 @@ export function validateForm(formData) {
     const error = validateField(key, value)
     if (error) {
       errors[key] = error
+      isValid = false
+    }
+  }
+
+  /* Event date is Studios-only and its required-ness depends on which
+     service was picked — validateField can't see cross-field context,
+     so it's handled here instead. Harmless no-op for forms that don't
+     carry a department/eventDate field at all. */
+  if (formData.department === 'studios') {
+    const isRangeMode = (formData.service || '').includes(WEDDING_SERVICE)
+    if (!(formData.eventDate || '').trim()) {
+      errors.eventDate = isRangeMode ? 'Please select a start date' : 'Please select your event date'
+      isValid = false
+    }
+    if (isRangeMode && !(formData.eventDateEnd || '').trim()) {
+      errors.eventDateEnd = 'Please select an end date'
       isValid = false
     }
   }
