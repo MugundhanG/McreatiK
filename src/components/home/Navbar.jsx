@@ -5,7 +5,8 @@
    clustered on the left, the CTA on the right.
    Tech and Studios open a hover dropdown listing
    that department's real sections, each linking
-   straight to it (e.g. /tech#services).
+   straight to it — a real page (e.g. /tech/services) or an
+   anchor on the main page (e.g. /tech#process) as needed.
    ============================================ */
 
 import React, { useState, useEffect, useCallback, memo } from 'react'
@@ -71,7 +72,7 @@ function DeptNavItem({ label, href, className, menu }) {
               <React.Fragment key={section.label}>
                 {i > 0 && <span className="text-white/15 text-xs px-1">/</span>}
                 <Link
-                  to={`${menu.basePath}${section.href}`}
+                  to={section.href.startsWith('/') ? section.href : `${menu.basePath}${section.href}`}
                   className="px-2 py-1 text-sm text-gray-300 whitespace-nowrap transition-colors"
                   onMouseEnter={(e) => (e.currentTarget.style.color = menu.accent)}
                   onMouseLeave={(e) => (e.currentTarget.style.color = '')}

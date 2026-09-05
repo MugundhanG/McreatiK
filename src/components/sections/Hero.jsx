@@ -8,6 +8,7 @@
    ============================================ */
 
 import React, { memo } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FiArrowRight } from 'react-icons/fi'
 import { FaWhatsapp } from 'react-icons/fa'
@@ -79,9 +80,12 @@ const Hero = memo(function Hero() {
               <Button href={WHATSAPP_HREF}>
                 <FaWhatsapp className="w-4 h-4" /> Get a Free Consultation
               </Button>
-              <Button href="#portfolio" variant="outline">
-                View Our Work <FiArrowRight className="w-4 h-4" />
-              </Button>
+              <Link
+                to="/tech/services"
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-md font-semibold text-sm tracking-wide transition-all duration-300 cursor-pointer border border-[#14161C]/15 text-[#14161C] hover:border-[#1E4FD9] hover:text-[#1E4FD9]"
+              >
+                View Our Services <FiArrowRight className="w-4 h-4" />
+              </Link>
             </motion.div>
           </div>
 

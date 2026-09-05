@@ -67,14 +67,14 @@ import adThumbnail from '../assets/ADthumbnail.jpg'
    ================================================= */
 
 export const TECH_NAV_LINKS = [
-  { label: 'Home', href: '#home' },
-  { label: 'Services', href: '#services' },
-  { label: 'Industries', href: '#industries' },
-  { label: 'Work', href: '#portfolio' },
-  { label: 'Process', href: '#process' },
-  { label: 'About', href: '#about' },
-  { label: 'FAQ', href: '#faq' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', href: '/tech', type: 'page' },
+  { label: 'Services', href: '/tech/services', type: 'page' },
+  { label: 'Industries', href: '/tech/industries', type: 'page' },
+  { label: 'Portfolio', href: '/tech/work', type: 'page' },
+  { label: 'Our Process', href: '/tech#process', type: 'anchor' },
+  { label: 'About Us', href: '/tech#about', type: 'anchor' },
+  { label: 'FAQs', href: '/tech/faq', type: 'page' },
+  { label: 'Contact Us', href: '/tech#contact', type: 'anchor' },
 ]
 
 export const TECH_TARGET_INDUSTRIES = [

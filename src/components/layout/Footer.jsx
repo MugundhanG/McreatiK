@@ -69,12 +69,12 @@ const Footer = memo(function Footer() {
             <ul className="space-y-3">
               {TECH_NAV_LINKS.map(({ label, href }) => (
                 <li key={label}>
-                  <a
-                    href={href}
+                  <Link
+                    to={href}
                     className="text-stone-600 hover:text-[#1E4FD9] text-sm transition-colors"
                   >
                     {label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -86,12 +86,12 @@ const Footer = memo(function Footer() {
             <ul className="grid grid-cols-2 gap-x-8 gap-y-3">
               {TECH_SERVICES.map(({ title }) => (
                 <li key={title}>
-                  <a
-                    href="#services"
+                  <Link
+                    to="/tech/services"
                     className="text-stone-600 hover:text-[#1E4FD9] text-sm transition-colors"
                   >
                     {title}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

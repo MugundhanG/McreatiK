@@ -53,14 +53,14 @@ const Navbar = memo(function Navbar() {
 
           <div className="hidden lg:flex items-center gap-6">
             {TECH_NAV_LINKS.map(({ label, href }) => (
-              <a
+              <Link
                 key={label}
-                href={href}
+                to={href}
                 className="group relative py-1.5 text-sm font-semibold tracking-wide text-stone-700 hover:text-[#1E4FD9] transition-colors duration-200"
               >
                 {label}
                 <span className="absolute left-0 -bottom-0.5 h-px w-0 bg-[#1E4FD9] transition-all duration-200 group-hover:w-full" />
-              </a>
+              </Link>
             ))}
           </div>
         </div>
@@ -104,14 +104,14 @@ const Navbar = memo(function Navbar() {
             >
               <div className="px-4 sm:px-6 py-5 space-y-1">
                 {TECH_NAV_LINKS.map(({ label, href }) => (
-                  <a
+                  <Link
                     key={label}
-                    href={href}
+                    to={href}
                     onClick={closeMobile}
                     className="block px-4 py-2.5 text-stone-700 hover:text-[#1E4FD9] hover:bg-stone-100 rounded-md transition-colors text-sm font-semibold tracking-wide"
                   >
                     {label}
-                  </a>
+                  </Link>
                 ))}
                 <div className="pt-3 flex items-center justify-between gap-4">
                   <DepartmentSwitcher className="text-stone-600 bg-stone-50/80" />

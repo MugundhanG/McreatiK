@@ -14,6 +14,10 @@ import WhatsAppButton from './components/ui/WhatsAppButton'
 
 const Landing = lazy(() => import('./pages/Landing'))
 const TechPage = lazy(() => import('./pages/TechPage'))
+const TechServicesPage = lazy(() => import('./pages/TechServicesPage'))
+const TechIndustriesPage = lazy(() => import('./pages/TechIndustriesPage'))
+const TechWorkPage = lazy(() => import('./pages/TechWorkPage'))
+const TechFAQPage = lazy(() => import('./pages/TechFAQPage'))
 const StudiosPage = lazy(() => import('./pages/StudiosPage'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
@@ -33,6 +37,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/tech" element={<TechPage />} />
+          <Route path="/tech/services" element={<TechServicesPage />} />
+          <Route path="/tech/industries" element={<TechIndustriesPage />} />
+          <Route path="/tech/work" element={<TechWorkPage />} />
+          <Route path="/tech/faq" element={<TechFAQPage />} />
           <Route path="/studios" element={<StudiosPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
