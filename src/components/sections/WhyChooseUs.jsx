@@ -1,9 +1,12 @@
 /* ============================================
-   WhyChooseUs Section — "Spec Sheet"
-   Not a card grid: a flat, ruled line-item list,
-   like a spec sheet in the same production-doc
-   language as the Hero's build manifest. Two
-   ruled columns on desktop, one on mobile.
+   WhyChooseUs Section — Bento Grid
+   An asymmetric card grid (wide + narrow, then a
+   row of three, then a full-width card) — each card
+   tops a blueprint-line illustration on a pale blue
+   construction ground, echoing the department's
+   signal-blue/rust register instead of a stock
+   illustration pack. Content unchanged from the
+   original spec-sheet layout.
    ============================================ */
 
 import React, { memo } from 'react'
@@ -11,29 +14,46 @@ import { motion } from 'framer-motion'
 import { FiCheck } from 'react-icons/fi'
 import { TECH_WHY_CHOOSE_US, TECH_TRUST_STATEMENTS } from '../../utils/constants'
 import SectionHeading from '../ui/SectionHeading'
-import RegMark from '../ui/RegMark'
+import {
+  ModernProfessionalArt,
+  MobileFirstArt,
+  BuiltAroundArt,
+  ConversionFocusedArt,
+  FastReliableArt,
+  OngoingSupportArt,
+} from '../ui/WhyChooseUsArt'
 
-const LEFT = TECH_WHY_CHOOSE_US.slice(0, 3)
-const RIGHT = TECH_WHY_CHOOSE_US.slice(3)
+const ART = [ModernProfessionalArt, MobileFirstArt, BuiltAroundArt, ConversionFocusedArt, FastReliableArt, OngoingSupportArt]
 
-const Row = ({ icon: Icon, title, description, index }) => (
-  <motion.div
-    className="group flex items-start gap-5 py-6 border-b border-stone-200 last:border-b-0"
-    initial={{ opacity: 0, x: -16 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    viewport={{ once: true, margin: '-30px' }}
-    transition={{ duration: 0.5, delay: index * 0.06 }}
-  >
-    <span className="font-mono-label text-xs text-stone-400 pt-1 w-10 shrink-0">
-      {String(index + 1).padStart(2, '0')}
-    </span>
-    <Icon className="w-5 h-5 text-[#1E4FD9] shrink-0 mt-0.5 group-hover:text-[#A8460A] transition-colors" />
-    <div>
-      <h3 className="text-stone-900 font-semibold font-display mb-1">{title}</h3>
-      <p className="text-stone-600 text-sm leading-relaxed">{description}</p>
-    </div>
-  </motion.div>
-)
+/* Row1: wide + narrow. Row2: three equal. Row3: one full-width. */
+const SPAN = ['sm:col-span-2', 'sm:col-span-1', 'sm:col-span-1', 'sm:col-span-1', 'sm:col-span-1', 'sm:col-span-3']
+const ART_HEIGHT = ['h-48', 'h-48', 'h-40', 'h-40', 'h-40', 'h-36']
+
+const Card = ({ title, description, index }) => {
+  const Art = ART[index]
+  return (
+    <motion.div
+      className={`group overflow-hidden rounded-2xl border border-stone-200 bg-white transition-colors duration-300 hover:border-[#1E4FD9]/30 ${SPAN[index]}`}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-30px' }}
+      whileHover={{ y: -6, boxShadow: '0 20px 40px -12px rgba(20, 22, 28, 0.14)' }}
+      transition={{ duration: 0.5, delay: (index % 3) * 0.08 }}
+    >
+      <div
+        className={`blueprint-dots flex items-center justify-center overflow-hidden bg-[#1E4FD9]/[0.05] transition-colors duration-300 group-hover:bg-[#1E4FD9]/[0.09] ${ART_HEIGHT[index]}`}
+      >
+        <div className="w-full max-w-xs px-8 transition-transform duration-500 ease-out group-hover:scale-[1.06]">
+          <Art />
+        </div>
+      </div>
+      <div className="p-6">
+        <h3 className="font-display text-lg font-semibold text-stone-900">{title}</h3>
+        <p className="mt-1.5 text-sm leading-relaxed text-stone-600">{description}</p>
+      </div>
+    </motion.div>
+  )
+}
 
 const WhyChooseUs = memo(function WhyChooseUs() {
   return (
@@ -45,17 +65,10 @@ const WhyChooseUs = memo(function WhyChooseUs() {
           subtitle="We're not just building websites — we're helping your business look the part online."
         />
 
-        <div className="relative glass-card rounded-lg px-6 sm:px-10 py-4">
-          <RegMark position="top-left" />
-          <RegMark position="bottom-right" />
-          <div className="grid grid-cols-1 lg:grid-cols-2 lg:divide-x lg:divide-stone-200">
-            <div className="lg:pr-10">
-              {LEFT.map((item, i) => <Row key={item.title} {...item} index={i} />)}
-            </div>
-            <div className="lg:pl-10">
-              {RIGHT.map((item, i) => <Row key={item.title} {...item} index={i + 3} />)}
-            </div>
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          {TECH_WHY_CHOOSE_US.map((item, i) => (
+            <Card key={item.title} {...item} index={i} />
+          ))}
         </div>
 
         {/* Factual trust strip — no fake testimonials, just what's actually true */}

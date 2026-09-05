@@ -13,7 +13,7 @@ import React, { memo, lazy, Suspense } from 'react'
 import { Link } from 'react-router-dom'
 import { FaWhatsapp } from 'react-icons/fa'
 import { FiCheck } from 'react-icons/fi'
-import { TECH_STATS, TECH_TARGET_INDUSTRIES } from '../../utils/constants'
+import { TECH_STATS } from '../../utils/constants'
 import { getWhatsAppHref } from '../../utils/whatsapp'
 
 const TechHeroShaderPanel = lazy(() => import('./TechHeroShaderPanel'))
@@ -33,20 +33,24 @@ const HERO_SERVICES_TICKER = [
 
 const Hero = memo(function Hero() {
   return (
-    <>
-      <section className="relative isolate overflow-x-clip bg-white">
+    <section className="relative isolate overflow-x-clip bg-white">
         <div className="max-w-7xl mx-auto grid items-center gap-16 px-4 sm:px-6 lg:px-8 pt-28 pb-16 sm:pt-32 lg:grid-cols-2">
           {/* ===== LEFT — Copy ===== */}
           <div className="relative z-10">
-            <p
-              className="mth-reveal inline-flex items-center gap-2 rounded-full py-1 pl-1 pr-3 text-sm font-medium shadow-[0_0_0_1px_rgba(10,10,10,0.10)]"
+            <div
+              className="mth-reveal inline-flex flex-col gap-2 rounded-2xl px-4 py-3 text-sm font-medium shadow-[0_0_0_1px_rgba(10,10,10,0.10)]"
               style={{ animationDelay: '0.05s' }}
             >
-              <span className="rounded-full bg-[#1E4FD9]/10 px-2 py-0.5 text-xs font-semibold text-[#1E4FD9]">
-                New
-              </span>
-              Modern websites &amp; branding for local businesses
-            </p>
+              <span className="text-stone-900">Modern websites &amp; branding for</span>
+              <ul className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-stone-600">
+                {['Businesses', 'Professionals', 'Small & Local Brands'].map((audience) => (
+                  <li key={audience} className="flex items-center gap-1.5">
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#1E4FD9]" aria-hidden="true" />
+                    {audience}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
             <h1
               className="mth-reveal mt-8 max-w-[22ch] text-balance font-display text-4xl font-bold leading-[1.1] tracking-tight text-stone-900 sm:text-5xl lg:text-6xl"
@@ -134,24 +138,7 @@ const Hero = memo(function Hero() {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* ===== Trust strip — industries served ===== */}
-      <section
-        aria-label="Industries"
-        className="mth-reveal max-w-7xl mx-auto border-t border-black/5 px-4 py-10 sm:px-6 lg:px-8"
-        style={{ animationDelay: '0.45s' }}
-      >
-        <div className="flex flex-wrap items-baseline gap-x-12 gap-y-4 text-stone-400">
-          <p className="text-sm">Built for businesses across</p>
-          {TECH_TARGET_INDUSTRIES.slice(0, 5).map((industry, i) => (
-            <span key={industry.title} className={`font-semibold ${i === 4 ? 'hidden sm:inline' : ''}`}>
-              {industry.title}
-            </span>
-          ))}
-        </div>
-      </section>
-    </>
+    </section>
   )
 })
 
