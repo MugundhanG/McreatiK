@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FiPlus } from 'react-icons/fi'
 import { TECH_FAQ } from '../../utils/constants'
 import SectionHeading from '../ui/SectionHeading'
+import SectionDivider from '../ui/SectionDivider'
 
 const FAQ = memo(function FAQ() {
   const [openIndex, setOpenIndex] = useState(0)
@@ -17,6 +18,7 @@ const FAQ = memo(function FAQ() {
   return (
     <section id="faq" className="relative py-24 lg:py-32 bg-stone-100">
       <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionDivider label="§ FAQ" />
         <SectionHeading
           label="FAQ"
           title="Questions You Might Have"

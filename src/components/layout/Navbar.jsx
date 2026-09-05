@@ -13,7 +13,7 @@ import { TECH_NAV_LINKS } from '../../utils/constants'
 import { getWhatsAppHref } from '../../utils/whatsapp'
 import Button from '../ui/Button'
 import DepartmentSwitcher from '../ui/DepartmentSwitcher'
-import mcreatiKLogo from '../../assets/mcreatik-logo-light-bg.png'
+import mcreatiKLogo from '../../assets/tech-logo-light-bg.png'
 
 const WHATSAPP_HREF = getWhatsAppHref("Hi McreatiK, I'm interested in getting a website for my business.")
 
@@ -47,22 +47,19 @@ const Navbar = memo(function Navbar() {
 
         {/* Logo + department tag + desktop nav links, clustered left */}
         <div className="flex items-center gap-8">
-          <Link to="/" className="shrink-0 flex items-center gap-2.5">
-            <img src={mcreatiKLogo} alt="McreatiK" className="h-8 w-auto object-contain" />
-            <span className="hidden sm:block h-4 w-px bg-stone-300" />
-            <span className="hidden sm:block font-mono-label text-[11px] uppercase tracking-wide text-stone-500">
-              Tech &amp; Creative
-            </span>
+          <Link to="/" className="shrink-0 flex items-center">
+            <img src={mcreatiKLogo} alt="McreatiK Tech & Creative" className="h-11 w-auto object-contain" />
           </Link>
 
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-6">
             {TECH_NAV_LINKS.map(({ label, href }) => (
               <a
                 key={label}
                 href={href}
-                className="px-3 py-1.5 text-sm font-medium text-stone-600 hover:text-[#1E4FD9] rounded-md hover:bg-stone-100 transition-all duration-200"
+                className="group relative py-1.5 text-sm font-semibold tracking-wide text-stone-700 hover:text-[#1E4FD9] transition-colors duration-200"
               >
                 {label}
+                <span className="absolute left-0 -bottom-0.5 h-px w-0 bg-[#1E4FD9] transition-all duration-200 group-hover:w-full" />
               </a>
             ))}
           </div>
@@ -111,7 +108,7 @@ const Navbar = memo(function Navbar() {
                     key={label}
                     href={href}
                     onClick={closeMobile}
-                    className="block px-4 py-2.5 text-stone-600 hover:text-[#1E4FD9] hover:bg-stone-100 rounded-md transition-colors text-sm font-medium"
+                    className="block px-4 py-2.5 text-stone-700 hover:text-[#1E4FD9] hover:bg-stone-100 rounded-md transition-colors text-sm font-semibold tracking-wide"
                   >
                     {label}
                   </a>

@@ -9,6 +9,7 @@
 import React, { useState, useCallback, memo } from 'react'
 import { TECH_PORTFOLIO_ITEMS } from '../../utils/constants'
 import SectionHeading from '../ui/SectionHeading'
+import SectionDivider from '../ui/SectionDivider'
 import PortfolioCard from '../ui/PortfolioCard'
 import Lightbox from '../ui/Lightbox'
 
@@ -27,6 +28,7 @@ const Portfolio = memo(function Portfolio() {
   return (
     <section id="portfolio" className="relative py-24 lg:py-32 bg-stone-100">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionDivider label="§ Work" />
         <SectionHeading
           label="Our Work"
           title="Featured Projects"

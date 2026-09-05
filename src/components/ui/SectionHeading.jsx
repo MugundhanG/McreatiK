@@ -21,15 +21,19 @@ const SectionHeading = memo(function SectionHeading({ label, title, subtitle }) 
     >
       <RegMark position="top-left" className="left-1/2 -translate-x-1/2 -top-3" />
 
-      {/* Small label chip above the title */}
+      {/* Eyebrow — a ruled tag, not a chip; matches the blueprint/spec-sheet register */}
       {label && (
-        <span className="inline-block px-4 py-1.5 mb-4 text-xs font-mono-label uppercase rounded-full bg-[#1E4FD9]/[0.06] text-[#1E4FD9] border border-[#1E4FD9]/20">
-          {label}
-        </span>
+        <div className="inline-flex items-center gap-3 mb-5">
+          <span className="w-8 h-px bg-[#1E4FD9]/50" />
+          <span className="font-mono-label text-xs uppercase tracking-[0.18em] text-[#1E4FD9]">
+            {label}
+          </span>
+          <span className="w-8 h-px bg-[#1E4FD9]/50" />
+        </div>
       )}
 
       {/* Main title — solid ink, no gradient */}
-      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display text-stone-900 leading-tight">
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display tracking-tight text-stone-900 leading-tight text-balance">
         {title}
       </h2>
 

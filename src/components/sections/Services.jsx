@@ -9,6 +9,7 @@ import React, { memo } from 'react'
 import { motion } from 'framer-motion'
 import { TECH_SERVICES, TECH_SERVICE_CATEGORIES } from '../../utils/constants'
 import SectionHeading from '../ui/SectionHeading'
+import SectionDivider from '../ui/SectionDivider'
 import ServiceCard from '../ui/ServiceCard'
 
 const Services = memo(function Services() {
@@ -21,6 +22,7 @@ const Services = memo(function Services() {
   return (
     <section id="services" className="relative py-24 lg:py-32 bg-stone-100">
       <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionDivider label="§ Services" />
         <SectionHeading
           label="What We Do"
           title="Services That Grow With Your Business"

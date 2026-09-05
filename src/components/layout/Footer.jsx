@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom'
 import { FiInstagram, FiLinkedin, FiTwitter, FiFacebook, FiYoutube } from 'react-icons/fi'
 import { TECH_NAV_LINKS, TECH_SERVICES, SOCIAL_LINKS } from '../../utils/constants'
 import DepartmentSwitcher from '../ui/DepartmentSwitcher'
-import mcreatiKLogo from '../../assets/mcreatik-logo-light-bg.png'
+import mcreatiKLogo from '../../assets/tech-logo-light-bg.png'
 
 /* Map icon name strings from constants to actual components */
 const ICON_MAP = {
@@ -111,8 +111,7 @@ const Footer = memo(function Footer() {
                   +91 9600-129-267
                 </a>
               </li>
-              <li>Based in Chennai, TN</li>
-              <li>Available Mon – Sat, 8 AM – 10 PM</li>
+              <li>Based in Chennai, TN, India</li>
             </ul>
           </div>
         </div>

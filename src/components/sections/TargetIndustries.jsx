@@ -13,6 +13,7 @@ import { FaWhatsapp } from 'react-icons/fa'
 import { TECH_TARGET_INDUSTRIES } from '../../utils/constants'
 import { getWhatsAppHref } from '../../utils/whatsapp'
 import SectionHeading from '../ui/SectionHeading'
+import SectionDivider from '../ui/SectionDivider'
 import Button from '../ui/Button'
 
 const WHATSAPP_HREF = getWhatsAppHref("Hi McreatiK, I'd like a free consultation for my business.")
@@ -25,6 +26,7 @@ const TargetIndustries = memo(function TargetIndustries() {
   return (
     <section id="industries" className="relative py-24 lg:py-32">
       <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionDivider label="§ Industries" />
         <SectionHeading
           label="Who We Work With"
           title="Websites Designed for Businesses Like Yours"

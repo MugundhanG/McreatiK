@@ -38,23 +38,12 @@ const Hero = memo(function Hero() {
           <div className="flex flex-col items-start">
 
             <motion.span
-              className="font-mono-label text-xs uppercase text-[#A8460A] mb-4"
+              className="font-display text-xl sm:text-2xl font-semibold uppercase tracking-tight text-[#A8460A] mb-6"
               variants={fadeUp(0)}
               initial="hidden"
               animate="visible"
             >
               McreatiK — Tech &amp; Creative Solutions
-            </motion.span>
-
-            {/* Badge */}
-            <motion.span
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium bg-white text-stone-700 border border-stone-200 shadow-sm mb-7"
-              variants={fadeUp(0.05)}
-              initial="hidden"
-              animate="visible"
-            >
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="font-mono-label">Now accepting new projects for 2026</span>
             </motion.span>
 
             {/* Headline */}
