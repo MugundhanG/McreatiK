@@ -41,8 +41,8 @@ const TargetIndustries = memo(function TargetIndustries() {
               onClick={() => setActive(i)}
               className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors cursor-pointer ${
                 active === i
-                  ? 'bg-[#5B5FEF] border-[#5B5FEF] text-white'
-                  : 'border-white/15 text-gray-400 hover:border-[#5B5FEF]/50 hover:text-[#a5a8ff]'
+                  ? 'bg-[#1E4FD9] border-[#1E4FD9] text-white'
+                  : 'border-stone-200 text-stone-600 hover:border-[#1E4FD9]/40 hover:text-[#1E4FD9]'
               }`}
             >
               {item.title}
@@ -61,19 +61,19 @@ const TargetIndustries = memo(function TargetIndustries() {
               transition={{ duration: 0.3, ease: 'easeOut' }}
               className="flex flex-col sm:flex-row items-start gap-6"
             >
-              <span className="flex items-center justify-center w-14 h-14 shrink-0 rounded-lg border border-[#5B5FEF]/30 text-[#a5a8ff]">
+              <span className="flex items-center justify-center w-14 h-14 shrink-0 rounded-lg border border-[#1E4FD9]/25 bg-[#1E4FD9]/[0.05] text-[#1E4FD9]">
                 <Icon className="w-6 h-6" />
               </span>
               <div>
-                <h3 className="text-xl font-semibold font-display text-white mb-2">{current.title}</h3>
-                <p className="text-gray-400 leading-relaxed max-w-xl">{current.description}</p>
+                <h3 className="text-xl font-semibold font-display text-stone-900 mb-2">{current.title}</h3>
+                <p className="text-stone-600 leading-relaxed max-w-xl">{current.description}</p>
               </div>
             </motion.div>
           </AnimatePresence>
         </div>
 
         <div className="mt-10 flex flex-col items-center gap-4 text-center">
-          <p className="text-gray-400 text-sm">
+          <p className="text-stone-600 text-sm">
             Don't see your kind of business here? We work with all kinds.
           </p>
           <Button href={WHATSAPP_HREF}>

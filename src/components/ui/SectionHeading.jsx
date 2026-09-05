@@ -23,19 +23,19 @@ const SectionHeading = memo(function SectionHeading({ label, title, subtitle }) 
 
       {/* Small label chip above the title */}
       {label && (
-        <span className="inline-block px-4 py-1.5 mb-4 text-xs font-mono-label uppercase rounded-full bg-[#5B5FEF]/10 text-[#a5a8ff] border border-[#5B5FEF]/20">
+        <span className="inline-block px-4 py-1.5 mb-4 text-xs font-mono-label uppercase rounded-full bg-[#1E4FD9]/[0.06] text-[#1E4FD9] border border-[#1E4FD9]/20">
           {label}
         </span>
       )}
 
-      {/* Main gradient title */}
-      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display gradient-text leading-tight">
+      {/* Main title — solid ink, no gradient */}
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display text-stone-900 leading-tight">
         {title}
       </h2>
 
       {/* Optional subtitle */}
       {subtitle && (
-        <p className="mt-4 text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+        <p className="mt-4 text-stone-600 text-lg max-w-2xl mx-auto leading-relaxed">
           {subtitle}
         </p>
       )}

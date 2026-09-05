@@ -64,15 +64,15 @@ const MultiSelect = ({ id, name, options, value, onChange, onBlur, placeholder, 
         aria-expanded={open}
         className={`${className} cursor-pointer flex items-center justify-between gap-2 text-left`}
       >
-        <span className={`truncate ${selected.length ? 'text-white' : 'text-gray-500'}`}>{summary}</span>
-        <FiChevronDown className={`w-4 h-4 shrink-0 text-gray-400 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+        <span className={`truncate ${selected.length ? 'text-stone-900' : 'text-stone-400'}`}>{summary}</span>
+        <FiChevronDown className={`w-4 h-4 shrink-0 text-stone-500 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
       </button>
 
       {open && (
         <div
           role="listbox"
           aria-multiselectable="true"
-          className="absolute z-30 mt-2 w-full max-h-64 overflow-y-auto bg-[#111827] border border-white/10 rounded-md shadow-xl shadow-black/40 py-1.5"
+          className="absolute z-30 mt-2 w-full max-h-64 overflow-y-auto bg-white border border-stone-200 rounded-md shadow-lg shadow-stone-900/10 py-1.5"
         >
           {options.map((opt) => {
             const isChecked = selected.includes(opt)
@@ -81,7 +81,7 @@ const MultiSelect = ({ id, name, options, value, onChange, onBlur, placeholder, 
                 key={opt}
                 role="option"
                 aria-selected={isChecked}
-                className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:bg-white/5 cursor-pointer transition-colors"
+                className="flex items-center gap-3 px-4 py-2.5 text-sm text-stone-700 hover:bg-stone-50 cursor-pointer transition-colors"
               >
                 <input
                   type="checkbox"
@@ -91,7 +91,7 @@ const MultiSelect = ({ id, name, options, value, onChange, onBlur, placeholder, 
                 />
                 <span
                   className={`w-4 h-4 rounded border flex items-center justify-center shrink-0 transition-colors ${
-                    isChecked ? 'bg-[#5B5FEF] border-[#5B5FEF]' : 'border-white/20'
+                    isChecked ? 'bg-[#1E4FD9] border-[#1E4FD9]' : 'border-stone-300'
                   }`}
                 >
                   {isChecked && <FiCheck className="w-3 h-3 text-white" />}

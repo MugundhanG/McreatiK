@@ -15,7 +15,7 @@ const FAQ = memo(function FAQ() {
   const [openIndex, setOpenIndex] = useState(0)
 
   return (
-    <section id="faq" className="relative py-24 lg:py-32">
+    <section id="faq" className="relative py-24 lg:py-32 bg-stone-100">
       <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           label="FAQ"
@@ -23,19 +23,19 @@ const FAQ = memo(function FAQ() {
           subtitle="Straight answers before you reach out."
         />
 
-        <div className="border-t border-white/10">
+        <div className="border-t border-stone-200">
           {TECH_FAQ.map(({ question, answer }, index) => {
             const isOpen = openIndex === index
             return (
-              <div key={question} className="border-b border-white/10">
+              <div key={question} className="border-b border-stone-200">
                 <button
                   onClick={() => setOpenIndex(isOpen ? -1 : index)}
                   aria-expanded={isOpen}
                   className="w-full flex items-center justify-between gap-4 py-5 text-left cursor-pointer"
                 >
-                  <span className="text-white font-medium font-display">{question}</span>
+                  <span className="text-stone-900 font-medium font-display">{question}</span>
                   <FiPlus
-                    className={`w-4 h-4 text-[#a5a8ff] shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}
+                    className={`w-4 h-4 text-[#1E4FD9] shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}
                   />
                 </button>
                 <AnimatePresence initial={false}>
@@ -47,7 +47,7 @@ const FAQ = memo(function FAQ() {
                       transition={{ duration: 0.25, ease: 'easeOut' }}
                       className="overflow-hidden"
                     >
-                      <p className="text-gray-400 text-sm leading-relaxed pb-5 pr-8">{answer}</p>
+                      <p className="text-stone-600 text-sm leading-relaxed pb-5 pr-8">{answer}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>

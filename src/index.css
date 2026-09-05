@@ -59,10 +59,13 @@
   /* ---------- Department theme wrappers ---------- */
   /* Wrap each department page's root element in one of these to set
      its background, ink color, and font tokens for everything inside. */
+  /* Tech — light, editorial, "blueprint" identity: warm paper ground,
+     charcoal ink, signal-blue accent. Deliberately distinct from both
+     the dark Tech theme it replaces and McreatiK home's navy + gold. */
   .theme-tech {
-    background: #0a0b10;
-    color: #f1f2f5;
-    --font-display: 'Archivo', sans-serif;
+    background: #faf9f6;
+    color: #14161c;
+    --font-display: 'Space Grotesk', sans-serif;
     --font-body: 'Inter', sans-serif;
     --font-mono: 'IBM Plex Mono', monospace;
   }
@@ -99,10 +102,12 @@
     background-clip: text;
   }
 
-  /* Flat card surface — Tech only */
+  /* Flat card surface — Tech only. White on paper, hairline border,
+     a shadow just barely there rather than a glow. */
   .glass-card {
-    background: #12141c;
-    border: 1px solid rgba(91, 95, 239, 0.22);
+    background: #ffffff;
+    border: 1px solid #e4e2dc;
+    box-shadow: 0 1px 2px rgba(20, 22, 28, 0.04);
   }
 
   /* Flat card surface — McreatiK home only, gold-tinted border */
@@ -112,8 +117,9 @@
   }
 
   /* ---------- Tech registration-mark motif ----------
-     A small print/production crop-mark tick, placed at the
-     corner of a section or card via absolute positioning. */
+     A small blueprint/production crop-mark tick, placed at the
+     corner of a section or card via absolute positioning. Blue
+     on paper — the light-theme translation of the same motif. */
   .reg-mark {
     position: absolute;
     width: 12px;
@@ -124,7 +130,7 @@
   .reg-mark::after {
     content: '';
     position: absolute;
-    background: rgba(255, 107, 53, 0.55);
+    background: rgba(30, 79, 217, 0.45);
   }
   .reg-mark::before {
     top: 50%;
@@ -192,6 +198,20 @@
   }
   .k-mark::before { left: 3px; }
   .k-mark::after { left: 8px; }
+
+  /* ---------- Tech blueprint grid ----------
+     Faint construction-line grid, the light-theme signature
+     texture — a technical-drawing ground rather than decoration. */
+  .blueprint-grid {
+    background-image:
+      linear-gradient(rgba(30, 79, 217, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30, 79, 217, 0.06) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+  .blueprint-dots {
+    background-image: radial-gradient(rgba(30, 79, 217, 0.18) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
 
   /* Subtle paper-grain texture overlay, Studios only */
   .film-grain {

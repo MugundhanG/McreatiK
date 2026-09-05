@@ -27,7 +27,7 @@ const DepartmentSwitcher = ({ compact = false, className = '' }) => {
         to="/tech"
         title="McreatiK Tech & Creative"
         aria-current={isTech ? 'page' : undefined}
-        className={`${itemBase} ${isTech ? 'bg-[#5B5FEF] text-white' : 'text-current/50 hover:text-[#5B5FEF]'}`}
+        className={`${itemBase} ${isTech ? 'bg-[#1E4FD9] text-white' : 'text-current/50 hover:text-[#1E4FD9]'}`}
       >
         <FiCode className="w-3.5 h-3.5 shrink-0" />
         {!compact && <span>Tech</span>}

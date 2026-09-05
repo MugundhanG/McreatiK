@@ -27,17 +27,17 @@ const Testimonials = memo(function Testimonials() {
           {PLACEHOLDER_SLOTS.map((i) => (
             <motion.div
               key={i}
-              className="rounded-lg border border-dashed border-white/15 p-6 flex flex-col gap-4"
+              className="rounded-lg border border-dashed border-stone-300 p-6 flex flex-col gap-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-20px' }}
               transition={{ duration: 0.4, delay: i * 0.05 }}
             >
-              <span className="text-3xl font-display text-white/15 leading-none">&ldquo;</span>
-              <p className="text-gray-500 text-sm italic leading-relaxed -mt-2">
+              <span className="text-3xl font-display text-stone-300 leading-none">&ldquo;</span>
+              <p className="text-stone-500 text-sm italic leading-relaxed -mt-2">
                 Testimonial coming soon.
               </p>
-              <p className="text-gray-600 text-xs font-mono-label mt-auto pt-2 border-t border-white/10">
+              <p className="text-stone-500 text-xs font-mono-label mt-auto pt-2 border-t border-stone-200">
                 Client Name · Business Type
               </p>
             </motion.div>

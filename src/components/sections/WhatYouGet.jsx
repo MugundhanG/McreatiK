@@ -20,12 +20,12 @@ const WhatYouGet = memo(function WhatYouGet() {
           subtitle="Exactly what goes into your site depends on your business, but here's what's typically included."
         />
 
-        <div className="border-y border-white/10 py-10">
+        <div className="border-y border-stone-200 py-10">
           <div className="flex flex-wrap justify-center gap-3">
             {TECH_WHAT_YOU_GET.map((item, index) => (
               <motion.span
                 key={item}
-                className="px-4 py-2 rounded-full border border-[#5B5FEF]/25 text-sm text-gray-300 hover:border-[#5B5FEF]/60 hover:text-white transition-colors"
+                className="px-4 py-2 rounded-full border border-[#1E4FD9]/20 bg-white text-sm text-stone-700 hover:border-[#1E4FD9]/50 hover:text-stone-900 transition-colors"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, margin: '-20px' }}

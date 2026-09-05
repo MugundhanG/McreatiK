@@ -11,9 +11,9 @@ import React, { memo } from 'react'
 const THEMES = {
   tech: {
     primary:
-      'bg-[#5B5FEF] text-white border border-white/10 hover:bg-[#6d70f2] hover:border-[#FF6B35]/40',
+      'bg-[#1E4FD9] text-white border border-transparent shadow-sm shadow-[#1E4FD9]/25 hover:bg-[#1840b8]',
     outline:
-      'border border-[#5B5FEF]/50 text-[#a5a8ff] hover:bg-[#5B5FEF]/10 hover:border-[#5B5FEF]',
+      'border border-[#14161C]/15 text-[#14161C] hover:border-[#1E4FD9] hover:text-[#1E4FD9]',
   },
   studios: {
     primary:

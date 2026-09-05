@@ -1,8 +1,8 @@
 /* ============================================
-   Navbar Component — Tech & Creative
-   Floating pill-style navbar centered on screen.
-   Logo fixed separately in top-left corner and
-   links back to the department picker.
+   Navbar Component — Tech & Creative (light theme)
+   Full-width bar, flush to the top edge, hairline
+   bottom border — matches the home navbar's frame
+   language while running Tech's own blue accent.
    ============================================ */
 
 import React, { useState, useEffect, useCallback, memo } from 'react'
@@ -13,7 +13,7 @@ import { TECH_NAV_LINKS } from '../../utils/constants'
 import { getWhatsAppHref } from '../../utils/whatsapp'
 import Button from '../ui/Button'
 import DepartmentSwitcher from '../ui/DepartmentSwitcher'
-import mcreatiKLogo from '../../assets/tech-logo-dark-bg.png'
+import mcreatiKLogo from '../../assets/mcreatik-logo-light-bg.png'
 
 const WHATSAPP_HREF = getWhatsAppHref("Hi McreatiK, I'm interested in getting a website for my business.")
 
@@ -22,7 +22,7 @@ const Navbar = memo(function Navbar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 50)
+    const onScroll = () => setIsScrolled(window.scrollY > 10)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -35,127 +35,101 @@ const Navbar = memo(function Navbar() {
   const closeMobile = useCallback(() => setIsMobileOpen(false), [])
 
   return (
-    <>
-      {/* ---------- Fixed Logo — Top Left (tablet/desktop only; mobile shows a compact logo inside the pill instead, see below) ---------- */}
-      <motion.div
-        className="hidden md:block fixed top-3 left-4 z-50"
-        initial={{ opacity: 0, x: -30 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
-      >
-        <Link to="/">
-          <img
-            src={mcreatiKLogo}
-            alt="McreatiK"
-            className="h-16 sm:h-20 md:h-24 w-auto object-contain"
-          />
-        </Link>
-      </motion.div>
+    <motion.header
+      className={`fixed top-0 left-0 right-0 z-40 border-b transition-colors duration-300 ${
+        isScrolled ? 'bg-white/90 backdrop-blur-xl border-stone-200' : 'bg-white/70 backdrop-blur-md border-stone-200/60'
+      }`}
+      initial={{ y: -60, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
 
-      {/* ---------- Department Switcher — a separate floating badge, not part of the pill nav ---------- */}
-      <motion.div
-        className="fixed top-20 right-4 sm:right-6 z-30"
-        initial={{ opacity: 0, y: -12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
-      >
-        <DepartmentSwitcher className="text-gray-300 bg-gray-950/70 backdrop-blur-md shadow-lg shadow-black/20" />
-      </motion.div>
+        {/* Logo + department tag + desktop nav links, clustered left */}
+        <div className="flex items-center gap-8">
+          <Link to="/" className="shrink-0 flex items-center gap-2.5">
+            <img src={mcreatiKLogo} alt="McreatiK" className="h-8 w-auto object-contain" />
+            <span className="hidden sm:block h-4 w-px bg-stone-300" />
+            <span className="hidden sm:block font-mono-label text-[11px] uppercase tracking-wide text-stone-500">
+              Tech &amp; Creative
+            </span>
+          </Link>
 
-      {/* ---------- Floating Pill Navbar — Centered ---------- */}
-      <div className="fixed top-0 left-0 right-0 z-40 flex justify-center pt-4 px-4 md:pl-32 lg:pl-4">
-        <motion.nav
-          className={`w-full max-w-2xl rounded-lg transition-all duration-300 ${
-            isScrolled
-              ? 'bg-gray-950/80 backdrop-blur-xl border border-white/10 shadow-xl shadow-black/20'
-              : 'bg-gray-950/50 backdrop-blur-md border border-white/5'
-          }`}
-          initial={{ y: -80, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-          <div className="flex items-center justify-between h-14 px-4 sm:px-6">
-
-            {/* Desktop nav links */}
-            <div className="hidden md:flex items-center gap-0.5">
-              {TECH_NAV_LINKS.map(({ label, href }) => (
-                <a
-                  key={label}
-                  href={href}
-                  className="px-3.5 py-1.5 text-sm font-medium text-gray-300 hover:text-[#a5a8ff] rounded-lg hover:bg-[#5B5FEF]/15 transition-all duration-200"
-                >
-                  {label}
-                </a>
-              ))}
-            </div>
-
-            {/* Desktop: CTA */}
-            <div className="hidden md:flex items-center gap-4 shrink-0">
-              <Button href={WHATSAPP_HREF} className="text-xs px-4 py-2">
-                Get Started
-              </Button>
-            </div>
-
-            {/* Mobile: compact logo + toggle, in-line so nothing overlaps the floating logo (which is hidden below md) */}
-            <div className="md:hidden flex items-center justify-between w-full">
-              <Link to="/" className="flex items-center">
-                <img src={mcreatiKLogo} alt="McreatiK" className="h-8 w-auto object-contain" />
-              </Link>
-              <button
-                onClick={() => setIsMobileOpen((prev) => !prev)}
-                className="w-8 h-8 rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-                aria-label="Toggle menu"
+          <div className="hidden lg:flex items-center gap-1">
+            {TECH_NAV_LINKS.map(({ label, href }) => (
+              <a
+                key={label}
+                href={href}
+                className="px-3 py-1.5 text-sm font-medium text-stone-600 hover:text-[#1E4FD9] rounded-md hover:bg-stone-100 transition-all duration-200"
               >
-                {isMobileOpen ? <FiX className="w-4 h-4" /> : <FiMenu className="w-4 h-4" />}
-              </button>
-            </div>
-
+                {label}
+              </a>
+            ))}
           </div>
-        </motion.nav>
+        </div>
 
-        {/* ---------- Mobile Drawer ---------- */}
-        <AnimatePresence>
-          {isMobileOpen && (
-            <>
-              {/* Backdrop */}
-              <motion.div
-                className="fixed inset-0 bg-black/60 backdrop-blur-sm md:hidden"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={closeMobile}
-              />
-              {/* Drawer */}
-              <motion.div
-                className="fixed top-20 left-4 right-4 bg-gray-950/95 backdrop-blur-xl border border-white/10 rounded-lg shadow-xl md:hidden"
-                initial={{ opacity: 0, y: -12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.2 }}
-              >
-                <div className="px-4 py-5 space-y-1">
-                  {TECH_NAV_LINKS.map(({ label, href }) => (
-                    <a
-                      key={label}
-                      href={href}
-                      onClick={closeMobile}
-                      className="block px-4 py-2.5 text-gray-300 hover:text-[#a5a8ff] hover:bg-[#5B5FEF]/15 rounded-md transition-colors text-sm font-medium"
-                    >
-                      {label}
-                    </a>
-                  ))}
-                  <div className="pt-3">
-                    <Button href={WHATSAPP_HREF} onClick={closeMobile} className="w-full text-center">
-                      Get Started
-                    </Button>
-                  </div>
-                </div>
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>
+        {/* Desktop: switcher + CTA */}
+        <div className="hidden lg:flex items-center gap-4 shrink-0">
+          <DepartmentSwitcher className="text-stone-600 bg-stone-50/80" />
+          <Button href={WHATSAPP_HREF} className="text-xs px-4 py-2">
+            Get Started
+          </Button>
+        </div>
+
+        {/* Mobile/tablet: toggle */}
+        <button
+          onClick={() => setIsMobileOpen((prev) => !prev)}
+          className="lg:hidden w-8 h-8 rounded-lg flex items-center justify-center text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition-colors cursor-pointer"
+          aria-label="Toggle menu"
+        >
+          {isMobileOpen ? <FiX className="w-4 h-4" /> : <FiMenu className="w-4 h-4" />}
+        </button>
+
       </div>
-    </>
+
+      {/* ---------- Mobile Drawer ---------- */}
+      <AnimatePresence>
+        {isMobileOpen && (
+          <>
+            <motion.div
+              className="fixed inset-0 top-16 bg-stone-900/20 backdrop-blur-sm lg:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeMobile}
+            />
+            <motion.div
+              className="absolute top-full left-0 right-0 bg-white border-b border-stone-200 shadow-lg shadow-stone-900/5 lg:hidden"
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div className="px-4 sm:px-6 py-5 space-y-1">
+                {TECH_NAV_LINKS.map(({ label, href }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    onClick={closeMobile}
+                    className="block px-4 py-2.5 text-stone-600 hover:text-[#1E4FD9] hover:bg-stone-100 rounded-md transition-colors text-sm font-medium"
+                  >
+                    {label}
+                  </a>
+                ))}
+                <div className="pt-3 flex items-center justify-between gap-4">
+                  <DepartmentSwitcher className="text-stone-600 bg-stone-50/80" />
+                </div>
+                <div className="pt-1">
+                  <Button href={WHATSAPP_HREF} onClick={closeMobile} className="w-full text-center">
+                    Get Started
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </motion.header>
   )
 })
 

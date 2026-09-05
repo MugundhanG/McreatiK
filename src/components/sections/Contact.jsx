@@ -69,15 +69,12 @@ const Contact = memo(function Contact() {
 
   /* Shared input class names */
   const inputBase =
-    'w-full bg-white/5 border rounded-md px-4 py-3.5 text-white placeholder-gray-500 outline-none transition-all duration-200 focus:ring-2 focus:ring-indigo-500/40 text-sm'
-  const inputOk  = 'border-white/10 hover:border-white/20'
-  const inputErr = 'border-red-500/50 focus:ring-red-500/40'
+    'w-full bg-white border rounded-md px-4 py-3.5 text-stone-900 placeholder-stone-400 outline-none transition-all duration-200 focus:ring-2 focus:ring-[#1E4FD9]/25 text-sm'
+  const inputOk  = 'border-stone-200 hover:border-stone-300'
+  const inputErr = 'border-red-400/60 focus:ring-red-400/30'
 
   return (
     <section id="contact" className="relative py-24 lg:py-32">
-      {/* Background accent */}
-      <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-[#5B5FEF]/5 rounded-full blur-[120px] pointer-events-none" />
-
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           label="Get In Touch"
@@ -100,17 +97,17 @@ const Contact = memo(function Contact() {
               { icon: FiMapPin, label: 'Location', value: 'Remote — Global',       href: null },
             ].map(({ icon: Icon, label, value, href }) => (
               <div key={label} className="glass-card rounded-lg p-6 flex items-start gap-4">
-                <div className="w-12 h-12 rounded-md bg-gradient-to-br from-[#5B5FEF]/20 to-[#FF6B35]/10 flex items-center justify-center border border-[#5B5FEF]/20 shrink-0">
-                  <Icon className="w-5 h-5 text-[#a5a8ff]" />
+                <div className="w-12 h-12 rounded-md bg-[#1E4FD9]/[0.06] flex items-center justify-center border border-[#1E4FD9]/20 shrink-0">
+                  <Icon className="w-5 h-5 text-[#1E4FD9]" />
                 </div>
                 <div>
-                  <div className="text-gray-400 text-sm mb-0.5">{label}</div>
+                  <div className="text-stone-500 text-sm mb-0.5">{label}</div>
                   {href ? (
-                    <a href={href} className="text-white font-medium hover:text-[#a5a8ff] transition-colors text-sm">
+                    <a href={href} className="text-stone-900 font-medium hover:text-[#1E4FD9] transition-colors text-sm">
                       {value}
                     </a>
                   ) : (
-                    <span className="text-white font-medium text-sm">{value}</span>
+                    <span className="text-stone-900 font-medium text-sm">{value}</span>
                   )}
                 </div>
               </div>
@@ -118,8 +115,8 @@ const Contact = memo(function Contact() {
 
             {/* Response time note */}
             <div className="glass-card rounded-lg p-6">
-              <p className="text-gray-400 text-sm leading-relaxed">
-                <span className="text-white font-medium">Quick response guaranteed.</span>{' '}
+              <p className="text-stone-600 text-sm leading-relaxed">
+                <span className="text-stone-900 font-medium">Quick response guaranteed.</span>{' '}
                 We typically reply within a few hours during business days. For urgent requests, feel free to call us directly.
               </p>
             </div>
@@ -138,8 +135,8 @@ const Contact = memo(function Contact() {
             {/* Name + Email row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
-                <label htmlFor="name" className="block text-sm text-gray-300 mb-1.5 font-medium">
-                  Full Name <span className="text-red-400">*</span>
+                <label htmlFor="name" className="block text-sm text-stone-700 mb-1.5 font-medium">
+                  Full Name <span className="text-red-600">*</span>
                 </label>
                 <input
                   id="name"
@@ -151,12 +148,12 @@ const Contact = memo(function Contact() {
                   onBlur={handleBlur}
                   className={`${inputBase} ${errors.name ? inputErr : inputOk}`}
                 />
-                {errors.name && <p className="mt-1 text-xs text-red-400">{errors.name}</p>}
+                {errors.name && <p className="mt-1 text-xs text-red-600">{errors.name}</p>}
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm text-gray-300 mb-1.5 font-medium">
-                  Email Address <span className="text-red-400">*</span>
+                <label htmlFor="email" className="block text-sm text-stone-700 mb-1.5 font-medium">
+                  Email Address <span className="text-red-600">*</span>
                 </label>
                 <input
                   id="email"
@@ -168,15 +165,15 @@ const Contact = memo(function Contact() {
                   onBlur={handleBlur}
                   className={`${inputBase} ${errors.email ? inputErr : inputOk}`}
                 />
-                {errors.email && <p className="mt-1 text-xs text-red-400">{errors.email}</p>}
+                {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
               </div>
             </div>
 
             {/* Phone + Service row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
-                <label htmlFor="phone" className="block text-sm text-gray-300 mb-1.5 font-medium">
-                  Phone Number <span className="text-red-400">*</span>
+                <label htmlFor="phone" className="block text-sm text-stone-700 mb-1.5 font-medium">
+                  Phone Number <span className="text-red-600">*</span>
                 </label>
                 <input
                   id="phone"
@@ -188,12 +185,12 @@ const Contact = memo(function Contact() {
                   onBlur={handleBlur}
                   className={`${inputBase} ${errors.phone ? inputErr : inputOk}`}
                 />
-                {errors.phone && <p className="mt-1 text-xs text-red-400">{errors.phone}</p>}
+                {errors.phone && <p className="mt-1 text-xs text-red-600">{errors.phone}</p>}
               </div>
 
               <div>
-                <label htmlFor="service" className="block text-sm text-gray-300 mb-1.5 font-medium">
-                  Service(s) Required <span className="text-red-400">*</span>
+                <label htmlFor="service" className="block text-sm text-stone-700 mb-1.5 font-medium">
+                  Service(s) Required <span className="text-red-600">*</span>
                 </label>
                 <MultiSelect
                   id="service"
@@ -205,13 +202,13 @@ const Contact = memo(function Contact() {
                   placeholder="Select services"
                   className={`${inputBase} ${errors.service ? inputErr : inputOk}`}
                 />
-                {errors.service && <p className="mt-1 text-xs text-red-400">{errors.service}</p>}
+                {errors.service && <p className="mt-1 text-xs text-red-600">{errors.service}</p>}
               </div>
             </div>
 
             {/* Message */}
             <div>
-              <label htmlFor="message" className="block text-sm text-gray-300 mb-1.5 font-medium">
+              <label htmlFor="message" className="block text-sm text-stone-700 mb-1.5 font-medium">
                 Message
               </label>
               <textarea
@@ -224,7 +221,7 @@ const Contact = memo(function Contact() {
                 onBlur={handleBlur}
                 className={`${inputBase} resize-none ${errors.message ? inputErr : inputOk}`}
               />
-              {errors.message && <p className="mt-1 text-xs text-red-400">{errors.message}</p>}
+              {errors.message && <p className="mt-1 text-xs text-red-600">{errors.message}</p>}
             </div>
 
             {/* Submit button + status feedback */}
@@ -247,7 +244,7 @@ const Contact = memo(function Contact() {
 
               {submitStatus === 'success' && (
                 <motion.p
-                  className="text-green-400 text-sm"
+                  className="text-green-600 text-sm"
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                 >
@@ -256,7 +253,7 @@ const Contact = memo(function Contact() {
               )}
               {submitStatus === 'error' && (
                 <motion.p
-                  className="text-red-400 text-sm"
+                  className="text-red-600 text-sm"
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                 >

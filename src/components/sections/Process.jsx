@@ -23,7 +23,7 @@ const Process = memo(function Process() {
 
         {/* Desktop — horizontal rail */}
         <div className="hidden lg:block relative">
-          <div className="absolute top-6 left-0 right-0 h-px bg-white/10" />
+          <div className="absolute top-6 left-0 right-0 h-px bg-stone-200" />
           <div className="grid grid-cols-5 gap-6">
             {TECH_PROCESS_STEPS.map(({ icon: Icon, step, title, description }, index) => (
               <motion.div
@@ -33,12 +33,12 @@ const Process = memo(function Process() {
                 viewport={{ once: true, margin: '-30px' }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <div className="relative z-10 w-12 h-12 rounded-full bg-[#0a0b10] border border-[#5B5FEF]/40 flex items-center justify-center mb-5">
-                  <Icon className="w-5 h-5 text-[#a5a8ff]" />
+                <div className="relative z-10 w-12 h-12 rounded-full bg-stone-50 border border-[#1E4FD9]/35 flex items-center justify-center mb-5">
+                  <Icon className="w-5 h-5 text-[#1E4FD9]" />
                 </div>
-                <span className="font-mono-label text-xs text-gray-600">{step}</span>
-                <h3 className="text-white font-semibold font-display mt-1 mb-1.5">{title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{description}</p>
+                <span className="font-mono-label text-xs text-stone-400">{step}</span>
+                <h3 className="text-stone-900 font-semibold font-display mt-1 mb-1.5">{title}</h3>
+                <p className="text-stone-600 text-sm leading-relaxed">{description}</p>
               </motion.div>
             ))}
           </div>
@@ -46,7 +46,7 @@ const Process = memo(function Process() {
 
         {/* Mobile/tablet — vertical rail */}
         <div className="lg:hidden relative pl-6">
-          <div className="absolute top-1 bottom-1 left-0 w-px bg-white/10" />
+          <div className="absolute top-1 bottom-1 left-0 w-px bg-stone-200" />
           <div className="space-y-10">
             {TECH_PROCESS_STEPS.map(({ icon: Icon, step, title, description }, index) => (
               <motion.div
@@ -57,12 +57,12 @@ const Process = memo(function Process() {
                 viewport={{ once: true, margin: '-30px' }}
                 transition={{ duration: 0.5, delay: index * 0.06 }}
               >
-                <div className="absolute -left-9 top-0 w-8 h-8 rounded-full bg-[#0a0b10] border border-[#5B5FEF]/40 flex items-center justify-center">
-                  <Icon className="w-3.5 h-3.5 text-[#a5a8ff]" />
+                <div className="absolute -left-9 top-0 w-8 h-8 rounded-full bg-stone-50 border border-[#1E4FD9]/35 flex items-center justify-center">
+                  <Icon className="w-3.5 h-3.5 text-[#1E4FD9]" />
                 </div>
-                <span className="font-mono-label text-xs text-gray-600">{step}</span>
-                <h3 className="text-white font-semibold font-display mt-1 mb-1.5">{title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{description}</p>
+                <span className="font-mono-label text-xs text-stone-400">{step}</span>
+                <h3 className="text-stone-900 font-semibold font-display mt-1 mb-1.5">{title}</h3>
+                <p className="text-stone-600 text-sm leading-relaxed">{description}</p>
               </motion.div>
             ))}
           </div>
