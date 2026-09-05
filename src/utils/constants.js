@@ -330,38 +330,183 @@ export const TECH_TRUST_STATEMENTS = [
 ]
 
 export const TECH_WHAT_YOU_GET = [
-  'Responsive design',
-  'Mobile optimization',
-  'WhatsApp integration',
-  'Contact forms',
-  'Google Maps integration',
-  'Social media integration',
-  'Service pages',
-  'Gallery',
-  'FAQ section',
-  'SEO-friendly structure',
-  'Performance optimization',
-  'Domain & hosting guidance',
-  'Post-launch support',
+  {
+    title: 'Responsive design',
+    description: 'Your site resizes and rearranges itself for phones, tablets, and desktops — no pinching or zooming to read it.',
+  },
+  {
+    title: 'Mobile optimization',
+    description: 'Tap targets, load speed, and layout tuned for the phone screens most of your visitors will actually use.',
+  },
+  {
+    title: 'WhatsApp integration',
+    description: 'A tap-to-chat button that opens a conversation with you directly — no typing a number to save first.',
+  },
+  {
+    title: 'Contact forms',
+    description: 'A simple form so visitors can reach you without leaving the page or opening their email app.',
+  },
+  {
+    title: 'Google Maps integration',
+    description: 'An embedded map showing exactly where you are, so customers can get directions in one tap.',
+  },
+  {
+    title: 'Social media integration',
+    description: 'Links to your Instagram, Facebook, and other profiles, so visitors can follow you where they already spend time.',
+  },
+  {
+    title: 'Service pages',
+    description: 'A dedicated page for each service you offer, so customers find details on exactly what they need.',
+  },
+  {
+    title: 'Gallery',
+    description: 'A visual showcase of your work, products, or space that lets people see the quality before they contact you.',
+  },
+  {
+    title: 'FAQ section',
+    description: 'Answers to the questions you get asked most, so visitors get clarity without messaging you first.',
+  },
+  {
+    title: 'SEO-friendly structure',
+    description: 'Pages built the way Google expects, so your business shows up when people search for what you do.',
+  },
+  {
+    title: 'Performance optimization',
+    description: 'A site that loads fast on any connection — slow pages lose visitors before they see anything.',
+  },
+  {
+    title: 'Domain & hosting guidance',
+    description: 'Help picking and setting up where your site lives online, so you\'re not stuck figuring it out alone.',
+  },
+  {
+    title: 'Post-launch support',
+    description: 'Assistance after your site goes live, whenever something needs updating or fixing.',
+  },
 ]
 
 export const TECH_PACKAGES = [
   {
     name: 'Starter',
-    tagline: 'For businesses that need a professional online presence.',
+    displayName: 'Professional Presence',
+    price: '₹25,000',
+    tagline: 'For small businesses that need a polished and credible online presence.',
     highlight: false,
+    categories: [
+      {
+        title: 'Website',
+        items: [
+          'Up to 4–5 pages',
+          'Custom responsive design',
+          'Mobile, tablet & desktop optimization',
+          'Professional homepage',
+          'WhatsApp integration',
+        ],
+      },
+      {
+        title: 'Business Setup',
+        items: ['Google Business Profile setup', 'Social media links', 'Click-to-chat integration'],
+      },
+      {
+        title: 'SEO',
+        items: ['Basic on-page SEO', 'Meta titles & descriptions', 'Image optimization'],
+      },
+    ],
   },
   {
     name: 'Professional',
-    tagline: 'For businesses that want a complete business website.',
+    displayName: 'Business Growth Website',
+    price: '₹50,000',
+    tagline: 'For businesses that want a stronger digital presence and a website designed to generate more enquiries.',
     highlight: true,
+    extraFrom: 'Starter',
+    categories: [
+      {
+        title: 'Website',
+        items: [
+          'Up to 8–10 pages',
+          'Custom UI/UX design',
+          'Brand-aligned website design',
+          'Dedicated service pages',
+          'Gallery / portfolio section',
+          'FAQ section',
+          'Testimonials section',
+          'Contact forms',
+          'WhatsApp integration',          
+        ],
+      },
+      {
+        title: 'SEO',
+        items: [
+          'Advanced on-page SEO',
+          'Keyword-focused page structure',          
+          'Image optimization',
+          'SEO-friendly URLs',          
+        ],
+      },
+      {
+        title: 'Conversion Features',
+        items: [          
+          'Enquiry buttons throughout the website',          
+        ],
+      },
+    ],
   },
   {
     name: 'Premium',
-    tagline: 'For businesses that need a highly customized digital experience.',
+    displayName: 'Custom Digital Experience',
+    price: '₹75,000',
+    tagline: 'For established businesses and brands that need a highly customized website with advanced functionality.',
     highlight: false,
+    extraFrom: 'Professional',
+    categories: [
+      {
+        title: 'Advanced Design',
+        items: [
+          'Up to 15 pages',
+          'Customized UI/UX design',
+          'Premium visual design',
+          'Advanced animations & interactions',
+          'Brand-focused visual system',
+          'Custom sections and layouts',
+          'WhatsApp integration',
+          'Social media integration',
+          'Google Maps integration',
+        ],
+      },
+      {
+        title: 'Advanced Functionality',
+        note: 'Selected features based on business requirements:',
+        items: [
+          'Product / service catalogue',
+          'Advanced contact & enquiry forms',
+          'Pricing & Packages display',         
+        ],
+      },
+      {
+        title: 'SEO & Performance',
+        items: [
+          'Advanced on-page SEO',          
+          'Sitemap & indexing setup',          
+          'Meta titles & descriptions',
+          'Image optimization',          
+        ],
+      },
+      {
+        title: 'Launch & Support',
+        items: [
+          'Domain & hosting setup for 1 year',
+          'SSL certificate setup',
+          'Website deployment',
+          'Basic training / documentation',
+          '30 days post-launch support',
+        ],
+      },
+    ],
   },
 ]
+
+export const TECH_PACKAGES_FOOTNOTE =
+  'Complex functionality, paid third-party services, and additional development are quoted separately where applicable.'
 
 export const TECH_PROCESS_STEPS = [
   {
