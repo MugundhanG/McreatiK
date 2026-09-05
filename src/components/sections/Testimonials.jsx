@@ -1,21 +1,73 @@
 /* ============================================
    Testimonials Section
-   Honestly-marked placeholders — no invented
-   quotes or client names (see Studios' gallery/
-   services for the same pattern). Swap each card
-   for real content as testimonials come in; no
-   component changes needed, just the copy below.
+   Visual treatment adapted from a 3-column
+   auto-scrolling marquee reference design, kept on
+   this project's existing stack (plain JS + Tailwind
+   + framer-motion, no shadcn/TypeScript/lucide swap
+   needed beyond the icons below). Content stays
+   exactly what it was: honestly-marked placeholders
+   with no invented quotes, client names, or photos —
+   a generic avatar icon stands in for a real photo.
+   Swap the placeholder text for real quotes as they
+   come in; no structural changes needed.
    ============================================ */
 
 import React, { memo } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
+import { Quote, UserCircle2 } from 'lucide-react'
 import SectionHeading from '../ui/SectionHeading'
 
-const PLACEHOLDER_SLOTS = Array.from({ length: 6 }, (_, i) => i)
+/* Two placeholder cards per column; each column's list is rendered
+   twice back-to-back and scrolled exactly -50% of its own height,
+   which makes the loop seamless. */
+const COLUMN_ITEM_COUNTS = [2, 2, 2]
+const COLUMN_DURATIONS = [15, 19, 17]
+
+function TestimonialCard() {
+  return (
+    <motion.div
+      whileHover={{ y: -6, boxShadow: '0 20px 40px -12px rgba(20, 22, 28, 0.12)' }}
+      transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+      className="w-full max-w-xs rounded-2xl border border-stone-200 bg-white p-7 shadow-sm"
+    >
+      <Quote className="h-6 w-6 text-[#1E4FD9]/40" strokeWidth={2.5} />
+      <p className="mt-3 text-sm italic leading-relaxed text-stone-500">Testimonial coming soon.</p>
+      <div className="mt-6 flex items-center gap-3 border-t border-stone-100 pt-4">
+        <UserCircle2 className="h-10 w-10 shrink-0 text-stone-300" strokeWidth={1.5} />
+        <p className="font-mono-label text-xs text-stone-500">Client Name &middot; Business Type</p>
+      </div>
+    </motion.div>
+  )
+}
+
+function TestimonialsColumn({ count, duration, className = '' }) {
+  const reduceMotion = useReducedMotion()
+  const items = Array.from({ length: count })
+
+  return (
+    <div className={className}>
+      <motion.ul
+        animate={reduceMotion ? undefined : { translateY: '-50%' }}
+        transition={{ duration, repeat: Infinity, ease: 'linear', repeatType: 'loop' }}
+        className="m-0 flex list-none flex-col gap-5 p-0"
+      >
+        {[0, 1].map((dup) => (
+          <React.Fragment key={dup}>
+            {items.map((_, i) => (
+              <li key={`${dup}-${i}`} aria-hidden={dup === 1}>
+                <TestimonialCard />
+              </li>
+            ))}
+          </React.Fragment>
+        ))}
+      </motion.ul>
+    </div>
+  )
+}
 
 const Testimonials = memo(function Testimonials() {
   return (
-    <section className="relative py-24 lg:py-32">
+    <section className="relative overflow-hidden py-24 lg:py-32">
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           label="Testimonials"
@@ -23,25 +75,14 @@ const Testimonials = memo(function Testimonials() {
           subtitle="Real feedback from real clients, added here as it comes in."
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {PLACEHOLDER_SLOTS.map((i) => (
-            <motion.div
-              key={i}
-              className="rounded-lg border border-dashed border-stone-300 p-6 flex flex-col gap-4"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-20px' }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
-            >
-              <span className="text-3xl font-display text-stone-300 leading-none">&ldquo;</span>
-              <p className="text-stone-500 text-sm italic leading-relaxed -mt-2">
-                Testimonial coming soon.
-              </p>
-              <p className="text-stone-500 text-xs font-mono-label mt-auto pt-2 border-t border-stone-200">
-                Client Name · Business Type
-              </p>
-            </motion.div>
-          ))}
+        <div
+          className="flex max-h-[520px] justify-center gap-5 overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_8%,black_92%,transparent)]"
+          role="region"
+          aria-label="Scrolling testimonial placeholders"
+        >
+          <TestimonialsColumn count={COLUMN_ITEM_COUNTS[0]} duration={COLUMN_DURATIONS[0]} />
+          <TestimonialsColumn count={COLUMN_ITEM_COUNTS[1]} duration={COLUMN_DURATIONS[1]} className="hidden md:block" />
+          <TestimonialsColumn count={COLUMN_ITEM_COUNTS[2]} duration={COLUMN_DURATIONS[2]} className="hidden lg:block" />
         </div>
       </div>
     </section>
