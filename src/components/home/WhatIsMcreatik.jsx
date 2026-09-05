@@ -10,6 +10,7 @@
 import React, { memo } from 'react'
 import { motion } from 'framer-motion'
 import { FiGlobe, FiCamera } from 'react-icons/fi'
+import BeamsBackground from '../ui/BeamsBackground'
 
 const DEPARTMENTS = [
   { icon: FiGlobe, label: 'McreatiK Tech', tagline: 'Websites & digital', accent: '#5B5FEF' },
@@ -18,8 +19,9 @@ const DEPARTMENTS = [
 
 const WhatIsMcreatik = memo(function WhatIsMcreatik() {
   return (
-    <section id="about" className="relative py-24 lg:py-28">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="about" className="relative overflow-hidden py-24 lg:py-28">
+      <BeamsBackground intensity="medium" beamCount={12} />
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-14 lg:gap-16 items-center">
 
           {/* ---------- Left — the statement ---------- */}
