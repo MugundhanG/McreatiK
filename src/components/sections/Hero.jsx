@@ -99,7 +99,7 @@ const Hero = memo(function Hero() {
 
           {/* ===== RIGHT — Shader panel with an animated services ticker ===== */}
           <div className="mth-reveal relative h-100 sm:h-120 lg:h-140" style={{ animationDelay: '0.2s' }}>
-            <div className="absolute inset-y-0 left-4 right-0 rotate-3 overflow-hidden rounded-[2rem] bg-[#1E4FD9] shadow-2xl shadow-[#1E4FD9]/20 lg:-right-16 lg:rotate-6">
+            <div className="absolute inset-y-0 left-4 right-0 rotate-3 overflow-hidden rounded-[2rem] bg-[#1E4FD9] shadow-2xl shadow-[#1E4FD9]/20 xl:-right-16 xl:rotate-6">
               <Suspense fallback={null}>
                 <TechHeroShaderPanel />
               </Suspense>

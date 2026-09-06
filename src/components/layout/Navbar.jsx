@@ -43,45 +43,54 @@ const Navbar = memo(function Navbar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* flex-wrap + the hidden spacer below force the switcher/CTA onto
+            their own line only in the lg tier (compact laptop widths,
+            ~1024-1279px) where there isn't room for everything on one
+            line — xl+ hides the spacer so it collapses back to one row. */}
+        <div className="flex flex-wrap items-center justify-between h-16 lg:h-auto lg:py-3 xl:h-16 xl:py-0">
 
-        {/* Logo + department tag + desktop nav links, clustered left */}
-        <div className="flex items-center gap-8">
-          <Link to="/" className="shrink-0 flex items-center">
-            <img src={mcreatiKLogo} alt="McreatiK Tech & Creative" className="h-11 w-auto object-contain" />
-          </Link>
+          {/* Logo + department tag + desktop nav links, clustered left */}
+          <div className="flex items-center gap-8">
+            <Link to="/" className="shrink-0 flex items-center">
+              <img src={mcreatiKLogo} alt="McreatiK Tech & Creative" className="h-11 w-auto object-contain" />
+            </Link>
 
-          <div className="hidden lg:flex items-center gap-6">
-            {TECH_NAV_LINKS.map(({ label, href }) => (
-              <Link
-                key={label}
-                to={href}
-                className="group relative py-1.5 text-sm font-semibold tracking-wide text-stone-700 hover:text-[#1E4FD9] transition-colors duration-200"
-              >
-                {label}
-                <span className="absolute left-0 -bottom-0.5 h-px w-0 bg-[#1E4FD9] transition-all duration-200 group-hover:w-full" />
-              </Link>
-            ))}
+            <div className="hidden lg:flex items-center gap-6">
+              {TECH_NAV_LINKS.map(({ label, href }) => (
+                <Link
+                  key={label}
+                  to={href}
+                  className="group relative py-1.5 text-sm font-semibold tracking-wide text-stone-700 hover:text-[#1E4FD9] transition-colors duration-200 whitespace-nowrap"
+                >
+                  {label}
+                  <span className="absolute left-0 -bottom-0.5 h-px w-0 bg-[#1E4FD9] transition-all duration-200 group-hover:w-full" />
+                </Link>
+              ))}
+            </div>
           </div>
+
+          {/* Line-break spacer — lg tier only */}
+          <div className="hidden lg:block xl:hidden basis-full h-0" aria-hidden="true" />
+
+          {/* Desktop: switcher + CTA */}
+          <div className="hidden lg:flex items-center gap-4 shrink-0 lg:w-full lg:justify-center xl:w-auto xl:justify-normal">
+            <DepartmentSwitcher className="text-stone-600 bg-stone-50/80" />
+            <Button href={WHATSAPP_HREF} className="text-xs px-4 py-2">
+              Get Started
+            </Button>
+          </div>
+
+          {/* Mobile/tablet: toggle */}
+          <button
+            onClick={() => setIsMobileOpen((prev) => !prev)}
+            className="lg:hidden w-8 h-8 rounded-lg flex items-center justify-center text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition-colors cursor-pointer"
+            aria-label="Toggle menu"
+          >
+            {isMobileOpen ? <FiX className="w-4 h-4" /> : <FiMenu className="w-4 h-4" />}
+          </button>
+
         </div>
-
-        {/* Desktop: switcher + CTA */}
-        <div className="hidden lg:flex items-center gap-4 shrink-0">
-          <DepartmentSwitcher className="text-stone-600 bg-stone-50/80" />
-          <Button href={WHATSAPP_HREF} className="text-xs px-4 py-2">
-            Get Started
-          </Button>
-        </div>
-
-        {/* Mobile/tablet: toggle */}
-        <button
-          onClick={() => setIsMobileOpen((prev) => !prev)}
-          className="lg:hidden w-8 h-8 rounded-lg flex items-center justify-center text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition-colors cursor-pointer"
-          aria-label="Toggle menu"
-        >
-          {isMobileOpen ? <FiX className="w-4 h-4" /> : <FiMenu className="w-4 h-4" />}
-        </button>
-
       </div>
 
       {/* ---------- Mobile Drawer ---------- */}
