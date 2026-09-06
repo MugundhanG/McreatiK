@@ -13,7 +13,7 @@ const TargetIndustries = lazy(() => import('../components/sections/TargetIndustr
 
 function TechIndustriesPage() {
   useEffect(() => {
-    document.title = 'Industries We Work With | McreatiK Tech & Creative'
+    document.title = 'Industries We Serve | McreatiK Tech & Creative'
     setFavicon('/favicon-tech.png')
   }, [])
 

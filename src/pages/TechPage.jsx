@@ -18,7 +18,8 @@ const StudiosCrossSell = lazy(() => import('../components/sections/StudiosCrossS
 const Packages = lazy(() => import('../components/sections/Packages'))
 const Process = lazy(() => import('../components/sections/Process'))
 const About = lazy(() => import('../components/sections/About'))
-const Testimonials = lazy(() => import('../components/sections/Testimonials'))
+// Testimonials hidden until real client feedback comes in — see below, not removed.
+// const Testimonials = lazy(() => import('../components/sections/Testimonials'))
 const FinalCTA = lazy(() => import('../components/sections/FinalCTA'))
 const Contact = lazy(() => import('../components/sections/Contact'))
 
@@ -39,7 +40,7 @@ function TechPage() {
       <Packages />
       <Process />
       <About />
-      <Testimonials />
+      {/* <Testimonials /> — hidden until real client feedback replaces the placeholders */}
       <FinalCTA />
       <Contact />
     </TechPageShell>
