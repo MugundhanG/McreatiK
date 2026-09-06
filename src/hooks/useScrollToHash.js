@@ -7,6 +7,13 @@
    yet on the first render after navigation, so
    this retries briefly instead of relying on the
    browser's native (load-time-only) hash scroll.
+
+   Also corrects for the fixed navbar: plain
+   scrollIntoView aligns the section's top edge
+   with the viewport's top edge, which lands it
+   right under (hidden behind) the fixed header.
+   We measure the actual rendered header height
+   and scroll to that offset instead.
    ============================================ */
 
 import { useEffect } from 'react'
@@ -14,6 +21,7 @@ import { useLocation } from 'react-router-dom'
 
 const MAX_ATTEMPTS = 40
 const RETRY_MS = 200
+const EXTRA_GAP = 16
 
 export function useScrollToHash() {
   const { hash } = useLocation()
@@ -27,7 +35,10 @@ export function useScrollToHash() {
     const tryScroll = () => {
       const el = document.getElementById(id)
       if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        const header = document.querySelector('header')
+        const offset = (header?.getBoundingClientRect().height || 0) + EXTRA_GAP
+        const top = el.getBoundingClientRect().top + window.scrollY - offset
+        window.scrollTo({ top, behavior: 'smooth' })
         return
       }
       attempts += 1

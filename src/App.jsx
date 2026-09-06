@@ -11,6 +11,7 @@
 import React, { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import WhatsAppButton from './components/ui/WhatsAppButton'
+import { useScrollRestoration } from './hooks/useScrollRestoration'
 
 const Landing = lazy(() => import('./pages/Landing'))
 const TechPage = lazy(() => import('./pages/TechPage'))
@@ -31,6 +32,8 @@ function PageLoader() {
 }
 
 function App() {
+  useScrollRestoration()
+
   return (
     <>
       <Suspense fallback={<PageLoader />}>

@@ -14,7 +14,7 @@ import studiosHeroPhoto from '../../assets/studios-hero-photo.webp'
 
 const StudiosHero = memo(function StudiosHero() {
   return (
-    <section id="home" className="relative min-h-screen flex items-center overflow-hidden bg-[#FAF7F0]">
+    <section id="home" className="relative min-h-screen flex items-center overflow-hidden bg-[#FAF7F0] scroll-mt-28">
       {/* Warm ambient glow */}
       <div
         className="absolute inset-0"

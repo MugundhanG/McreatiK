@@ -13,7 +13,7 @@ import SectionHeading from '../ui/SectionHeading'
 
 const About = memo(function About() {
   return (
-    <section id="about" className="relative py-24 lg:py-32 bg-stone-100">
+    <section id="about" className="relative py-24 lg:py-32 bg-stone-100 scroll-mt-24">
       <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           label="About Us"

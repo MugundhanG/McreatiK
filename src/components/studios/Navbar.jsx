@@ -58,13 +58,13 @@ const StudiosNavbar = memo(function StudiosNavbar() {
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-8">
           {STUDIOS_NAV_LINKS.map(({ label, href }) => (
-            <a
+            <Link
               key={label}
-              href={href}
+              to={href}
               className="font-body text-sm text-[#4A4438] hover:text-[#C9971F] transition-colors"
             >
               {label}
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -89,14 +89,14 @@ const StudiosNavbar = memo(function StudiosNavbar() {
             transition={{ duration: 0.2 }}
           >
             {STUDIOS_NAV_LINKS.map(({ label, href }) => (
-              <a
+              <Link
                 key={label}
-                href={href}
+                to={href}
                 onClick={closeMobile}
                 className="block py-2.5 font-body text-[#4A4438] hover:text-[#C9971F] transition-colors text-sm"
               >
                 {label}
-              </a>
+              </Link>
             ))}
           </motion.div>
         )}

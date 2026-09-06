@@ -11,7 +11,7 @@ import { STUDIOS_STATS } from '../../utils/constants'
 
 const StudiosAbout = memo(function StudiosAbout() {
   return (
-    <section id="about" className="relative py-24 lg:py-32 bg-[#FAF7F0]">
+    <section id="about" className="relative py-24 lg:py-32 bg-[#FAF7F0] scroll-mt-28">
       <div className="max-w-4xl mx-auto px-5 sm:px-8 text-center">
         <motion.p
           initial={{ opacity: 0, y: 20 }}

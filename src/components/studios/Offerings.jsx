@@ -10,7 +10,7 @@ import { STUDIOS_SERVICES } from '../../utils/constants'
 
 const StudiosOfferings = memo(function StudiosOfferings() {
   return (
-    <section id="offerings" className="relative py-24 lg:py-32 bg-[#FAF7F0]">
+    <section id="offerings" className="relative py-24 lg:py-32 bg-[#FAF7F0] scroll-mt-28">
       <div className="max-w-5xl mx-auto px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}

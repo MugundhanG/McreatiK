@@ -74,7 +74,7 @@ const Contact = memo(function Contact() {
   const inputErr = 'border-red-400/60 focus:ring-red-400/30'
 
   return (
-    <section id="contact" className="relative py-24 lg:py-32">
+    <section id="contact" className="relative py-24 lg:py-32 scroll-mt-24">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           label="Get In Touch"

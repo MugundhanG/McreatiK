@@ -13,7 +13,7 @@ import SectionHeading from '../ui/SectionHeading'
 
 const Process = memo(function Process() {
   return (
-    <section id="process" className="relative py-24 lg:py-32">
+    <section id="process" className="relative py-24 lg:py-32 scroll-mt-24">
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           label="How It Works"

@@ -46,7 +46,7 @@ const StudiosContact = memo(function StudiosContact() {
   const inputErr = 'border-[#8B2E2A]/60 focus:ring-[#8B2E2A]/40'
 
   return (
-    <section id="book" className="relative py-24 lg:py-32 bg-[#FAF7F0]">
+    <section id="book" className="relative py-24 lg:py-32 bg-[#FAF7F0] scroll-mt-28">
       <div className="max-w-5xl mx-auto px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
