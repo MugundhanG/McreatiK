@@ -101,9 +101,21 @@ const Packages = memo(function Packages() {
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           label="Packages"
-          title="Find the Right Fit"
+          title="Website Development Packages"
           subtitle="Three tiers, clearly scoped — pick the one that matches your business, or use it as a starting point for the conversation."
         />
+        <p className="-mt-12 mb-16 text-center text-sm text-stone-500">
+          Need to know pricing for remaining services?{' '}
+          <a
+            href={getWhatsAppHref('Hi')}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-[#1E4FD9] hover:underline"
+          >
+            Just send a Hi! on WhatsApp
+          </a>
+          .
+        </p>
 
         {/* Starter + Professional — a wider two-column row */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:items-stretch">
