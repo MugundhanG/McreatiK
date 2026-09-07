@@ -26,6 +26,7 @@ const StudiosGalleryPage = lazy(() => import('./pages/StudiosGalleryPage'))
 const StudiosAlbumsPage = lazy(() => import('./pages/StudiosAlbumsPage'))
 const StudiosExperiencePage = lazy(() => import('./pages/StudiosExperiencePage'))
 const StudiosBlogPage = lazy(() => import('./pages/StudiosBlogPage'))
+const StudiosBlogPostPage = lazy(() => import('./pages/StudiosBlogPostPage'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 /* Full-screen loading placeholder shown while a page chunk loads */
@@ -61,6 +62,7 @@ function App() {
           <Route path="/studios/albums" element={<StudiosAlbumsPage />} />
           <Route path="/studios/experience" element={<StudiosExperiencePage />} />
           <Route path="/studios/blog" element={<StudiosBlogPage />} />
+          <Route path="/studios/blog/:slug" element={<StudiosBlogPostPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

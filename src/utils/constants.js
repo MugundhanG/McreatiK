@@ -816,24 +816,6 @@ export const STUDIOS_SERVICES = [
   },
 ]
 
-/* Gallery entries — no real photos yet, rendered as labeled
-   placeholder frames until real images are supplied. */
-export const STUDIOS_GALLERY_ITEMS = [
-  { id: 1, category: 'Portrait', title: 'Portrait Session — placeholder' },
-  { id: 2, category: 'Wedding', title: 'Wedding Coverage — placeholder' },
-  { id: 3, category: 'Event', title: 'Event Coverage — placeholder' },
-  { id: 4, category: 'Pre/Post Wedding', title: 'Pre/Post Wedding — placeholder' },
-]
-
-/* Sample album spreads — no real designs yet, placeholder frames
-   like the Gallery until real album pages are supplied. */
-export const STUDIOS_ALBUM_ITEMS = [
-  { id: 1, category: 'Wedding', title: 'Wedding Album — placeholder' },
-  { id: 2, category: 'Pre-Wedding', title: 'Pre-Wedding Album — placeholder' },
-  { id: 3, category: 'Birthday', title: 'Birthday Album — placeholder' },
-  { id: 4, category: 'Family', title: 'Family Album — placeholder' },
-]
-
 export const STUDIOS_STATS = [
   { value: '30+', label: 'Projects Delivered' },
   { value: '25,000+', label: 'Images Captured' },
