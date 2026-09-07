@@ -21,7 +21,10 @@ const TINTS = [
 
 const StudiosGallery = memo(function StudiosGallery() {
   return (
-    <section id="gallery" className="relative py-24 lg:py-32 bg-[#F3EEE3] scroll-mt-28">
+    <section
+      id="gallery"
+      className="relative py-24 lg:py-32 scroll-mt-28 bg-[linear-gradient(135deg,#EDE7D3_0%,#E6B5AC_30%,#5FC7A8_62%,#163A3D_100%)]"
+    >
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}

@@ -682,68 +682,126 @@ export const TECH_SERVICE_OPTIONS = [
    ================================================= */
 
 export const STUDIOS_NAV_LINKS = [
-  { label: 'Home', href: '#home' },
-  { label: 'Offerings', href: '#offerings' },
-  { label: 'Gallery', href: '#gallery' },
-  { label: 'About', href: '#about' },
-  { label: 'Book', href: '#book' },
+  { label: 'Home', href: '/studios' },
+  { label: 'About', href: '/studios#about' },
+  { label: 'Gallery', href: '/studios/gallery' },
+  { label: 'Albums', href: '/studios/albums' },
+  { label: 'Services', href: '/studios#offerings' },
+  { label: 'Experience', href: '/studios/experience' },
+  { label: 'Blog', href: '/studios/blog' },
+  { label: 'Contact', href: '/studios#book' },
+]
+
+/* What clients can expect after they reach out — a standard shoot
+   workflow; confirm/edit the steps if the real process differs. */
+export const STUDIOS_EXPERIENCE_STEPS = [
+  {
+    icon: FiMessageCircle,
+    step: '01',
+    title: 'Enquiry',
+    description: 'Tell us the shoot type, date, and what you have in mind — we reply within 24 hours.',
+  },
+  {
+    icon: FiCalendar,
+    step: '02',
+    title: 'Consultation & Planning',
+    description: 'A quick call to lock the date, location, and shot list so everyone knows what to expect on the day.',
+  },
+  {
+    icon: FiCamera,
+    step: '03',
+    title: 'The Shoot',
+    description: 'We show up on time and shoot at a relaxed pace, so the moments stay natural instead of staged.',
+  },
+  {
+    icon: FiEdit3,
+    step: '04',
+    title: 'Editing & Selection',
+    description: 'Every photo is reviewed, culled, and edited for color, light, and detail before it reaches you.',
+  },
+  {
+    icon: FiPackage,
+    step: '05',
+    title: 'Delivery',
+    description: 'Final photos (and album, if included) delivered digitally, ready to share or print.',
+  },
+]
+
+/* Pricing varies by shoot — these are the factors that shape a quote,
+   not fixed tiers. Swap in real fixed packages once pricing is final. */
+export const STUDIOS_PRICING_FACTORS = [
+  {
+    icon: FiCamera,
+    title: 'Session Type',
+    description: 'A portrait session and a full wedding day naturally carry different pricing.',
+  },
+  {
+    icon: FiCalendar,
+    title: 'Duration & Locations',
+    description: 'Hours on-site and the number of locations covered both factor into the quote.',
+  },
+  {
+    icon: FiPackage,
+    title: 'Deliverables',
+    description: 'Edited digital photos, a printed album, or same-day highlights — pick what the shoot needs.',
+  },
 ]
 
 export const STUDIOS_SERVICES = [
   {
     icon: FiCamera,
     title: 'Portrait Sessions',
-    description: 'Placeholder — describe your portrait/headshot session packages here.',
+    description: 'Studio or outdoor portraits — solo, couple, or family — with natural posing and a relaxed pace.',
   },
   {
     icon: FiHeart,
     title: 'Wedding Photography',
-    description: 'Placeholder — describe your wedding coverage packages here.',
+    description: 'Full-day wedding coverage that captures both the rituals and the moments happening in between.',
   },
   {
     icon: FiCalendar,
     title: 'Pre and Post Wedding',
-    description: 'Placeholder — describe your pre-wedding and post-wedding shoot packages here.',
+    description: 'A dedicated shoot before or after the wedding, at a location that reflects the two of you.',
   },
   {
     icon: FiSun,
     title: 'Baby & Kids Outdoor Shoots',
-    description: 'Placeholder — describe your baby and kids outdoor photography packages here.',
+    description: 'Playful, unposed outdoor sessions that capture how your little one actually moves and smiles.',
   },
   {
     icon: FiAperture,
     title: 'Model Outdoor Shoots',
-    description: 'Placeholder — describe your model and portfolio outdoor shoot packages here.',
+    description: 'Portfolio-ready outdoor shoots with varied looks and locations, edited for a polished final set.',
   },
   {
     icon: FiGift,
     title: 'Maternity and Baby Shower',
-    description: 'Placeholder — describe your maternity and baby shower shoot packages here.',
+    description: 'Gentle, celebratory photography for this stage — indoors or outdoors, however you feel most you.',
   },
   {
     icon: FiStar,
     title: 'Birthday Parties',
-    description: 'Placeholder — describe your birthday party photography packages here.',
+    description: 'Candid and posed coverage of the celebration, from decor and cake to the moments with guests.',
   },
   {
     icon: FiUsers,
     title: 'All Traditional Events',
-    description: 'Placeholder — describe your traditional and cultural event coverage here.',
+    description: 'Coverage for cultural and traditional functions, attentive to the rituals that matter most to your family.',
   },
   {
     icon: FiCircle,
     title: 'Ring Ceremony',
-    description: 'Placeholder — describe your ring ceremony/engagement shoot packages here.',
+    description: 'Coverage of the engagement — the ring exchange, family moments, and the celebration around it.',
   },
   {
     icon: FiHome,
     title: 'House Warming',
-    description: 'Placeholder — describe your house warming event coverage packages here.',
+    description: 'Photography for the ceremony and celebration as you settle into a new home.',
   },
   {
     icon: FiBook,
     title: 'Photo Album Design',
-    description: 'Placeholder — describe your photo album design and printing packages here.',
+    description: 'Your favorite shots laid out into a printed album, designed spread by spread to tell the story in order.',
   },
 ]
 
@@ -753,13 +811,21 @@ export const STUDIOS_GALLERY_ITEMS = [
   { id: 1, category: 'Portrait', title: 'Portrait Session — placeholder' },
   { id: 2, category: 'Wedding', title: 'Wedding Coverage — placeholder' },
   { id: 3, category: 'Event', title: 'Event Coverage — placeholder' },
-  { id: 4, category: 'Product', title: 'Product Shoot — placeholder' },
+  { id: 4, category: 'Pre/Post Wedding', title: 'Pre/Post Wedding — placeholder' },
+]
+
+/* Sample album spreads — no real designs yet, placeholder frames
+   like the Gallery until real album pages are supplied. */
+export const STUDIOS_ALBUM_ITEMS = [
+  { id: 1, category: 'Wedding', title: 'Wedding Album — placeholder' },
+  { id: 2, category: 'Pre-Wedding', title: 'Pre-Wedding Album — placeholder' },
+  { id: 3, category: 'Birthday', title: 'Birthday Album — placeholder' },
+  { id: 4, category: 'Family', title: 'Family Album — placeholder' },
 ]
 
 export const STUDIOS_STATS = [
-  { value: '—', label: 'Shoots Delivered' },
-  { value: '—', label: 'Years Behind the Lens' },
-  { value: '—', label: 'Happy Clients' },
+  { value: '30+', label: 'Projects Delivered' },
+  { value: '25,000+', label: 'Images Captured' },
 ]
 
 export const STUDIOS_SERVICE_OPTIONS = [
@@ -770,11 +836,20 @@ export const STUDIOS_SERVICE_OPTIONS = [
   'Model Outdoor Shoots',
   'Maternity and Baby Shower',
   'Birthday Parties',
-  'All Traditional Events',
   'Ring Ceremony',
   'House Warming',
   'Photo Album Design',
   'Other',
+]
+
+/* No real posts yet — these are the topics the blog will cover once
+   it launches, shown as an honest "coming soon" preview rather than
+   fabricated placeholder articles. */
+export const STUDIOS_BLOG_TOPICS = [
+  'Photography Tips',
+  'Behind the Scenes',
+  'Real Weddings',
+  'Location Guides',
 ]
 
 /* =================================================

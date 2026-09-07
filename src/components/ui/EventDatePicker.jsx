@@ -54,6 +54,10 @@ const EventDatePicker = memo(function EventDatePicker({
   onApply,
   error,
   id = 'event-date',
+  /* 'dark' matches the Home page's dark form fields; 'light' matches
+     Studios' own white-card contact form. Only the trigger button's
+     colors change — the popover itself is already light-themed. */
+  variant = 'dark',
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const [position, setPosition] = useState(null)
@@ -254,9 +258,17 @@ const EventDatePicker = memo(function EventDatePicker({
         onClick={() => (isOpen ? setIsOpen(false) : openPicker())}
         aria-haspopup="dialog"
         aria-expanded={isOpen}
-        className={`w-full flex items-center gap-2.5 rounded-full bg-white/5 border px-4 py-3.5 text-sm text-left transition-all duration-200 ${
-          error ? 'border-red-500/50' : 'border-white/10 hover:border-white/20'
-        } ${startDate ? 'text-white' : 'text-gray-500'}`}
+        className={`w-full flex items-center gap-2.5 rounded-full border px-4 py-3.5 text-sm text-left transition-all duration-200 ${
+          variant === 'light' ? 'bg-black/[0.02]' : 'bg-white/5'
+        } ${
+          error
+            ? variant === 'light' ? 'border-[#DC2626]' : 'border-red-500/50'
+            : variant === 'light' ? 'border-black/10 hover:border-black/20' : 'border-white/10 hover:border-white/20'
+        } ${
+          startDate
+            ? variant === 'light' ? 'text-[#1C1710]' : 'text-white'
+            : variant === 'light' ? 'text-[#A89A88]' : 'text-gray-500'
+        }`}
       >
         <FiCalendar className="w-4 h-4 text-[#D8AE55] shrink-0" />
         {label}
