@@ -1,12 +1,13 @@
 /* ============================================
    BookingModal — Studios
-   A quick-enquiry popup shown once per browser
-   session when a visitor lands on the Studios
-   home page (adapted from a reference design,
-   recolored to McreatiK's own warm paper/gold
-   palette). Just three fields — name, phone,
-   and service — kept intentionally short so it
-   doesn't feel like the full booking form.
+   A quick-enquiry popup shown every time a visitor
+   lands on the Studios home page — fresh load,
+   direct link, or switching over from Tech — not
+   just once per session (adapted from a reference
+   design, recolored to McreatiK's own warm
+   paper/gold palette). Just three fields — name,
+   phone, and service — kept intentionally short so
+   it doesn't feel like the full booking form.
    ============================================ */
 
 import React, { memo, useCallback, useEffect, useState } from 'react'
@@ -18,8 +19,6 @@ import { STUDIOS_SERVICE_OPTIONS } from '../../utils/constants'
 import { useForm } from '../../hooks/useForm'
 import Button from '../ui/Button'
 
-const SEEN_KEY = 'mcreatik_studios_booking_modal_seen'
-
 const INITIAL_VALUES = { name: '', phone: '', service: '' }
 
 const SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID
@@ -27,11 +26,10 @@ const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
 const PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 
 const StudiosBookingModal = memo(function StudiosBookingModal() {
-  const [isOpen, setIsOpen] = useState(() => !sessionStorage.getItem(SEEN_KEY))
+  const [isOpen, setIsOpen] = useState(true)
 
   const close = useCallback(() => {
     setIsOpen(false)
-    sessionStorage.setItem(SEEN_KEY, '1')
   }, [])
 
   const onSubmit = useCallback(async (data) => {
