@@ -9,10 +9,11 @@
    ============================================ */
 
 import React, { lazy, Suspense } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import WhatsAppButton from './components/ui/WhatsAppButton'
 import DepartmentTransitionOverlay from './components/ui/DepartmentTransitionOverlay'
 import { useScrollRestoration } from './hooks/useScrollRestoration'
+import { syncPathname } from './utils/navigationHistory'
 
 const Landing = lazy(() => import('./pages/Landing'))
 const TechPage = lazy(() => import('./pages/TechPage'))
@@ -38,6 +39,12 @@ function PageLoader() {
 
 function App() {
   useScrollRestoration()
+
+  /* Must run synchronously during render (not in an effect) so the
+     value is already correct before the newly-routed page's own
+     components render in this same pass — see navigationHistory.js. */
+  const { pathname } = useLocation()
+  syncPathname(pathname)
 
   return (
     <>

@@ -1,9 +1,12 @@
 /* ============================================
    BookingModal — Studios
-   A quick-enquiry popup shown every time a visitor
-   lands on the Studios home page — fresh load,
-   direct link, or switching over from Tech — not
-   just once per session (adapted from a reference
+   A quick-enquiry popup shown whenever a visitor
+   arrives at the Studios home page from outside
+   Studios — a fresh load, a direct link, or
+   switching over from Tech — but not when
+   navigating back to it from another Studios page
+   (Gallery, Albums, Experience, Blog), since that's
+   still the same visit (adapted from a reference
    design, recolored to McreatiK's own warm
    paper/gold palette). Just three fields — name,
    phone, and service — kept intentionally short so
@@ -18,6 +21,7 @@ import emailjs from '@emailjs/browser'
 import { STUDIOS_SERVICE_OPTIONS } from '../../utils/constants'
 import { useForm } from '../../hooks/useForm'
 import Button from '../ui/Button'
+import { getLastPathname } from '../../utils/navigationHistory'
 
 const INITIAL_VALUES = { name: '', phone: '', service: '' }
 
@@ -25,8 +29,13 @@ const SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID
 const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
 const PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 
+/* Suppress the popup only when coming from elsewhere inside Studios
+   itself — a fresh load, a direct link, or arriving from Tech (where
+   the last pathname is null or non-Studios) should all still show it. */
+const cameFromWithinStudios = () => Boolean(getLastPathname()?.startsWith('/studios'))
+
 const StudiosBookingModal = memo(function StudiosBookingModal() {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(() => !cameFromWithinStudios())
 
   const close = useCallback(() => {
     setIsOpen(false)
