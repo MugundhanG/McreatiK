@@ -564,32 +564,89 @@ export const TECH_PROCESS_STEPS = [
 
 export const TECH_FAQ = [
   {
+    category: 'Websites',
     question: 'How long does it take to build my website?',
     answer: 'It depends on your requirements and how quickly you can share content like text and images. We\'ll give you a clear timeline during our first conversation, before any work begins.',
   },
   {
+    category: 'Websites',
     question: 'Do I own my website and domain?',
     answer: 'Yes. Once the project is complete, the domain and website are yours — you\'re not locked into us to keep using them.',
   },
   {
+    category: 'Websites',
     question: 'Can I request changes during the design process?',
     answer: 'Yes — that\'s exactly what the Review step in our process is for. You review the site and request changes before it goes live.',
   },
   {
+    category: 'Websites',
     question: 'I don\'t have content or photos ready — can you still help?',
     answer: 'Yes. We can guide you on what\'s needed, or connect you with McreatiK Studios for professional product and team photography.',
   },
   {
+    category: 'Websites',
     question: 'What happens after my website goes live?',
     answer: 'We offer Website Care & Maintenance plans for ongoing updates, backups, and small changes, so your site keeps working for you after launch.',
   },
   {
+    category: 'Websites',
     question: 'How much will my website cost?',
     answer: 'Pricing depends on scope — request a quote on WhatsApp and we\'ll give you a clear number before any work begins.',
   },
   {
+    category: 'Websites',
     question: 'How do I get started?',
     answer: 'Message us on WhatsApp with a bit about your business, and we\'ll set up a free consultation to understand what you need.',
+  },
+  {
+    category: 'Branding',
+    question: 'What\'s included in a logo design package?',
+    answer: 'You\'ll get multiple initial concepts, a round of revisions on the direction you pick, and final files in the formats you need for both web and print.',
+  },
+  {
+    category: 'Branding',
+    question: 'Can you redesign my existing logo instead of starting from scratch?',
+    answer: 'Yes — we can refresh or modernize an existing logo while keeping it recognizable, or design a completely new one. Your call.',
+  },
+  {
+    category: 'Branding',
+    question: 'Will my business card design match my logo?',
+    answer: 'Yes — business card designs are built around your existing brand colors and logo so everything looks consistent.',
+  },
+  {
+    category: 'Branding',
+    question: 'What file formats will I receive?',
+    answer: 'Print-ready files (PDF) plus web-friendly formats (PNG, and vector where applicable), so you\'re covered for both digital use and printing.',
+  },
+  {
+    category: 'Branding',
+    question: 'How much does branding work cost?',
+    answer: 'Pricing depends on scope — request a quote on WhatsApp and we\'ll give you a clear number before any work begins.',
+  },
+  {
+    category: 'Digital Design',
+    question: 'What\'s the difference between a resume design and a resume makeover?',
+    answer: 'A makeover reworks the content and layout of your existing resume; a design builds one from scratch using your career details.',
+  },
+  {
+    category: 'Digital Design',
+    question: 'Can invoices and quotations be designed to match my brand?',
+    answer: 'Yes — invoice and quotation templates are designed using your logo and brand colors, so every document you send looks professional.',
+  },
+  {
+    category: 'Digital Design',
+    question: 'What does the LinkedIn Profile Makeover actually cover?',
+    answer: 'Your profile photo treatment, headline, and summary — the parts of your profile people actually see first.',
+  },
+  {
+    category: 'Digital Design',
+    question: 'What file formats do I get for these designs?',
+    answer: 'Print-ready PDFs plus editable source files where applicable, so you can make small updates yourself later if needed.',
+  },
+  {
+    category: 'Digital Design',
+    question: 'How much do these services cost?',
+    answer: 'Pricing depends on scope — request a quote on WhatsApp and we\'ll give you a clear number before any work begins.',
   },
 ]
 
