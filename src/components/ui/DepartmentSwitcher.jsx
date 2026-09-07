@@ -12,6 +12,17 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { FiCode, FiCamera } from 'react-icons/fi'
+import { triggerDepartmentTransition } from '../../utils/departmentTransition'
+
+/* Plain clicks switch departments through the wipe transition; a
+   modifier click (open in new tab, middle-click, etc.) is left alone
+   so the real href still works as expected. */
+const switchDepartment = (department, isActive) => (e) => {
+  if (isActive || e.defaultPrevented) return
+  if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+  e.preventDefault()
+  triggerDepartmentTransition(department)
+}
 
 const DepartmentSwitcher = ({ compact = false, className = '' }) => {
   const { pathname } = useLocation()
@@ -27,6 +38,7 @@ const DepartmentSwitcher = ({ compact = false, className = '' }) => {
         to="/tech"
         title="McreatiK Tech & Creative"
         aria-current={isTech ? 'page' : undefined}
+        onClick={switchDepartment('tech', isTech)}
         className={`${itemBase} ${isTech ? 'bg-[#1E4FD9] text-white' : 'text-current/50 hover:text-[#1E4FD9]'}`}
       >
         <FiCode className="w-3.5 h-3.5 shrink-0" />
@@ -36,6 +48,7 @@ const DepartmentSwitcher = ({ compact = false, className = '' }) => {
         to="/studios"
         title="McreatiK Studios"
         aria-current={!isTech ? 'page' : undefined}
+        onClick={switchDepartment('studios', !isTech)}
         className={`${itemBase} ${!isTech ? 'bg-[#C9971F] text-white' : 'text-current/50 hover:text-[#C9971F]'}`}
       >
         <FiCamera className="w-3.5 h-3.5 shrink-0" />
