@@ -29,7 +29,7 @@ const StudiosAbout = memo(function StudiosAbout() {
           transition={{ duration: 0.6, delay: 0.08 }}
           className="font-display italic text-3xl sm:text-4xl lg:text-5xl text-[#1C1710] leading-snug mb-8"
         >
-          It started with one camera, one lockdown, and a lot of curiosity.
+          It started with one camera and a lot of curiosity.
         </motion.h2>
 
         <motion.p

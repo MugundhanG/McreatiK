@@ -41,9 +41,11 @@ const StudiosNavbar = memo(function StudiosNavbar() {
 
   return (
     <>
-      {/* ---------- Department Switcher — a separate floating badge, not part of the header bar ---------- */}
+      {/* ---------- Department Switcher — a separate floating badge on
+          desktop; on mobile it moves into the menu bar instead (below),
+          so it doesn't float disconnected over the page content. ---------- */}
       <motion.div
-        className="fixed top-24 right-4 sm:right-6 z-40"
+        className="fixed top-24 right-4 sm:right-6 z-40 hidden lg:block"
         initial={{ opacity: 0, y: -12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
@@ -121,6 +123,9 @@ const StudiosNavbar = memo(function StudiosNavbar() {
                 {label}
               </Link>
             ))}
+            <div className="pt-3 pb-1 flex items-center justify-between gap-4">
+              <DepartmentSwitcher className="text-[#4A4438] border-black/10" />
+            </div>
             <Link
               to="/studios#book"
               onClick={closeMobile}
