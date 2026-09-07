@@ -1,30 +1,22 @@
 /* ============================================
    StudiosPage — McreatiK Studios
-   Assembles the department's sections inside the
-   .theme-studios wrapper (light paper palette,
-   Fraunces display, film-frame gallery motif).
+   The main scroll: Home, About, Offerings,
+   Pricing, and Book. Gallery, Experience, and
+   Blog are now their own standalone pages (see
+   StudiosGalleryPage, StudiosExperiencePage,
+   StudiosBlogPage).
    ============================================ */
 
-import React, { lazy, Suspense, useEffect } from 'react'
-import StudiosNavbar from '../components/studios/Navbar'
+import React, { lazy, useEffect } from 'react'
 import StudiosHero from '../components/studios/Hero'
-import StudiosFooter from '../components/studios/Footer'
-import ScrollToTop from '../components/ui/ScrollToTop'
+import StudiosPageShell from '../components/layout/StudiosPageShell'
 import { setFavicon } from '../utils/setFavicon'
 import { useScrollToHash } from '../hooks/useScrollToHash'
 
 const StudiosOfferings = lazy(() => import('../components/studios/Offerings'))
-const StudiosGallery = lazy(() => import('../components/studios/Gallery'))
+const StudiosPricing = lazy(() => import('../components/studios/Pricing'))
 const StudiosAbout = lazy(() => import('../components/studios/About'))
 const StudiosContact = lazy(() => import('../components/studios/Contact'))
-
-function SectionLoader() {
-  return (
-    <div className="flex items-center justify-center py-32">
-      <div className="w-8 h-8 border-2 border-[#C9971F] border-t-transparent rounded-full animate-spin" />
-    </div>
-  )
-}
 
 function StudiosPage() {
   useEffect(() => {
@@ -35,20 +27,13 @@ function StudiosPage() {
   useScrollToHash()
 
   return (
-    <div className="theme-studios min-h-screen overflow-x-hidden w-full">
-      <StudiosNavbar />
-      <main>
-        <StudiosHero />
-        <Suspense fallback={<SectionLoader />}>
-          <StudiosOfferings />
-          <StudiosGallery />
-          <StudiosAbout />
-          <StudiosContact />
-        </Suspense>
-      </main>
-      <StudiosFooter />
-      <ScrollToTop accentClass="bg-[#C9971F] text-white shadow-[#C9971F]/30 hover:bg-[#b3860f]" />
-    </div>
+    <StudiosPageShell>
+      <StudiosHero />
+      <StudiosOfferings />
+      <StudiosPricing />
+      <StudiosAbout />
+      <StudiosContact />
+    </StudiosPageShell>
   )
 }
 

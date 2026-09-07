@@ -1,12 +1,13 @@
 /* ============================================
    Hero Section — Studios
-   Light, paper-toned ground with a warm radial
-   glow and the circular badge watermarked large
-   in the background — exposure-style caption,
-   editorial Fraunces headline.
+   Full-bleed hero photo (100vw x 100vh) doubling
+   as the backdrop for the transparent navbar above
+   it — a dark gradient keeps both the nav and the
+   headline legible over whatever the photo holds.
    ============================================ */
 
 import React, { memo } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FiArrowRight } from 'react-icons/fi'
 import Button from '../ui/Button'
@@ -14,47 +15,25 @@ import studiosHeroPhoto from '../../assets/studios-hero-photo.webp'
 
 const StudiosHero = memo(function StudiosHero() {
   return (
-    <section id="home" className="relative min-h-screen flex items-center overflow-hidden bg-[#FAF7F0] scroll-mt-28">
-      {/* Warm ambient glow */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            'radial-gradient(circle at 85% 20%, rgba(201,151,31,0.16) 0, transparent 45%),' +
-            'radial-gradient(circle at 10% 85%, rgba(27,42,74,0.08) 0, transparent 40%)',
-        }}
-      />
-      <div className="film-grain" />
-
-      {/* Hero photo — hidden on mobile so it never collides with the headline; framed like a strip of film, fades toward the text column */}
+    <section id="home" className="relative h-screen w-screen min-h-screen flex items-end overflow-hidden bg-[#1C1710] scroll-mt-28">
       <img
         src={studiosHeroPhoto}
         alt=""
         aria-hidden="true"
-        className="film-frame hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-[58%] min-w-[400px] max-w-[840px] h-[78%] object-cover pointer-events-none select-none"
-        style={{
-          objectPosition: '75% center',
-          WebkitMaskImage: 'linear-gradient(to left, black 55%, transparent 96%)',
-          maskImage: 'linear-gradient(to left, black 55%, transparent 96%)',
-        }}
+        className="absolute inset-0 h-full w-full scale-110 object-cover blur-md"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#FAF7F0] via-transparent to-[#FAF7F0]/30 pointer-events-none" />
+      <div className="film-grain" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full pt-40 pb-20">
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="font-mono-label text-xs uppercase text-[#C9971F] mb-5"
-        >
-          f/2.8 · 1/200s · ISO 400 — McreatiK Studios
-        </motion.p>
+      {/* Gradient — dark enough at the very top for the transparent navbar's
+          logo/links, and dark enough at the bottom for the headline. */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/10 to-black/70" />
 
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full pb-20 sm:pb-24">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="font-display italic font-normal text-4xl sm:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-[#1C1710] max-w-3xl text-balance"
+          className="font-display italic font-normal text-4xl sm:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-white max-w-3xl text-balance"
         >
           Photographs worth keeping, made worth remembering.
         </motion.h1>
@@ -63,10 +42,9 @@ const StudiosHero = memo(function StudiosHero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="font-body mt-6 text-base sm:text-lg text-[#6B6153] max-w-xl leading-relaxed"
+          className="font-body mt-6 text-base sm:text-lg text-white/80 max-w-xl leading-relaxed"
         >
-          Portraits, weddings, and events — shot with an eye for the quiet moments
-          in between the posed ones.
+          We capture the emotions, connections, and little moments that make every story uniquely yours.
         </motion.p>
 
         <motion.div
@@ -78,9 +56,12 @@ const StudiosHero = memo(function StudiosHero() {
           <Button theme="studios" href="#book">
             Book a Session <FiArrowRight className="w-4 h-4" />
           </Button>
-          <Button theme="studios" variant="outline" href="#gallery">
+          <Link
+            to="/studios/gallery"
+            className="inline-flex items-center justify-center gap-2 rounded-md border border-white/40 px-7 py-3.5 text-sm font-semibold tracking-wide text-white transition-all duration-300 hover:border-white hover:bg-white/10"
+          >
             View Gallery
-          </Button>
+          </Link>
         </motion.div>
       </div>
     </section>

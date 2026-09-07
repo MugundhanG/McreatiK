@@ -1,27 +1,36 @@
 /* ============================================
    Navbar Component — Studios
-   Full-width static bar (not a floating pill —
-   deliberately unlike Tech's navbar), solidifies
-   on scroll. Light ground, dark ink.
+   Transparent over the full-bleed hero photo on
+   the home page (so the photo shows straight
+   through behind it) until the user scrolls past
+   it, or lands on any other Studios page — both
+   switch it to a solid, paper-toned bar.
    ============================================ */
 
 import React, { useState, useEffect, useCallback, memo } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiMenu, FiX } from 'react-icons/fi'
+import { FiMenu, FiX, FiArrowRight } from 'react-icons/fi'
 import { STUDIOS_NAV_LINKS } from '../../utils/constants'
 import DepartmentSwitcher from '../ui/DepartmentSwitcher'
-import studiosLogo from '../../assets/studios-logo-light-bg.png'
+import studiosLogoLight from '../../assets/studios-logo-light-bg.png'
+import studiosLogoDark from '../../assets/studios-logo-dark-bg.png'
 
 const StudiosNavbar = memo(function StudiosNavbar() {
+  const { pathname } = useLocation()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
 
+  const isHome = pathname === '/studios'
+  const isTransparent = isHome && !isScrolled
+
   useEffect(() => {
+    if (!isHome) return
     const onScroll = () => setIsScrolled(window.scrollY > 40)
+    onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  }, [isHome])
 
   useEffect(() => {
     document.body.style.overflow = isMobileOpen ? 'hidden' : ''
@@ -44,34 +53,48 @@ const StudiosNavbar = memo(function StudiosNavbar() {
 
       <motion.header
         className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
-          isScrolled ? 'bg-[#FAF7F0]/92 backdrop-blur-md border-b border-black/5' : 'bg-transparent'
+          isTransparent ? 'bg-transparent' : 'bg-[#FAF7F0]/92 backdrop-blur-md border-b border-black/5'
         }`}
         initial={{ y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
       >
       <div className="max-w-7xl mx-auto px-5 sm:px-8 h-20 flex items-center justify-between">
-        <Link to="/" className="flex items-center">
-          <img src={studiosLogo} alt="McreatiK Studios" className="h-11 w-auto object-contain" />
+        <Link to="/studios" className="flex items-center">
+          <img
+            src={isTransparent ? studiosLogoDark : studiosLogoLight}
+            alt="McreatiK Studios"
+            className="h-16 w-auto object-contain"
+          />
         </Link>
 
         {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-8">
           {STUDIOS_NAV_LINKS.map(({ label, href }) => (
             <Link
               key={label}
               to={href}
-              className="font-body text-sm text-[#4A4438] hover:text-[#C9971F] transition-colors"
+              className={`font-body text-sm transition-colors ${
+                isTransparent ? 'text-white/90 hover:text-white' : 'text-[#4A4438] hover:text-[#C9971F]'
+              }`}
             >
               {label}
             </Link>
           ))}
+          <Link
+            to="/studios#book"
+            className="inline-flex items-center gap-1.5 rounded-md bg-[#C9971F] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#b3860f]"
+          >
+            Book a Session <FiArrowRight className="w-3.5 h-3.5" />
+          </Link>
         </div>
 
         {/* Mobile toggle */}
         <button
           onClick={() => setIsMobileOpen((prev) => !prev)}
-          className="md:hidden w-9 h-9 flex items-center justify-center text-[#1C1710] cursor-pointer"
+          className={`lg:hidden w-9 h-9 flex items-center justify-center cursor-pointer ${
+            isTransparent ? 'text-white' : 'text-[#1C1710]'
+          }`}
           aria-label="Toggle menu"
         >
           {isMobileOpen ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
@@ -82,7 +105,7 @@ const StudiosNavbar = memo(function StudiosNavbar() {
       <AnimatePresence>
         {isMobileOpen && (
           <motion.div
-            className="md:hidden bg-[#FAF7F0] border-t border-black/5 px-5 py-5 space-y-1"
+            className="lg:hidden bg-[#FAF7F0] border-t border-black/5 px-5 py-5 space-y-1"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -98,6 +121,13 @@ const StudiosNavbar = memo(function StudiosNavbar() {
                 {label}
               </Link>
             ))}
+            <Link
+              to="/studios#book"
+              onClick={closeMobile}
+              className="mt-2 inline-flex w-full items-center justify-center gap-1.5 rounded-md bg-[#C9971F] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#b3860f]"
+            >
+              Book a Session <FiArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>

@@ -11,6 +11,7 @@
 import React, { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import WhatsAppButton from './components/ui/WhatsAppButton'
+import DepartmentTransitionOverlay from './components/ui/DepartmentTransitionOverlay'
 import { useScrollRestoration } from './hooks/useScrollRestoration'
 
 const Landing = lazy(() => import('./pages/Landing'))
@@ -20,6 +21,10 @@ const TechIndustriesPage = lazy(() => import('./pages/TechIndustriesPage'))
 const TechWorkPage = lazy(() => import('./pages/TechWorkPage'))
 const TechFAQPage = lazy(() => import('./pages/TechFAQPage'))
 const StudiosPage = lazy(() => import('./pages/StudiosPage'))
+const StudiosGalleryPage = lazy(() => import('./pages/StudiosGalleryPage'))
+const StudiosAlbumsPage = lazy(() => import('./pages/StudiosAlbumsPage'))
+const StudiosExperiencePage = lazy(() => import('./pages/StudiosExperiencePage'))
+const StudiosBlogPage = lazy(() => import('./pages/StudiosBlogPage'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 /* Full-screen loading placeholder shown while a page chunk loads */
@@ -45,10 +50,15 @@ function App() {
           <Route path="/tech/work" element={<TechWorkPage />} />
           <Route path="/tech/faq" element={<TechFAQPage />} />
           <Route path="/studios" element={<StudiosPage />} />
+          <Route path="/studios/gallery" element={<StudiosGalleryPage />} />
+          <Route path="/studios/albums" element={<StudiosAlbumsPage />} />
+          <Route path="/studios/experience" element={<StudiosExperiencePage />} />
+          <Route path="/studios/blog" element={<StudiosBlogPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
       <WhatsAppButton />
+      <DepartmentTransitionOverlay />
     </>
   )
 }
