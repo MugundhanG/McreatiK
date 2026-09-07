@@ -687,7 +687,7 @@ export const STUDIOS_NAV_LINKS = [
   { label: 'Gallery', href: '/studios/gallery' },
   { label: 'Albums', href: '/studios/albums' },
   { label: 'Services', href: '/studios#offerings' },
-  { label: 'Experience', href: '/studios/experience' },
+  { label: 'Process', href: '/studios/experience' },
   { label: 'Blog', href: '/studios/blog' },
   { label: 'Contact', href: '/studios#book' },
 ]
@@ -752,56 +752,67 @@ export const STUDIOS_SERVICES = [
     icon: FiCamera,
     title: 'Portrait Sessions',
     description: 'Studio or outdoor portraits — solo, couple, or family — with natural posing and a relaxed pace.',
+    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80',
   },
   {
     icon: FiHeart,
     title: 'Wedding Photography',
     description: 'Full-day wedding coverage that captures both the rituals and the moments happening in between.',
+    image: 'https://images.unsplash.com/photo-1621801306185-8c0ccf9c8eb8?auto=format&fit=crop&w=800&q=80',
   },
   {
     icon: FiCalendar,
     title: 'Pre and Post Wedding',
     description: 'A dedicated shoot before or after the wedding, at a location that reflects the two of you.',
+    image: 'https://images.unsplash.com/photo-1496156555893-ce6408188e2c?auto=format&fit=crop&w=800&q=80',
   },
   {
     icon: FiSun,
     title: 'Baby & Kids Outdoor Shoots',
     description: 'Playful, unposed outdoor sessions that capture how your little one actually moves and smiles.',
+    image: 'https://images.unsplash.com/photo-1637878257903-7f08eab9a7f2?auto=format&fit=crop&w=800&q=80',
   },
   {
     icon: FiAperture,
     title: 'Model Outdoor Shoots',
     description: 'Portfolio-ready outdoor shoots with varied looks and locations, edited for a polished final set.',
+    image: 'https://images.unsplash.com/photo-1655994688032-67a1b6474cf3?auto=format&fit=crop&w=800&q=80',
   },
   {
     icon: FiGift,
     title: 'Maternity and Baby Shower',
     description: 'Gentle, celebratory photography for this stage — indoors or outdoors, however you feel most you.',
+    image: 'https://images.unsplash.com/photo-1544784179-ae1535e9f013?auto=format&fit=crop&w=800&q=80',
   },
   {
     icon: FiStar,
     title: 'Birthday Parties',
     description: 'Candid and posed coverage of the celebration, from decor and cake to the moments with guests.',
+    image: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=800&q=80',
   },
   {
     icon: FiUsers,
     title: 'All Traditional Events',
     description: 'Coverage for cultural and traditional functions, attentive to the rituals that matter most to your family.',
+    image: 'https://images.unsplash.com/photo-1587271636175-90d58cdad458?auto=format&fit=crop&w=800&q=80',
   },
   {
     icon: FiCircle,
     title: 'Ring Ceremony',
     description: 'Coverage of the engagement — the ring exchange, family moments, and the celebration around it.',
+    image: 'https://images.unsplash.com/photo-1618566864264-fb013f791da4?auto=format&fit=crop&w=800&q=80',
   },
   {
     icon: FiHome,
     title: 'House Warming',
     description: 'Photography for the ceremony and celebration as you settle into a new home.',
+    image: 'https://images.unsplash.com/photo-1628133287836-40bd5453bed1?auto=format&fit=crop&w=800&q=80',
   },
   {
     icon: FiBook,
     title: 'Photo Album Design',
     description: 'Your favorite shots laid out into a printed album, designed spread by spread to tell the story in order.',
+    image: 'https://images.unsplash.com/photo-1528569937393-ee892b976859?auto=format&fit=crop&w=800&q=80',
   },
 ]
 

@@ -76,11 +76,16 @@ const StudiosNavbar = memo(function StudiosNavbar() {
             <Link
               key={label}
               to={href}
-              className={`font-body text-sm transition-colors ${
+              className={`group relative py-1.5 font-body text-sm transition-colors ${
                 isTransparent ? 'text-white/90 hover:text-white' : 'text-[#4A4438] hover:text-[#C9971F]'
               }`}
             >
               {label}
+              <span
+                className={`absolute left-0 -bottom-0.5 h-px w-0 transition-all duration-200 group-hover:w-full ${
+                  isTransparent ? 'bg-white' : 'bg-[#C9971F]'
+                }`}
+              />
             </Link>
           ))}
           <Link

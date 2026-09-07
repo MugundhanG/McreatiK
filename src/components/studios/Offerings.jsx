@@ -44,25 +44,38 @@ const StudiosOfferings = memo(function StudiosOfferings() {
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {STUDIOS_SERVICES.map(({ icon: Icon, title, description }, index) => (
+          {STUDIOS_SERVICES.map(({ icon: Icon, title, description, image }, index) => (
             <motion.div
               key={title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-30px' }}
               transition={{ duration: 0.5, delay: index * 0.06 }}
-              className="group rounded-lg border border-black/10 bg-white/40 p-6 transition-colors hover:border-[#C9971F]/50"
+              className="group relative min-h-[420px] overflow-hidden rounded-xl border border-black/10 transition-colors duration-300 hover:border-[#C9971F]/60"
             >
-              <div className="flex items-center justify-between mb-5">
-                <div className="w-11 h-11 shrink-0 rounded-full border border-[#C9971F]/40 flex items-center justify-center group-hover:border-[#C9971F] transition-colors">
-                  <Icon className="w-4.5 h-4.5 text-[#C9971F]" />
+              <img
+                src={image}
+                alt=""
+                loading="lazy"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 transition-colors duration-300 group-hover:from-black/95" />
+
+              <div className="relative z-10 flex h-full flex-col p-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/40 bg-black/20 backdrop-blur-sm transition-colors duration-300 group-hover:border-[#C9971F]">
+                    <Icon className="h-4.5 w-4.5 text-white" />
+                  </div>
+                  <span className="font-mono-label text-xs text-white/70">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
                 </div>
-                <span className="font-mono-label text-xs text-[#8B2E2A]">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
+
+                <div className="mt-auto transition-transform duration-300 group-hover:-translate-y-1">
+                  <h3 className="font-display text-xl text-white mb-1.5">{title}</h3>
+                  <p className="font-body text-sm text-white/80 leading-relaxed">{description}</p>
+                </div>
               </div>
-              <h3 className="font-display text-xl text-[#1C1710] mb-1.5">{title}</h3>
-              <p className="font-body text-sm text-[#6B6153] leading-relaxed">{description}</p>
             </motion.div>
           ))}
         </div>

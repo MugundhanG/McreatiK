@@ -24,7 +24,7 @@ function FactorCard({ icon: Icon, title, description, index }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-30px' }}
       transition={{ duration: 0.5, delay: index * 0.08 }}
-      className="rounded-2xl border border-white/8 p-8 text-center"
+      className="rounded-2xl border border-white/8 p-8 text-center transition-all duration-300 hover:-translate-y-1 hover:border-[#C9971F] hover:shadow-xl hover:shadow-[#C9971F]/15"
       style={{ backgroundColor: '#14110d' }}
     >
       <div
