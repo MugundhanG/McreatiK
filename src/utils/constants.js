@@ -60,6 +60,16 @@ export const WHATSAPP_NUMBER = '919600129267'
 
 import photographyThumbnail from '../assets/photography_website_thumbnail.jpg'
 import adThumbnail from '../assets/ADthumbnail.jpg'
+import portraitSessionsPhoto from '../assets/offerings/portrait-sessions.jpg'
+import weddingPhotographyPhoto from '../assets/offerings/wedding-photography.jpg'
+import prePostWeddingPhoto from '../assets/offerings/pre-post-wedding.jpg'
+import babyKidsOutdoorShootsPhoto from '../assets/offerings/baby-kids-outdoor-shoots.jpg'
+import modelOutdoorShootsPhoto from '../assets/offerings/model-outdoor-shoots.jpg'
+import birthdayPartiesPhoto from '../assets/offerings/birthday-parties.jpg'
+import allTraditionalEventsPhoto from '../assets/offerings/all-traditional-events.jpg'
+import ringCeremonyPhoto from '../assets/offerings/ring-ceremony.jpg'
+import houseWarmingPhoto from '../assets/offerings/house-warming.jpg'
+import photoAlbumDesignPhoto from '../assets/offerings/photo-album-design.jpg'
 
 /* =================================================
    MCREATIK TECH & CREATIVE SOLUTIONS
@@ -752,31 +762,31 @@ export const STUDIOS_SERVICES = [
     icon: FiCamera,
     title: 'Portrait Sessions',
     description: 'Studio or outdoor portraits — solo, couple, or family — with natural posing and a relaxed pace.',
-    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80',
+    image: portraitSessionsPhoto,
   },
   {
     icon: FiHeart,
     title: 'Wedding Photography',
     description: 'Full-day wedding coverage that captures both the rituals and the moments happening in between.',
-    image: 'https://images.unsplash.com/photo-1621801306185-8c0ccf9c8eb8?auto=format&fit=crop&w=800&q=80',
+    image: weddingPhotographyPhoto,
   },
   {
     icon: FiCalendar,
     title: 'Pre and Post Wedding',
     description: 'A dedicated shoot before or after the wedding, at a location that reflects the two of you.',
-    image: 'https://images.unsplash.com/photo-1496156555893-ce6408188e2c?auto=format&fit=crop&w=800&q=80',
+    image: prePostWeddingPhoto,
   },
   {
     icon: FiSun,
     title: 'Baby & Kids Outdoor Shoots',
     description: 'Playful, unposed outdoor sessions that capture how your little one actually moves and smiles.',
-    image: 'https://images.unsplash.com/photo-1637878257903-7f08eab9a7f2?auto=format&fit=crop&w=800&q=80',
+    image: babyKidsOutdoorShootsPhoto,
   },
   {
     icon: FiAperture,
     title: 'Model Outdoor Shoots',
     description: 'Portfolio-ready outdoor shoots with varied looks and locations, edited for a polished final set.',
-    image: 'https://images.unsplash.com/photo-1655994688032-67a1b6474cf3?auto=format&fit=crop&w=800&q=80',
+    image: modelOutdoorShootsPhoto,
   },
   {
     icon: FiGift,
@@ -788,31 +798,31 @@ export const STUDIOS_SERVICES = [
     icon: FiStar,
     title: 'Birthday Parties',
     description: 'Candid and posed coverage of the celebration, from decor and cake to the moments with guests.',
-    image: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=800&q=80',
+    image: birthdayPartiesPhoto,
   },
   {
     icon: FiUsers,
     title: 'All Traditional Events',
     description: 'Coverage for cultural and traditional functions, attentive to the rituals that matter most to your family.',
-    image: 'https://images.unsplash.com/photo-1587271636175-90d58cdad458?auto=format&fit=crop&w=800&q=80',
+    image: allTraditionalEventsPhoto,
   },
   {
     icon: FiCircle,
     title: 'Ring Ceremony',
     description: 'Coverage of the engagement — the ring exchange, family moments, and the celebration around it.',
-    image: 'https://images.unsplash.com/photo-1618566864264-fb013f791da4?auto=format&fit=crop&w=800&q=80',
+    image: ringCeremonyPhoto,
   },
   {
     icon: FiHome,
     title: 'House Warming',
     description: 'Photography for the ceremony and celebration as you settle into a new home.',
-    image: 'https://images.unsplash.com/photo-1628133287836-40bd5453bed1?auto=format&fit=crop&w=800&q=80',
+    image: houseWarmingPhoto,
   },
   {
     icon: FiBook,
     title: 'Photo Album Design',
     description: 'Your favorite shots laid out into a printed album, designed spread by spread to tell the story in order.',
-    image: 'https://images.unsplash.com/photo-1528569937393-ee892b976859?auto=format&fit=crop&w=800&q=80',
+    image: photoAlbumDesignPhoto,
   },
 ]
 
