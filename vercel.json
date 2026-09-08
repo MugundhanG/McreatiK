@@ -1,5 +1,7 @@
 {
   "rewrites": [
+    { "source": "/admin", "destination": "https://mcreatik-admin.vercel.app/" },
+    { "source": "/admin/:path*", "destination": "https://mcreatik-admin.vercel.app/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
