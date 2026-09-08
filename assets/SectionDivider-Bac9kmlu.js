@@ -1,0 +1,1 @@
+import{a as e}from"./rolldown-runtime-COnpUsM8.js";import{a as t,i as n}from"./framer-motion-BWWS1yIZ.js";var r=e(t(),1),i=n(),a=(0,r.memo)(function({label:e}){return(0,i.jsx)(`div`,{className:`border-t border-stone-300 pt-5 mb-12`,children:(0,i.jsx)(`span`,{className:`font-mono-label text-[11px] uppercase tracking-[0.18em] text-stone-400`,children:e})})});export{a as t};

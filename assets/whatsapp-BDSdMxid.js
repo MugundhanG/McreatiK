@@ -1,0 +1,1 @@
+import{k as e}from"./constants-DZnVzYCI.js";function t(t){return`https://wa.me/${e}?text=${encodeURIComponent(t)}`}export{t};

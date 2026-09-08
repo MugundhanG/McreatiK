@@ -1,0 +1,1 @@
+var e=`/assets/mcreatik-mk-mark-m0riBtZ6.png`;export{e as t};

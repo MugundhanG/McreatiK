@@ -1,0 +1,1 @@
+var e=`/assets/studios-logo-dark-bg-M0jzSB0e.png`;export{e as t};

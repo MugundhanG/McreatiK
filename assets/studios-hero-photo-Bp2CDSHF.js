@@ -1,0 +1,1 @@
+var e=`/assets/studios-hero-photo-3dodtTZy.webp`;export{e as t};
