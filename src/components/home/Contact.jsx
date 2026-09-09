@@ -12,7 +12,7 @@ import React, { memo, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiGlobe, FiCamera, FiCheck, FiMail, FiPhone } from 'react-icons/fi'
 import emailjs from '@emailjs/browser'
-import { TECH_SERVICE_OPTIONS, STUDIOS_SERVICE_OPTIONS } from '../../utils/constants'
+import { TECH_SERVICE_OPTIONS, STUDIOS_SERVICE_OPTIONS, LEAD_SOURCE_OPTIONS } from '../../utils/constants'
 import { useForm } from '../../hooks/useForm'
 import SectionHeading from './SectionHeading'
 import Button from '../ui/Button'
@@ -49,6 +49,7 @@ const INITIAL_VALUES = {
   message: '',
   eventDate: '',
   eventDateEnd: '',
+  leadSource: '',
 }
 
 const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
@@ -70,11 +71,12 @@ const HomeContact = memo(function HomeContact() {
       {
         from_name: data.name,
         from_email: data.email,
-        phone: `+91 ${data.phone}`,
+        phone: data.phone,
         service: data.service,
         message: data.message,
         department: dept ? dept.label : 'McreatiK',
         event_date: eventDate,
+        lead_source: data.leadSource,
       },
       PUBLIC_KEY
     )
@@ -82,7 +84,7 @@ const HomeContact = memo(function HomeContact() {
   }, [])
 
   const { values, errors, isSubmitting, submitStatus, handleChange, handleBlur, handleSubmit } =
-    useForm(INITIAL_VALUES, onSubmit)
+    useForm(INITIAL_VALUES, onSubmit, 'home_contact')
 
   const activeDept = DEPARTMENTS.find((d) => d.key === values.department)
 
@@ -248,21 +250,16 @@ const HomeContact = memo(function HomeContact() {
                       {errors.email && <p className="mt-1 text-xs text-red-400">{errors.email}</p>}
                     </div>
 
-                    {/* Phone number — fixed +91 prefix, McreatiK operates in India only */}
+                    {/* Phone number — international-capable, McreatiK Tech serves clients worldwide */}
                     <div>
                       <label htmlFor="h-phone" className="block text-sm text-gray-300 mb-1.5 font-medium">
                         Phone number <span className="text-red-400">*</span>
                       </label>
-                      <div className={`flex items-stretch rounded-md border overflow-hidden transition-all duration-200 focus-within:ring-2 focus-within:ring-[#D8AE55]/40 ${errors.phone ? inputErr : inputOk}`}>
-                        <span className="flex items-center px-3.5 text-sm text-gray-400 bg-white/5 border-r border-white/10 shrink-0">
-                          +91
-                        </span>
-                        <input
-                          id="h-phone" name="phone" type="tel" placeholder="98765 43210"
-                          value={values.phone} onChange={handleChange} onBlur={handleBlur}
-                          className="flex-1 min-w-0 bg-white/5 px-4 py-3.5 text-white placeholder-gray-500 outline-none text-sm"
-                        />
-                      </div>
+                      <input
+                        id="h-phone" name="phone" type="tel" placeholder="+91 98765 43210"
+                        value={values.phone} onChange={handleChange} onBlur={handleBlur}
+                        className={`${inputBase} ${errors.phone ? inputErr : inputOk}`}
+                      />
                       {errors.phone && <p className="mt-1 text-xs text-red-400">{errors.phone}</p>}
                     </div>
 
@@ -343,6 +340,23 @@ const HomeContact = memo(function HomeContact() {
                         )}
                       </div>
                     )}
+
+                    {/* How did you hear about us */}
+                    <div>
+                      <label htmlFor="h-lead-source" className="block text-sm text-gray-300 mb-1.5 font-medium">
+                        How did you hear about us?
+                      </label>
+                      <select
+                        id="h-lead-source" name="leadSource"
+                        value={values.leadSource} onChange={handleChange}
+                        className={`${inputBase} ${inputOk}`}
+                      >
+                        <option value="" className="bg-[#0A1128]">Select an option</option>
+                        {LEAD_SOURCE_OPTIONS.map((option) => (
+                          <option key={option} value={option} className="bg-[#0A1128]">{option}</option>
+                        ))}
+                      </select>
+                    </div>
 
                     <div className="pt-1">
                       <Button type="submit" theme="home" disabled={isSubmitting} className="w-full justify-center">

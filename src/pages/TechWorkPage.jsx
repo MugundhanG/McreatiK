@@ -8,12 +8,18 @@
 import React, { lazy, useEffect } from 'react'
 import TechPageShell from '../components/layout/TechPageShell'
 import { setFavicon } from '../utils/setFavicon'
+import { useSEO } from '../hooks/useSEO'
 
 const Portfolio = lazy(() => import('../components/sections/Portfolio'))
 
 function TechWorkPage() {
+  useSEO({
+    title: 'Our Work | McreatiK Tech & Creative',
+    description: 'Real websites and branding projects delivered by McreatiK Tech for small businesses.',
+    path: '/tech/work',
+  })
+
   useEffect(() => {
-    document.title = 'Our Work | McreatiK Tech & Creative'
     setFavicon('/favicon-tech.png')
   }, [])
 

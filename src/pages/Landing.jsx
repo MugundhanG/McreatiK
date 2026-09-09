@@ -13,6 +13,7 @@ import Hero from '../components/home/Hero'
 import Footer from '../components/home/Footer'
 import ScrollToTop from '../components/ui/ScrollToTop'
 import { setFavicon } from '../utils/setFavicon'
+import { useSEO } from '../hooks/useSEO'
 
 const WhatIsMcreatik = lazy(() => import('../components/home/WhatIsMcreatik'))
 const ExploreMcreatik = lazy(() => import('../components/home/ExploreMcreatik'))
@@ -32,8 +33,14 @@ function SectionLoader() {
 }
 
 const Landing = function Landing() {
+  useSEO({
+    title: 'McreatiK | Digital & Creative Solutions — Tech, Studios & More',
+    description:
+      'McreatiK is the umbrella brand for McreatiK Tech (websites, branding & SEO for small businesses, delivered remotely worldwide) and McreatiK Studios (portrait, wedding & event photography in Chennai).',
+    path: '/',
+  })
+
   useEffect(() => {
-    document.title = 'McreatiK | Digital & Creative Solutions — Tech, Studios & More'
     setFavicon('/favicon-tech.png')
   }, [])
 

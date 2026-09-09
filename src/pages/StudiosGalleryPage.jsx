@@ -8,12 +8,18 @@
 import React, { lazy, useEffect } from 'react'
 import StudiosPageShell from '../components/layout/StudiosPageShell'
 import { setFavicon } from '../utils/setFavicon'
+import { useSEO } from '../hooks/useSEO'
 
 const StudiosGallery = lazy(() => import('../components/studios/Gallery'))
 
 function StudiosGalleryPage() {
+  useSEO({
+    title: 'Gallery | McreatiK Studios',
+    description: 'Browse real wedding, portrait, and event photography by McreatiK Studios, Chennai.',
+    path: '/studios/gallery',
+  })
+
   useEffect(() => {
-    document.title = 'Gallery | McreatiK Studios'
     setFavicon('/favicon-studios.png')
   }, [])
 

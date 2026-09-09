@@ -9,12 +9,20 @@
 import { useState, useCallback } from 'react'
 import { validateField, validateForm } from '../utils/validation'
 
+/** Fires a GA4 event, if gtag is available — see index.html's inline snippet. */
+function trackEvent(name, params) {
+  if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+    window.gtag('event', name, params)
+  }
+}
+
 /**
  * @param {Object} initialValues - default field values
  * @param {Function} onSubmit    - async callback receiving validated data
+ * @param {string} [formName]    - identifies this form in GA4 events (e.g. 'tech_contact')
  * @returns form state + handlers
  */
-export function useForm(initialValues, onSubmit) {
+export function useForm(initialValues, onSubmit, formName) {
   const [values, setValues] = useState(initialValues)
   const [errors, setErrors] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -48,14 +56,16 @@ export function useForm(initialValues, onSubmit) {
       try {
         await onSubmit(values)
         setSubmitStatus('success')
+        trackEvent('generate_lead', { form_name: formName || 'unknown', lead_source: values.leadSource || '' })
         setValues(initialValues) // reset after success
       } catch {
         setSubmitStatus('error')
+        trackEvent('form_submit_error', { form_name: formName || 'unknown' })
       } finally {
         setIsSubmitting(false)
       }
     },
-    [values, initialValues, onSubmit]
+    [values, initialValues, onSubmit, formName]
   )
 
   /* Manual reset */

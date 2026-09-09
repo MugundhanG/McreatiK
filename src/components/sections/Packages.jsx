@@ -71,6 +71,9 @@ function PackageHeader({ pkg, index }) {
         <span className="font-display text-3xl font-bold text-stone-900">{pkg.price}</span>
         <span className="text-sm text-stone-500">one-time</span>
       </div>
+      {pkg.priceUSD && (
+        <p className="mt-1 text-sm text-stone-500">{pkg.priceUSD} USD</p>
+      )}
 
       <Button
         href={getWhatsAppHref(`Hi McreatiK, I'd like to know more about the ${pkg.name} package (${pkg.price}).`)}

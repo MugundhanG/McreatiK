@@ -9,7 +9,7 @@ import React, { memo, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { FiSend, FiMail, FiPhone, FiMapPin } from 'react-icons/fi'
 import emailjs from '@emailjs/browser'
-import { STUDIOS_SERVICE_OPTIONS } from '../../utils/constants'
+import { STUDIOS_SERVICE_OPTIONS, LEAD_SOURCE_OPTIONS } from '../../utils/constants'
 import { useForm } from '../../hooks/useForm'
 import Button from '../ui/Button'
 import EventDatePicker from '../ui/EventDatePicker'
@@ -28,6 +28,7 @@ const INITIAL_VALUES = {
   message: '',
   eventDate: '',
   eventDateEnd: '',
+  leadSource: '',
 }
 
 const SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID
@@ -50,6 +51,7 @@ const StudiosContact = memo(function StudiosContact() {
         message: data.message,
         department: 'McreatiK Studios',
         event_date: eventDate,
+        lead_source: data.leadSource,
       },
       PUBLIC_KEY
     )
@@ -57,7 +59,7 @@ const StudiosContact = memo(function StudiosContact() {
   }, [])
 
   const { values, errors, isSubmitting, submitStatus, handleChange, handleBlur, handleSubmit } =
-    useForm(INITIAL_VALUES, onSubmit)
+    useForm(INITIAL_VALUES, onSubmit, 'studios_contact')
 
   const isWeddingRangeMode = values.service === WEDDING_SERVICE
 
@@ -223,6 +225,20 @@ const StudiosContact = memo(function StudiosContact() {
                 value={values.message} onChange={handleChange} onBlur={handleBlur}
                 className={`${inputBase} resize-none ${errors.message ? inputErr : inputOk}`}
               />
+            </div>
+
+            <div>
+              <label htmlFor="s-lead-source" className="font-body block text-sm text-[#4A4438] mb-1.5">How did you hear about us?</label>
+              <select
+                id="s-lead-source" name="leadSource"
+                value={values.leadSource} onChange={handleChange}
+                className={`${inputBase} ${inputOk}`}
+              >
+                <option value="">Select an option</option>
+                {LEAD_SOURCE_OPTIONS.map((option) => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
+              </select>
             </div>
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-1">

@@ -60,6 +60,8 @@ export const WHATSAPP_NUMBER = '919600129267'
 
 import photographyThumbnail from '../assets/photography_website_thumbnail.jpg'
 import adThumbnail from '../assets/ADthumbnail.jpg'
+import fitnessStudioThumbnail from '../assets/fitness-studio-thumbnail.png'
+import dentalClinicThumbnail from '../assets/dental-clinic-thumbnail.png'
 import portraitSessionsPhoto from '../assets/offerings/portrait-sessions.jpg'
 import weddingPhotographyPhoto from '../assets/offerings/wedding-photography.jpg'
 import prePostWeddingPhoto from '../assets/offerings/pre-post-wedding.jpg'
@@ -293,7 +295,7 @@ export const TECH_PORTFOLIO_ITEMS = [
     title: 'Fitness Studio Website',
     category: 'Website',
     industry: 'Gym & Fitness Studio',
-    image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80',
+    image: fitnessStudioThumbnail,
     link: 'https://muscle-town-fitness.vercel.app/',
     description: 'A high-energy fitness website with programs, trainer coaching, and a free-trial call to action.',
     challenge: 'Needed a site that matched the studio\'s energy while making it easy for prospects to book a free trial.',
@@ -305,7 +307,7 @@ export const TECH_PORTFOLIO_ITEMS = [
     title: 'Dental Clinic Website',
     category: 'Website',
     industry: 'Dental Clinic',
-    image: 'https://images.unsplash.com/photo-1667133295315-820bb6481730?auto=format&fit=crop&w=1200&q=80',
+    image: dentalClinicThumbnail,
     link: 'https://the-dental-boutique-one.vercel.app/',
     description: 'A calming, patient-first website covering treatments, transparent pricing, and appointment booking.',
     challenge: 'Needed a site that eased patient anxiety and made booking a consultation simple.',
@@ -420,6 +422,7 @@ export const TECH_PACKAGES = [
     name: 'Starter',
     displayName: 'Professional Presence',
     price: '₹25,000',
+    priceUSD: '~$300',
     tagline: 'For small businesses that need a polished and credible online presence.',
     highlight: false,
     categories: [
@@ -447,6 +450,7 @@ export const TECH_PACKAGES = [
     name: 'Professional',
     displayName: 'Business Growth Website',
     price: '₹50,000',
+    priceUSD: '~$600',
     tagline: 'For businesses that want a stronger digital presence and a website designed to generate more enquiries.',
     highlight: true,
     extraFrom: 'Starter',
@@ -486,6 +490,7 @@ export const TECH_PACKAGES = [
     name: 'Premium',
     displayName: 'Custom Digital Experience',
     price: '₹75,000',
+    priceUSD: '~$900',
     tagline: 'For established businesses and brands that need a highly customized website with advanced functionality.',
     highlight: false,
     extraFrom: 'Professional',
@@ -658,6 +663,19 @@ export const TECH_FAQ = [
     question: 'How much do these services cost?',
     answer: 'Pricing depends on scope — request a quote on WhatsApp and we\'ll give you a clear number before any work begins.',
   },
+]
+
+/* Shared "how did you hear about us" options — every contact form asks
+   this the same way so results are comparable across departments. */
+export const LEAD_SOURCE_OPTIONS = [
+  'Google Search',
+  'Instagram',
+  'Facebook',
+  'LinkedIn',
+  'Fiverr / Upwork',
+  'Referral',
+  'WhatsApp',
+  'Other',
 ]
 
 export const TECH_STATS = [

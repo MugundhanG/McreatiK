@@ -13,7 +13,7 @@ import React, { memo, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { FiSend, FiMail, FiPhone, FiMapPin } from 'react-icons/fi'
 import emailjs from '@emailjs/browser'
-import { TECH_SERVICE_OPTIONS } from '../../utils/constants'
+import { TECH_SERVICE_OPTIONS, LEAD_SOURCE_OPTIONS } from '../../utils/constants'
 import { useForm } from '../../hooks/useForm'
 import SectionHeading from '../ui/SectionHeading'
 import Button from '../ui/Button'
@@ -26,6 +26,7 @@ const INITIAL_VALUES = {
   phone: '',
   service: '',
   message: '',
+  leadSource: '',
 }
 
 /* EmailJS credentials from .env */
@@ -50,6 +51,7 @@ const Contact = memo(function Contact() {
         phone:      data.phone,
         service:    data.service,
         message:    data.message,
+        lead_source: data.leadSource,
         department: 'McreatiK Tech & Creative',
       },
       PUBLIC_KEY
@@ -65,7 +67,7 @@ const Contact = memo(function Contact() {
     handleChange,
     handleBlur,
     handleSubmit,
-  } = useForm(INITIAL_VALUES, onSubmit)
+  } = useForm(INITIAL_VALUES, onSubmit, 'tech_contact')
 
   /* Shared input class names */
   const inputBase =
@@ -222,6 +224,25 @@ const Contact = memo(function Contact() {
                 className={`${inputBase} resize-none ${errors.message ? inputErr : inputOk}`}
               />
               {errors.message && <p className="mt-1 text-xs text-red-600">{errors.message}</p>}
+            </div>
+
+            {/* How did you hear about us */}
+            <div>
+              <label htmlFor="leadSource" className="block text-sm text-stone-700 mb-1.5 font-medium">
+                How did you hear about us?
+              </label>
+              <select
+                id="leadSource"
+                name="leadSource"
+                value={values.leadSource}
+                onChange={handleChange}
+                className={`${inputBase} ${inputOk}`}
+              >
+                <option value="">Select an option</option>
+                {LEAD_SOURCE_OPTIONS.map((option) => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
+              </select>
             </div>
 
             {/* Submit button + status feedback */}

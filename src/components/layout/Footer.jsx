@@ -111,7 +111,7 @@ const Footer = memo(function Footer() {
                   +91 9600-129-267
                 </a>
               </li>
-              <li>Based in Chennai, TN, India</li>
+              <li>Remote — serving clients worldwide</li>
             </ul>
           </div>
         </div>

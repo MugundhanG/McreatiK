@@ -11,6 +11,7 @@ import Hero from '../components/sections/Hero'
 import TechPageShell from '../components/layout/TechPageShell'
 import { setFavicon } from '../utils/setFavicon'
 import { useScrollToHash } from '../hooks/useScrollToHash'
+import { useSEO } from '../hooks/useSEO'
 
 const WhyChooseUs = lazy(() => import('../components/sections/WhyChooseUs'))
 const WhatYouGet = lazy(() => import('../components/sections/WhatYouGet'))
@@ -24,8 +25,14 @@ const FinalCTA = lazy(() => import('../components/sections/FinalCTA'))
 const Contact = lazy(() => import('../components/sections/Contact'))
 
 function TechPage() {
+  useSEO({
+    title: 'McreatiK Tech & Creative | Website & Logo Design, Remote — Global',
+    description:
+      'Affordable website design, branding, and SEO for small businesses — delivered remotely for clients worldwide, no matter where you are.',
+    path: '/tech',
+  })
+
   useEffect(() => {
-    document.title = 'McreatiK Tech & Creative | Website & Logo Design in Chennai'
     setFavicon('/favicon-tech.png')
   }, [])
 

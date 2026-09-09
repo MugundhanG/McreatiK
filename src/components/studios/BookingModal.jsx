@@ -48,7 +48,7 @@ const StudiosBookingModal = memo(function StudiosBookingModal() {
       {
         from_name: data.name,
         from_email: '',
-        phone: `+91 ${data.phone}`,
+        phone: data.phone,
         service: data.service,
         message: 'Quick enquiry from the Studios booking popup.',
         department: 'McreatiK Studios (Quick Enquiry)',
@@ -59,7 +59,7 @@ const StudiosBookingModal = memo(function StudiosBookingModal() {
   }, [])
 
   const { values, errors, isSubmitting, submitStatus, handleChange, handleBlur, handleSubmit } =
-    useForm(INITIAL_VALUES, onSubmit)
+    useForm(INITIAL_VALUES, onSubmit, 'studios_booking_modal')
 
   useEffect(() => {
     if (submitStatus === 'success') {
@@ -146,16 +146,11 @@ const StudiosBookingModal = memo(function StudiosBookingModal() {
                     <label htmlFor="bm-phone" className="font-body block text-sm text-[#4A4438] mb-1.5">
                       Phone Number <span className="text-[#DC2626]">*</span>
                     </label>
-                    <div className={`flex items-stretch rounded-md border overflow-hidden transition-all duration-200 focus-within:ring-2 focus-within:ring-[#C9971F]/40 ${errors.phone ? inputErr : inputOk}`}>
-                      <span className="flex items-center px-3.5 text-sm text-[#6B6153] bg-black/[0.02] border-r border-black/10 shrink-0">
-                        +91
-                      </span>
-                      <input
-                        id="bm-phone" name="phone" type="tel" placeholder="81234 56789"
-                        value={values.phone} onChange={handleChange} onBlur={handleBlur}
-                        className="flex-1 min-w-0 bg-transparent px-4 py-3 text-[#1C1710] placeholder-[#A89A88] outline-none text-sm font-body"
-                      />
-                    </div>
+                    <input
+                      id="bm-phone" name="phone" type="tel" placeholder="+91 81234 56789"
+                      value={values.phone} onChange={handleChange} onBlur={handleBlur}
+                      className={`${inputBase} ${errors.phone ? inputErr : inputOk}`}
+                    />
                     {errors.phone && <p className="mt-1 text-xs font-semibold text-[#DC2626]">{errors.phone}</p>}
                   </div>
 

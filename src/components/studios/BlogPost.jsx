@@ -10,6 +10,7 @@ import { useParams, Link } from 'react-router-dom'
 import DOMPurify from 'dompurify'
 import { FiArrowLeft, FiAlertCircle } from 'react-icons/fi'
 import { fetchBlogPost } from '../../utils/cmsApi'
+import { useSEO } from '../../hooks/useSEO'
 
 function formatDate(iso) {
   return new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
@@ -27,7 +28,6 @@ export default function BlogPost() {
         if (!cancelled) {
           setPost(data)
           setStatus('ready')
-          document.title = `${data.seoTitle || data.title} | McreatiK Studios`
         }
       })
       .catch(() => {
@@ -37,6 +37,13 @@ export default function BlogPost() {
       cancelled = true
     }
   }, [slug])
+
+  useSEO({
+    title: post ? `${post.seoTitle || post.title} | McreatiK Studios` : null,
+    description: post ? post.seoDescription || post.excerpt || `${post.title} — from the McreatiK Studios blog.` : null,
+    path: `/studios/blog/${slug}`,
+    image: post?.cover?.url,
+  })
 
   if (status === 'loading') {
     return (
