@@ -21,6 +21,8 @@ const TechServicesPage = lazy(() => import('./pages/TechServicesPage'))
 const TechIndustriesPage = lazy(() => import('./pages/TechIndustriesPage'))
 const TechWorkPage = lazy(() => import('./pages/TechWorkPage'))
 const TechFAQPage = lazy(() => import('./pages/TechFAQPage'))
+const TechBlogPage = lazy(() => import('./pages/TechBlogPage'))
+const TechBlogPostPage = lazy(() => import('./pages/TechBlogPostPage'))
 const StudiosPage = lazy(() => import('./pages/StudiosPage'))
 const StudiosGalleryPage = lazy(() => import('./pages/StudiosGalleryPage'))
 const StudiosAlbumsPage = lazy(() => import('./pages/StudiosAlbumsPage'))
@@ -57,6 +59,8 @@ function App() {
           <Route path="/tech/industries" element={<TechIndustriesPage />} />
           <Route path="/tech/work" element={<TechWorkPage />} />
           <Route path="/tech/faq" element={<TechFAQPage />} />
+          <Route path="/tech/blog" element={<TechBlogPage />} />
+          <Route path="/tech/blog/:slug" element={<TechBlogPostPage />} />
           <Route path="/studios" element={<StudiosPage />} />
           <Route path="/studios/gallery" element={<StudiosGalleryPage />} />
           <Route path="/studios/albums" element={<StudiosAlbumsPage />} />

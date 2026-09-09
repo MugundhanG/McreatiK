@@ -84,6 +84,7 @@ export const TECH_NAV_LINKS = [
   { label: 'Portfolio', href: '/tech/work', type: 'page' },
   { label: 'Our Process', href: '/tech#process', type: 'anchor' },
   { label: 'About Us', href: '/tech#about', type: 'anchor' },
+  { label: 'Blog', href: '/tech/blog', type: 'page' },
   { label: 'FAQs', href: '/tech/faq', type: 'page' },
   { label: 'Contact Us', href: '/tech#contact', type: 'anchor' },
 ]
@@ -871,6 +872,13 @@ export const STUDIOS_BLOG_TOPICS = [
   'Behind the Scenes',
   'Real Weddings',
   'Location Guides',
+]
+
+export const TECH_BLOG_TOPICS = [
+  'Web Design Tips',
+  'SEO Basics',
+  'Client Case Studies',
+  'Tech Trends',
 ]
 
 /* =================================================

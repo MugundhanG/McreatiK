@@ -22,8 +22,9 @@ export async function fetchAlbums() {
   return page.content
 }
 
-export async function fetchBlogPosts() {
-  const page = await getJson('/api/v1/blog?size=50')
+export async function fetchBlogPosts({ site } = {}) {
+  const query = site ? `?site=${encodeURIComponent(site)}&size=50` : '?size=50'
+  const page = await getJson(`/api/v1/blog${query}`)
   return page.content
 }
 
