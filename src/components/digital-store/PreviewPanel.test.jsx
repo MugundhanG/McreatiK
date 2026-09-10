@@ -5,13 +5,13 @@ import * as api from '../../utils/digitalStoreApi'
 
 beforeEach(() => {
   vi.restoreAllMocks()
-  global.URL.createObjectURL = vi.fn(() => 'blob:fake-url')
-  global.URL.revokeObjectURL = vi.fn()
+  globalThis.URL.createObjectURL = vi.fn(() => 'blob:fake-url')
+  globalThis.URL.revokeObjectURL = vi.fn()
 })
 
 afterEach(() => {
-  delete global.URL.createObjectURL
-  delete global.URL.revokeObjectURL
+  delete globalThis.URL.createObjectURL
+  delete globalThis.URL.revokeObjectURL
 })
 
 describe('PreviewPanel', () => {
@@ -53,7 +53,7 @@ describe('PreviewPanel', () => {
     await waitFor(() => expect(screen.getByTitle(/preview/i)).toBeInTheDocument())
 
     fireEvent.click(screen.getByRole('button', { name: /preview/i }))
-    await waitFor(() => expect(global.URL.revokeObjectURL).toHaveBeenCalledWith('blob:fake-url'))
+    await waitFor(() => expect(globalThis.URL.revokeObjectURL).toHaveBeenCalledWith('blob:fake-url'))
   })
 
   it('guards against state updates and revokes URLs when unmounting during an in-flight request', async () => {
@@ -78,7 +78,7 @@ describe('PreviewPanel', () => {
     await new Promise((resolve) => setTimeout(resolve, 0))
 
     // Verify the blob URL was revoked immediately (not stored in ref for later cleanup)
-    expect(global.URL.revokeObjectURL).toHaveBeenCalledWith('blob:fake-url')
+    expect(globalThis.URL.revokeObjectURL).toHaveBeenCalledWith('blob:fake-url')
 
     // Verify no React "state update on unmounted component" warning
     expect(consoleErrorSpy).not.toHaveBeenCalledWith(

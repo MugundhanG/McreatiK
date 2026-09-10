@@ -20,7 +20,7 @@ const SAMPLE_TEMPLATE = {
 }
 
 beforeEach(() => {
-  global.fetch = vi.fn()
+  globalThis.fetch = vi.fn()
 })
 
 afterEach(() => {
@@ -29,16 +29,16 @@ afterEach(() => {
 
 describe('fetchDigitalStoreTemplates', () => {
   it('returns the parsed template list on success', async () => {
-    global.fetch.mockResolvedValue({ ok: true, json: async () => [SAMPLE_TEMPLATE] })
+    globalThis.fetch.mockResolvedValue({ ok: true, json: async () => [SAMPLE_TEMPLATE] })
 
     const templates = await fetchDigitalStoreTemplates()
 
     expect(templates).toEqual([SAMPLE_TEMPLATE])
-    expect(global.fetch).toHaveBeenCalledWith(expect.stringContaining('/api/v1/templates'))
+    expect(globalThis.fetch).toHaveBeenCalledWith(expect.stringContaining('/api/v1/templates'))
   })
 
   it('throws DigitalStoreApiError on a non-ok response', async () => {
-    global.fetch.mockResolvedValue({ ok: false, status: 500, json: async () => ({ message: 'boom' }) })
+    globalThis.fetch.mockResolvedValue({ ok: false, status: 500, json: async () => ({ message: 'boom' }) })
 
     await expect(fetchDigitalStoreTemplates()).rejects.toThrow(DigitalStoreApiError)
   })
@@ -46,7 +46,7 @@ describe('fetchDigitalStoreTemplates', () => {
 
 describe('fetchDigitalStoreTemplate', () => {
   it('finds the matching template by id from the list', async () => {
-    global.fetch.mockResolvedValue({ ok: true, json: async () => [SAMPLE_TEMPLATE] })
+    globalThis.fetch.mockResolvedValue({ ok: true, json: async () => [SAMPLE_TEMPLATE] })
 
     const template = await fetchDigitalStoreTemplate('template-1')
 
@@ -54,7 +54,7 @@ describe('fetchDigitalStoreTemplate', () => {
   })
 
   it('throws when no template matches the id', async () => {
-    global.fetch.mockResolvedValue({ ok: true, json: async () => [SAMPLE_TEMPLATE] })
+    globalThis.fetch.mockResolvedValue({ ok: true, json: async () => [SAMPLE_TEMPLATE] })
 
     await expect(fetchDigitalStoreTemplate('missing')).rejects.toThrow()
   })
@@ -63,19 +63,19 @@ describe('fetchDigitalStoreTemplate', () => {
 describe('requestDigitalStorePreview', () => {
   it('POSTs fieldValues and returns the response blob on success', async () => {
     const fakeBlob = new Blob(['%PDF-'], { type: 'application/pdf' })
-    global.fetch.mockResolvedValue({ ok: true, blob: async () => fakeBlob })
+    globalThis.fetch.mockResolvedValue({ ok: true, blob: async () => fakeBlob })
 
     const blob = await requestDigitalStorePreview('template-1', { brideName: 'Jane' })
 
     expect(blob).toBe(fakeBlob)
-    const [url, options] = global.fetch.mock.calls[0]
+    const [url, options] = globalThis.fetch.mock.calls[0]
     expect(url).toContain('/api/v1/templates/template-1/preview')
     expect(options.method).toBe('POST')
     expect(JSON.parse(options.body)).toEqual({ fieldValues: { brideName: 'Jane' } })
   })
 
   it('throws DigitalStoreApiError with fieldErrors on a 400 validation response', async () => {
-    global.fetch.mockResolvedValue({
+    globalThis.fetch.mockResolvedValue({
       ok: false,
       status: 400,
       json: async () => ({ message: 'Validation failed', fieldErrors: { brideName: 'is required' } }),
@@ -90,7 +90,7 @@ describe('requestDigitalStorePreview', () => {
 
 describe('createDigitalStoreOrder', () => {
   it('sends the Idempotency-Key header and returns the created order', async () => {
-    global.fetch.mockResolvedValue({
+    globalThis.fetch.mockResolvedValue({
       ok: true,
       json: async () => ({ orderId: 'order-1', razorpayOrderId: 'rzp_1', razorpayKeyId: 'rzp_key', amount: 99.0, currency: 'INR' }),
     })
@@ -100,12 +100,12 @@ describe('createDigitalStoreOrder', () => {
     })
 
     expect(order.orderId).toBe('order-1')
-    const [, options] = global.fetch.mock.calls[0]
+    const [, options] = globalThis.fetch.mock.calls[0]
     expect(options.headers['Idempotency-Key']).toBe('idem-1')
   })
 
   it('throws DigitalStoreApiError on a 429 rate-limit response', async () => {
-    global.fetch.mockResolvedValue({ ok: false, status: 429, json: async () => ({ message: 'slow down' }) })
+    globalThis.fetch.mockResolvedValue({ ok: false, status: 429, json: async () => ({ message: 'slow down' }) })
 
     await expect(
       createDigitalStoreOrder('idem-1', { templateId: 't', customerName: 'J', customerEmail: 'j@e.com', fieldValues: {} })
@@ -115,7 +115,7 @@ describe('createDigitalStoreOrder', () => {
 
 describe('verifyDigitalStoreOrder', () => {
   it('returns the verify response', async () => {
-    global.fetch.mockResolvedValue({
+    globalThis.fetch.mockResolvedValue({
       ok: true,
       json: async () => ({ orderId: 'order-1', fulfilled: true, downloadToken: 'tok', downloadTokenExpiresAt: '2026-01-01T00:00:00Z' }),
     })

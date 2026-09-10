@@ -11,7 +11,7 @@ const POLL_INTERVAL_MS = 5000
 export default function DigitalStoreOrderPage() {
   const { orderId } = useParams()
   // 'recovery_failed' | 'verifying' | 'preparing' | 'ready' | 'error'
-  const [state, setState] = useState('verifying')
+  const [state, setState] = useState(() => (readStoredPaymentDetails(orderId) ? 'verifying' : 'recovery_failed'))
   const [downloadToken, setDownloadToken] = useState(null)
   const pollTimeoutRef = useRef(null)
 
@@ -20,7 +20,9 @@ export default function DigitalStoreOrderPage() {
   useEffect(() => {
     const paymentDetails = readStoredPaymentDetails(orderId)
     if (!paymentDetails) {
-      setState('recovery_failed')
+      // No stored payment details for this order (e.g. different device/browser) -
+      // the initial state already reflects this via the lazy useState initializer above,
+      // so there's nothing to poll for.
       return
     }
 
