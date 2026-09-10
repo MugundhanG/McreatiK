@@ -7,28 +7,42 @@ function sessionStorageKeyFor(orderId) {
   return `digital-store-order-${orderId}`
 }
 
+// Deterministic, synchronous string hash (djb2). Not cryptographic - it only needs to be
+// deterministic and reasonably collision-resistant so identical checkout payloads dedupe to the
+// same idempotency key while edited payloads land on a different one. Runs on JSON.stringify(payload).
+function hashString(str) {
+  let hash = 5381
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash * 33) ^ str.charCodeAt(i)
+  }
+  // >>> 0 coerces to an unsigned 32-bit int so the result is a stable, non-negative string.
+  return (hash >>> 0).toString(16)
+}
+
+function computeIdempotencyKey(sessionId, payload) {
+  return `${sessionId}:${hashString(JSON.stringify(payload))}`
+}
+
 export function useCheckout(template) {
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState(null)
-  const idempotencyKeyRef = useRef(null)
-
-  function getIdempotencyKey() {
-    if (!idempotencyKeyRef.current) {
-      idempotencyKeyRef.current = crypto.randomUUID()
-    }
-    return idempotencyKeyRef.current
-  }
+  // A random UUID generated once per hook instance (mount). This is NOT the idempotency key by
+  // itself - it exists purely so two different buyers can never collide on the same key even if
+  // they submit identical form data (e.g. both testing with "Test Buyer" / "test@test.com").
+  // useRef(crypto.randomUUID()) evaluates the initializer on every render but React only keeps the
+  // value from the first render, so this is safe and simpler than a lazy-init pattern.
+  const sessionIdRef = useRef(crypto.randomUUID())
 
   async function startCheckout({ customerName, customerEmail, fieldValues }, { onSuccess }) {
     setStatus('creating_order')
     setError(null)
     try {
-      const order = await createDigitalStoreOrder(getIdempotencyKey(), {
-        templateId: template.id,
-        customerName,
-        customerEmail,
-        fieldValues,
-      })
+      const payload = { templateId: template.id, customerName, customerEmail, fieldValues }
+      // Recomputed fresh from the actual request content on every call: resubmitting the same
+      // payload (after a dismiss, a script-load failure, a Razorpay-construction failure, or any
+      // other retry) reuses the same key/order, while an edited payload gets a fresh one.
+      const idempotencyKey = computeIdempotencyKey(sessionIdRef.current, payload)
+      const order = await createDigitalStoreOrder(idempotencyKey, payload)
 
       trackDigitalStoreEvent(DIGITAL_STORE_EVENTS.CHECKOUT_INITIATED, { template_id: template.id })
 
@@ -65,10 +79,9 @@ export function useCheckout(template) {
         modal: {
           ondismiss: () => {
             setStatus('idle')
-            // Force a fresh idempotency key on the next attempt: the backend caches orders by
-            // this key with no payload comparison, so reusing it after the buyer edits the form
-            // would return the stale first order instead of one reflecting their edits.
-            idempotencyKeyRef.current = null
+            // No key reset needed: the idempotency key is derived fresh from the payload on every
+            // startCheckout call, so a same-payload retry naturally reuses this order and an
+            // edited-payload retry naturally gets a new one.
           },
         },
       })

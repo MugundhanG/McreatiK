@@ -48,7 +48,7 @@ describe('useCheckout', () => {
     expect(openMock).toHaveBeenCalledTimes(1)
   })
 
-  it('reuses the same idempotency key across two calls to startCheckout', async () => {
+  it('reuses the same idempotency key across two calls to startCheckout with identical payloads (e.g. a network-level retry, no dismiss in between)', async () => {
     const createOrderSpy = vi
       .spyOn(api, 'createDigitalStoreOrder')
       .mockResolvedValue({ orderId: 'order-1', razorpayOrderId: 'rzp_1', razorpayKeyId: 'k', amount: 99, currency: 'INR' })
@@ -120,7 +120,7 @@ describe('useCheckout', () => {
     expect(result.current.status).toBe('idle')
   })
 
-  it('generates a fresh idempotency key after the buyer dismisses the modal and retries', async () => {
+  it('reuses the same idempotency key when the buyer dismisses the modal and retries with the SAME payload (order is reused, no duplicate)', async () => {
     const createOrderSpy = vi
       .spyOn(api, 'createDigitalStoreOrder')
       .mockResolvedValue({ orderId: 'order-1', razorpayOrderId: 'rzp_1', razorpayKeyId: 'k', amount: 99, currency: 'INR' })
@@ -138,6 +138,71 @@ describe('useCheckout', () => {
 
     await act(async () => {
       await result.current.startCheckout(details, { onSuccess: vi.fn() })
+    })
+
+    const [firstKey] = createOrderSpy.mock.calls[0]
+    const [secondKey] = createOrderSpy.mock.calls[1]
+    expect(secondKey).toBe(firstKey)
+  })
+
+  it('generates a DIFFERENT idempotency key when the buyer retries (after a dismiss, or any other failure) with an EDITED payload', async () => {
+    const createOrderSpy = vi
+      .spyOn(api, 'createDigitalStoreOrder')
+      .mockResolvedValue({ orderId: 'order-1', razorpayOrderId: 'rzp_1', razorpayKeyId: 'k', amount: 99, currency: 'INR' })
+    const { getOptions } = mockRazorpayCapturingOptions()
+    const { result } = renderHook(() => useCheckout(TEMPLATE))
+
+    await act(async () => {
+      await result.current.startCheckout(
+        { customerName: 'Jane', customerEmail: 'jane@example.com', fieldValues: {} },
+        { onSuccess: vi.fn() }
+      )
+    })
+
+    act(() => {
+      getOptions().modal.ondismiss()
+    })
+
+    // Buyer edits a field before retrying - not just a bare retry of the same request.
+    await act(async () => {
+      await result.current.startCheckout(
+        { customerName: 'Jane', customerEmail: 'jane+updated@example.com', fieldValues: {} },
+        { onSuccess: vi.fn() }
+      )
+    })
+
+    const [firstKey] = createOrderSpy.mock.calls[0]
+    const [secondKey] = createOrderSpy.mock.calls[1]
+    expect(secondKey).not.toBe(firstKey)
+  })
+
+  it('generates a DIFFERENT idempotency key on retry after a non-dismiss failure (e.g. Razorpay script load or construction throwing) when the payload changed', async () => {
+    const createOrderSpy = vi
+      .spyOn(api, 'createDigitalStoreOrder')
+      .mockResolvedValue({ orderId: 'order-1', razorpayOrderId: 'rzp_1', razorpayKeyId: 'k', amount: 99, currency: 'INR' })
+    const { result } = renderHook(() => useCheckout(TEMPLATE))
+
+    // First attempt fails after order creation succeeds - e.g. a network blip loading the
+    // Razorpay script. This is exactly the case the old dismiss-only reset missed: nothing
+    // resets a cached key here, but the new design doesn't cache one to begin with.
+    vi.spyOn(scriptLoader, 'loadRazorpayCheckoutScript').mockRejectedValueOnce(new Error('script load failed'))
+
+    await act(async () => {
+      await result.current.startCheckout(
+        { customerName: 'Jane', customerEmail: 'jane@example.com', fieldValues: {} },
+        { onSuccess: vi.fn() }
+      )
+    })
+
+    expect(result.current.status).toBe('error')
+
+    mockRazorpayCapturingOptions()
+    // Buyer edits a field before retrying.
+    await act(async () => {
+      await result.current.startCheckout(
+        { customerName: 'Jane', customerEmail: 'jane@example.com', fieldValues: { note: 'please gift wrap' } },
+        { onSuccess: vi.fn() }
+      )
     })
 
     const [firstKey] = createOrderSpy.mock.calls[0]
