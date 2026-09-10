@@ -12,12 +12,11 @@ function renderCard(template) {
 }
 
 describe('ProductCard', () => {
-  it('renders name, price, and currency, which are always present', () => {
+  it('renders name and a formatted price with the currency symbol, which are always present', () => {
     renderCard({ id: 't1', name: 'Wedding Photography Agreement', price: 99.0, currency: 'INR', marketingContent: null })
 
     expect(screen.getByText('Wedding Photography Agreement')).toBeInTheDocument()
-    expect(screen.getByText(/99/)).toBeInTheDocument()
-    expect(screen.getByText(/INR/)).toBeInTheDocument()
+    expect(screen.getByText('₹99')).toBeInTheDocument()
   })
 
   it('links to the product detail page', () => {

@@ -7,15 +7,22 @@ import { DIGITAL_STORE_EVENTS, trackDigitalStoreEvent } from '../utils/digitalSt
 import { useSEO } from '../hooks/useSEO'
 
 const POLL_INTERVAL_MS = 5000
+// 24 attempts at 5s intervals = 2 minutes before we stop polling and tell the buyer to
+// contact us, rather than polling /verify forever if fulfillment is stuck.
+const MAX_POLL_ATTEMPTS = 24
 
 export default function DigitalStoreOrderPage() {
-  const { orderId } = useParams()
-  // 'recovery_failed' | 'verifying' | 'preparing' | 'ready' | 'error'
+  const { templateId, orderId } = useParams()
+  // 'recovery_failed' | 'verifying' | 'preparing' | 'ready' | 'error' | 'taking_longer'
   const [state, setState] = useState(() => (readStoredPaymentDetails(orderId) ? 'verifying' : 'recovery_failed'))
   const [downloadToken, setDownloadToken] = useState(null)
   const pollTimeoutRef = useRef(null)
 
-  useSEO({ title: 'Your Order | McreatiK Studios Digital Store', description: 'Order status and download.', path: `/digital_store/order/${orderId}` })
+  useSEO({
+    title: 'Your Order | McreatiK Studios Digital Store',
+    description: 'Order status and download.',
+    path: `/digital_store/${templateId}/order/${orderId}`,
+  })
 
   useEffect(() => {
     const paymentDetails = readStoredPaymentDetails(orderId)
@@ -27,14 +34,18 @@ export default function DigitalStoreOrderPage() {
     }
 
     let cancelled = false
+    let attempts = 0
 
     async function poll() {
+      attempts += 1
       try {
         const result = await verifyDigitalStoreOrder(orderId, paymentDetails)
         if (cancelled) return
         if (result.fulfilled) {
           setDownloadToken(result.downloadToken)
           setState('ready')
+        } else if (attempts >= MAX_POLL_ATTEMPTS) {
+          setState('taking_longer')
         } else {
           setState('preparing')
           pollTimeoutRef.current = setTimeout(poll, POLL_INTERVAL_MS)
@@ -105,6 +116,15 @@ export default function DigitalStoreOrderPage() {
             <h1 className="text-2xl font-semibold mb-3">Something went wrong</h1>
             <p className="text-gray-600">
               Please contact us with your order ID (<code className="bg-gray-100 px-1 rounded">{orderId}</code>) and we'll sort it out.
+            </p>
+          </>
+        ) : null}
+
+        {state === 'taking_longer' ? (
+          <>
+            <h1 className="text-2xl font-semibold mb-3">This is taking longer than expected</h1>
+            <p className="text-gray-600">
+              Please contact us with your order ID (<code className="bg-gray-100 px-1 rounded">{orderId}</code>) and we'll help sort it out.
             </p>
           </>
         ) : null}

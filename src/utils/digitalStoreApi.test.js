@@ -6,6 +6,7 @@ import {
   createDigitalStoreOrder,
   verifyDigitalStoreOrder,
   digitalStoreDownloadUrl,
+  formatDigitalStorePrice,
   DigitalStoreApiError,
 } from './digitalStoreApi'
 
@@ -134,5 +135,19 @@ describe('digitalStoreDownloadUrl', () => {
 
     expect(url).toContain('/api/v1/orders/order-1/download')
     expect(url).toContain(`token=${encodeURIComponent('a token/with-chars')}`)
+  })
+})
+
+describe('formatDigitalStorePrice', () => {
+  it('formats a whole-number INR price with the rupee symbol and no decimals', () => {
+    expect(formatDigitalStorePrice('INR', 99.0)).toBe('₹99')
+  })
+
+  it('formats a fractional INR price with 2 decimals', () => {
+    expect(formatDigitalStorePrice('INR', 99.5)).toBe('₹99.50')
+  })
+
+  it('falls back to showing the currency code as-is for a non-INR currency', () => {
+    expect(formatDigitalStorePrice('USD', 49)).toBe('USD 49')
   })
 })

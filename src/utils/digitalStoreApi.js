@@ -77,3 +77,18 @@ export async function verifyDigitalStoreOrder(orderId, { razorpayOrderId, razorp
 export function digitalStoreDownloadUrl(orderId, downloadToken) {
   return `${API_BASE}/api/v1/orders/${orderId}/download?token=${encodeURIComponent(downloadToken)}`
 }
+
+// Maps a currency code to its display symbol. Any currency not listed here falls back to
+// showing the raw code (e.g. "USD 99") rather than a symbol.
+const CURRENCY_SYMBOLS = { INR: '₹' }
+
+/**
+ * Formats a price for display: "₹99" (no decimals for a whole number), "₹99.50" (2 decimals
+ * when there's a fractional part), or "USD 99" for a currency with no known symbol.
+ */
+export function formatDigitalStorePrice(currency, price) {
+  const numericPrice = Number(price)
+  const formattedPrice = Number.isInteger(numericPrice) ? String(numericPrice) : numericPrice.toFixed(2)
+  const symbol = CURRENCY_SYMBOLS[currency]
+  return symbol ? `${symbol}${formattedPrice}` : `${currency} ${formattedPrice}`
+}

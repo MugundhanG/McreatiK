@@ -112,4 +112,14 @@ describe('ProductForm', () => {
 
     expect(onFirstInteraction).toHaveBeenCalledTimes(1)
   })
+
+  it('renders an empty form instead of throwing when fieldSchema has no fields key', () => {
+    expect(() => renderForm({ fieldSchema: {} })).not.toThrow()
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
+  })
+
+  it('renders an empty form instead of throwing when fieldSchema is null', () => {
+    expect(() => renderForm({ fieldSchema: null })).not.toThrow()
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
+  })
 })

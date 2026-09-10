@@ -52,6 +52,23 @@ describe('DigitalStoreOrderPage', () => {
     expect(verifySpy).toHaveBeenCalledTimes(2)
   })
 
+  it('stops polling and shows "taking longer" after the poll cap is reached', async () => {
+    vi.spyOn(checkoutHook, 'readStoredPaymentDetails').mockReturnValue({
+      orderId: 'order-1', razorpayOrderId: 'rzp_1', razorpayPaymentId: 'pay_1', razorpaySignature: 'sig_1',
+    })
+    const verifySpy = vi.spyOn(api, 'verifyDigitalStoreOrder').mockResolvedValue({ orderId: 'order-1', fulfilled: false })
+
+    renderAt('order-1')
+
+    expect(await screen.findByText(/preparing your document/i)).toBeInTheDocument()
+
+    // 24 attempts at 5s intervals = 2 minutes; advance well past the cap.
+    await vi.advanceTimersByTimeAsync(5000 * 30)
+
+    expect(await screen.findByText(/taking longer than expected/i)).toBeInTheDocument()
+    expect(verifySpy).toHaveBeenCalledTimes(24)
+  })
+
   it('the download link points at the correct download URL', async () => {
     vi.spyOn(checkoutHook, 'readStoredPaymentDetails').mockReturnValue({
       orderId: 'order-1', razorpayOrderId: 'rzp_1', razorpayPaymentId: 'pay_1', razorpaySignature: 'sig_1',

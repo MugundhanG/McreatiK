@@ -48,7 +48,13 @@ export function useCheckout(template) {
             razorpayPaymentId: response.razorpay_payment_id,
             razorpaySignature: response.razorpay_signature,
           }
-          sessionStorage.setItem(sessionStorageKeyFor(order.orderId), JSON.stringify(paymentDetails))
+          try {
+            sessionStorage.setItem(sessionStorageKeyFor(order.orderId), JSON.stringify(paymentDetails))
+          } catch {
+            // A storage failure (private browsing, quota exceeded, disabled storage, etc.) must
+            // never strand a buyer who has already paid - fall through to onSuccess regardless.
+            // DigitalStoreOrderPage handles the missing-details case gracefully via 'recovery_failed'.
+          }
           trackDigitalStoreEvent(DIGITAL_STORE_EVENTS.PAYMENT_SUCCESSFUL, {
             template_id: template.id,
             order_id: order.orderId,
@@ -57,7 +63,13 @@ export function useCheckout(template) {
           onSuccess(order.orderId)
         },
         modal: {
-          ondismiss: () => setStatus('idle'),
+          ondismiss: () => {
+            setStatus('idle')
+            // Force a fresh idempotency key on the next attempt: the backend caches orders by
+            // this key with no payload comparison, so reusing it after the buyer edits the form
+            // would return the stale first order instead of one reflecting their edits.
+            idempotencyKeyRef.current = null
+          },
         },
       })
 
@@ -73,6 +85,12 @@ export function useCheckout(template) {
 }
 
 export function readStoredPaymentDetails(orderId) {
-  const raw = sessionStorage.getItem(sessionStorageKeyFor(orderId))
-  return raw ? JSON.parse(raw) : null
+  try {
+    const raw = sessionStorage.getItem(sessionStorageKeyFor(orderId))
+    return raw ? JSON.parse(raw) : null
+  } catch {
+    // Corrupted JSON or inaccessible storage - treat exactly like "no stored details",
+    // which DigitalStoreOrderPage already handles via its 'recovery_failed' state.
+    return null
+  }
 }

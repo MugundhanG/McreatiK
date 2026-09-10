@@ -72,7 +72,13 @@ export default function PreviewPanel({ templateId, fieldValues }) {
       {status === 'error' ? <p className="text-red-600 mt-3">{errorMessage}</p> : null}
 
       {status === 'ready' && previewUrl ? (
-        <iframe title="Document preview" src={previewUrl} className="w-full mt-4 rounded-lg border" style={{ height: '70vh' }} />
+        <>
+          <iframe title="Document preview" src={previewUrl} className="w-full mt-4 rounded-lg border" style={{ height: '70vh' }} />
+          {/* Fallback for mobile browsers that render blob: PDFs inconsistently inside an iframe. */}
+          <a href={previewUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-sm text-[#C9971F] underline">
+            Open preview in a new tab
+          </a>
+        </>
       ) : null}
     </div>
   )

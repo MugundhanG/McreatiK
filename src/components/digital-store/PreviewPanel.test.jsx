@@ -25,6 +25,17 @@ describe('PreviewPanel', () => {
     expect(api.requestDigitalStorePreview).toHaveBeenCalledWith('t1', { brideName: 'Jane' })
   })
 
+  it('shows a fallback "open in a new tab" link once the preview is ready', async () => {
+    vi.spyOn(api, 'requestDigitalStorePreview').mockResolvedValue(new Blob(['%PDF-'], { type: 'application/pdf' }))
+    render(<PreviewPanel templateId="t1" fieldValues={{}} />)
+
+    fireEvent.click(screen.getByRole('button', { name: /preview/i }))
+
+    const link = await screen.findByRole('link', { name: /open preview in a new tab/i })
+    expect(link).toHaveAttribute('href', 'blob:fake-url')
+    expect(link).toHaveAttribute('target', '_blank')
+  })
+
   it('shows field validation errors returned by the backend', async () => {
     const error = Object.assign(new Error('Validation failed'), { status: 400, fieldErrors: { brideName: 'is required' } })
     vi.spyOn(api, 'requestDigitalStorePreview').mockRejectedValue(error)

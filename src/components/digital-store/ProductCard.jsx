@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { formatDigitalStorePrice } from '../../utils/digitalStoreApi'
 
 export default function ProductCard({ template }) {
   const marketing = template.marketingContent || {}
@@ -27,9 +28,7 @@ export default function ProductCard({ template }) {
           </span>
         ) : null}
         <div className="mt-4 flex items-center justify-between">
-          <span className="text-xl font-bold">
-            {template.currency} {template.price}
-          </span>
+          <span className="text-xl font-bold">{formatDigitalStorePrice(template.currency, template.price)}</span>
           <span className="text-sm font-medium text-[#C9971F]">View & Customize →</span>
         </div>
       </div>

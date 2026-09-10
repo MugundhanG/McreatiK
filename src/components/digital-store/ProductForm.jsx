@@ -45,7 +45,7 @@ export default function ProductForm({ fieldSchema, values, onChange, serverError
 
   return (
     <form className="space-y-5">
-      {fieldSchema.fields.map((field) => {
+      {(fieldSchema?.fields ?? []).map((field) => {
         const value = values[field.name] ?? ''
         const clientError = touched[field.name] ? clientValidate(field, value) : null
         const error = serverErrors[field.name] || clientError

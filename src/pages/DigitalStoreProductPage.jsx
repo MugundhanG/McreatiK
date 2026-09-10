@@ -11,7 +11,7 @@ import {
   ProductTrustSection,
 } from '../components/digital-store/ProductMarketingSections'
 import { useCheckout } from '../hooks/useCheckout'
-import { fetchDigitalStoreTemplate } from '../utils/digitalStoreApi'
+import { fetchDigitalStoreTemplate, formatDigitalStorePrice } from '../utils/digitalStoreApi'
 import { DIGITAL_STORE_EVENTS, trackDigitalStoreEvent } from '../utils/digitalStoreAnalytics'
 import { useSEO } from '../hooks/useSEO'
 
@@ -23,8 +23,12 @@ export default function DigitalStoreProductPage() {
   const [fieldValues, setFieldValues] = useState({})
   const [customerName, setCustomerName] = useState('')
   const [customerEmail, setCustomerEmail] = useState('')
+  const [validationMessage, setValidationMessage] = useState(null)
 
   const { status: checkoutStatus, error: checkoutError, startCheckout } = useCheckout(template || { id: templateId })
+  // Derived directly from checkoutError rather than mirrored into its own state - it's
+  // fully determined by the hook's error on every render, so there's nothing to synchronize.
+  const checkoutFieldErrors = checkoutError?.fieldErrors || {}
 
   useSEO({
     title: template ? `${template.name} | McreatiK Studios Digital Store` : 'Digital Store | McreatiK Studios',
@@ -51,6 +55,7 @@ export default function DigitalStoreProductPage() {
 
   function handleFieldChange(name, value) {
     setFieldValues((prev) => ({ ...prev, [name]: value }))
+    setValidationMessage(null)
   }
 
   function handleFirstFormInteraction() {
@@ -61,7 +66,25 @@ export default function DigitalStoreProductPage() {
     document.getElementById('digital-store-form')?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  // A lightweight, non-exhaustive check: it only catches an obviously-incomplete form
+  // (a blank required field) so we can block submission and say why, rather than
+  // duplicating ProductForm's own per-field validation UI here.
+  function isFormObviouslyIncomplete() {
+    if (!customerName.trim() || !customerEmail.trim()) return true
+    const fields = template?.fieldSchema?.fields ?? []
+    return fields.some((field) => {
+      if (!field.required) return false
+      const value = fieldValues[field.name]
+      return value === undefined || value === null || value === ''
+    })
+  }
+
   async function handlePayClick() {
+    if (isFormObviouslyIncomplete()) {
+      setValidationMessage('Please fill in all required fields above before continuing.')
+      return
+    }
+    setValidationMessage(null)
     await startCheckout(
       { customerName, customerEmail, fieldValues },
       { onSuccess: (orderId) => navigate(`/digital_store/${templateId}/order/${orderId}`) }
@@ -102,7 +125,10 @@ export default function DigitalStoreProductPage() {
               <input
                 id="customerName"
                 value={customerName}
-                onChange={(e) => setCustomerName(e.target.value)}
+                onChange={(e) => {
+                  setCustomerName(e.target.value)
+                  setValidationMessage(null)
+                }}
                 required
                 className="w-full rounded-md border border-gray-300 px-3 py-2"
               />
@@ -115,7 +141,10 @@ export default function DigitalStoreProductPage() {
                 id="customerEmail"
                 type="email"
                 value={customerEmail}
-                onChange={(e) => setCustomerEmail(e.target.value)}
+                onChange={(e) => {
+                  setCustomerEmail(e.target.value)
+                  setValidationMessage(null)
+                }}
                 required
                 className="w-full rounded-md border border-gray-300 px-3 py-2"
               />
@@ -126,23 +155,25 @@ export default function DigitalStoreProductPage() {
             values={fieldValues}
             onChange={handleFieldChange}
             onFirstInteraction={handleFirstFormInteraction}
+            serverErrors={checkoutFieldErrors}
           />
         </section>
 
         <PreviewPanel templateId={template.id} fieldValues={fieldValues} />
 
         <section className="py-10 border-t border-gray-200 text-center">
-          <p className="text-2xl font-bold mb-4">
-            {template.currency} {template.price}
-          </p>
+          <p className="text-2xl font-bold mb-4">{formatDigitalStorePrice(template.currency, template.price)}</p>
           <button
             type="button"
             onClick={handlePayClick}
             disabled={checkoutStatus === 'creating_order' || checkoutStatus === 'awaiting_payment'}
             className="bg-[#C9971F] text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-[#b3860f] disabled:opacity-50"
           >
-            {checkoutStatus === 'creating_order' ? 'Preparing checkout...' : `Pay ${template.currency} ${template.price}`}
+            {checkoutStatus === 'creating_order'
+              ? 'Preparing checkout...'
+              : `Pay ${formatDigitalStorePrice(template.currency, template.price)}`}
           </button>
+          {validationMessage ? <p className="text-red-600 mt-3">{validationMessage}</p> : null}
           {checkoutStatus === 'error' ? (
             <p className="text-red-600 mt-3">
               {checkoutError?.status === 429

@@ -1,12 +1,11 @@
 import { getWhatsAppHref } from '../../utils/whatsapp'
+import { formatDigitalStorePrice } from '../../utils/digitalStoreApi'
 
 export function ProductHero({ template, onGetStarted }) {
   return (
     <section className="text-center py-16">
       <h1 className="text-4xl font-bold mb-3">{template.name}</h1>
-      <p className="text-2xl font-semibold text-[#C9971F] mb-6">
-        {template.currency} {template.price}
-      </p>
+      <p className="text-2xl font-semibold text-[#C9971F] mb-6">{formatDigitalStorePrice(template.currency, template.price)}</p>
       <button
         type="button"
         onClick={onGetStarted}
