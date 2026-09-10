@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { renderHook, act } from '@testing-library/react'
-import { useCheckout, readStoredPaymentDetails } from './useCheckout'
+import { useCheckout, readStoredPaymentDetails, hashString } from './useCheckout'
 import * as api from '../utils/digitalStoreApi'
 import * as scriptLoader from '../utils/razorpayScriptLoader'
 
@@ -145,6 +145,55 @@ describe('useCheckout', () => {
     expect(secondKey).toBe(firstKey)
   })
 
+  it('generates a DIFFERENT idempotency key across two calls to startCheckout with an edited payload and nothing else different (no dismiss, no failure in between)', async () => {
+    const createOrderSpy = vi
+      .spyOn(api, 'createDigitalStoreOrder')
+      .mockResolvedValue({ orderId: 'order-1', razorpayOrderId: 'rzp_1', razorpayKeyId: 'k', amount: 99, currency: 'INR' })
+    mockRazorpayCapturingOptions()
+    const { result } = renderHook(() => useCheckout(TEMPLATE))
+
+    await act(async () => {
+      await result.current.startCheckout(
+        { customerName: 'Jane', customerEmail: 'jane@example.com', fieldValues: {} },
+        { onSuccess: vi.fn() }
+      )
+    })
+    await act(async () => {
+      await result.current.startCheckout(
+        { customerName: 'Jane', customerEmail: 'jane@example.com', fieldValues: { note: 'please gift wrap' } },
+        { onSuccess: vi.fn() }
+      )
+    })
+
+    const [firstKey] = createOrderSpy.mock.calls[0]
+    const [secondKey] = createOrderSpy.mock.calls[1]
+    expect(secondKey).not.toBe(firstKey)
+  })
+
+  it('generates DIFFERENT idempotency keys for two separate buyer sessions (two hook instances) submitting byte-identical form data', async () => {
+    const createOrderSpy = vi
+      .spyOn(api, 'createDigitalStoreOrder')
+      .mockResolvedValue({ orderId: 'order-1', razorpayOrderId: 'rzp_1', razorpayKeyId: 'k', amount: 99, currency: 'INR' })
+    mockRazorpayCapturingOptions()
+    // Two unrelated buyers who happen to both submit identical-looking test data (e.g. both
+    // testing with "Test Buyer" / "test@test.com") must never collide on the same order - this is
+    // the whole reason sessionId exists alongside the payload hash.
+    const details = { customerName: 'Test Buyer', customerEmail: 'test@test.com', fieldValues: {} }
+    const { result: sessionA } = renderHook(() => useCheckout(TEMPLATE))
+    const { result: sessionB } = renderHook(() => useCheckout(TEMPLATE))
+
+    await act(async () => {
+      await sessionA.current.startCheckout(details, { onSuccess: vi.fn() })
+    })
+    await act(async () => {
+      await sessionB.current.startCheckout(details, { onSuccess: vi.fn() })
+    })
+
+    const [keyA] = createOrderSpy.mock.calls[0]
+    const [keyB] = createOrderSpy.mock.calls[1]
+    expect(keyA).not.toBe(keyB)
+  })
+
   it('generates a DIFFERENT idempotency key when the buyer retries (after a dismiss, or any other failure) with an EDITED payload', async () => {
     const createOrderSpy = vi
       .spyOn(api, 'createDigitalStoreOrder')
@@ -256,6 +305,27 @@ describe('useCheckout', () => {
 
     expect(result.current.status).toBe('error')
     expect(result.current.error).toBe(failure)
+  })
+})
+
+describe('hashString', () => {
+  it('is deterministic: the same input produces the same output across multiple calls', () => {
+    const input = JSON.stringify({ templateId: 'template-1', customerName: 'Jane', customerEmail: 'jane@example.com', fieldValues: { note: 'please gift wrap' } })
+
+    const first = hashString(input)
+    const second = hashString(input)
+    const third = hashString(input)
+
+    expect(first).toBe(second)
+    expect(second).toBe(third)
+  })
+
+  it('combines two independent hash mixers into a wider combined hash (not just a single 32-bit hash)', () => {
+    const result = hashString('some-payload')
+
+    // Each 32-bit mixer contributes up to 8 hex chars; combined output should reflect both,
+    // not collapse to a single mixer's width.
+    expect(result.length).toBeGreaterThan(8)
   })
 })
 

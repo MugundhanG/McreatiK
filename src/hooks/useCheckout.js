@@ -7,10 +7,10 @@ function sessionStorageKeyFor(orderId) {
   return `digital-store-order-${orderId}`
 }
 
-// Deterministic, synchronous string hash (djb2). Not cryptographic - it only needs to be
-// deterministic and reasonably collision-resistant so identical checkout payloads dedupe to the
+// Deterministic, synchronous string hash (djb2-xor variant). Not cryptographic - it only needs to
+// be deterministic and reasonably collision-resistant so identical checkout payloads dedupe to the
 // same idempotency key while edited payloads land on a different one. Runs on JSON.stringify(payload).
-function hashString(str) {
+function djb2Hash(str) {
   let hash = 5381
   for (let i = 0; i < str.length; i++) {
     hash = (hash * 33) ^ str.charCodeAt(i)
@@ -19,19 +19,48 @@ function hashString(str) {
   return (hash >>> 0).toString(16)
 }
 
+// Second, independent string hash (sdbm). Combined with djb2-xor below to widen the effective
+// hash space to ~64 bits: two different 32-bit mixers are far less likely to collide on the same
+// near-identical mutated payload at the same time than either mixer alone. Still not cryptographic
+// - just meaningfully more collision-resistant than a single 32-bit hash for this use case.
+function sdbmHash(str) {
+  let hash = 0
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + (hash << 6) + (hash << 16) - hash
+  }
+  return (hash >>> 0).toString(16)
+}
+
+// Exported (in addition to being used internally) so its determinism can be unit-tested directly,
+// without going through the full startCheckout flow.
+export function hashString(str) {
+  return `${djb2Hash(str)}${sdbmHash(str)}`
+}
+
 function computeIdempotencyKey(sessionId, payload) {
   return `${sessionId}:${hashString(JSON.stringify(payload))}`
+}
+
+// crypto.randomUUID requires a secure context (HTTPS) and isn't available in older Safari
+// (<15.4) or on a plain-HTTP LAN dev URL. Guard it so a missing implementation degrades to a
+// lower-entropy-but-still-unique fallback instead of throwing during render (which would crash
+// the whole product page rather than surface as a checkout-time error). The fallback doesn't need
+// cryptographic randomness - only enough entropy that two concurrent sessions won't collide by chance.
+function generateSessionId() {
+  return typeof crypto?.randomUUID === 'function'
+    ? crypto.randomUUID()
+    : `${Date.now().toString(36)}${Math.random().toString(36).slice(2)}`
 }
 
 export function useCheckout(template) {
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState(null)
-  // A random UUID generated once per hook instance (mount). This is NOT the idempotency key by
+  // A random ID generated once per hook instance (mount). This is NOT the idempotency key by
   // itself - it exists purely so two different buyers can never collide on the same key even if
   // they submit identical form data (e.g. both testing with "Test Buyer" / "test@test.com").
-  // useRef(crypto.randomUUID()) evaluates the initializer on every render but React only keeps the
+  // useRef(generateSessionId()) evaluates the initializer on every render but React only keeps the
   // value from the first render, so this is safe and simpler than a lazy-init pattern.
-  const sessionIdRef = useRef(crypto.randomUUID())
+  const sessionIdRef = useRef(generateSessionId())
 
   async function startCheckout({ customerName, customerEmail, fieldValues }, { onSuccess }) {
     setStatus('creating_order')
