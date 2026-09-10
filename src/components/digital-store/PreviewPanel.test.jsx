@@ -55,4 +55,36 @@ describe('PreviewPanel', () => {
     fireEvent.click(screen.getByRole('button', { name: /preview/i }))
     await waitFor(() => expect(global.URL.revokeObjectURL).toHaveBeenCalledWith('blob:fake-url'))
   })
+
+  it('guards against state updates and revokes URLs when unmounting during an in-flight request', async () => {
+    let resolvePreview
+    const previewPromise = new Promise((resolve) => {
+      resolvePreview = resolve
+    })
+    vi.spyOn(api, 'requestDigitalStorePreview').mockReturnValue(previewPromise)
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+    const { unmount } = render(<PreviewPanel templateId="t1" fieldValues={{}} />)
+
+    fireEvent.click(screen.getByRole('button', { name: /preview/i }))
+
+    // Unmount before the promise resolves
+    unmount()
+
+    // Resolve the promise after unmount
+    resolvePreview(new Blob(['%PDF-'], { type: 'application/pdf' }))
+
+    // Give any pending microtasks a chance to run
+    await new Promise((resolve) => setTimeout(resolve, 0))
+
+    // Verify the blob URL was revoked immediately (not stored in ref for later cleanup)
+    expect(global.URL.revokeObjectURL).toHaveBeenCalledWith('blob:fake-url')
+
+    // Verify no React "state update on unmounted component" warning
+    expect(consoleErrorSpy).not.toHaveBeenCalledWith(
+      expect.stringContaining('state update on an unmounted component')
+    )
+
+    consoleErrorSpy.mockRestore()
+  })
 })

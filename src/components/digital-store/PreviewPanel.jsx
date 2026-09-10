@@ -6,10 +6,12 @@ export default function PreviewPanel({ templateId, fieldValues }) {
   const [status, setStatus] = useState('idle') // idle | loading | ready | error
   const [previewUrl, setPreviewUrl] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
-  const previousUrlRef = useRef(null);
+  const previousUrlRef = useRef(null)
+  const isMountedRef = useRef(true)
 
   useEffect(() => {
     return () => {
+      isMountedRef.current = false
       if (previousUrlRef.current) {
         URL.revokeObjectURL(previousUrlRef.current)
       }
@@ -23,6 +25,14 @@ export default function PreviewPanel({ templateId, fieldValues }) {
     try {
       const blob = await requestDigitalStorePreview(templateId, fieldValues)
       const url = URL.createObjectURL(blob)
+
+      // Guard against state updates after unmount
+      if (!isMountedRef.current) {
+        // Component unmounted; revoke the URL immediately and bail
+        URL.revokeObjectURL(url)
+        return
+      }
+
       if (previousUrlRef.current) {
         URL.revokeObjectURL(previousUrlRef.current)
       }
@@ -31,6 +41,11 @@ export default function PreviewPanel({ templateId, fieldValues }) {
       setStatus('ready')
       trackDigitalStoreEvent(DIGITAL_STORE_EVENTS.PREVIEW_GENERATED, { template_id: templateId })
     } catch (err) {
+      // Guard against state updates after unmount
+      if (!isMountedRef.current) {
+        return
+      }
+
       setStatus('error')
       if (err.fieldErrors) {
         setErrorMessage('Please fill in all required fields correctly before previewing.')
