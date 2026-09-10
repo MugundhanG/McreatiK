@@ -29,6 +29,9 @@ const StudiosAlbumsPage = lazy(() => import('./pages/StudiosAlbumsPage'))
 const StudiosExperiencePage = lazy(() => import('./pages/StudiosExperiencePage'))
 const StudiosBlogPage = lazy(() => import('./pages/StudiosBlogPage'))
 const StudiosBlogPostPage = lazy(() => import('./pages/StudiosBlogPostPage'))
+const DigitalStoreCatalogPage = lazy(() => import('./pages/DigitalStoreCatalogPage'))
+const DigitalStoreProductPage = lazy(() => import('./pages/DigitalStoreProductPage'))
+const DigitalStoreOrderPage = lazy(() => import('./pages/DigitalStoreOrderPage'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 /* Full-screen loading placeholder shown while a page chunk loads */
@@ -67,6 +70,9 @@ function App() {
           <Route path="/studios/experience" element={<StudiosExperiencePage />} />
           <Route path="/studios/blog" element={<StudiosBlogPage />} />
           <Route path="/studios/blog/:slug" element={<StudiosBlogPostPage />} />
+          <Route path="/digital_store" element={<DigitalStoreCatalogPage />} />
+          <Route path="/digital_store/:templateId" element={<DigitalStoreProductPage />} />
+          <Route path="/digital_store/:templateId/order/:orderId" element={<DigitalStoreOrderPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
