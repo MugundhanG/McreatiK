@@ -59,6 +59,17 @@ describe('ProductForm', () => {
     expect(onChange).toHaveBeenCalledWith('hoursCovered', 8)
   })
 
+  it('calls onChange with null when a number field is cleared', () => {
+    // Render with an initial value so the input has a value to clear
+    const { onChange } = renderForm({ values: { hoursCovered: 8 } })
+    const input = screen.getByLabelText('Hours Covered *')
+
+    // Clear the number field by changing to empty string
+    fireEvent.change(input, { target: { value: '' } })
+
+    expect(onChange).toHaveBeenCalledWith('hoursCovered', null)
+  })
+
   it('shows a required-field error only after the field is blurred empty', () => {
     renderForm()
     const input = screen.getByLabelText("Bride's Name *")

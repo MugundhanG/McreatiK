@@ -9,7 +9,7 @@ function resolveInputType(fieldType) {
 
 function coerceValue(field, rawValue) {
   if (field.type === 'number') {
-    return rawValue === '' ? '' : Number(rawValue)
+    return rawValue === '' ? null : Number(rawValue)
   }
   return rawValue
 }
