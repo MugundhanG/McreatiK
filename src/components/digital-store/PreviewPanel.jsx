@@ -10,6 +10,11 @@ export default function PreviewPanel({ templateId, fieldValues }) {
   const isMountedRef = useRef(true)
 
   useEffect(() => {
+    // Set (not just initialize) on every effect run: StrictMode's dev-only
+    // double-invoke (mount -> effect -> cleanup -> effect) would otherwise
+    // leave this permanently false after the first cleanup, since the ref's
+    // initial value only ever applies once.
+    isMountedRef.current = true
     return () => {
       isMountedRef.current = false
       if (previousUrlRef.current) {
