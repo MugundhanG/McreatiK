@@ -3,17 +3,23 @@
    Minimal placeholder bar for the Store department:
    wordmark + department switcher + a "Soon" tag,
    in the same frame language as Tech/Studios' bars.
-   No real nav links yet — there are no catalog
+   No catalog nav links yet — there are no catalog
    sections to point to until the Store's actual
-   pages are built.
+   pages are built. Does show sign-in state (Task 10):
+   a Log In link when signed out, or the customer's
+   name + Log Out when signed in — the only real,
+   working links this bar has right now.
    ============================================ */
 
 import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import DepartmentSwitcher from '../ui/DepartmentSwitcher'
+import { useAuth } from '../../context/AuthContext'
 
 const StoreNavbar = memo(function StoreNavbar() {
+  const { customer, loading, logout } = useAuth()
+
   return (
     <motion.header
       className="fixed top-0 left-0 right-0 z-40 border-b border-[#17151f]/10 bg-[#f8f7fb]/90 backdrop-blur-xl"
@@ -32,7 +38,28 @@ const StoreNavbar = memo(function StoreNavbar() {
           </span>
         </Link>
 
-        <DepartmentSwitcher className="text-[#17151f]/70 bg-white/70" />
+        <div className="flex items-center gap-4">
+          {!loading && (
+            customer ? (
+              <div className="flex items-center gap-3 text-sm">
+                <span className="hidden sm:inline text-[#17151f]/70">Hi, {customer.name}</span>
+                <button
+                  type="button"
+                  onClick={logout}
+                  className="font-semibold hover:underline"
+                  style={{ color: '#8B7FE8' }}
+                >
+                  Log Out
+                </button>
+              </div>
+            ) : (
+              <Link to="/store/login" className="text-sm font-semibold hover:underline" style={{ color: '#8B7FE8' }}>
+                Log In
+              </Link>
+            )
+          )}
+          <DepartmentSwitcher className="text-[#17151f]/70 bg-white/70" />
+        </div>
       </div>
     </motion.header>
   )

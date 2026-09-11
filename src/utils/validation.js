@@ -44,6 +44,15 @@ export function validateField(name, value) {
       if (!PHONE_REGEX.test(trimmed)) return 'Please enter a valid phone number'
       return ''
 
+    // 'password' (signup/login) and 'newPassword' (reset-password confirm) share the
+    // same rule - both are checked against the backend's own @Size(min = 8, max = 100).
+    case 'password':
+    case 'newPassword':
+      if (!value) return 'Password is required'
+      if (value.length < 8) return 'Password must be at least 8 characters'
+      if (value.length > 100) return 'Password must be 100 characters or fewer'
+      return ''
+
     case 'service':
       if (!trimmed) return 'Please select at least one service'
       return ''
@@ -69,6 +78,21 @@ export function validateForm(formData) {
     const error = validateField(key, value)
     if (error) {
       errors[key] = error
+      isValid = false
+    }
+  }
+
+  // 'confirmPassword' (signup, reset-password) needs to compare against whichever
+  // sibling password field the form actually has - validateField can't see that,
+  // so, like the eventDate cross-field check below, it's handled here instead.
+  // Harmless no-op for forms that don't carry a confirmPassword field at all.
+  if (formData.confirmPassword !== undefined) {
+    const password = formData.password !== undefined ? formData.password : formData.newPassword
+    if (!formData.confirmPassword) {
+      errors.confirmPassword = 'Please confirm your password'
+      isValid = false
+    } else if (formData.confirmPassword !== password) {
+      errors.confirmPassword = 'Passwords do not match'
       isValid = false
     }
   }

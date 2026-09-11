@@ -5,6 +5,8 @@
      /tech     McreatiK Tech & Creative Solutions
      /studios  McreatiK Studios (photography)
      /store    McreatiK Digital Store (placeholder — catalog is a later task)
+               /store/signup, /login, /forgot-password, /reset-password —
+               customer auth pages (Task 10); browsing itself stays public.
    Each department page is lazy-loaded so a visitor
    only ever downloads the one they chose.
    ============================================ */
@@ -31,6 +33,10 @@ const StudiosExperiencePage = lazy(() => import('./pages/StudiosExperiencePage')
 const StudiosBlogPage = lazy(() => import('./pages/StudiosBlogPage'))
 const StudiosBlogPostPage = lazy(() => import('./pages/StudiosBlogPostPage'))
 const StorePage = lazy(() => import('./pages/StorePage'))
+const StoreSignupPage = lazy(() => import('./pages/StoreSignupPage'))
+const StoreLoginPage = lazy(() => import('./pages/StoreLoginPage'))
+const StoreForgotPasswordPage = lazy(() => import('./pages/StoreForgotPasswordPage'))
+const StoreResetPasswordPage = lazy(() => import('./pages/StoreResetPasswordPage'))
 const DigitalStoreCatalogPage = lazy(() => import('./pages/DigitalStoreCatalogPage'))
 const DigitalStoreProductPage = lazy(() => import('./pages/DigitalStoreProductPage'))
 const DigitalStoreOrderPage = lazy(() => import('./pages/DigitalStoreOrderPage'))
@@ -73,6 +79,10 @@ function App() {
           <Route path="/studios/blog" element={<StudiosBlogPage />} />
           <Route path="/studios/blog/:slug" element={<StudiosBlogPostPage />} />
           <Route path="/store" element={<StorePage />} />
+          <Route path="/store/signup" element={<StoreSignupPage />} />
+          <Route path="/store/login" element={<StoreLoginPage />} />
+          <Route path="/store/forgot-password" element={<StoreForgotPasswordPage />} />
+          <Route path="/store/reset-password" element={<StoreResetPasswordPage />} />
           <Route path="/digital_store" element={<DigitalStoreCatalogPage />} />
           <Route path="/digital_store/:templateId" element={<DigitalStoreProductPage />} />
           <Route path="/digital_store/:templateId/order/:orderId" element={<DigitalStoreOrderPage />} />
