@@ -4,9 +4,14 @@
      /         Landing — pick a department
      /tech     McreatiK Tech & Creative Solutions
      /studios  McreatiK Studios (photography)
-     /store    McreatiK Digital Store (placeholder — catalog is a later task)
-               /store/signup, /login, /forgot-password, /reset-password —
-               customer auth pages (Task 10); browsing itself stays public.
+     /store    McreatiK Digital Store — category picker + product grid
+               (Task 12). /store/products/:productId — conditional product
+               page (customization form + preview, or straight to
+               marketing + Add to Cart, depending on the product's
+               category). /store/signup, /login, /forgot-password,
+               /reset-password — customer auth pages (Task 10); browsing
+               itself stays public, add-to-cart is what's auth-gated.
+               Cart (/store/cart) and checkout are later tasks (13/14).
    Each department page is lazy-loaded so a visitor
    only ever downloads the one they chose.
    ============================================ */
@@ -32,13 +37,12 @@ const StudiosAlbumsPage = lazy(() => import('./pages/StudiosAlbumsPage'))
 const StudiosExperiencePage = lazy(() => import('./pages/StudiosExperiencePage'))
 const StudiosBlogPage = lazy(() => import('./pages/StudiosBlogPage'))
 const StudiosBlogPostPage = lazy(() => import('./pages/StudiosBlogPostPage'))
-const StorePage = lazy(() => import('./pages/StorePage'))
+const StoreCatalogPage = lazy(() => import('./pages/StoreCatalogPage'))
+const StoreProductPage = lazy(() => import('./pages/StoreProductPage'))
 const StoreSignupPage = lazy(() => import('./pages/StoreSignupPage'))
 const StoreLoginPage = lazy(() => import('./pages/StoreLoginPage'))
 const StoreForgotPasswordPage = lazy(() => import('./pages/StoreForgotPasswordPage'))
 const StoreResetPasswordPage = lazy(() => import('./pages/StoreResetPasswordPage'))
-const DigitalStoreCatalogPage = lazy(() => import('./pages/DigitalStoreCatalogPage'))
-const DigitalStoreProductPage = lazy(() => import('./pages/DigitalStoreProductPage'))
 const DigitalStoreOrderPage = lazy(() => import('./pages/DigitalStoreOrderPage'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
@@ -78,13 +82,16 @@ function App() {
           <Route path="/studios/experience" element={<StudiosExperiencePage />} />
           <Route path="/studios/blog" element={<StudiosBlogPage />} />
           <Route path="/studios/blog/:slug" element={<StudiosBlogPostPage />} />
-          <Route path="/store" element={<StorePage />} />
+          <Route path="/store" element={<StoreCatalogPage />} />
+          <Route path="/store/products/:productId" element={<StoreProductPage />} />
           <Route path="/store/signup" element={<StoreSignupPage />} />
           <Route path="/store/login" element={<StoreLoginPage />} />
           <Route path="/store/forgot-password" element={<StoreForgotPasswordPage />} />
           <Route path="/store/reset-password" element={<StoreResetPasswordPage />} />
-          <Route path="/digital_store" element={<DigitalStoreCatalogPage />} />
-          <Route path="/digital_store/:templateId" element={<DigitalStoreProductPage />} />
+          {/* Legacy single-product checkout/order route from the pre-rebuild storefront.
+              Task 14 replaces this with a cart-based StoreOrderPage; left in place until
+              then since useCheckout.js/DigitalStoreOrderPage.jsx are explicitly its job,
+              not this task's. */}
           <Route path="/digital_store/:templateId/order/:orderId" element={<DigitalStoreOrderPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

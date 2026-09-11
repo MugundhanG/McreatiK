@@ -1,7 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import {
-  fetchDigitalStoreTemplates,
-  fetchDigitalStoreTemplate,
+  fetchDigitalStoreCategories,
+  fetchDigitalStoreProducts,
+  fetchDigitalStoreProduct,
   requestDigitalStorePreview,
   createDigitalStoreOrder,
   verifyDigitalStoreOrder,
@@ -10,10 +11,21 @@ import {
   DigitalStoreApiError,
 } from './digitalStoreApi'
 
-const SAMPLE_TEMPLATE = {
-  id: 'template-1',
+const SAMPLE_CATEGORY = {
+  id: 1,
+  name: 'Agreements',
+  slug: 'agreements',
+  description: 'Photography agreements',
+  requiresCustomization: true,
+  sortOrder: 0,
+  status: 'PUBLISHED',
+}
+
+const SAMPLE_PRODUCT = {
+  id: 'product-1',
   name: 'Wedding Photography Agreement',
-  shootType: 'WEDDING',
+  categoryId: 1,
+  productType: 'AGREEMENT_DOCUMENT',
   price: 99.0,
   currency: 'INR',
   fieldSchema: { fields: [{ name: 'brideName', type: 'string', label: "Bride's Name", required: true, maxLength: 100 }] },
@@ -28,36 +40,53 @@ afterEach(() => {
   vi.restoreAllMocks()
 })
 
-describe('fetchDigitalStoreTemplates', () => {
-  it('returns the parsed template list on success', async () => {
-    globalThis.fetch.mockResolvedValue({ ok: true, json: async () => [SAMPLE_TEMPLATE] })
+describe('fetchDigitalStoreCategories', () => {
+  it('returns the parsed category list on success', async () => {
+    globalThis.fetch.mockResolvedValue({ ok: true, json: async () => [SAMPLE_CATEGORY] })
 
-    const templates = await fetchDigitalStoreTemplates()
+    const categories = await fetchDigitalStoreCategories()
 
-    expect(templates).toEqual([SAMPLE_TEMPLATE])
-    expect(globalThis.fetch).toHaveBeenCalledWith(expect.stringContaining('/api/v1/templates'))
+    expect(categories).toEqual([SAMPLE_CATEGORY])
+    expect(globalThis.fetch).toHaveBeenCalledWith(expect.stringContaining('/api/v1/categories'))
   })
 
   it('throws DigitalStoreApiError on a non-ok response', async () => {
     globalThis.fetch.mockResolvedValue({ ok: false, status: 500, json: async () => ({ message: 'boom' }) })
 
-    await expect(fetchDigitalStoreTemplates()).rejects.toThrow(DigitalStoreApiError)
+    await expect(fetchDigitalStoreCategories()).rejects.toThrow(DigitalStoreApiError)
   })
 })
 
-describe('fetchDigitalStoreTemplate', () => {
-  it('finds the matching template by id from the list', async () => {
-    globalThis.fetch.mockResolvedValue({ ok: true, json: async () => [SAMPLE_TEMPLATE] })
+describe('fetchDigitalStoreProducts', () => {
+  it('returns the parsed product list on success', async () => {
+    globalThis.fetch.mockResolvedValue({ ok: true, json: async () => [SAMPLE_PRODUCT] })
 
-    const template = await fetchDigitalStoreTemplate('template-1')
+    const products = await fetchDigitalStoreProducts()
 
-    expect(template).toEqual(SAMPLE_TEMPLATE)
+    expect(products).toEqual([SAMPLE_PRODUCT])
+    expect(globalThis.fetch).toHaveBeenCalledWith(expect.stringContaining('/api/v1/products'))
   })
 
-  it('throws when no template matches the id', async () => {
-    globalThis.fetch.mockResolvedValue({ ok: true, json: async () => [SAMPLE_TEMPLATE] })
+  it('throws DigitalStoreApiError on a non-ok response', async () => {
+    globalThis.fetch.mockResolvedValue({ ok: false, status: 500, json: async () => ({ message: 'boom' }) })
 
-    await expect(fetchDigitalStoreTemplate('missing')).rejects.toThrow()
+    await expect(fetchDigitalStoreProducts()).rejects.toThrow(DigitalStoreApiError)
+  })
+})
+
+describe('fetchDigitalStoreProduct', () => {
+  it('finds the matching product by id from the list', async () => {
+    globalThis.fetch.mockResolvedValue({ ok: true, json: async () => [SAMPLE_PRODUCT] })
+
+    const product = await fetchDigitalStoreProduct('product-1')
+
+    expect(product).toEqual(SAMPLE_PRODUCT)
+  })
+
+  it('throws when no product matches the id', async () => {
+    globalThis.fetch.mockResolvedValue({ ok: true, json: async () => [SAMPLE_PRODUCT] })
+
+    await expect(fetchDigitalStoreProduct('missing')).rejects.toThrow()
   })
 })
 
@@ -66,11 +95,11 @@ describe('requestDigitalStorePreview', () => {
     const fakeBlob = new Blob(['%PDF-'], { type: 'application/pdf' })
     globalThis.fetch.mockResolvedValue({ ok: true, blob: async () => fakeBlob })
 
-    const blob = await requestDigitalStorePreview('template-1', { brideName: 'Jane' })
+    const blob = await requestDigitalStorePreview('product-1', { brideName: 'Jane' })
 
     expect(blob).toBe(fakeBlob)
     const [url, options] = globalThis.fetch.mock.calls[0]
-    expect(url).toContain('/api/v1/templates/template-1/preview')
+    expect(url).toContain('/api/v1/products/product-1/preview')
     expect(options.method).toBe('POST')
     expect(JSON.parse(options.body)).toEqual({ fieldValues: { brideName: 'Jane' } })
   })
@@ -82,7 +111,7 @@ describe('requestDigitalStorePreview', () => {
       json: async () => ({ message: 'Validation failed', fieldErrors: { brideName: 'is required' } }),
     })
 
-    await expect(requestDigitalStorePreview('template-1', {})).rejects.toMatchObject({
+    await expect(requestDigitalStorePreview('product-1', {})).rejects.toMatchObject({
       status: 400,
       fieldErrors: { brideName: 'is required' },
     })

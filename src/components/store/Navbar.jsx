@@ -1,14 +1,13 @@
 /* ============================================
    Navbar Component — Store
-   Minimal placeholder bar for the Store department:
-   wordmark + department switcher + a "Soon" tag,
-   in the same frame language as Tech/Studios' bars.
-   No catalog nav links yet — there are no catalog
-   sections to point to until the Store's actual
-   pages are built. Does show sign-in state (Task 10):
-   a Log In link when signed out, or the customer's
-   name + Log Out when signed in — the only real,
-   working links this bar has right now.
+   Minimal bar for the Store department: wordmark +
+   department switcher, in the same frame language as
+   Tech/Studios' bars. The "Soon" tag is gone now that
+   /store is the real catalog (Task 12) rather than a
+   placeholder. Still no extra nav links/sections (no
+   cart/checkout yet - Tasks 13/14). Shows sign-in
+   state (Task 10): a Log In link when signed out, or
+   the customer's name + Log Out when signed in.
    ============================================ */
 
 import React, { memo } from 'react'
@@ -33,9 +32,6 @@ const StoreNavbar = memo(function StoreNavbar() {
             McreatiK
           </span>
           <span className="font-display font-semibold text-lg text-[#17151f]">Digital Store</span>
-          <span className="hidden sm:inline-flex text-[10px] font-mono uppercase tracking-wide text-[#17151f]/50 border border-[#17151f]/15 rounded-full px-1.5 py-0.5">
-            Soon
-          </span>
         </Link>
 
         <div className="flex items-center gap-4">

@@ -6,6 +6,7 @@ export const DIGITAL_STORE_EVENTS = {
   CHECKOUT_INITIATED: 'digital_store_checkout_initiated',
   PAYMENT_SUCCESSFUL: 'digital_store_payment_successful',
   DOWNLOAD_INITIATED: 'digital_store_download_initiated',
+  ADD_TO_CART_CLICKED: 'digital_store_add_to_cart_clicked',
 }
 
 // Reuses the same window.gtag mechanism already wired in index.html and already

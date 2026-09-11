@@ -123,3 +123,93 @@ describe('ProductForm', () => {
     expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
   })
 })
+
+describe('ProductForm — non-editable fields (customerEditable: false)', () => {
+  const NON_EDITABLE_SCHEMA = {
+    fields: [
+      {
+        name: 'licenceTerms',
+        type: 'string',
+        label: 'Licence Terms',
+        required: true,
+        customerEditable: false,
+        fixedValue: 'This document is licensed for personal use only.',
+      },
+      { name: 'brideName', type: 'string', label: "Bride's Name", required: true, maxLength: 100 },
+    ],
+  }
+
+  it('renders a non-editable field disabled and pre-filled with its fixedValue', () => {
+    render(<ProductForm fieldSchema={NON_EDITABLE_SCHEMA} values={{}} onChange={vi.fn()} />)
+
+    const input = screen.getByLabelText('Licence Terms')
+    expect(input).toBeDisabled()
+    expect(input).toHaveValue('This document is licensed for personal use only.')
+  })
+
+  it('does not mark a non-editable field as required in its label, even when the schema says required: true', () => {
+    render(<ProductForm fieldSchema={NON_EDITABLE_SCHEMA} values={{}} onChange={vi.fn()} />)
+
+    expect(screen.getByText('Licence Terms')).toBeInTheDocument()
+    expect(screen.queryByText('Licence Terms *')).not.toBeInTheDocument()
+  })
+
+  it('never shows a required-field error for a non-editable field, even blank and required, and does not block form submission', () => {
+    const onChange = vi.fn()
+    render(<ProductForm fieldSchema={NON_EDITABLE_SCHEMA} values={{}} onChange={onChange} />)
+
+    const nonEditableInput = screen.getByLabelText('Licence Terms')
+    // Attempt exactly the interaction that would surface a required-field error on an
+    // editable field (blur while empty) - a disabled input can't actually receive
+    // focus/blur from a real user, but this proves the component's own validation
+    // logic short-circuits for this field regardless.
+    fireEvent.blur(nonEditableInput)
+    fireEvent.click(screen.getByLabelText("Bride's Name *"))
+
+    expect(screen.queryByText(/is required/i)).not.toBeInTheDocument()
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+  })
+
+  it('ignores a server-side error keyed to a non-editable field name (the backend never reports one, but the client must not surface it if it somehow arrived)', () => {
+    render(
+      <ProductForm
+        fieldSchema={NON_EDITABLE_SCHEMA}
+        values={{}}
+        onChange={vi.fn()}
+        serverErrors={{ licenceTerms: 'is required' }}
+      />
+    )
+
+    expect(screen.queryByText('is required')).not.toBeInTheDocument()
+  })
+
+  it('never calls onChange for a non-editable field since it has no change handler attached', () => {
+    const onChange = vi.fn()
+    render(<ProductForm fieldSchema={NON_EDITABLE_SCHEMA} values={{}} onChange={onChange} />)
+
+    const nonEditableInput = screen.getByLabelText('Licence Terms')
+    fireEvent.change(nonEditableInput, { target: { value: 'tampered value' } })
+
+    expect(onChange).not.toHaveBeenCalled()
+  })
+
+  it('still validates a sibling editable required field normally alongside a non-editable one', () => {
+    render(<ProductForm fieldSchema={NON_EDITABLE_SCHEMA} values={{}} onChange={vi.fn()} />)
+
+    fireEvent.blur(screen.getByLabelText("Bride's Name *"))
+
+    expect(screen.getByText(/is required/i)).toBeInTheDocument()
+  })
+
+  it('treats customerEditable: true the same as an absent customerEditable key', () => {
+    const explicit = { fields: [{ name: 'x', type: 'string', label: 'X', required: false, customerEditable: true }] }
+    const implicit = { fields: [{ name: 'x', type: 'string', label: 'X', required: false }] }
+
+    const { unmount } = render(<ProductForm fieldSchema={explicit} values={{}} onChange={vi.fn()} />)
+    expect(screen.getByLabelText('X')).not.toBeDisabled()
+    unmount()
+
+    render(<ProductForm fieldSchema={implicit} values={{}} onChange={vi.fn()} />)
+    expect(screen.getByLabelText('X')).not.toBeDisabled()
+  })
+})

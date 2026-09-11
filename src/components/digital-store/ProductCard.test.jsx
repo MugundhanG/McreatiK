@@ -3,30 +3,30 @@ import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import ProductCard from './ProductCard'
 
-function renderCard(template) {
+function renderCard(product, props = {}) {
   render(
     <MemoryRouter>
-      <ProductCard template={template} />
+      <ProductCard product={product} {...props} />
     </MemoryRouter>
   )
 }
 
 describe('ProductCard', () => {
   it('renders name and a formatted price with the currency symbol, which are always present', () => {
-    renderCard({ id: 't1', name: 'Wedding Photography Agreement', price: 99.0, currency: 'INR', marketingContent: null })
+    renderCard({ id: 'p1', name: 'Wedding Photography Agreement', price: 99.0, currency: 'INR', marketingContent: null })
 
     expect(screen.getByText('Wedding Photography Agreement')).toBeInTheDocument()
     expect(screen.getByText('₹99')).toBeInTheDocument()
   })
 
-  it('links to the product detail page', () => {
-    renderCard({ id: 't1', name: 'Wedding Photography Agreement', price: 99.0, currency: 'INR', marketingContent: null })
+  it('links to the product detail page under /store/products', () => {
+    renderCard({ id: 'p1', name: 'Wedding Photography Agreement', price: 99.0, currency: 'INR', marketingContent: null })
 
-    expect(screen.getByRole('link')).toHaveAttribute('href', '/digital_store/t1')
+    expect(screen.getByRole('link')).toHaveAttribute('href', '/store/products/p1')
   })
 
   it('renders no optional marketing content when marketingContent is null', () => {
-    renderCard({ id: 't1', name: 'Wedding Photography Agreement', price: 99.0, currency: 'INR', marketingContent: null })
+    renderCard({ id: 'p1', name: 'Wedding Photography Agreement', price: 99.0, currency: 'INR', marketingContent: null })
 
     expect(screen.queryByTestId('product-card-category')).not.toBeInTheDocument()
     expect(screen.queryByTestId('product-card-highlight')).not.toBeInTheDocument()
@@ -34,12 +34,36 @@ describe('ProductCard', () => {
 
   it('renders optional marketing content when present', () => {
     renderCard({
-      id: 't1', name: 'Wedding Photography Agreement', price: 99.0, currency: 'INR',
+      id: 'p1', name: 'Wedding Photography Agreement', price: 99.0, currency: 'INR',
       marketingContent: { shortDescription: 'A lovely agreement.', category: 'Agreements', keyHighlight: 'Ready in minutes' },
     })
 
     expect(screen.getByText('A lovely agreement.')).toBeInTheDocument()
     expect(screen.getByTestId('product-card-category')).toHaveTextContent('Agreements')
     expect(screen.getByTestId('product-card-highlight')).toHaveTextContent('Ready in minutes')
+  })
+
+  it('shows "Customize & Buy" CTA copy for a product in a customization-required category', () => {
+    renderCard(
+      { id: 'p1', name: 'Wedding Photography Agreement', price: 99.0, currency: 'INR', marketingContent: null },
+      { requiresCustomization: true }
+    )
+
+    expect(screen.getByTestId('product-card-cta')).toHaveTextContent('Customize & Buy →')
+  })
+
+  it('shows "Add to Cart" CTA copy for a product in a non-customization category', () => {
+    renderCard(
+      { id: 'p1', name: 'Wedding Photography Agreement', price: 99.0, currency: 'INR', marketingContent: null },
+      { requiresCustomization: false }
+    )
+
+    expect(screen.getByTestId('product-card-cta')).toHaveTextContent('Add to Cart →')
+  })
+
+  it('defaults to "Add to Cart" CTA copy when requiresCustomization is not passed', () => {
+    renderCard({ id: 'p1', name: 'Wedding Photography Agreement', price: 99.0, currency: 'INR', marketingContent: null })
+
+    expect(screen.getByTestId('product-card-cta')).toHaveTextContent('Add to Cart →')
   })
 })

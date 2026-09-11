@@ -36,24 +36,32 @@ async function postJson(path, body, extraHeaders = {}) {
   return res.json()
 }
 
-export async function fetchDigitalStoreTemplates() {
-  return getJson('/api/v1/templates')
+// Public catalog: categories + products, backed by CategoryPublicController
+// (/api/v1/categories, PUBLISHED-only, sorted by sortOrder/name) and
+// ProductPublicController (/api/v1/products, ACTIVE-only). Both endpoints are
+// unpaginated, small, complete lists - fine for a storefront catalog.
+export async function fetchDigitalStoreCategories() {
+  return getJson('/api/v1/categories')
 }
 
-// The backend has no single-template lookup endpoint - only the list. Fetching the
+export async function fetchDigitalStoreProducts() {
+  return getJson('/api/v1/products')
+}
+
+// The backend has no single-product lookup endpoint - only the list. Fetching the
 // whole (small, single-digit-count) catalog and finding by id client-side is a
 // deliberate, small trade-off rather than adding a new backend endpoint for this.
-export async function fetchDigitalStoreTemplate(templateId) {
-  const templates = await fetchDigitalStoreTemplates()
-  const template = templates.find((t) => t.id === templateId)
-  if (!template) {
-    throw new Error(`Template ${templateId} not found`)
+export async function fetchDigitalStoreProduct(productId) {
+  const products = await fetchDigitalStoreProducts()
+  const product = products.find((p) => p.id === productId)
+  if (!product) {
+    throw new Error(`Product ${productId} not found`)
   }
-  return template
+  return product
 }
 
-export async function requestDigitalStorePreview(templateId, fieldValues) {
-  const res = await fetch(`${API_BASE}/api/v1/templates/${templateId}/preview`, {
+export async function requestDigitalStorePreview(productId, fieldValues) {
+  const res = await fetch(`${API_BASE}/api/v1/products/${productId}/preview`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ fieldValues }),

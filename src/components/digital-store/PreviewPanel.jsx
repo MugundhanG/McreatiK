@@ -69,7 +69,7 @@ export default function PreviewPanel({ templateId, fieldValues }) {
         type="button"
         onClick={handlePreviewClick}
         disabled={status === 'loading'}
-        className="bg-white border border-[#C9971F] text-[#C9971F] px-5 py-2 rounded-lg font-medium hover:bg-[#C9971F]/5 disabled:opacity-50"
+        className="bg-white border border-[#8B7FE8] text-[#8B7FE8] px-5 py-2 rounded-lg font-medium hover:bg-[#8B7FE8]/5 disabled:opacity-50"
       >
         {status === 'loading' ? 'Generating preview...' : 'Preview my document'}
       </button>
@@ -80,7 +80,7 @@ export default function PreviewPanel({ templateId, fieldValues }) {
         <>
           <iframe title="Document preview" src={previewUrl} className="w-full mt-4 rounded-lg border" style={{ height: '70vh' }} />
           {/* Fallback for mobile browsers that render blob: PDFs inconsistently inside an iframe. */}
-          <a href={previewUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-sm text-[#C9971F] underline">
+          <a href={previewUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-sm text-[#8B7FE8] underline">
             Open preview in a new tab
           </a>
         </>

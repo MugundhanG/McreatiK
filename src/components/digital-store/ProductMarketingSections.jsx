@@ -5,11 +5,11 @@ export function ProductHero({ template, onGetStarted }) {
   return (
     <section className="text-center py-16">
       <h1 className="text-4xl font-bold mb-3">{template.name}</h1>
-      <p className="text-2xl font-semibold text-[#C9971F] mb-6">{formatDigitalStorePrice(template.currency, template.price)}</p>
+      <p className="text-2xl font-semibold text-[#8B7FE8] mb-6">{formatDigitalStorePrice(template.currency, template.price)}</p>
       <button
         type="button"
         onClick={onGetStarted}
-        className="inline-block bg-[#C9971F] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#b3860f]"
+        className="inline-block bg-[#8B7FE8] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#7A6DE0]"
       >
         Get Started
       </button>
@@ -109,7 +109,7 @@ export function ProductTrustSection({ oneTimePurchase }) {
       </ul>
       <p className="mt-4">
         Questions?{' '}
-        <a href={getWhatsAppHref('Hi, I have a question about the Digital Store')} className="text-[#C9971F] underline">
+        <a href={getWhatsAppHref('Hi, I have a question about the Digital Store')} className="text-[#8B7FE8] underline">
           Contact support
         </a>
       </p>
