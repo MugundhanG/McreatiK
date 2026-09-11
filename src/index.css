@@ -1,9 +1,10 @@
 /* ============================================
    McreatiK - Global Styles
    Imports Tailwind CSS and defines base styles
-   plus the two department theme systems:
+   plus the department theme systems:
      .theme-tech     — Tech & Creative Solutions
      .theme-studios  — McreatiK Studios
+     .theme-store    — McreatiK Digital Store
    ============================================ */
 
 @import "tailwindcss";
@@ -74,6 +75,19 @@
     color: #1c1710;
     --font-display: 'Fraunces', serif;
     --font-body: 'Work Sans', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+  }
+  /* Store — light, product-forward identity: cool
+     lavender-tinted paper ground, near-black ink,
+     periwinkle accent (#8B7FE8, reserved on the home
+     page's Explore/nav placeholders). Placeholder
+     department — content and copy will grow once the
+     catalog ships. */
+  .theme-store {
+    background: #f8f7fb;
+    color: #17151f;
+    --font-display: 'Archivo', sans-serif;
+    --font-body: 'Inter', sans-serif;
     --font-mono: 'Space Mono', monospace;
   }
   /* McreatiK master brand — the homepage's own identity, distinct from

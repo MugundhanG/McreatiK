@@ -25,7 +25,7 @@ const ICON_MAP = {
 const ECOSYSTEM_LINKS = [
   { label: 'McreatiK Tech', href: '/tech' },
   { label: 'McreatiK Studios', href: '/studios' },
-  { label: 'McreatiK Digital Store — Coming Soon', href: null },
+  { label: 'McreatiK Digital Store', href: '/store' },
 ]
 
 const Footer = memo(function Footer() {

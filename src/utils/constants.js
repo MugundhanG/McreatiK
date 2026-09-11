@@ -901,7 +901,7 @@ export const HOME_NAV_LINKS = [
   { label: 'Home', href: '#home', type: 'anchor' },
   { label: 'Tech', href: '/tech', type: 'route' },
   { label: 'Studios', href: '/studios', type: 'route' },
-  { label: 'Digital Store', type: 'disabled' },
+  { label: 'Digital Store', href: '/store', type: 'route' },
   { label: 'About', href: '#about', type: 'anchor' },
   { label: 'Contact', href: '#contact', type: 'anchor' },
 ]
@@ -939,10 +939,9 @@ export const HOME_EXPLORE_AREAS = [
     tagline: 'Digital products and creative resources to help you get moving faster.',
     longDescription: 'Digital products, templates and creative resources to help you create, launch and grow.',
     bullets: ['Templates', 'Digital downloads', 'Creative resources'],
-    cta: 'Coming Soon',
-    href: null,
+    cta: 'Explore Store',
+    href: '/store',
     accent: '#8B7FE8',
-    comingSoon: true,
   },
 ]
 
