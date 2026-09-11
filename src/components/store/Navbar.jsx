@@ -4,10 +4,15 @@
    department switcher, in the same frame language as
    Tech/Studios' bars. The "Soon" tag is gone now that
    /store is the real catalog (Task 12) rather than a
-   placeholder. Still no extra nav links/sections (no
-   cart/checkout yet - Tasks 13/14). Shows sign-in
-   state (Task 10): a Log In link when signed out, or
-   the customer's name + Log Out when signed in.
+   placeholder. Shows sign-in state (Task 10): a Log In
+   link when signed out, or the customer's name + Log
+   Out when signed in. Shows a cart badge (Task 13) when
+   signed in, reading its count straight from useCart() -
+   the same source of truth StoreCartPage.jsx renders
+   from, so the two can never disagree about what's in
+   the cart. No badge when signed out: the cart endpoint
+   is auth-gated, so there's nothing for it to reflect
+   yet (checkout is Task 14).
    ============================================ */
 
 import React, { memo } from 'react'
@@ -15,9 +20,11 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import DepartmentSwitcher from '../ui/DepartmentSwitcher'
 import { useAuth } from '../../context/AuthContext'
+import { useCart } from '../../context/CartContext'
 
 const StoreNavbar = memo(function StoreNavbar() {
   const { customer, loading, logout } = useAuth()
+  const { itemCount } = useCart()
 
   return (
     <motion.header
@@ -39,6 +46,22 @@ const StoreNavbar = memo(function StoreNavbar() {
             customer ? (
               <div className="flex items-center gap-3 text-sm">
                 <span className="hidden sm:inline text-[#17151f]/70">Hi, {customer.name}</span>
+                <Link
+                  to="/store/cart"
+                  aria-label={`Cart, ${itemCount} item${itemCount === 1 ? '' : 's'}`}
+                  className="relative font-semibold hover:underline"
+                  style={{ color: '#8B7FE8' }}
+                >
+                  Cart
+                  {itemCount > 0 && (
+                    <span
+                      className="absolute -top-2 -right-3 flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full text-[11px] font-bold text-white"
+                      style={{ backgroundColor: '#17151f' }}
+                    >
+                      {itemCount}
+                    </span>
+                  )}
+                </Link>
                 <button
                   type="button"
                   onClick={logout}

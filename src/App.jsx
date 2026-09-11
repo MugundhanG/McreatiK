@@ -11,7 +11,8 @@
                category). /store/signup, /login, /forgot-password,
                /reset-password — customer auth pages (Task 10); browsing
                itself stays public, add-to-cart is what's auth-gated.
-               Cart (/store/cart) and checkout are later tasks (13/14).
+               /store/cart (Task 13) — line items, remove, running total,
+               proceed-to-checkout (checkout itself is Task 14).
    Each department page is lazy-loaded so a visitor
    only ever downloads the one they chose.
    ============================================ */
@@ -39,6 +40,7 @@ const StudiosBlogPage = lazy(() => import('./pages/StudiosBlogPage'))
 const StudiosBlogPostPage = lazy(() => import('./pages/StudiosBlogPostPage'))
 const StoreCatalogPage = lazy(() => import('./pages/StoreCatalogPage'))
 const StoreProductPage = lazy(() => import('./pages/StoreProductPage'))
+const StoreCartPage = lazy(() => import('./pages/StoreCartPage'))
 const StoreSignupPage = lazy(() => import('./pages/StoreSignupPage'))
 const StoreLoginPage = lazy(() => import('./pages/StoreLoginPage'))
 const StoreForgotPasswordPage = lazy(() => import('./pages/StoreForgotPasswordPage'))
@@ -84,6 +86,7 @@ function App() {
           <Route path="/studios/blog/:slug" element={<StudiosBlogPostPage />} />
           <Route path="/store" element={<StoreCatalogPage />} />
           <Route path="/store/products/:productId" element={<StoreProductPage />} />
+          <Route path="/store/cart" element={<StoreCartPage />} />
           <Route path="/store/signup" element={<StoreSignupPage />} />
           <Route path="/store/login" element={<StoreLoginPage />} />
           <Route path="/store/forgot-password" element={<StoreForgotPasswordPage />} />

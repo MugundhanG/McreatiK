@@ -3,6 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import StoreCatalogPage from './StoreCatalogPage'
 import { AuthProvider } from '../context/AuthContext'
+import { CartProvider } from '../context/CartContext'
 import * as api from '../utils/digitalStoreApi'
 
 const CATEGORY_AGREEMENTS = {
@@ -51,7 +52,9 @@ function renderPage() {
   return render(
     <MemoryRouter>
       <AuthProvider>
-        <StoreCatalogPage />
+        <CartProvider>
+          <StoreCatalogPage />
+        </CartProvider>
       </AuthProvider>
     </MemoryRouter>
   )
@@ -59,9 +62,11 @@ function renderPage() {
 
 beforeEach(() => {
   vi.restoreAllMocks()
-  // StorePageShell renders StoreNavbar, which reads useAuth() - AuthProvider's
-  // mount-time refresh() call needs a fetch mock (this page's own auth state
-  // isn't under test here, only that the shell renders without crashing).
+  // StorePageShell renders StoreNavbar, which reads useAuth() and useCart() -
+  // AuthProvider's mount-time refresh() call needs a fetch mock (this page's
+  // own auth state isn't under test here, only that the shell renders without
+  // crashing). Signed-out means CartProvider never calls the cart endpoint, so
+  // the same 401 stub covers both.
   globalThis.fetch = vi.fn().mockResolvedValue({ ok: false, status: 401, json: async () => ({ message: 'no session' }) })
 })
 

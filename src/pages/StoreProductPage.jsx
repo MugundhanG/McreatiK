@@ -14,6 +14,7 @@ import { useRequireAuthOrRedirect } from '../hooks/useRequireAuthOrRedirect'
 import { fetchDigitalStoreProduct, fetchDigitalStoreCategories, formatDigitalStorePrice } from '../utils/digitalStoreApi'
 import { DIGITAL_STORE_EVENTS, trackDigitalStoreEvent } from '../utils/digitalStoreAnalytics'
 import { useSEO } from '../hooks/useSEO'
+import { useCart } from '../context/CartContext'
 
 const FORM_SECTION_ID = 'store-product-form'
 const CTA_SECTION_ID = 'store-product-cta'
@@ -21,6 +22,7 @@ const CTA_SECTION_ID = 'store-product-cta'
 export default function StoreProductPage() {
   const { productId } = useParams()
   const requireAuthOrRedirect = useRequireAuthOrRedirect()
+  const { addItem } = useCart()
 
   const [product, setProduct] = useState(null)
   const [category, setCategory] = useState(null)
@@ -28,6 +30,8 @@ export default function StoreProductPage() {
   const [fieldValues, setFieldValues] = useState({})
   const [validationMessage, setValidationMessage] = useState(null)
   const [cartMessage, setCartMessage] = useState(null)
+  const [cartError, setCartError] = useState(null)
+  const [addingToCart, setAddingToCart] = useState(false)
 
   // The public Product list carries only categoryId (ProductResponse.categoryId) -
   // requiresCustomization lives on the Category, so both lists have to be fetched
@@ -60,6 +64,7 @@ export default function StoreProductPage() {
   function handleFieldChange(name, value) {
     setFieldValues((prev) => ({ ...prev, [name]: value }))
     setValidationMessage(null)
+    setCartError(null)
   }
 
   function handleFirstFormInteraction() {
@@ -89,30 +94,41 @@ export default function StoreProductPage() {
   }
 
   // --- Add to cart ---------------------------------------------------------
-  // Placeholder only: Task 13 builds the real cart (cartApi.js + CartContext /
-  // useCart()). This function is the one thing Task 13 needs to replace - swap
-  // its body for `await useCart().addItem({ productId: product.id, fieldValues })`
-  // and everything that calls it (both branches below, via handleAddToCartClick)
-  // stays exactly as-is. No fake persistence is built here on purpose.
-  function addToCartPlaceholder() {
-    // TODO(Task 13): replace with a real cart mutation.
-    console.log('[Store] Add to cart (placeholder)', { productId: product.id, fieldValues })
-    setCartMessage(`Added "${product.name}" to your cart. (Cart & checkout are coming soon!)`)
-    trackDigitalStoreEvent(DIGITAL_STORE_EVENTS.ADD_TO_CART_CLICKED, { product_id: product.id })
+  // Real cart mutation (Task 13): calls useCart().addItem(), which POSTs to
+  // /api/v1/cart/items and sets CartContext's state from whatever the server
+  // returns. The server re-validates fieldValues against the product's
+  // *current* schema (CartService.addItem / GenericFieldSchemaValidator) - a
+  // rejection there (e.g. a field that stopped satisfying the schema, or a
+  // stale price/schema an admin changed since this page loaded) comes back as
+  // a CustomerApiError with a readable `.message`, surfaced below rather than
+  // silently swallowed.
+  async function addToCart() {
+    setAddingToCart(true)
+    setCartMessage(null)
+    setCartError(null)
+    try {
+      await addItem({ productId: product.id, fieldValues })
+      setCartMessage(`Added "${product.name}" to your cart.`)
+      trackDigitalStoreEvent(DIGITAL_STORE_EVENTS.ADD_TO_CART_CLICKED, { product_id: product.id })
+    } catch (err) {
+      setCartError(err.message || 'Could not add this item to your cart. Please try again.')
+    } finally {
+      setAddingToCart(false)
+    }
   }
 
   // The single add-to-cart action both branches (customizable / non-customizable)
   // end at. Auth is required before anything else happens: requireAuthOrRedirect
-  // runs addToCartPlaceholder immediately for a signed-in customer, or sends a
-  // signed-out visitor to /store/login (carrying this page as `from`) and runs
-  // nothing - browsing the product page itself stays public either way.
+  // runs addToCart immediately for a signed-in customer, or sends a signed-out
+  // visitor to /store/login (carrying this page as `from`) and runs nothing -
+  // browsing the product page itself stays public either way.
   function handleAddToCartClick() {
     if (isFormObviouslyIncomplete()) {
       setValidationMessage('Please fill in all required fields above before adding to cart.')
       return
     }
     setValidationMessage(null)
-    requireAuthOrRedirect(addToCartPlaceholder)
+    requireAuthOrRedirect(addToCart)
   }
 
   if (loadError) {
@@ -160,11 +176,13 @@ export default function StoreProductPage() {
           <button
             type="button"
             onClick={handleAddToCartClick}
-            className="bg-[#8B7FE8] text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-[#7A6DE0]"
+            disabled={addingToCart}
+            className="bg-[#8B7FE8] text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-[#7A6DE0] disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Add to Cart
+            {addingToCart ? 'Adding...' : 'Add to Cart'}
           </button>
           {validationMessage ? <p className="text-red-600 mt-3">{validationMessage}</p> : null}
+          {cartError ? <p className="text-red-600 mt-3">{cartError}</p> : null}
           {cartMessage ? <p className="text-green-700 mt-3">{cartMessage}</p> : null}
         </section>
 
