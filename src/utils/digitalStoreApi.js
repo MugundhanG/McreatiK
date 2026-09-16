@@ -24,18 +24,6 @@ async function getJson(path) {
   return res.json()
 }
 
-async function postJson(path, body, extraHeaders = {}) {
-  const res = await fetch(`${API_BASE}${path}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...extraHeaders },
-    body: JSON.stringify(body),
-  })
-  if (!res.ok) {
-    throw new DigitalStoreApiError(res.status, await parseErrorBody(res))
-  }
-  return res.json()
-}
-
 // Public catalog: categories + products, backed by CategoryPublicController
 // (/api/v1/categories, PUBLISHED-only, sorted by sortOrder/name) and
 // ProductPublicController (/api/v1/products, ACTIVE-only). Both endpoints are
@@ -72,19 +60,16 @@ export async function requestDigitalStorePreview(productId, fieldValues) {
   return res.blob()
 }
 
-export async function createDigitalStoreOrder(idempotencyKey, { templateId, customerName, customerEmail, fieldValues }) {
-  return postJson('/api/v1/orders', { templateId, customerName, customerEmail, fieldValues }, {
-    'Idempotency-Key': idempotencyKey,
-  })
-}
-
-export async function verifyDigitalStoreOrder(orderId, { razorpayOrderId, razorpayPaymentId, razorpaySignature }) {
-  return postJson(`/api/v1/orders/${orderId}/verify`, { razorpayOrderId, razorpayPaymentId, razorpaySignature })
-}
-
-export function digitalStoreDownloadUrl(orderId, downloadToken) {
-  return `${API_BASE}/api/v1/orders/${orderId}/download?token=${encodeURIComponent(downloadToken)}`
-}
+/* The single-product order/verify/download helpers that used to live here are gone as of
+   Task 14, along with the page that called them. They weren't merely unused: two of the
+   three addressed routes the backend no longer has. createDigitalStoreOrder posted a
+   client-supplied basket to POST /api/v1/orders (replaced by POST /api/v1/checkout, which
+   takes a session id and prices the cart server-side) with a client-chosen
+   Idempotency-Key header (the key is now computed server-side - a client choosing the key
+   is a client choosing whether it gets a fresh order or a cached one), and
+   digitalStoreDownloadUrl addressed a per-ORDER download route that is now per ITEM.
+   Leaving them here as dead code would leave a caller-shaped trap. Their replacements are
+   in checkoutApi.js, which also documents why they sit in a separate module. */
 
 // Maps a currency code to its display symbol. Any currency not listed here falls back to
 // showing the raw code (e.g. "USD 99") rather than a symbol.

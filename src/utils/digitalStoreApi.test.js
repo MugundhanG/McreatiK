@@ -4,9 +4,6 @@ import {
   fetchDigitalStoreProducts,
   fetchDigitalStoreProduct,
   requestDigitalStorePreview,
-  createDigitalStoreOrder,
-  verifyDigitalStoreOrder,
-  digitalStoreDownloadUrl,
   formatDigitalStorePrice,
   DigitalStoreApiError,
 } from './digitalStoreApi'
@@ -118,54 +115,9 @@ describe('requestDigitalStorePreview', () => {
   })
 })
 
-describe('createDigitalStoreOrder', () => {
-  it('sends the Idempotency-Key header and returns the created order', async () => {
-    globalThis.fetch.mockResolvedValue({
-      ok: true,
-      json: async () => ({ orderId: 'order-1', razorpayOrderId: 'rzp_1', razorpayKeyId: 'rzp_key', amount: 99.0, currency: 'INR' }),
-    })
-
-    const order = await createDigitalStoreOrder('idem-1', {
-      templateId: 'template-1', customerName: 'Jane', customerEmail: 'jane@example.com', fieldValues: {},
-    })
-
-    expect(order.orderId).toBe('order-1')
-    const [, options] = globalThis.fetch.mock.calls[0]
-    expect(options.headers['Idempotency-Key']).toBe('idem-1')
-  })
-
-  it('throws DigitalStoreApiError on a 429 rate-limit response', async () => {
-    globalThis.fetch.mockResolvedValue({ ok: false, status: 429, json: async () => ({ message: 'slow down' }) })
-
-    await expect(
-      createDigitalStoreOrder('idem-1', { templateId: 't', customerName: 'J', customerEmail: 'j@e.com', fieldValues: {} })
-    ).rejects.toMatchObject({ status: 429 })
-  })
-})
-
-describe('verifyDigitalStoreOrder', () => {
-  it('returns the verify response', async () => {
-    globalThis.fetch.mockResolvedValue({
-      ok: true,
-      json: async () => ({ orderId: 'order-1', fulfilled: true, downloadToken: 'tok', downloadTokenExpiresAt: '2026-01-01T00:00:00Z' }),
-    })
-
-    const result = await verifyDigitalStoreOrder('order-1', {
-      razorpayOrderId: 'rzp_1', razorpayPaymentId: 'pay_1', razorpaySignature: 'sig_1',
-    })
-
-    expect(result.fulfilled).toBe(true)
-  })
-})
-
-describe('digitalStoreDownloadUrl', () => {
-  it('builds a URL with the order id and url-encoded token', () => {
-    const url = digitalStoreDownloadUrl('order-1', 'a token/with-chars')
-
-    expect(url).toContain('/api/v1/orders/order-1/download')
-    expect(url).toContain(`token=${encodeURIComponent('a token/with-chars')}`)
-  })
-})
+// createDigitalStoreOrder / verifyDigitalStoreOrder / digitalStoreDownloadUrl and their
+// tests were removed with the single-product order flow in Task 14 - see the note in
+// digitalStoreApi.js. checkoutApi.test.js covers their replacements.
 
 describe('formatDigitalStorePrice', () => {
   it('formats a whole-number INR price with the rupee symbol and no decimals', () => {
