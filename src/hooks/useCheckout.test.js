@@ -1,15 +1,47 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { renderHook, act } from '@testing-library/react'
-import { useCheckout, readStoredPaymentDetails, hashString } from './useCheckout'
-import * as api from '../utils/digitalStoreApi'
+import {
+  useCheckout,
+  getOrCreateCheckoutSessionId,
+  resetCheckoutSessionId,
+  readStoredOrderRecord,
+  persistStoredOrderItems,
+  MAX_SESSION_ID_LENGTH,
+} from './useCheckout'
+import * as checkoutApi from '../utils/checkoutApi'
 import * as scriptLoader from '../utils/razorpayScriptLoader'
 
-const TEMPLATE = { id: 'template-1', name: 'Wedding Photography Agreement', price: 99.0, currency: 'INR' }
+const SESSION_ID_STORAGE_KEY = 'store-checkout-session-id'
+
+const ORDER = {
+  orderId: 'order-1',
+  razorpayOrderId: 'rzp_order_1',
+  razorpayKeyId: 'rzp_key',
+  amount: 148.0,
+  currency: 'INR',
+  items: [
+    { orderItemId: 'oi-1', productId: 'p1', productName: 'Wedding Photography Agreement', unitPrice: 99, quantity: 1, lineAmount: 99 },
+    { orderItemId: 'oi-2', productId: 'p2', productName: 'Social Media Template Pack', unitPrice: 49, quantity: 1, lineAmount: 49 },
+  ],
+}
+
+const RAZORPAY_SUCCESS = {
+  razorpay_order_id: 'rzp_order_1',
+  razorpay_payment_id: 'pay_1',
+  razorpay_signature: 'sig_1',
+}
 
 beforeEach(() => {
   sessionStorage.clear()
+  // Also drops the module-level in-memory fallback, so one test's session id can never
+  // leak into the next through it.
+  resetCheckoutSessionId()
   vi.restoreAllMocks()
   vi.spyOn(scriptLoader, 'loadRazorpayCheckoutScript').mockResolvedValue(undefined)
+})
+
+afterEach(() => {
+  vi.restoreAllMocks()
 })
 
 function mockRazorpayCapturingOptions() {
@@ -27,322 +59,344 @@ function mockRazorpayCapturingOptions() {
   return { getOptions: () => capturedOptions, openMock }
 }
 
-describe('useCheckout', () => {
-  it('goes idle -> creating_order -> awaiting_payment and opens Razorpay on a successful order creation', async () => {
-    vi.spyOn(api, 'createDigitalStoreOrder').mockResolvedValue({
-      orderId: 'order-1', razorpayOrderId: 'rzp_order_1', razorpayKeyId: 'rzp_key', amount: 99.0, currency: 'INR',
-    })
+function mockCheckoutOk() {
+  return vi.spyOn(checkoutApi, 'startStoreCheckout').mockResolvedValue(ORDER)
+}
+
+describe('useCheckout — the checkout call itself', () => {
+  it('goes idle -> awaiting_payment and opens Razorpay on a successful checkout', async () => {
+    mockCheckoutOk()
     const { openMock } = mockRazorpayCapturingOptions()
-    const { result } = renderHook(() => useCheckout(TEMPLATE))
+    const { result } = renderHook(() => useCheckout())
 
     expect(result.current.status).toBe('idle')
 
     await act(async () => {
-      await result.current.startCheckout(
-        { customerName: 'Jane', customerEmail: 'jane@example.com', fieldValues: {} },
-        { onSuccess: vi.fn() }
-      )
+      await result.current.startCheckout({ onSuccess: vi.fn() })
     })
 
     expect(result.current.status).toBe('awaiting_payment')
     expect(openMock).toHaveBeenCalledTimes(1)
   })
 
-  it('reuses the same idempotency key across two calls to startCheckout with identical payloads (e.g. a network-level retry, no dismiss in between)', async () => {
-    const createOrderSpy = vi
-      .spyOn(api, 'createDigitalStoreOrder')
-      .mockResolvedValue({ orderId: 'order-1', razorpayOrderId: 'rzp_1', razorpayKeyId: 'k', amount: 99, currency: 'INR' })
+  it('sends ONLY a session id - the cart is never submitted from the client', async () => {
+    // The backend prices the basket it reads from the database for the authenticated
+    // customer. startStoreCheckout takes a single string argument precisely so there is
+    // no shape in which this hook could name what the buyer is charged for.
+    const checkoutSpy = mockCheckoutOk()
     mockRazorpayCapturingOptions()
-    const { result } = renderHook(() => useCheckout(TEMPLATE))
-    const details = { customerName: 'Jane', customerEmail: 'jane@example.com', fieldValues: {} }
+    const { result } = renderHook(() => useCheckout())
 
     await act(async () => {
-      await result.current.startCheckout(details, { onSuccess: vi.fn() })
-    })
-    await act(async () => {
-      await result.current.startCheckout(details, { onSuccess: vi.fn() })
+      await result.current.startCheckout({ onSuccess: vi.fn() })
     })
 
-    const [firstKey] = createOrderSpy.mock.calls[0]
-    const [secondKey] = createOrderSpy.mock.calls[1]
-    expect(firstKey).toBe(secondKey)
+    expect(checkoutSpy).toHaveBeenCalledTimes(1)
+    const args = checkoutSpy.mock.calls[0]
+    expect(args).toHaveLength(1)
+    expect(typeof args[0]).toBe('string')
   })
 
-  it('persists payment details to sessionStorage and calls onSuccess when Razorpay reports success', async () => {
-    vi.spyOn(api, 'createDigitalStoreOrder').mockResolvedValue({
-      orderId: 'order-1', razorpayOrderId: 'rzp_order_1', razorpayKeyId: 'rzp_key', amount: 99.0, currency: 'INR',
-    })
+  it('hands Razorpay the server-issued order id, key and amount in paise', async () => {
+    mockCheckoutOk()
     const { getOptions } = mockRazorpayCapturingOptions()
-    const { result } = renderHook(() => useCheckout(TEMPLATE))
-    const onSuccess = vi.fn()
+    const { result } = renderHook(() => useCheckout())
 
     await act(async () => {
-      await result.current.startCheckout(
-        { customerName: 'Jane', customerEmail: 'jane@example.com', fieldValues: {} },
-        { onSuccess }
-      )
+      await result.current.startCheckout({ onSuccess: vi.fn() })
     })
 
-    act(() => {
-      getOptions().handler({
-        razorpay_order_id: 'rzp_order_1',
-        razorpay_payment_id: 'pay_1',
-        razorpay_signature: 'sig_1',
-      })
-    })
-
-    expect(onSuccess).toHaveBeenCalledWith('order-1')
-    const stored = JSON.parse(sessionStorage.getItem('digital-store-order-order-1'))
-    expect(stored).toEqual({
-      orderId: 'order-1', razorpayOrderId: 'rzp_order_1', razorpayPaymentId: 'pay_1', razorpaySignature: 'sig_1',
-    })
-    expect(result.current.status).toBe('idle')
+    const options = getOptions()
+    expect(options.order_id).toBe('rzp_order_1')
+    expect(options.key).toBe('rzp_key')
+    expect(options.amount).toBe(14800)
+    expect(options.currency).toBe('INR')
+    // Multi-item orders can't be described by one product name.
+    expect(options.description).toBe('2 items')
   })
 
-  it('returns to idle when the buyer dismisses the Razorpay modal', async () => {
-    vi.spyOn(api, 'createDigitalStoreOrder').mockResolvedValue({
-      orderId: 'order-1', razorpayOrderId: 'rzp_1', razorpayKeyId: 'k', amount: 99, currency: 'INR',
-    })
+  it('describes a single-item order by its product name', async () => {
+    vi.spyOn(checkoutApi, 'startStoreCheckout').mockResolvedValue({ ...ORDER, items: [ORDER.items[0]] })
     const { getOptions } = mockRazorpayCapturingOptions()
-    const { result } = renderHook(() => useCheckout(TEMPLATE))
+    const { result } = renderHook(() => useCheckout())
 
     await act(async () => {
-      await result.current.startCheckout(
-        { customerName: 'Jane', customerEmail: 'jane@example.com', fieldValues: {} },
-        { onSuccess: vi.fn() }
-      )
+      await result.current.startCheckout({ onSuccess: vi.fn() })
     })
 
-    act(() => {
-      getOptions().modal.ondismiss()
-    })
-
-    expect(result.current.status).toBe('idle')
+    expect(getOptions().description).toBe('Wedding Photography Agreement')
   })
 
-  it('reuses the same idempotency key when the buyer dismisses the modal and retries with the SAME payload (order is reused, no duplicate)', async () => {
-    const createOrderSpy = vi
-      .spyOn(api, 'createDigitalStoreOrder')
-      .mockResolvedValue({ orderId: 'order-1', razorpayOrderId: 'rzp_1', razorpayKeyId: 'k', amount: 99, currency: 'INR' })
-    const { getOptions } = mockRazorpayCapturingOptions()
-    const { result } = renderHook(() => useCheckout(TEMPLATE))
-    const details = { customerName: 'Jane', customerEmail: 'jane@example.com', fieldValues: {} }
+  it('sets status to error and captures the error when checkout fails', async () => {
+    const failure = Object.assign(new Error('Too many requests, please slow down'), { status: 429 })
+    vi.spyOn(checkoutApi, 'startStoreCheckout').mockRejectedValue(failure)
+    const { result } = renderHook(() => useCheckout())
 
     await act(async () => {
-      await result.current.startCheckout(details, { onSuccess: vi.fn() })
-    })
-
-    act(() => {
-      getOptions().modal.ondismiss()
-    })
-
-    await act(async () => {
-      await result.current.startCheckout(details, { onSuccess: vi.fn() })
-    })
-
-    const [firstKey] = createOrderSpy.mock.calls[0]
-    const [secondKey] = createOrderSpy.mock.calls[1]
-    expect(secondKey).toBe(firstKey)
-  })
-
-  it('generates a DIFFERENT idempotency key across two calls to startCheckout with an edited payload and nothing else different (no dismiss, no failure in between)', async () => {
-    const createOrderSpy = vi
-      .spyOn(api, 'createDigitalStoreOrder')
-      .mockResolvedValue({ orderId: 'order-1', razorpayOrderId: 'rzp_1', razorpayKeyId: 'k', amount: 99, currency: 'INR' })
-    mockRazorpayCapturingOptions()
-    const { result } = renderHook(() => useCheckout(TEMPLATE))
-
-    await act(async () => {
-      await result.current.startCheckout(
-        { customerName: 'Jane', customerEmail: 'jane@example.com', fieldValues: {} },
-        { onSuccess: vi.fn() }
-      )
-    })
-    await act(async () => {
-      await result.current.startCheckout(
-        { customerName: 'Jane', customerEmail: 'jane@example.com', fieldValues: { note: 'please gift wrap' } },
-        { onSuccess: vi.fn() }
-      )
-    })
-
-    const [firstKey] = createOrderSpy.mock.calls[0]
-    const [secondKey] = createOrderSpy.mock.calls[1]
-    expect(secondKey).not.toBe(firstKey)
-  })
-
-  it('generates DIFFERENT idempotency keys for two separate buyer sessions (two hook instances) submitting byte-identical form data', async () => {
-    const createOrderSpy = vi
-      .spyOn(api, 'createDigitalStoreOrder')
-      .mockResolvedValue({ orderId: 'order-1', razorpayOrderId: 'rzp_1', razorpayKeyId: 'k', amount: 99, currency: 'INR' })
-    mockRazorpayCapturingOptions()
-    // Two unrelated buyers who happen to both submit identical-looking test data (e.g. both
-    // testing with "Test Buyer" / "test@test.com") must never collide on the same order - this is
-    // the whole reason sessionId exists alongside the payload hash.
-    const details = { customerName: 'Test Buyer', customerEmail: 'test@test.com', fieldValues: {} }
-    const { result: sessionA } = renderHook(() => useCheckout(TEMPLATE))
-    const { result: sessionB } = renderHook(() => useCheckout(TEMPLATE))
-
-    await act(async () => {
-      await sessionA.current.startCheckout(details, { onSuccess: vi.fn() })
-    })
-    await act(async () => {
-      await sessionB.current.startCheckout(details, { onSuccess: vi.fn() })
-    })
-
-    const [keyA] = createOrderSpy.mock.calls[0]
-    const [keyB] = createOrderSpy.mock.calls[1]
-    expect(keyA).not.toBe(keyB)
-  })
-
-  it('generates a DIFFERENT idempotency key when the buyer retries (after a dismiss, or any other failure) with an EDITED payload', async () => {
-    const createOrderSpy = vi
-      .spyOn(api, 'createDigitalStoreOrder')
-      .mockResolvedValue({ orderId: 'order-1', razorpayOrderId: 'rzp_1', razorpayKeyId: 'k', amount: 99, currency: 'INR' })
-    const { getOptions } = mockRazorpayCapturingOptions()
-    const { result } = renderHook(() => useCheckout(TEMPLATE))
-
-    await act(async () => {
-      await result.current.startCheckout(
-        { customerName: 'Jane', customerEmail: 'jane@example.com', fieldValues: {} },
-        { onSuccess: vi.fn() }
-      )
-    })
-
-    act(() => {
-      getOptions().modal.ondismiss()
-    })
-
-    // Buyer edits a field before retrying - not just a bare retry of the same request.
-    await act(async () => {
-      await result.current.startCheckout(
-        { customerName: 'Jane', customerEmail: 'jane+updated@example.com', fieldValues: {} },
-        { onSuccess: vi.fn() }
-      )
-    })
-
-    const [firstKey] = createOrderSpy.mock.calls[0]
-    const [secondKey] = createOrderSpy.mock.calls[1]
-    expect(secondKey).not.toBe(firstKey)
-  })
-
-  it('generates a DIFFERENT idempotency key on retry after a non-dismiss failure (e.g. Razorpay script load or construction throwing) when the payload changed', async () => {
-    const createOrderSpy = vi
-      .spyOn(api, 'createDigitalStoreOrder')
-      .mockResolvedValue({ orderId: 'order-1', razorpayOrderId: 'rzp_1', razorpayKeyId: 'k', amount: 99, currency: 'INR' })
-    const { result } = renderHook(() => useCheckout(TEMPLATE))
-
-    // First attempt fails after order creation succeeds - e.g. a network blip loading the
-    // Razorpay script. This is exactly the case the old dismiss-only reset missed: nothing
-    // resets a cached key here, but the new design doesn't cache one to begin with.
-    vi.spyOn(scriptLoader, 'loadRazorpayCheckoutScript').mockRejectedValueOnce(new Error('script load failed'))
-
-    await act(async () => {
-      await result.current.startCheckout(
-        { customerName: 'Jane', customerEmail: 'jane@example.com', fieldValues: {} },
-        { onSuccess: vi.fn() }
-      )
-    })
-
-    expect(result.current.status).toBe('error')
-
-    mockRazorpayCapturingOptions()
-    // Buyer edits a field before retrying.
-    await act(async () => {
-      await result.current.startCheckout(
-        { customerName: 'Jane', customerEmail: 'jane@example.com', fieldValues: { note: 'please gift wrap' } },
-        { onSuccess: vi.fn() }
-      )
-    })
-
-    const [firstKey] = createOrderSpy.mock.calls[0]
-    const [secondKey] = createOrderSpy.mock.calls[1]
-    expect(secondKey).not.toBe(firstKey)
-  })
-
-  it('still calls onSuccess when persisting payment details to sessionStorage throws', async () => {
-    vi.spyOn(api, 'createDigitalStoreOrder').mockResolvedValue({
-      orderId: 'order-1', razorpayOrderId: 'rzp_order_1', razorpayKeyId: 'rzp_key', amount: 99.0, currency: 'INR',
-    })
-    const { getOptions } = mockRazorpayCapturingOptions()
-    const { result } = renderHook(() => useCheckout(TEMPLATE))
-    const onSuccess = vi.fn()
-    const setItemSpy = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
-      throw new Error('quota exceeded')
-    })
-
-    await act(async () => {
-      await result.current.startCheckout(
-        { customerName: 'Jane', customerEmail: 'jane@example.com', fieldValues: {} },
-        { onSuccess }
-      )
-    })
-
-    act(() => {
-      getOptions().handler({
-        razorpay_order_id: 'rzp_order_1',
-        razorpay_payment_id: 'pay_1',
-        razorpay_signature: 'sig_1',
-      })
-    })
-
-    expect(onSuccess).toHaveBeenCalledWith('order-1')
-    expect(result.current.status).toBe('idle')
-
-    setItemSpy.mockRestore()
-  })
-
-  it('sets status to error and captures the error when order creation fails', async () => {
-    const failure = Object.assign(new Error('rate limited'), { status: 429 })
-    vi.spyOn(api, 'createDigitalStoreOrder').mockRejectedValue(failure)
-    const { result } = renderHook(() => useCheckout(TEMPLATE))
-
-    await act(async () => {
-      await result.current.startCheckout(
-        { customerName: 'Jane', customerEmail: 'jane@example.com', fieldValues: {} },
-        { onSuccess: vi.fn() }
-      )
+      await result.current.startCheckout({ onSuccess: vi.fn() })
     })
 
     expect(result.current.status).toBe('error')
     expect(result.current.error).toBe(failure)
   })
-})
 
-describe('hashString', () => {
-  it('is deterministic: the same input produces the same output across multiple calls', () => {
-    const input = JSON.stringify({ templateId: 'template-1', customerName: 'Jane', customerEmail: 'jane@example.com', fieldValues: { note: 'please gift wrap' } })
+  it('sets status to error when the Razorpay script fails to load after the order was created', async () => {
+    mockCheckoutOk()
+    scriptLoader.loadRazorpayCheckoutScript.mockRejectedValueOnce(new Error('script load failed'))
+    const { result } = renderHook(() => useCheckout())
+    const onSuccess = vi.fn()
 
-    const first = hashString(input)
-    const second = hashString(input)
-    const third = hashString(input)
+    await act(async () => {
+      await result.current.startCheckout({ onSuccess })
+    })
 
-    expect(first).toBe(second)
-    expect(second).toBe(third)
-  })
-
-  it('combines two independent hash mixers into a wider combined hash (not just a single 32-bit hash)', () => {
-    const result = hashString('some-payload')
-
-    // Each 32-bit mixer contributes up to 8 hex chars; combined output should reflect both,
-    // not collapse to a single mixer's width.
-    expect(result.length).toBeGreaterThan(8)
+    expect(result.current.status).toBe('error')
+    expect(onSuccess).not.toHaveBeenCalled()
   })
 })
 
-describe('readStoredPaymentDetails', () => {
-  it('returns null (not throwing) when the stored value is corrupted JSON', () => {
-    sessionStorage.setItem('digital-store-order-order-1', 'not-valid-json{')
+describe('useCheckout — session id (the half of the idempotency key this client owns)', () => {
+  it('SURVIVES A RELOAD: a fresh module instance reads the same id back out of sessionStorage', async () => {
+    // A reload throws away every module-level variable but keeps the tab's
+    // sessionStorage. vi.resetModules() + a fresh import reproduces exactly that, which
+    // a useRef-held id (the single-product version's mechanism) would not survive -
+    // and a new id means a new idempotency key, hence a SECOND Razorpay order for a
+    // cart the buyer never changed.
+    vi.resetModules()
+    const before = await import('./useCheckout')
+    const idBeforeReload = before.getOrCreateCheckoutSessionId()
 
-    expect(readStoredPaymentDetails('order-1')).toBeNull()
+    vi.resetModules()
+    const after = await import('./useCheckout')
+
+    expect(after).not.toBe(before)
+    expect(after.getOrCreateCheckoutSessionId()).toBe(idBeforeReload)
   })
 
-  it('returns null (not throwing) when sessionStorage access fails', () => {
-    const getItemSpy = vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+  it('control: with sessionStorage cleared in between, the reloaded module does NOT reuse the id', async () => {
+    // Proves the test above is actually exercising sessionStorage rather than a module
+    // cache that vi.resetModules() failed to drop.
+    vi.resetModules()
+    const before = await import('./useCheckout')
+    const idBeforeReload = before.getOrCreateCheckoutSessionId()
+
+    sessionStorage.clear()
+
+    vi.resetModules()
+    const after = await import('./useCheckout')
+
+    expect(after.getOrCreateCheckoutSessionId()).not.toBe(idBeforeReload)
+  })
+
+  it('persists the id under a stable key so a reload can find it', () => {
+    const id = getOrCreateCheckoutSessionId()
+
+    expect(sessionStorage.getItem(SESSION_ID_STORAGE_KEY)).toBe(id)
+  })
+
+  it('generates an id within the length the backend accepts', () => {
+    // Longer than MAX_SESSION_ID_LENGTH is a 400 from @Size, and the ceiling exists
+    // because sessionId + ":" + sha256hex has to fit orders.idempotency_key(128).
+    expect(getOrCreateCheckoutSessionId().length).toBeLessThanOrEqual(MAX_SESSION_ID_LENGTH)
+  })
+
+  it('regenerates rather than sending back an over-long id found in storage', () => {
+    sessionStorage.setItem(SESSION_ID_STORAGE_KEY, 'x'.repeat(MAX_SESSION_ID_LENGTH + 1))
+
+    const id = getOrCreateCheckoutSessionId()
+
+    expect(id.length).toBeLessThanOrEqual(MAX_SESSION_ID_LENGTH)
+  })
+
+  it('REUSES the id when the buyer dismisses the modal and retries - the same cart must reuse the order, not create a second', async () => {
+    const checkoutSpy = mockCheckoutOk()
+    const { getOptions } = mockRazorpayCapturingOptions()
+    const { result } = renderHook(() => useCheckout())
+
+    await act(async () => {
+      await result.current.startCheckout({ onSuccess: vi.fn() })
+    })
+    act(() => {
+      getOptions().modal.ondismiss()
+    })
+    await act(async () => {
+      await result.current.startCheckout({ onSuccess: vi.fn() })
+    })
+
+    expect(checkoutSpy.mock.calls[0][0]).toBe(checkoutSpy.mock.calls[1][0])
+  })
+
+  it('REUSES the id on a retry after a failure (no dismiss) - that is the case the stable id exists for', async () => {
+    const checkoutSpy = mockCheckoutOk()
+    scriptLoader.loadRazorpayCheckoutScript.mockRejectedValueOnce(new Error('script load failed'))
+    const { result } = renderHook(() => useCheckout())
+
+    await act(async () => {
+      await result.current.startCheckout({ onSuccess: vi.fn() })
+    })
+    expect(result.current.status).toBe('error')
+
+    mockRazorpayCapturingOptions()
+    await act(async () => {
+      await result.current.startCheckout({ onSuccess: vi.fn() })
+    })
+
+    expect(checkoutSpy.mock.calls[0][0]).toBe(checkoutSpy.mock.calls[1][0])
+  })
+
+  it('ROTATES the id once a payment succeeds, so a later identical cart cannot replay the paid order', async () => {
+    // The backend's replay lookup returns a matching order regardless of whether it has
+    // been paid. Checkout empties the cart, so re-adding the same product produces a
+    // byte-identical server-side snapshot - with an unrotated session id, an identical
+    // key, and the buyer would be handed back their previous, already-paid order.
+    mockCheckoutOk()
+    const { getOptions } = mockRazorpayCapturingOptions()
+    const { result } = renderHook(() => useCheckout())
+
+    await act(async () => {
+      await result.current.startCheckout({ onSuccess: vi.fn() })
+    })
+    const idDuringAttempt = sessionStorage.getItem(SESSION_ID_STORAGE_KEY)
+
+    act(() => {
+      getOptions().handler(RAZORPAY_SUCCESS)
+    })
+
+    expect(sessionStorage.getItem(SESSION_ID_STORAGE_KEY)).toBeNull()
+    expect(getOrCreateCheckoutSessionId()).not.toBe(idDuringAttempt)
+  })
+
+  it('does NOT rotate the id on a dismiss', async () => {
+    mockCheckoutOk()
+    const { getOptions } = mockRazorpayCapturingOptions()
+    const { result } = renderHook(() => useCheckout())
+
+    await act(async () => {
+      await result.current.startCheckout({ onSuccess: vi.fn() })
+    })
+    const idDuringAttempt = sessionStorage.getItem(SESSION_ID_STORAGE_KEY)
+
+    act(() => {
+      getOptions().modal.ondismiss()
+    })
+
+    expect(sessionStorage.getItem(SESSION_ID_STORAGE_KEY)).toBe(idDuringAttempt)
+    expect(result.current.status).toBe('idle')
+  })
+
+  it('still returns a stable id for an in-page retry when sessionStorage is unwritable', () => {
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('storage disabled')
+    })
+    vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
       throw new Error('storage disabled')
     })
 
-    expect(readStoredPaymentDetails('order-1')).toBeNull()
+    const first = getOrCreateCheckoutSessionId()
+    const second = getOrCreateCheckoutSessionId()
 
-    getItemSpy.mockRestore()
+    expect(first).toBeTruthy()
+    expect(second).toBe(first)
+  })
+})
+
+describe('useCheckout — handing the order to StoreOrderPage', () => {
+  it('persists the Razorpay triple AND the line snapshot, then calls onSuccess with the order id', async () => {
+    mockCheckoutOk()
+    const { getOptions } = mockRazorpayCapturingOptions()
+    const { result } = renderHook(() => useCheckout())
+    const onSuccess = vi.fn()
+
+    await act(async () => {
+      await result.current.startCheckout({ onSuccess })
+    })
+    act(() => {
+      getOptions().handler(RAZORPAY_SUCCESS)
+    })
+
+    expect(onSuccess).toHaveBeenCalledWith('order-1')
+    expect(readStoredOrderRecord('order-1')).toEqual({
+      orderId: 'order-1',
+      razorpayOrderId: 'rzp_order_1',
+      razorpayPaymentId: 'pay_1',
+      razorpaySignature: 'sig_1',
+      amount: 148.0,
+      currency: 'INR',
+      // The cart is emptied server-side on payment, so this snapshot is the only way the
+      // order page can list what was bought before the first poll returns.
+      items: ORDER.items,
+    })
+    expect(result.current.status).toBe('idle')
+  })
+
+  it('still calls onSuccess when persisting throws - a buyer who has already paid must never be stranded', async () => {
+    mockCheckoutOk()
+    const { getOptions } = mockRazorpayCapturingOptions()
+    const { result } = renderHook(() => useCheckout())
+    const onSuccess = vi.fn()
+
+    await act(async () => {
+      await result.current.startCheckout({ onSuccess })
+    })
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('quota exceeded')
+    })
+
+    act(() => {
+      getOptions().handler(RAZORPAY_SUCCESS)
+    })
+
+    expect(onSuccess).toHaveBeenCalledWith('order-1')
+  })
+})
+
+describe('readStoredOrderRecord / persistStoredOrderItems', () => {
+  it('returns null (not throwing) when the stored value is corrupted JSON', () => {
+    sessionStorage.setItem('store-order-order-1', 'not-valid-json{')
+
+    expect(readStoredOrderRecord('order-1')).toBeNull()
+  })
+
+  it('returns null (not throwing) when sessionStorage access fails', () => {
+    vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+      throw new Error('storage disabled')
+    })
+
+    expect(readStoredOrderRecord('order-1')).toBeNull()
+  })
+
+  it('returns null for an order this device never saw', () => {
+    expect(readStoredOrderRecord('order-elsewhere')).toBeNull()
+  })
+
+  it('writes merged items back over the stored record without disturbing the Razorpay triple', () => {
+    sessionStorage.setItem(
+      'store-order-order-1',
+      JSON.stringify({
+        orderId: 'order-1',
+        razorpayOrderId: 'rzp_order_1',
+        razorpayPaymentId: 'pay_1',
+        razorpaySignature: 'sig_1',
+        amount: 148,
+        currency: 'INR',
+        items: [{ orderItemId: 'oi-1', productName: 'A' }],
+      })
+    )
+
+    persistStoredOrderItems('order-1', [
+      { orderItemId: 'oi-1', productName: 'A', fulfillmentStatus: 'FULFILLED', downloadToken: 'tok-1' },
+    ])
+
+    const record = readStoredOrderRecord('order-1')
+    // The token has to outlive a reload: the server stores only its hash and will never
+    // hand the raw value over again.
+    expect(record.items[0].downloadToken).toBe('tok-1')
+    expect(record.razorpaySignature).toBe('sig_1')
+  })
+
+  it('is a no-op (not a throw, not a half-record) when there is no stored record to merge into', () => {
+    expect(() => persistStoredOrderItems('order-missing', [{ orderItemId: 'oi-1' }])).not.toThrow()
+
+    expect(sessionStorage.getItem('store-order-order-missing')).toBeNull()
   })
 })

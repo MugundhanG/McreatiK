@@ -17,27 +17,32 @@
    actually change anything meaningful yet would be
    worse than not having one.
 
-   "Proceed to checkout" is a clearly-marked placeholder:
-   Task 14 builds the real checkout flow. Nothing here
-   navigates to a route that doesn't exist yet.
+   "Proceed to checkout" was a placeholder through Task
+   13 and is now wired to the real flow: useCheckout()
+   posts the session id to /api/v1/checkout (the cart
+   itself is read server-side - this page sends no line
+   items), opens Razorpay, and on payment routes to
+   /store/orders/:orderId. Everything else on this page
+   is Task 13's and untouched.
    ============================================ */
 
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import StorePageShell from '../components/layout/StorePageShell'
 import { useAuth } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
 import { useRequireAuthOrRedirect } from '../hooks/useRequireAuthOrRedirect'
+import { useCheckout } from '../hooks/useCheckout'
 import { formatDigitalStorePrice } from '../utils/digitalStoreApi'
-import { DIGITAL_STORE_EVENTS, trackDigitalStoreEvent } from '../utils/digitalStoreAnalytics'
 import { useSEO } from '../hooks/useSEO'
 
 export default function StoreCartPage() {
   const { loading: authLoading } = useAuth()
   const requireAuthOrRedirect = useRequireAuthOrRedirect()
   const { cart, loading: cartLoading, error, removeItem } = useCart()
+  const { status: checkoutStatus, error: checkoutError, startCheckout } = useCheckout()
+  const navigate = useNavigate()
   const [removingItemId, setRemovingItemId] = useState(null)
-  const [checkoutMessage, setCheckoutMessage] = useState(null)
 
   useSEO({
     title: 'Your Cart | McreatiK Digital Store',
@@ -65,10 +70,13 @@ export default function StoreCartPage() {
     }
   }
 
+  // No payload: /api/v1/checkout takes a session id and nothing else, and reads the
+  // basket from the database for the authenticated customer. Deliberately so - a
+  // client-submitted basket is a client-submitted price (CheckoutRequest.java). The
+  // CHECKOUT_INITIATED analytics event moved into useCheckout for the same reason: only
+  // there is the server-resolved order (and its real item count) actually known.
   function handleProceedToCheckout() {
-    // TODO(Task 14): replace with real checkout (order creation + payment).
-    trackDigitalStoreEvent(DIGITAL_STORE_EVENTS.CHECKOUT_INITIATED, { item_count: cart?.items?.length ?? 0 })
-    setCheckoutMessage('Checkout is coming soon! Your cart is saved for when it launches.')
+    startCheckout({ onSuccess: (orderId) => navigate(`/store/orders/${orderId}`) })
   }
 
   if (authLoading || cartLoading) {
@@ -80,6 +88,7 @@ export default function StoreCartPage() {
   }
 
   const items = cart?.items ?? []
+  const checkoutBusy = checkoutStatus === 'creating_order' || checkoutStatus === 'awaiting_payment'
 
   return (
     <StorePageShell>
@@ -132,14 +141,23 @@ export default function StoreCartPage() {
               </span>
             </div>
 
+            {/* Disabled while an attempt is in flight so a double-click can't fire two
+                checkouts. That's belt-and-braces rather than the actual safeguard: the
+                session id is stable across retries, so the backend recomputes the same
+                idempotency key and hands back the SAME order either way. */}
             <button
               type="button"
               onClick={handleProceedToCheckout}
-              className="w-full bg-[#8B7FE8] text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-[#7A6DE0]"
+              disabled={checkoutBusy}
+              className="w-full bg-[#8B7FE8] text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-[#7A6DE0] disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Proceed to Checkout
+              {checkoutBusy ? 'Starting checkout...' : 'Proceed to Checkout'}
             </button>
-            {checkoutMessage ? <p className="text-gray-600 mt-3 text-center">{checkoutMessage}</p> : null}
+            {checkoutError ? (
+              <p className="text-red-600 mt-3 text-center">
+                {checkoutError.message || "We couldn't start checkout. Please try again."}
+              </p>
+            ) : null}
           </>
         )}
       </div>

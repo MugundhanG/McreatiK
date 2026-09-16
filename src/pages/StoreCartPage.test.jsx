@@ -1,9 +1,12 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { AuthProvider } from '../context/AuthContext'
 import { CartProvider } from '../context/CartContext'
 import * as cartApi from '../utils/cartApi'
+import * as checkoutApi from '../utils/checkoutApi'
+import * as scriptLoader from '../utils/razorpayScriptLoader'
+import { resetCheckoutSessionId } from '../hooks/useCheckout'
 import StoreCartPage from './StoreCartPage'
 
 const AUTH_RESPONSE = { accessToken: 'access-1', tokenType: 'Bearer', expiresInSeconds: 900, name: 'Jane Doe' }
@@ -43,6 +46,30 @@ const CART_WITH_TWO_ITEMS = {
 
 const EMPTY_CART = { id: 'cart-1', items: [], totalAmount: 0, currency: null }
 
+const CHECKOUT_RESPONSE = {
+  orderId: 'order-1',
+  razorpayOrderId: 'rzp_order_1',
+  razorpayKeyId: 'rzp_key',
+  amount: 148,
+  currency: 'INR',
+  items: [
+    { orderItemId: 'oi-1', productId: 'p1', productName: 'Wedding Photography Agreement', unitPrice: 99, quantity: 1, lineAmount: 99 },
+    { orderItemId: 'oi-2', productId: 'p2', productName: 'Social Media Template Pack', unitPrice: 49, quantity: 1, lineAmount: 49 },
+  ],
+}
+
+function mockRazorpay() {
+  let capturedOptions = null
+  class RazorpayMock {
+    constructor(options) {
+      capturedOptions = options
+    }
+    open() {}
+  }
+  window.Razorpay = RazorpayMock
+  return { getOptions: () => capturedOptions }
+}
+
 function renderPage({ fetchImpl = { ok: true, status: 200, json: async () => AUTH_RESPONSE } } = {}) {
   globalThis.fetch = vi.fn().mockResolvedValue(fetchImpl)
   return render(
@@ -52,6 +79,7 @@ function renderPage({ fetchImpl = { ok: true, status: 200, json: async () => AUT
           <Routes>
             <Route path="/store/cart" element={<StoreCartPage />} />
             <Route path="/store/login" element={<div>login page</div>} />
+            <Route path="/store/orders/:orderId" element={<div>order page for order-1</div>} />
           </Routes>
         </CartProvider>
       </AuthProvider>
@@ -61,6 +89,8 @@ function renderPage({ fetchImpl = { ok: true, status: 200, json: async () => AUT
 
 beforeEach(() => {
   vi.restoreAllMocks()
+  sessionStorage.clear()
+  resetCheckoutSessionId()
 })
 
 afterEach(() => {
@@ -117,14 +147,69 @@ describe('StoreCartPage — rendering the same useCart() source of truth as the 
     expect(cartApi.removeCartItem).toHaveBeenCalledWith('item-1')
   })
 
-  it('shows a clearly-marked placeholder message on "Proceed to Checkout" rather than navigating to an unbuilt route', async () => {
+})
+
+describe('StoreCartPage — "Proceed to Checkout" (Task 14 wiring)', () => {
+  it('starts the real checkout flow and routes to the order page once payment succeeds', async () => {
     vi.spyOn(cartApi, 'fetchCart').mockResolvedValue(CART_WITH_TWO_ITEMS)
+    vi.spyOn(checkoutApi, 'startStoreCheckout').mockResolvedValue(CHECKOUT_RESPONSE)
+    vi.spyOn(scriptLoader, 'loadRazorpayCheckoutScript').mockResolvedValue(undefined)
+    const { getOptions } = mockRazorpay()
     renderPage()
 
     fireEvent.click(await screen.findByRole('button', { name: /proceed to checkout/i }))
 
-    expect(await screen.findByText(/checkout is coming soon/i)).toBeInTheDocument()
-    // Still on the cart page - no navigation to a not-yet-built checkout route.
+    await waitFor(() => expect(checkoutApi.startStoreCheckout).toHaveBeenCalledTimes(1))
+
+    act(() => {
+      getOptions().handler({
+        razorpay_order_id: 'rzp_order_1',
+        razorpay_payment_id: 'pay_1',
+        razorpay_signature: 'sig_1',
+      })
+    })
+
+    expect(await screen.findByText('order page for order-1')).toBeInTheDocument()
+  })
+
+  it('sends no line items - checkout is passed a session id and nothing else', async () => {
+    // The cart this prices is read server-side from the database. A cart submitted from
+    // here would be a price submitted from here.
+    vi.spyOn(cartApi, 'fetchCart').mockResolvedValue(CART_WITH_TWO_ITEMS)
+    vi.spyOn(checkoutApi, 'startStoreCheckout').mockResolvedValue(CHECKOUT_RESPONSE)
+    vi.spyOn(scriptLoader, 'loadRazorpayCheckoutScript').mockResolvedValue(undefined)
+    mockRazorpay()
+    renderPage()
+
+    fireEvent.click(await screen.findByRole('button', { name: /proceed to checkout/i }))
+
+    await waitFor(() => expect(checkoutApi.startStoreCheckout).toHaveBeenCalledTimes(1))
+    expect(checkoutApi.startStoreCheckout.mock.calls[0]).toHaveLength(1)
+    expect(typeof checkoutApi.startStoreCheckout.mock.calls[0][0]).toBe('string')
+  })
+
+  it('surfaces a checkout failure on the cart page instead of navigating away', async () => {
+    vi.spyOn(cartApi, 'fetchCart').mockResolvedValue(CART_WITH_TWO_ITEMS)
+    vi.spyOn(checkoutApi, 'startStoreCheckout').mockRejectedValue(
+      Object.assign(new Error('Too many requests, please slow down'), { status: 429 })
+    )
+    renderPage()
+
+    fireEvent.click(await screen.findByRole('button', { name: /proceed to checkout/i }))
+
+    expect(await screen.findByText(/too many requests/i)).toBeInTheDocument()
     expect(screen.getByText('Wedding Photography Agreement')).toBeInTheDocument()
+  })
+
+  it('disables the button while an attempt is in flight so a double-click cannot fire two checkouts', async () => {
+    vi.spyOn(cartApi, 'fetchCart').mockResolvedValue(CART_WITH_TWO_ITEMS)
+    vi.spyOn(checkoutApi, 'startStoreCheckout').mockReturnValue(new Promise(() => {}))
+    renderPage()
+
+    const button = await screen.findByRole('button', { name: /proceed to checkout/i })
+    fireEvent.click(button)
+
+    await waitFor(() => expect(screen.getByRole('button', { name: /starting checkout/i })).toBeDisabled())
+    expect(checkoutApi.startStoreCheckout).toHaveBeenCalledTimes(1)
   })
 })

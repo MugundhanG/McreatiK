@@ -12,7 +12,9 @@
                /reset-password — customer auth pages (Task 10); browsing
                itself stays public, add-to-cart is what's auth-gated.
                /store/cart (Task 13) — line items, remove, running total,
-               proceed-to-checkout (checkout itself is Task 14).
+               proceed-to-checkout. /store/orders/:orderId (Task 14) —
+               post-payment page, polls /verify and shows per-item
+               status so each download appears as that item finishes.
    Each department page is lazy-loaded so a visitor
    only ever downloads the one they chose.
    ============================================ */
@@ -45,7 +47,7 @@ const StoreSignupPage = lazy(() => import('./pages/StoreSignupPage'))
 const StoreLoginPage = lazy(() => import('./pages/StoreLoginPage'))
 const StoreForgotPasswordPage = lazy(() => import('./pages/StoreForgotPasswordPage'))
 const StoreResetPasswordPage = lazy(() => import('./pages/StoreResetPasswordPage'))
-const DigitalStoreOrderPage = lazy(() => import('./pages/DigitalStoreOrderPage'))
+const StoreOrderPage = lazy(() => import('./pages/StoreOrderPage'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 /* Full-screen loading placeholder shown while a page chunk loads */
@@ -91,11 +93,7 @@ function App() {
           <Route path="/store/login" element={<StoreLoginPage />} />
           <Route path="/store/forgot-password" element={<StoreForgotPasswordPage />} />
           <Route path="/store/reset-password" element={<StoreResetPasswordPage />} />
-          {/* Legacy single-product checkout/order route from the pre-rebuild storefront.
-              Task 14 replaces this with a cart-based StoreOrderPage; left in place until
-              then since useCheckout.js/DigitalStoreOrderPage.jsx are explicitly its job,
-              not this task's. */}
-          <Route path="/digital_store/:templateId/order/:orderId" element={<DigitalStoreOrderPage />} />
+          <Route path="/store/orders/:orderId" element={<StoreOrderPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
