@@ -58,6 +58,35 @@ import { useState } from 'react'
 import { startStoreCheckout } from '../utils/checkoutApi'
 import { loadRazorpayCheckoutScript } from '../utils/razorpayScriptLoader'
 import { DIGITAL_STORE_EVENTS, trackDigitalStoreEvent } from '../utils/digitalStoreAnalytics'
+import { CustomerApiError } from '../utils/customerApi'
+
+/**
+ * PurchasableProductResolver (checked by OrderService.checkout for every cart line,
+ * server-side, against the product's CURRENT status - a cart line is never frozen)
+ * answers "may this be sold right now" with exactly two failure shapes: 404 when a
+ * line's product is gone or was retired since it was added (e.g. an admin edited it
+ * after it already had other orders - ProductService's append-only versioning retires
+ * the old row rather than mutating it), and 400 when it still exists but nothing can
+ * fulfil it yet (a STATIC_ASSET with no file uploaded). Neither response names WHICH
+ * cart line failed - checkout takes no line-item payload at all, by design (see
+ * checkoutApi.js's header) - so the honest thing this hook can do is recognize "this
+ * is a such-and-such-item-in-your-cart problem, not a general failure" and say so,
+ * rather than surfacing the raw backend string verbatim.
+ */
+function isCartItemAvailabilityError(err) {
+  // Excludes anything carrying fieldErrors: that shape belongs to
+  // ProductFieldValidationException (a stale/edited field schema on a cart line),
+  // whose message is already specific and actionable and must not be masked by the
+  // generic availability copy below.
+  return (
+    err instanceof CustomerApiError &&
+    (err.status === 404 || err.status === 400) &&
+    !(err.fieldErrors && Object.keys(err.fieldErrors).length > 0)
+  )
+}
+
+const CART_ITEM_UNAVAILABLE_MESSAGE =
+  "One or more items in your cart are no longer available — an item may have been updated or removed since you added it. Please review your cart below (remove anything that looks out of date) and try again."
 
 const SESSION_ID_STORAGE_KEY = 'store-checkout-session-id'
 
@@ -178,7 +207,7 @@ export function useCheckout() {
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState(null)
 
-  async function startCheckout({ onSuccess } = {}) {
+  async function startCheckout({ onSuccess, onCartItemUnavailable } = {}) {
     setStatus('creating_order')
     setError(null)
     try {
@@ -230,7 +259,17 @@ export function useCheckout() {
       razorpay.open()
     } catch (err) {
       setStatus('error')
-      setError(err)
+      if (isCartItemAvailabilityError(err)) {
+        setError(new CustomerApiError(err.status, CART_ITEM_UNAVAILABLE_MESSAGE))
+        // The cart itself was never re-synced by this failure (checkout only reads it,
+        // never writes it) - the stale line is still sitting there with whatever it
+        // looked like before. Re-fetching at least surfaces any price/status change
+        // the caller's cart view can react to, even though the response still can't
+        // say which line was the problem.
+        onCartItemUnavailable?.()
+      } else {
+        setError(err)
+      }
     }
   }
 

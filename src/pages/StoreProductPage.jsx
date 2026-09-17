@@ -16,6 +16,7 @@ import { fetchDigitalStoreProduct, fetchDigitalStoreCategories, formatDigitalSto
 import { DIGITAL_STORE_EVENTS, trackDigitalStoreEvent } from '../utils/digitalStoreAnalytics'
 import { useSEO } from '../hooks/useSEO'
 import { useCart } from '../context/CartContext'
+import { CustomerApiError } from '../utils/customerApi'
 
 const FORM_SECTION_ID = 'store-product-form'
 const CTA_SECTION_ID = 'store-product-cta'
@@ -112,7 +113,25 @@ export default function StoreProductPage() {
       setCartMessage(`Added "${product.name}" to your cart.`)
       trackDigitalStoreEvent(DIGITAL_STORE_EVENTS.ADD_TO_CART_CLICKED, { product_id: product.id })
     } catch (err) {
-      setCartError(err.message || 'Could not add this item to your cart. Please try again.')
+      // CartService.addItem's PurchasableProductResolver check answers "may this be
+      // sold right now" with a 404 (gone/retired since the page loaded - e.g. an admin
+      // edited it after it already had other orders, which retires the old row rather
+      // than mutating it) or a 400 (still exists but nothing can fulfil it yet). Both
+      // are a "this specific product isn't buyable anymore" case, not a generic
+      // failure, so say that plainly rather than surfacing the raw backend string -
+      // unlike the cart page, there's exactly one product in view here, so no
+      // ambiguity about which item is meant. Excludes anything carrying fieldErrors:
+      // that's ProductFieldValidationException's shape (a stale/edited field schema),
+      // whose message is already specific and actionable and must not be masked.
+      const isAvailabilityError =
+        err instanceof CustomerApiError &&
+        (err.status === 404 || err.status === 400) &&
+        !(err.fieldErrors && Object.keys(err.fieldErrors).length > 0)
+      setCartError(
+        isAvailabilityError
+          ? `"${product.name}" is no longer available to purchase — it may have been updated or removed. Try refreshing the page.`
+          : err.message || 'Could not add this item to your cart. Please try again.',
+      )
     } finally {
       setAddingToCart(false)
     }

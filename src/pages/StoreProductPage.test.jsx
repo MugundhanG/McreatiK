@@ -279,6 +279,23 @@ describe('StoreProductPage — backend re-validation rejection is surfaced, not 
     )
     expect(screen.queryByText(/price: stale/i)).not.toBeInTheDocument()
   })
+
+  // Cross-cutting fix: PurchasableProductResolver's "gone or retired" (404) and "not
+  // purchasable yet" (400) rejections carry no fieldErrors, unlike the
+  // field-validation case above - previously these showed the raw backend string
+  // ("Product not found or not active") verbatim.
+  it('shows a plain-language unavailable message (not the raw backend string) when the product is no longer purchasable', async () => {
+    vi.spyOn(api, 'fetchDigitalStoreProduct').mockResolvedValue(NON_CUSTOM_PRODUCT)
+    vi.spyOn(cartApi, 'addCartItem').mockRejectedValue(
+      new CustomerApiError(404, 'Product not found or not active')
+    )
+    renderPage('p2', { fetchImpl: SIGNED_IN_RESPONSE })
+
+    fireEvent.click(await screen.findByRole('button', { name: /add to cart/i }))
+
+    expect(await screen.findByText(/no longer available to purchase/i)).toBeInTheDocument()
+    expect(screen.queryByText(/product not found or not active/i)).not.toBeInTheDocument()
+  })
 })
 
 describe('StoreProductPage — error/loading states', () => {

@@ -39,7 +39,7 @@ import { useSEO } from '../hooks/useSEO'
 export default function StoreCartPage() {
   const { loading: authLoading } = useAuth()
   const requireAuthOrRedirect = useRequireAuthOrRedirect()
-  const { cart, loading: cartLoading, error, removeItem } = useCart()
+  const { cart, loading: cartLoading, error, removeItem, refresh: refreshCart } = useCart()
   const { status: checkoutStatus, error: checkoutError, startCheckout } = useCheckout()
   const navigate = useNavigate()
   const [removingItemId, setRemovingItemId] = useState(null)
@@ -76,7 +76,14 @@ export default function StoreCartPage() {
   // CHECKOUT_INITIATED analytics event moved into useCheckout for the same reason: only
   // there is the server-resolved order (and its real item count) actually known.
   function handleProceedToCheckout() {
-    startCheckout({ onSuccess: (orderId) => navigate(`/store/orders/${orderId}`) })
+    startCheckout({
+      onSuccess: (orderId) => navigate(`/store/orders/${orderId}`),
+      onCartItemUnavailable: () => {
+        refreshCart().catch(() => {
+          // Already recorded on CartContext's own `error` state; nothing else to do.
+        })
+      },
+    })
   }
 
   if (authLoading || cartLoading) {

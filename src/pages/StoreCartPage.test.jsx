@@ -7,6 +7,7 @@ import * as cartApi from '../utils/cartApi'
 import * as checkoutApi from '../utils/checkoutApi'
 import * as scriptLoader from '../utils/razorpayScriptLoader'
 import { resetCheckoutSessionId } from '../hooks/useCheckout'
+import { CustomerApiError } from '../utils/customerApi'
 import StoreCartPage from './StoreCartPage'
 
 const AUTH_RESPONSE = { accessToken: 'access-1', tokenType: 'Bearer', expiresInSeconds: 900, name: 'Jane Doe' }
@@ -199,6 +200,42 @@ describe('StoreCartPage — "Proceed to Checkout" (Task 14 wiring)', () => {
 
     expect(await screen.findByText(/too many requests/i)).toBeInTheDocument()
     expect(screen.getByText('Wedding Photography Agreement')).toBeInTheDocument()
+  })
+
+  // Cross-cutting fix: checkout has no per-item payload at all (see checkoutApi.js's
+  // header), so a 404/400 from PurchasableProductResolver never names which cart line
+  // is stale/retired. Previously the raw backend string ("Product not found or not
+  // active") was shown verbatim with nothing telling the buyer what to do about it.
+  it('shows a plain-language message and re-fetches the cart when checkout fails because a line is no longer purchasable', async () => {
+    vi.spyOn(cartApi, 'fetchCart').mockResolvedValue(CART_WITH_TWO_ITEMS)
+    vi.spyOn(checkoutApi, 'startStoreCheckout').mockRejectedValue(
+      new CustomerApiError(404, 'Product not found or not active')
+    )
+    renderPage()
+
+    fireEvent.click(await screen.findByRole('button', { name: /proceed to checkout/i }))
+
+    expect(await screen.findByText(/no longer available/i)).toBeInTheDocument()
+    expect(screen.queryByText(/product not found or not active/i)).not.toBeInTheDocument()
+    // Once for the initial page load, once more triggered by the failure - the stale
+    // line itself can't be identified, but re-syncing the cart is still the honest
+    // thing to do (see useCheckout.js's onCartItemUnavailable comment).
+    await waitFor(() => expect(cartApi.fetchCart).toHaveBeenCalledTimes(2))
+  })
+
+  // A genuine field-validation rejection (ProductFieldValidationException, carrying
+  // fieldErrors) is NOT an availability error and must be shown as-is, not masked by
+  // the generic message above - mirrors StoreProductPage.test.jsx's equivalent case.
+  it('shows the raw backend message unchanged for a non-availability checkout failure', async () => {
+    vi.spyOn(cartApi, 'fetchCart').mockResolvedValue(CART_WITH_TWO_ITEMS)
+    vi.spyOn(checkoutApi, 'startStoreCheckout').mockRejectedValue(
+      new CustomerApiError(400, 'fieldValues.brideName: must not be blank', { 'fieldValues.brideName': 'must not be blank' })
+    )
+    renderPage()
+
+    fireEvent.click(await screen.findByRole('button', { name: /proceed to checkout/i }))
+
+    expect(await screen.findByText(/must not be blank/i)).toBeInTheDocument()
   })
 
   it('disables the button while an attempt is in flight so a double-click cannot fire two checkouts', async () => {
