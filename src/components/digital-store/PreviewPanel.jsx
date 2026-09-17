@@ -63,7 +63,8 @@ export default function PreviewPanel({ templateId, fieldValues }) {
   return (
     <div className="py-10">
       <p className="text-sm text-gray-600 mb-3">
-        This is your actual document — the same file you'll receive, watermarked only until you complete your purchase.
+        Want to double-check? Generate the exact, final PDF — the same file you'll receive, watermarked only until
+        you complete your purchase.
       </p>
       <button
         type="button"
@@ -71,7 +72,7 @@ export default function PreviewPanel({ templateId, fieldValues }) {
         disabled={status === 'loading'}
         className="bg-white border border-[#8B7FE8] text-[#8B7FE8] px-5 py-2 rounded-lg font-medium hover:bg-[#8B7FE8]/5 disabled:opacity-50"
       >
-        {status === 'loading' ? 'Generating preview...' : 'Preview my document'}
+        {status === 'loading' ? 'Generating preview...' : "See the exact PDF you'll receive"}
       </button>
 
       {status === 'error' ? <p className="text-red-600 mt-3">{errorMessage}</p> : null}

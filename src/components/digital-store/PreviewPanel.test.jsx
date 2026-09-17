@@ -19,7 +19,7 @@ describe('PreviewPanel', () => {
     vi.spyOn(api, 'requestDigitalStorePreview').mockResolvedValue(new Blob(['%PDF-'], { type: 'application/pdf' }))
     render(<PreviewPanel templateId="t1" fieldValues={{ brideName: 'Jane' }} />)
 
-    fireEvent.click(screen.getByRole('button', { name: /preview/i }))
+    fireEvent.click(screen.getByRole('button', { name: /see the exact pdf/i }))
 
     await waitFor(() => expect(screen.getByTitle(/preview/i)).toHaveAttribute('src', 'blob:fake-url'))
     expect(api.requestDigitalStorePreview).toHaveBeenCalledWith('t1', { brideName: 'Jane' })
@@ -29,7 +29,7 @@ describe('PreviewPanel', () => {
     vi.spyOn(api, 'requestDigitalStorePreview').mockResolvedValue(new Blob(['%PDF-'], { type: 'application/pdf' }))
     render(<PreviewPanel templateId="t1" fieldValues={{}} />)
 
-    fireEvent.click(screen.getByRole('button', { name: /preview/i }))
+    fireEvent.click(screen.getByRole('button', { name: /see the exact pdf/i }))
 
     const link = await screen.findByRole('link', { name: /open preview in a new tab/i })
     expect(link).toHaveAttribute('href', 'blob:fake-url')
@@ -41,7 +41,7 @@ describe('PreviewPanel', () => {
     vi.spyOn(api, 'requestDigitalStorePreview').mockRejectedValue(error)
     render(<PreviewPanel templateId="t1" fieldValues={{}} />)
 
-    fireEvent.click(screen.getByRole('button', { name: /preview/i }))
+    fireEvent.click(screen.getByRole('button', { name: /see the exact pdf/i }))
 
     await waitFor(() => expect(screen.getByText(/please fill in all required fields/i)).toBeInTheDocument())
   })
@@ -51,7 +51,7 @@ describe('PreviewPanel', () => {
     vi.spyOn(api, 'requestDigitalStorePreview').mockRejectedValue(error)
     render(<PreviewPanel templateId="t1" fieldValues={{}} />)
 
-    fireEvent.click(screen.getByRole('button', { name: /preview/i }))
+    fireEvent.click(screen.getByRole('button', { name: /see the exact pdf/i }))
 
     await waitFor(() => expect(screen.getByText(/try again/i)).toBeInTheDocument())
   })
@@ -60,10 +60,10 @@ describe('PreviewPanel', () => {
     vi.spyOn(api, 'requestDigitalStorePreview').mockResolvedValue(new Blob(['%PDF-'], { type: 'application/pdf' }))
     render(<PreviewPanel templateId="t1" fieldValues={{}} />)
 
-    fireEvent.click(screen.getByRole('button', { name: /preview/i }))
+    fireEvent.click(screen.getByRole('button', { name: /see the exact pdf/i }))
     await waitFor(() => expect(screen.getByTitle(/preview/i)).toBeInTheDocument())
 
-    fireEvent.click(screen.getByRole('button', { name: /preview/i }))
+    fireEvent.click(screen.getByRole('button', { name: /see the exact pdf/i }))
     await waitFor(() => expect(globalThis.URL.revokeObjectURL).toHaveBeenCalledWith('blob:fake-url'))
   })
 
@@ -77,7 +77,7 @@ describe('PreviewPanel', () => {
 
     const { unmount } = render(<PreviewPanel templateId="t1" fieldValues={{}} />)
 
-    fireEvent.click(screen.getByRole('button', { name: /preview/i }))
+    fireEvent.click(screen.getByRole('button', { name: /see the exact pdf/i }))
 
     // Unmount before the promise resolves
     unmount()

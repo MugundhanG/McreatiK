@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import StorePageShell from '../components/layout/StorePageShell'
 import ProductForm from '../components/digital-store/ProductForm'
+import LiveDocumentPreview from '../components/digital-store/LiveDocumentPreview'
 import PreviewPanel from '../components/digital-store/PreviewPanel'
 import {
   ProductHero,
@@ -166,6 +167,17 @@ export default function StoreProductPage() {
                 onFirstInteraction={handleFirstFormInteraction}
               />
             </section>
+
+            {/* Always visible the moment this branch renders - not a tab, not gated
+                behind a button, not pushed below the CTA. Sits directly under the form
+                so the buyer sees it update with every keystroke without scrolling past
+                it to find it. See LiveDocumentPreview.jsx for why useMemo alone (no
+                debounce) is correct here. */}
+            <LiveDocumentPreview
+              templateBody={product.templateBody}
+              fieldSchema={product.fieldSchema}
+              fieldValues={fieldValues}
+            />
 
             <PreviewPanel templateId={product.id} fieldValues={fieldValues} />
           </>

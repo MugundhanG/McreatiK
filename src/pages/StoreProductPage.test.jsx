@@ -56,6 +56,7 @@ const CUSTOMIZABLE_PRODUCT = {
     ],
   },
   marketingContent: null,
+  templateBody: '<p>Bride: {{brideName}}</p><p>{{licenceTerms}}</p>',
 }
 
 const NON_CUSTOM_PRODUCT = {
@@ -108,7 +109,27 @@ describe('StoreProductPage — branching on category.requiresCustomization', () 
     renderPage('p1')
 
     expect(await screen.findByLabelText("Bride's Name *")).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /preview my document/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /see the exact pdf/i })).toBeInTheDocument()
+  })
+
+  it('shows the always-visible live preview immediately, updating as the buyer types - not gated behind any button', async () => {
+    vi.spyOn(api, 'fetchDigitalStoreProduct').mockResolvedValue(CUSTOMIZABLE_PRODUCT)
+    renderPage('p1')
+
+    const nameInput = await screen.findByLabelText("Bride's Name *")
+    const liveIframe = screen.getByTitle('Live document preview')
+
+    // Visible from the moment the page loads, with the blank editable field rendering as
+    // empty - not an error, not a placeholder requiring interaction first - while the
+    // locked licenceTerms field (customerEditable: false) already shows its fixedValue,
+    // since ProductForm never puts a locked field's value into fieldValues at all.
+    expect(liveIframe).toBeInTheDocument()
+    expect(liveIframe.getAttribute('srcdoc')).toContain('<p>Bride: </p>')
+    expect(liveIframe.getAttribute('srcdoc')).toContain('This document is licensed for personal use only.')
+
+    // Updates on every keystroke, with no click and no debounce.
+    fireEvent.change(nameInput, { target: { value: 'Jane' } })
+    expect(liveIframe.getAttribute('srcdoc')).toContain('<p>Bride: Jane</p>')
   })
 
   it('skips the form and preview panel entirely for a product in a non-customization category', async () => {
@@ -117,7 +138,8 @@ describe('StoreProductPage — branching on category.requiresCustomization', () 
 
     await screen.findByRole('button', { name: /add to cart/i })
 
-    expect(screen.queryByRole('button', { name: /preview my document/i })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /see the exact pdf/i })).not.toBeInTheDocument()
+    expect(screen.queryByTitle('Live document preview')).not.toBeInTheDocument()
     expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
   })
 
