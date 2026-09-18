@@ -1,10 +1,11 @@
 /* ============================================
    Footer Component — Store
-   Minimal placeholder footer for the Store
-   department, matching Tech/Studios' bottom-bar
-   layout: wordmark + copyright + department
-   switcher. Expand once the catalog and its own
-   nav sections exist.
+   Minimal footer for the Store department, matching
+   Tech/Studios' bottom-bar layout: wordmark + copyright +
+   department switcher. Deliberately still minimal even
+   with the catalog live - this department sells a small,
+   flat product list, not enough distinct sections yet to
+   warrant a Tech/Studios-style multi-column footer.
    ============================================ */
 
 import React, { memo } from 'react'
@@ -20,7 +21,7 @@ const StoreFooter = memo(function StoreFooter() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <Link to="/" className="inline-flex items-center gap-2">
-              <span className="font-display font-bold text-base" style={{ color: '#8B7FE8' }}>
+              <span className="font-display font-bold text-base text-[var(--store-accent-text)]">
                 McreatiK
               </span>
               <span className="font-display font-semibold text-base text-[#17151f]">Digital Store</span>

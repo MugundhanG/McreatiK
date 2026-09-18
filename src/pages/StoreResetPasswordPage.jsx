@@ -53,7 +53,7 @@ export default function StoreResetPasswordPage() {
         >
           <span
             className="flex items-center justify-center w-12 h-12 rounded-lg border mb-5"
-            style={{ borderColor: '#8B7FE8', color: '#8B7FE8', backgroundColor: '#8B7FE81a' }}
+            style={{ borderColor: 'var(--store-accent)', color: 'var(--store-accent-text)', backgroundColor: 'var(--store-accent-soft)' }}
           >
             <FiLock className="w-5 h-5" />
           </span>
@@ -64,7 +64,7 @@ export default function StoreResetPasswordPage() {
               This reset link is missing or invalid. Please request a new one.
             </p>
           ) : submitStatus === 'success' ? (
-            <p className="text-sm text-[#17151f]/80 bg-[#8B7FE8]/10 border border-[#8B7FE8]/30 rounded-md p-4">
+            <p className="text-sm text-[#17151f]/80 bg-[var(--store-accent-soft)] border border-[var(--store-accent)]/30 rounded-md p-4">
               Your password has been reset. You've been signed out of all sessions — please log in again with your
               new password.
             </p>
@@ -113,7 +113,7 @@ export default function StoreResetPasswordPage() {
           )}
 
           <p className="mt-6 text-sm text-center text-[#17151f]/70">
-            <Link to="/store/login" className="font-semibold" style={{ color: '#8B7FE8' }}>
+            <Link to="/store/login" className="font-semibold text-[var(--store-accent-text)]">
               Back to log in
             </Link>
           </p>

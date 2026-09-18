@@ -71,7 +71,7 @@ export default function ProductForm({ fieldSchema, values, onChange, serverError
 
         return (
           <div key={field.name}>
-            <label htmlFor={field.name} className="block text-sm font-medium mb-1">
+            <label htmlFor={field.name} className="block text-sm font-medium text-[#17151f] mb-1.5">
               {field.label}
               {field.required && editable ? ' *' : ''}
             </label>
@@ -85,10 +85,10 @@ export default function ProductForm({ fieldSchema, values, onChange, serverError
               disabled={!editable}
               onChange={editable ? (e) => handleChange(field, e.target.value) : undefined}
               onBlur={editable ? () => handleBlur(field) : undefined}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-[#8B7FE8] disabled:bg-gray-100 disabled:text-gray-500"
+              className="w-full rounded-md border border-black/15 px-3.5 py-2.5 text-base text-[#17151f] transition-shadow duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--store-accent)]/50 focus:border-[var(--store-accent)] disabled:bg-black/[0.03] disabled:text-[#7a7887]"
             />
             {!editable ? (
-              <p className="mt-1 text-xs text-gray-500">This value is fixed by the seller and can't be changed.</p>
+              <p className="mt-1.5 text-xs text-[#7a7887]">This value is fixed by the seller and can't be changed.</p>
             ) : null}
             {error ? (
               <p role="alert" className="mt-1 text-sm text-red-600">

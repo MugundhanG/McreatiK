@@ -41,13 +41,95 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { FiAlertTriangle, FiCheckCircle, FiClock, FiCopy, FiDownload, FiLoader, FiSearch } from 'react-icons/fi'
 import StorePageShell from '../components/layout/StorePageShell'
+import StoreCard from '../components/store/StoreCard'
+import OrderStateIllustration from '../components/digital-store/OrderStateIllustration'
 import { useCart } from '../context/CartContext'
 import { readStoredOrderRecord, persistStoredOrderItems } from '../hooks/useCheckout'
 import { storeItemDownloadUrl, verifyStoreOrder } from '../utils/checkoutApi'
 import { formatDigitalStorePrice } from '../utils/digitalStoreApi'
 import { DIGITAL_STORE_EVENTS, trackDigitalStoreEvent } from '../utils/digitalStoreAnalytics'
 import { useSEO } from '../hooks/useSEO'
+
+// The header content per state - kept as one lookup so StoreOrderPage's render
+// body doesn't repeat 7 near-identical conditionals. Copy is unchanged from
+// before this restyle; only the presentation (OrderStateIllustration) is new.
+function stateContent(state, readyCount) {
+  switch (state) {
+    case 'verifying':
+    case 'preparing':
+      return {
+        icon: FiLoader,
+        spin: true,
+        title: 'Preparing your files...',
+        description: "This usually takes just a few seconds. Each item appears below as soon as it's ready.",
+      }
+    case 'ready':
+      return {
+        icon: FiCheckCircle,
+        tone: 'success',
+        celebrate: true,
+        title: 'Your order is ready',
+        description: 'Download each item below.',
+      }
+    case 'partial':
+      return {
+        icon: FiAlertTriangle,
+        tone: 'warning',
+        title: readyCount > 0 ? 'Some of your items are ready' : "We couldn't prepare your items",
+        description:
+          'Anything marked below as "Couldn\'t be prepared" hasn\'t gone through — contact us with your order ID and we\'ll sort just that item out. Your payment covered the whole order.',
+      }
+    case 'taking_longer':
+      return {
+        icon: FiClock,
+        tone: 'warning',
+        title: 'This is taking longer than expected',
+        description:
+          readyCount > 0
+            ? "Anything already finished is downloadable below. For the rest, please contact us with your order ID and we'll help sort it out."
+            : "Please contact us with your order ID and we'll help sort it out.",
+      }
+    case 'error':
+      return {
+        icon: FiAlertTriangle,
+        tone: 'warning',
+        title: 'Something went wrong',
+        description: `Please contact us with your order ID and we'll sort it out.${
+          readyCount > 0 ? ' Anything already finished is still downloadable below.' : ''
+        }`,
+      }
+    default:
+      return null
+  }
+}
+
+// A tiny 3-step progress line for the verifying/preparing state - "genuinely
+// animated," per the redesign brief, rather than just a spinner with no
+// context for how far along the buyer actually is.
+function FulfillmentProgress({ active }) {
+  const steps = ['Payment confirmed', 'Preparing', 'Ready']
+  return (
+    <div className="flex items-center justify-center gap-2 mb-8" aria-hidden="true">
+      {steps.map((step, index) => (
+        <div key={step} className="flex items-center gap-2">
+          <div className={`h-1.5 w-16 rounded-full ${index <= 1 ? 'bg-[var(--store-accent)]' : 'bg-black/10'} overflow-hidden`}>
+            {index === 1 && active ? (
+              <motion.div
+                className="h-full bg-[var(--store-accent)]"
+                initial={{ x: '-100%' }}
+                animate={{ x: '100%' }}
+                transition={{ repeat: Infinity, duration: 1.4, ease: 'easeInOut' }}
+              />
+            ) : null}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
 
 const POLL_INTERVAL_MS = 5000
 // 24 attempts at 5s = 2 minutes before we stop and tell the buyer to contact us, rather
@@ -108,14 +190,20 @@ function ItemRow({ orderId, item, currency, onDownloadClick }) {
   const hasToken = isReady && Boolean(item.downloadToken)
 
   return (
-    <li data-testid={`order-item-${item.orderItemId}`} className="py-5 flex items-center justify-between gap-4">
+    <motion.li
+      data-testid={`order-item-${item.orderItemId}`}
+      layout
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+    >
+      <StoreCard hover={false} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
       <div className="min-w-0">
-        <p className="font-semibold truncate">{item.productName}</p>
+        <p className="font-semibold text-[#17151f] truncate">{item.productName}</p>
         {/* currency lives on the order header, not the line (CheckoutItemResponse has no
             currency field) - one Razorpay order carries exactly one currency, and
             checkout refuses a mixed-currency cart outright. */}
         {item.lineAmount != null && currency ? (
-          <p className="text-sm text-gray-500">{formatDigitalStorePrice(currency, item.lineAmount)}</p>
+          <p className="text-sm text-[#7a7887]">{formatDigitalStorePrice(currency, item.lineAmount)}</p>
         ) : null}
       </div>
 
@@ -129,9 +217,9 @@ function ItemRow({ orderId, item, currency, onDownloadClick }) {
             onClick={() => onDownloadClick(item)}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-[#8B7FE8] text-white px-5 py-2 rounded-lg font-semibold hover:bg-[#7A6DE0]"
+            className="inline-flex items-center gap-2 bg-[var(--store-accent)] text-white px-5 py-2 rounded-lg font-semibold hover:bg-[var(--store-accent-hover)] transition-colors"
           >
-            Download
+            <FiDownload size={16} /> Download
           </a>
         ) : null}
 
@@ -139,23 +227,32 @@ function ItemRow({ orderId, item, currency, onDownloadClick }) {
           /* Fulfilled, but this browser never saw the raw token (it was handed to a
              different device or a closed tab) and the server can only ever issue it once.
              Say so plainly rather than rendering a button that can't work. */
-          <span className="text-sm text-gray-500">Ready — contact us to resend your link</span>
+          <span className="text-sm text-[#7a7887]">Ready — contact us to resend your link</span>
         ) : null}
 
         {item.fulfillmentStatus === 'FAILED' ? (
           /* failureReason is a raw server-side exception message - useful in the admin,
              not something to show a buyer. The order id below is what support needs. */
-          <span className="text-sm font-semibold text-red-600">Couldn't be prepared</span>
+          <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-red-600">
+            <FiAlertTriangle size={15} /> Couldn't be prepared
+          </span>
         ) : null}
 
         {!TERMINAL_STATUSES.has(item.fulfillmentStatus) ? (
-          <span className="inline-flex items-center gap-2 text-sm text-gray-500">
-            <span className="w-4 h-4 border-2 border-[#8B7FE8] border-t-transparent rounded-full animate-spin" />
+          <span className="inline-flex items-center gap-2 text-sm text-[#7a7887]">
+            <motion.span
+              animate={{ rotate: 360 }}
+              transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
+              className="inline-flex"
+            >
+              <FiLoader size={15} />
+            </motion.span>
             Preparing...
           </span>
         ) : null}
       </div>
-    </li>
+      </StoreCard>
+    </motion.li>
   )
 }
 
@@ -255,76 +352,38 @@ export default function StoreOrderPage() {
   if (state === 'recovery_failed') {
     return (
       <StorePageShell>
-        <div className="max-w-2xl mx-auto px-4 pt-28 pb-20 text-center">
-          <h1 className="text-2xl font-semibold mb-3">We can't find this order on this device</h1>
-          <p className="text-gray-600">
-            If you already paid, your order is safe — please contact us with your order ID (
-            <code className="bg-gray-100 px-1 rounded">{orderId}</code>) and we'll help you get your files.
-          </p>
+        <div className="max-w-2xl mx-auto px-4 pt-28 pb-20">
+          <OrderStateIllustration
+            icon={FiSearch}
+            tone="neutral"
+            title="We can't find this order on this device"
+            description={
+              <>
+                If you already paid, your order is safe — please contact us with your order ID (
+                <code className="bg-black/5 px-1 rounded">{orderId}</code>) and we'll help you get your files.
+              </>
+            }
+          />
         </div>
       </StorePageShell>
     )
   }
 
   const readyCount = items.filter((item) => item.fulfillmentStatus === 'FULFILLED').length
+  const header = stateContent(state, readyCount)
 
   return (
     <StorePageShell>
       <div className="max-w-2xl mx-auto px-4 pt-28 pb-20">
-        <div className="text-center mb-10">
-          {state === 'verifying' || state === 'preparing' ? (
-            <>
-              <div className="w-10 h-10 mx-auto mb-4 border-2 border-[#8B7FE8] border-t-transparent rounded-full animate-spin" />
-              <h1 className="text-2xl font-semibold mb-2">Preparing your files...</h1>
-              <p className="text-gray-600">
-                This usually takes just a few seconds. Each item appears below as soon as it's ready.
-              </p>
-            </>
-          ) : null}
-
-          {state === 'ready' ? (
-            <>
-              <h1 className="text-2xl font-semibold mb-2">Your order is ready 🎉</h1>
-              <p className="text-gray-600">Download each item below.</p>
-            </>
-          ) : null}
-
-          {state === 'partial' ? (
-            <>
-              <h1 className="text-2xl font-semibold mb-2">
-                {readyCount > 0 ? 'Some of your items are ready' : "We couldn't prepare your items"}
-              </h1>
-              <p className="text-gray-600">
-                Anything marked below as "Couldn't be prepared" hasn't gone through — contact us with your
-                order ID and we'll sort just that item out. Your payment covered the whole order.
-              </p>
-            </>
-          ) : null}
-
-          {state === 'taking_longer' ? (
-            <>
-              <h1 className="text-2xl font-semibold mb-2">This is taking longer than expected</h1>
-              <p className="text-gray-600">
-                {readyCount > 0
-                  ? "Anything already finished is downloadable below. For the rest, please contact us with your order ID and we'll help sort it out."
-                  : "Please contact us with your order ID and we'll help sort it out."}
-              </p>
-            </>
-          ) : null}
-
-          {state === 'error' ? (
-            <>
-              <h1 className="text-2xl font-semibold mb-2">Something went wrong</h1>
-              <p className="text-gray-600">
-                Please contact us with your order ID and we'll sort it out.
-                {readyCount > 0 ? ' Anything already finished is still downloadable below.' : ''}
-              </p>
-            </>
-          ) : null}
-        </div>
+        {header ? (
+          <>
+            {state === 'verifying' || state === 'preparing' ? <FulfillmentProgress active /> : null}
+            <OrderStateIllustration {...header} />
+          </>
+        ) : null}
 
         {items.length > 0 ? (
-          <ul className="divide-y divide-gray-200 border-y border-gray-200 mb-8">
+          <ul className="space-y-3 mb-8">
             {items.map((item) => (
               <ItemRow
                 key={item.orderItemId}
@@ -337,11 +396,26 @@ export default function StoreOrderPage() {
           </ul>
         ) : null}
 
-        <p className="text-sm text-gray-500 text-center">
-          Order ID: <code className="bg-gray-100 px-1 rounded">{orderId}</code>
+        <p className="text-sm text-[#7a7887] text-center flex items-center justify-center gap-2">
+          Order ID: <code className="bg-black/5 px-1 rounded">{orderId}</code>
+          <button
+            type="button"
+            onClick={() => navigator.clipboard?.writeText(orderId)}
+            aria-label="Copy order ID"
+            title="Copy order ID"
+            className="text-[#7a7887] hover:text-[var(--store-accent-text)] transition-colors"
+          >
+            <FiCopy size={14} />
+          </button>
         </p>
         <p className="text-center mt-6">
-          <Link to="/store" className="text-[#8B7FE8] font-semibold hover:underline">
+          {/* Real client-side Link, not Button's own href path - see StoreCartPage.jsx's
+              identical note on why Button.jsx's href (a plain <a>) is reserved for
+              anchors/external links elsewhere in this app. */}
+          <Link
+            to="/store"
+            className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-md font-semibold text-sm tracking-wide border border-[var(--store-accent)]/60 text-[#17151f] transition-all duration-300 hover:bg-[var(--store-accent)]/10 hover:border-[var(--store-accent)]"
+          >
             Back to the Store
           </Link>
         </p>

@@ -1,6 +1,8 @@
 // src/components/digital-store/LiveDocumentPreview.jsx
 import { useMemo } from 'react'
+import { motion } from 'framer-motion'
 import { interpolateTemplatePreview } from '../../utils/templatePreview'
+import StoreSectionHeading from '../store/StoreSectionHeading'
 
 // Same font-family fallback stack TemplateHtmlPdfRenderer.buildHtml() embeds server-side
 // for the real PDF render (see TemplateHtmlPdfRenderer.java: "'Noto Sans','Noto Sans
@@ -99,23 +101,31 @@ export default function LiveDocumentPreview({ templateBody, fieldSchema, fieldVa
   }
 
   return (
-    <section aria-label="Live document preview" className="py-10 border-t border-gray-200">
-      <h3 className="text-lg font-semibold mb-1">Your document, updated as you type</h3>
-      <p className="text-sm text-gray-600 mb-3">
-        This updates instantly as you fill in the form above — nothing to click.
-      </p>
+    <section aria-label="Live document preview" className="py-10 border-t border-black/5">
+      <StoreSectionHeading
+        title="Your document, updated as you type"
+        subtitle="This updates instantly as you fill in the form above — nothing to click."
+        align="left"
+      />
       {error ? (
-        <p role="alert" className="text-red-600 text-sm">
+        <p role="alert" className="mt-4 text-red-600 text-sm">
           {error}
         </p>
       ) : (
-        <iframe
-          title="Live document preview"
-          sandbox="allow-same-origin"
-          srcDoc={buildPreviewDocument(html)}
-          className="w-full rounded-lg border border-gray-200 bg-white"
-          style={{ height: '70vh' }}
-        />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-6"
+        >
+          <iframe
+            title="Live document preview"
+            sandbox="allow-same-origin"
+            srcDoc={buildPreviewDocument(html)}
+            className="w-full rounded-lg border border-black/10 bg-white shadow-sm"
+            style={{ height: '70vh' }}
+          />
+        </motion.div>
       )}
     </section>
   )

@@ -46,7 +46,7 @@ export default function StoreForgotPasswordPage() {
         >
           <span
             className="flex items-center justify-center w-12 h-12 rounded-lg border mb-5"
-            style={{ borderColor: '#8B7FE8', color: '#8B7FE8', backgroundColor: '#8B7FE81a' }}
+            style={{ borderColor: 'var(--store-accent)', color: 'var(--store-accent-text)', backgroundColor: 'var(--store-accent-soft)' }}
           >
             <FiMail className="w-5 h-5" />
           </span>
@@ -56,7 +56,7 @@ export default function StoreForgotPasswordPage() {
           </p>
 
           {submitStatus === 'success' ? (
-            <p className="text-sm text-[#17151f]/80 bg-[#8B7FE8]/10 border border-[#8B7FE8]/30 rounded-md p-4">
+            <p className="text-sm text-[#17151f]/80 bg-[var(--store-accent-soft)] border border-[var(--store-accent)]/30 rounded-md p-4">
               If an account exists for that email, we've sent instructions to reset your password.
             </p>
           ) : (
@@ -88,7 +88,7 @@ export default function StoreForgotPasswordPage() {
           )}
 
           <p className="mt-6 text-sm text-center text-[#17151f]/70">
-            <Link to="/store/login" className="font-semibold" style={{ color: '#8B7FE8' }}>
+            <Link to="/store/login" className="font-semibold text-[var(--store-accent-text)]">
               Back to log in
             </Link>
           </p>

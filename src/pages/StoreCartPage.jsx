@@ -28,13 +28,34 @@
 
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FiShoppingBag, FiTrash2 } from 'react-icons/fi'
 import StorePageShell from '../components/layout/StorePageShell'
+import StoreCard from '../components/store/StoreCard'
+import StoreIconBadge from '../components/store/StoreIconBadge'
+import Button from '../components/ui/Button'
 import { useAuth } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
 import { useRequireAuthOrRedirect } from '../hooks/useRequireAuthOrRedirect'
 import { useCheckout } from '../hooks/useCheckout'
 import { formatDigitalStorePrice } from '../utils/digitalStoreApi'
 import { useSEO } from '../hooks/useSEO'
+
+function CartSkeleton() {
+  return (
+    <div className="space-y-3" aria-hidden="true">
+      {[0, 1].map((i) => (
+        <div key={i} className="card-store p-5 flex items-center justify-between animate-pulse">
+          <div className="space-y-2">
+            <div className="h-4 bg-black/5 rounded w-40" />
+            <div className="h-3 bg-black/5 rounded w-24" />
+          </div>
+          <div className="h-4 bg-black/5 rounded w-16" />
+        </div>
+      ))}
+    </div>
+  )
+}
 
 export default function StoreCartPage() {
   const { loading: authLoading } = useAuth()
@@ -89,7 +110,10 @@ export default function StoreCartPage() {
   if (authLoading || cartLoading) {
     return (
       <StorePageShell>
-        <div className="max-w-3xl mx-auto px-4 pt-28 pb-20 text-center text-gray-500">Loading your cart...</div>
+        <div className="max-w-3xl mx-auto px-4 pt-28 pb-20">
+          <h1 className="font-display text-3xl font-bold mb-8 text-[#17151f]">Your Cart</h1>
+          <CartSkeleton />
+        </div>
       </StorePageShell>
     )
   }
@@ -100,50 +124,70 @@ export default function StoreCartPage() {
   return (
     <StorePageShell>
       <div className="max-w-3xl mx-auto px-4 pt-28 pb-20">
-        <h1 className="text-3xl font-bold mb-8">Your Cart</h1>
+        <h1 className="font-display text-3xl font-bold mb-8 text-[#17151f]">Your Cart</h1>
 
         {error ? <p className="text-red-600 mb-6">{error}</p> : null}
 
         {items.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-gray-500 mb-6">Your cart is empty.</p>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center py-16 flex flex-col items-center gap-4"
+          >
+            <StoreIconBadge icon={FiShoppingBag} size="lg" />
+            <p className="text-[#4b4a55]">Your cart is empty.</p>
+            {/* Client-side nav, not Button's own href path - Button.jsx's href renders a
+                plain <a>, which is only ever used for anchors/external links elsewhere in
+                this app (see Hero.jsx, Navbar.jsx); a real Link keeps this in-SPA. */}
             <Link
               to="/store"
-              className="inline-block bg-[#8B7FE8] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#7A6DE0]"
+              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-md font-semibold text-sm tracking-wide bg-[var(--store-accent)] text-white shadow-sm shadow-[var(--store-accent)]/25 hover:bg-[var(--store-accent-hover)] transition-all duration-300"
             >
               Browse the Store
             </Link>
-          </div>
+          </motion.div>
         ) : (
           <>
-            <ul className="divide-y divide-gray-200 border-y border-gray-200 mb-8">
-              {items.map((item) => (
-                <li key={item.id} className="py-5 flex items-center justify-between gap-4">
-                  <div>
-                    <p className="font-semibold">{item.productName}</p>
-                    <p className="text-sm text-gray-500">
-                      {formatDigitalStorePrice(item.currency, item.unitPrice)}
-                      {item.quantity > 1 ? ` × ${item.quantity}` : ''}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <span className="font-semibold">{formatDigitalStorePrice(item.currency, item.lineAmount)}</span>
-                    <button
-                      type="button"
-                      onClick={() => handleRemove(item.id)}
-                      disabled={removingItemId === item.id}
-                      className="text-sm font-semibold text-red-600 hover:underline disabled:opacity-60 disabled:cursor-not-allowed"
-                    >
-                      {removingItemId === item.id ? 'Removing...' : 'Remove'}
-                    </button>
-                  </div>
-                </li>
-              ))}
+            <ul className="space-y-3 mb-8">
+              <AnimatePresence initial={false}>
+                {items.map((item) => (
+                  <motion.li
+                    key={item.id}
+                    layout
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, x: -24, transition: { duration: 0.2 } }}
+                  >
+                    <StoreCard hover={false} className="flex items-center justify-between gap-4">
+                      <div>
+                        <p className="font-semibold text-[#17151f]">{item.productName}</p>
+                        <p className="text-sm text-[#7a7887]">
+                          {formatDigitalStorePrice(item.currency, item.unitPrice)}
+                          {item.quantity > 1 ? ` × ${item.quantity}` : ''}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <span className="font-semibold text-[#17151f]">{formatDigitalStorePrice(item.currency, item.lineAmount)}</span>
+                        <button
+                          type="button"
+                          onClick={() => handleRemove(item.id)}
+                          disabled={removingItemId === item.id}
+                          aria-label={removingItemId === item.id ? 'Removing…' : 'Remove'}
+                          title="Remove"
+                          className="p-2 rounded-md text-red-600 hover:bg-red-50 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                        >
+                          <FiTrash2 size={18} />
+                        </button>
+                      </div>
+                    </StoreCard>
+                  </motion.li>
+                ))}
+              </AnimatePresence>
             </ul>
 
             <div className="flex items-center justify-between mb-8">
-              <span className="text-lg font-semibold">Total</span>
-              <span data-testid="cart-total" className="text-2xl font-bold">
+              <span className="text-lg font-semibold text-[#17151f]">Total</span>
+              <span data-testid="cart-total" className="font-display text-2xl font-bold text-[#17151f]">
                 {formatDigitalStorePrice(cart.currency, cart.totalAmount)}
               </span>
             </div>
@@ -152,14 +196,9 @@ export default function StoreCartPage() {
                 checkouts. That's belt-and-braces rather than the actual safeguard: the
                 session id is stable across retries, so the backend recomputes the same
                 idempotency key and hands back the SAME order either way. */}
-            <button
-              type="button"
-              onClick={handleProceedToCheckout}
-              disabled={checkoutBusy}
-              className="w-full bg-[#8B7FE8] text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-[#7A6DE0] disabled:opacity-60 disabled:cursor-not-allowed"
-            >
+            <Button theme="store" onClick={handleProceedToCheckout} disabled={checkoutBusy} className="w-full">
               {checkoutBusy ? 'Starting checkout...' : 'Proceed to Checkout'}
-            </button>
+            </Button>
             {checkoutError ? (
               <p className="text-red-600 mt-3 text-center">
                 {checkoutError.message || "We couldn't start checkout. Please try again."}

@@ -1,6 +1,8 @@
 // src/pages/StoreProductPage.jsx
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FiCheck } from 'react-icons/fi'
 import StorePageShell from '../components/layout/StorePageShell'
 import ProductForm from '../components/digital-store/ProductForm'
 import LiveDocumentPreview from '../components/digital-store/LiveDocumentPreview'
@@ -11,6 +13,9 @@ import {
   ProductFAQSection,
   ProductTrustSection,
 } from '../components/digital-store/ProductMarketingSections'
+import StoreSectionHeading from '../components/store/StoreSectionHeading'
+import StoreCard from '../components/store/StoreCard'
+import Button from '../components/ui/Button'
 import { useRequireAuthOrRedirect } from '../hooks/useRequireAuthOrRedirect'
 import { fetchDigitalStoreProduct, fetchDigitalStoreCategories, formatDigitalStorePrice } from '../utils/digitalStoreApi'
 import { DIGITAL_STORE_EVENTS, trackDigitalStoreEvent } from '../utils/digitalStoreAnalytics'
@@ -177,14 +182,16 @@ export default function StoreProductPage() {
 
         {requiresCustomization ? (
           <>
-            <section id={FORM_SECTION_ID} className="py-10 border-t border-gray-200">
-              <h2 className="text-2xl font-semibold mb-6">Customize your document</h2>
-              <ProductForm
-                fieldSchema={product.fieldSchema}
-                values={fieldValues}
-                onChange={handleFieldChange}
-                onFirstInteraction={handleFirstFormInteraction}
-              />
+            <section id={FORM_SECTION_ID} className="py-10 border-t border-black/5">
+              <StoreSectionHeading title="Customize your document" align="left" />
+              <div className="mt-6">
+                <ProductForm
+                  fieldSchema={product.fieldSchema}
+                  values={fieldValues}
+                  onChange={handleFieldChange}
+                  onFirstInteraction={handleFirstFormInteraction}
+                />
+              </div>
             </section>
 
             {/* Always visible the moment this branch renders - not a tab, not gated
@@ -202,19 +209,43 @@ export default function StoreProductPage() {
           </>
         ) : null}
 
-        <section id={CTA_SECTION_ID} className="py-10 border-t border-gray-200 text-center">
-          <p className="text-2xl font-bold mb-4">{formatDigitalStorePrice(product.currency, product.price)}</p>
-          <button
-            type="button"
-            onClick={handleAddToCartClick}
-            disabled={addingToCart}
-            className="bg-[#8B7FE8] text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-[#7A6DE0] disabled:opacity-60 disabled:cursor-not-allowed"
-          >
-            {addingToCart ? 'Adding...' : 'Add to Cart'}
-          </button>
-          {validationMessage ? <p className="text-red-600 mt-3">{validationMessage}</p> : null}
-          {cartError ? <p className="text-red-600 mt-3">{cartError}</p> : null}
-          {cartMessage ? <p className="text-green-700 mt-3">{cartMessage}</p> : null}
+        <section id={CTA_SECTION_ID} className="py-10 border-t border-black/5 text-center">
+          <StoreCard hover={false} padding="lg" className="max-w-sm mx-auto flex flex-col items-center gap-4">
+            <span className="font-display text-3xl font-bold text-[#17151f]">
+              {formatDigitalStorePrice(product.currency, product.price)}
+            </span>
+            <Button theme="store" onClick={handleAddToCartClick} disabled={addingToCart} className="w-full">
+              <AnimatePresence mode="wait" initial={false}>
+                {addingToCart ? (
+                  <motion.span key="adding" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                    Adding...
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key="idle"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="inline-flex items-center gap-2"
+                  >
+                    {cartMessage ? <FiCheck /> : null}
+                    Add to Cart
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </Button>
+            {validationMessage ? <p className="text-red-600 text-sm">{validationMessage}</p> : null}
+            {cartError ? <p className="text-red-600 text-sm">{cartError}</p> : null}
+            {cartMessage ? (
+              <motion.p
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-green-700 text-sm font-medium"
+              >
+                {cartMessage}
+              </motion.p>
+            ) : null}
+          </StoreCard>
         </section>
 
         <ProductFAQSection faq={product.marketingContent?.faq} />

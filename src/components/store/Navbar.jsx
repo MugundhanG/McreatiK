@@ -33,46 +33,47 @@ const StoreNavbar = memo(function StoreNavbar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
         <Link to="/" className="shrink-0 inline-flex items-center gap-2">
-          <span className="font-display font-bold text-lg" style={{ color: '#8B7FE8' }}>
+          <span className="font-display font-bold text-lg text-[var(--store-accent-text)]">
             McreatiK
           </span>
-          <span className="font-display font-semibold text-lg text-[#17151f]">Digital Store</span>
+          <span className="hidden sm:inline font-display font-semibold text-lg text-[#17151f]">Digital Store</span>
         </Link>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
           {!loading && (
             customer ? (
               <div className="flex items-center gap-3 text-sm">
-                <span className="hidden sm:inline text-[#17151f]/70">Hi, {customer.name}</span>
+                <span className="hidden lg:inline text-[#17151f]/70">Hi, {customer.name}</span>
                 <Link
                   to="/store/cart"
                   aria-label={`Cart, ${itemCount} item${itemCount === 1 ? '' : 's'}`}
-                  className="relative font-semibold hover:underline"
-                  style={{ color: '#8B7FE8' }}
+                  className="relative font-semibold hover:underline text-[var(--store-accent-text)]"
                 >
                   Cart
                   {itemCount > 0 && (
-                    <span
-                      className="absolute -top-2 -right-3 flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full text-[11px] font-bold text-white"
-                      style={{ backgroundColor: '#17151f' }}
+                    <motion.span
+                      key={itemCount}
+                      initial={{ scale: 0.6 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: 'spring', bounce: 0.5, duration: 0.4 }}
+                      className="absolute -top-2 -right-3 flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full text-[11px] font-bold text-white bg-[#17151f]"
                     >
                       {itemCount}
-                    </span>
+                    </motion.span>
                   )}
                 </Link>
                 <button
                   type="button"
                   onClick={logout}
-                  className="font-semibold hover:underline"
-                  style={{ color: '#8B7FE8' }}
+                  className="hidden sm:inline font-semibold hover:underline text-[var(--store-accent-text)]"
                 >
                   Log Out
                 </button>
               </div>
             ) : (
-              <Link to="/store/login" className="text-sm font-semibold hover:underline" style={{ color: '#8B7FE8' }}>
+              <Link to="/store/login" className="text-sm font-semibold hover:underline text-[var(--store-accent-text)]">
                 Log In
               </Link>
             )

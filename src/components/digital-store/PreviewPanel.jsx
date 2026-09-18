@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
+import { FiExternalLink } from 'react-icons/fi'
 import { requestDigitalStorePreview } from '../../utils/digitalStoreApi'
 import { DIGITAL_STORE_EVENTS, trackDigitalStoreEvent } from '../../utils/digitalStoreAnalytics'
+import Button from '../ui/Button'
 
 export default function PreviewPanel({ templateId, fieldValues }) {
   const [status, setStatus] = useState('idle') // idle | loading | ready | error
@@ -62,27 +64,36 @@ export default function PreviewPanel({ templateId, fieldValues }) {
 
   return (
     <div className="py-10">
-      <p className="text-sm text-gray-600 mb-3">
+      <p className="text-sm text-[#4b4a55] mb-3">
         Want to double-check? Generate the exact, final PDF — the same file you'll receive, watermarked only until
         you complete your purchase.
       </p>
-      <button
-        type="button"
-        onClick={handlePreviewClick}
-        disabled={status === 'loading'}
-        className="bg-white border border-[#8B7FE8] text-[#8B7FE8] px-5 py-2 rounded-lg font-medium hover:bg-[#8B7FE8]/5 disabled:opacity-50"
-      >
+      <Button theme="store" variant="outline" onClick={handlePreviewClick} disabled={status === 'loading'}>
         {status === 'loading' ? 'Generating preview...' : "See the exact PDF you'll receive"}
-      </button>
+      </Button>
 
       {status === 'error' ? <p className="text-red-600 mt-3">{errorMessage}</p> : null}
 
       {status === 'ready' && previewUrl ? (
         <>
-          <iframe title="Document preview" src={previewUrl} className="w-full mt-4 rounded-lg border" style={{ height: '70vh' }} />
-          {/* Fallback for mobile browsers that render blob: PDFs inconsistently inside an iframe. */}
-          <a href={previewUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-sm text-[#8B7FE8] underline">
-            Open preview in a new tab
+          <iframe
+            title="Document preview"
+            src={previewUrl}
+            className="w-full mt-4 rounded-lg border border-black/10 shadow-sm"
+            style={{ height: '70vh' }}
+          />
+          {/* Fallback for mobile browsers that render blob: PDFs inconsistently inside an
+              iframe - styled as a full button (Button.jsx's own store/outline classes,
+              copied rather than nesting a <button> inside this <a>, which would be
+              invalid HTML), not a small link, so it's not easy to miss on a small
+              screen where it matters most. */}
+          <a
+            href={previewUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-md font-semibold text-sm tracking-wide border border-[var(--store-accent)]/60 text-[#17151f] transition-all duration-300 hover:bg-[var(--store-accent)]/10 hover:border-[var(--store-accent)]"
+          >
+            <FiExternalLink /> Open preview in a new tab
           </a>
         </>
       ) : null}

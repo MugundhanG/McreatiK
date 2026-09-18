@@ -1,10 +1,51 @@
 import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
 import StorePageShell from '../components/layout/StorePageShell'
 import ProductCard from '../components/digital-store/ProductCard'
+import StoreSectionHeading from '../components/store/StoreSectionHeading'
 import { fetchDigitalStoreCategories, fetchDigitalStoreProducts } from '../utils/digitalStoreApi'
 import { useSEO } from '../hooks/useSEO'
 
 const ALL_CATEGORIES_FILTER = 'all'
+
+function FilterPill({ label, isActive, onSelect }) {
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      aria-pressed={isActive}
+      className={`relative overflow-hidden px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
+        isActive ? 'text-white border-transparent' : 'bg-white text-[#4b4a55] border-black/10 hover:border-[var(--store-accent)]'
+      }`}
+    >
+      {isActive ? (
+        <motion.span
+          layoutId="catalog-filter-pill"
+          className="absolute inset-0 bg-[var(--store-accent)] rounded-full"
+          transition={{ type: 'spring', bounce: 0.15, duration: 0.4 }}
+        />
+      ) : null}
+      <span className="relative z-10">{label}</span>
+    </button>
+  )
+}
+
+function CatalogSkeleton() {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" aria-hidden="true">
+      {[0, 1, 2].map((i) => (
+        <div key={i} className="card-store overflow-hidden animate-pulse">
+          <div className="w-full h-48 bg-black/5" />
+          <div className="p-5 space-y-3">
+            <div className="h-4 bg-black/5 rounded w-2/3" />
+            <div className="h-3 bg-black/5 rounded w-1/2" />
+            <div className="h-6 bg-black/5 rounded w-1/3 mt-4" />
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
 
 export default function StoreCatalogPage() {
   const [categories, setCategories] = useState(null)
@@ -47,51 +88,47 @@ export default function StoreCatalogPage() {
   return (
     <StorePageShell>
       <div className="max-w-5xl mx-auto px-4 pt-28 pb-20">
-        <h1 className="text-3xl font-bold mb-2">Digital Store</h1>
-        <p className="text-gray-600 mb-10">Ready-made and customizable digital products, ready in minutes.</p>
+        <StoreSectionHeading
+          eyebrow="Digital Store"
+          title="Ready-made and customizable digital products"
+          subtitle="Fill in your details, preview instantly, and download — ready in minutes."
+          align="left"
+        />
 
-        {error ? <p className="text-red-600">Something went wrong loading the catalog. Please try again shortly.</p> : null}
-        {isLoading ? <p className="text-gray-500">Loading...</p> : null}
+        {error ? <p className="mt-8 text-red-600">Something went wrong loading the catalog. Please try again shortly.</p> : null}
+
+        {isLoading ? <div className="mt-10"><CatalogSkeleton /></div> : null}
 
         {categories?.length ? (
-          <div role="group" aria-label="Filter by category" className="flex flex-wrap gap-2 mb-8">
-            <button
-              type="button"
-              onClick={() => setSelectedCategoryId(ALL_CATEGORIES_FILTER)}
-              aria-pressed={selectedCategoryId === ALL_CATEGORIES_FILTER}
-              className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
-                selectedCategoryId === ALL_CATEGORIES_FILTER
-                  ? 'bg-[#8B7FE8] text-white border-[#8B7FE8]'
-                  : 'bg-white text-gray-700 border-gray-200 hover:border-[#8B7FE8]'
-              }`}
-            >
-              All
-            </button>
+          <div role="group" aria-label="Filter by category" className="flex flex-wrap gap-2 mt-10 mb-8">
+            <FilterPill
+              id={ALL_CATEGORIES_FILTER}
+              label="All"
+              isActive={selectedCategoryId === ALL_CATEGORIES_FILTER}
+              onSelect={() => setSelectedCategoryId(ALL_CATEGORIES_FILTER)}
+            />
             {categories.map((category) => (
-              <button
+              <FilterPill
                 key={category.id}
-                type="button"
-                onClick={() => setSelectedCategoryId(category.id)}
-                aria-pressed={selectedCategoryId === category.id}
-                className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
-                  selectedCategoryId === category.id
-                    ? 'bg-[#8B7FE8] text-white border-[#8B7FE8]'
-                    : 'bg-white text-gray-700 border-gray-200 hover:border-[#8B7FE8]'
-                }`}
-              >
-                {category.name}
-              </button>
+                id={category.id}
+                label={category.name}
+                isActive={selectedCategoryId === category.id}
+                onSelect={() => setSelectedCategoryId(category.id)}
+              />
             ))}
           </div>
         ) : null}
 
-        {products && visibleProducts.length === 0 ? <p className="text-gray-500">No products available right now.</p> : null}
+        {products && visibleProducts.length === 0 ? (
+          <p className="mt-10 text-[#4b4a55]">No products available right now.</p>
+        ) : null}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {visibleProducts.map((product) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-2">
+          {visibleProducts.map((product, index) => (
             <ProductCard
               key={product.id}
               product={product}
+              index={index}
               requiresCustomization={categoryById.get(product.categoryId)?.requiresCustomization ?? false}
             />
           ))}

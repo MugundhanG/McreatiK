@@ -23,7 +23,7 @@ const AuthFormField = memo(function AuthFormField({
   autoComplete,
 }) {
   const inputBase =
-    'w-full bg-black/[0.02] border rounded-md px-4 py-3.5 text-[#17151f] placeholder-[#17151f]/40 outline-none transition-all duration-200 focus:ring-2 focus:ring-[#8B7FE8]/40 text-sm font-body'
+    'w-full bg-black/[0.02] border rounded-md px-4 py-3.5 text-[#17151f] placeholder-[#17151f]/40 outline-none transition-all duration-200 focus:ring-2 focus:ring-[var(--store-accent)]/40 text-sm font-body'
   const inputOk = 'border-black/10 hover:border-black/20'
   const inputErr = 'border-[#DC2626] focus:ring-[#DC2626]/40'
 

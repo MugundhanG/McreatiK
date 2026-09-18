@@ -61,7 +61,7 @@ export default function StoreSignupPage() {
         >
           <span
             className="flex items-center justify-center w-12 h-12 rounded-lg border mb-5"
-            style={{ borderColor: '#8B7FE8', color: '#8B7FE8', backgroundColor: '#8B7FE81a' }}
+            style={{ borderColor: 'var(--store-accent)', color: 'var(--store-accent-text)', backgroundColor: 'var(--store-accent-soft)' }}
           >
             <FiUserPlus className="w-5 h-5" />
           </span>
@@ -136,7 +136,7 @@ export default function StoreSignupPage() {
 
           <p className="mt-6 text-sm text-center text-[#17151f]/70">
             Already have an account?{' '}
-            <Link to="/store/login" state={location.state} className="font-semibold" style={{ color: '#8B7FE8' }}>
+            <Link to="/store/login" state={location.state} className="font-semibold text-[var(--store-accent-text)]">
               Log in
             </Link>
           </p>

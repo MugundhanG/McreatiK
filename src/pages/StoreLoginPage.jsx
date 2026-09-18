@@ -62,7 +62,7 @@ export default function StoreLoginPage() {
         >
           <span
             className="flex items-center justify-center w-12 h-12 rounded-lg border mb-5"
-            style={{ borderColor: '#8B7FE8', color: '#8B7FE8', backgroundColor: '#8B7FE81a' }}
+            style={{ borderColor: 'var(--store-accent)', color: 'var(--store-accent-text)', backgroundColor: 'var(--store-accent-soft)' }}
           >
             <FiLogIn className="w-5 h-5" />
           </span>
@@ -98,7 +98,7 @@ export default function StoreLoginPage() {
                 error={errors.password}
               />
               <div className="text-right mt-1.5">
-                <Link to="/store/forgot-password" className="text-xs font-semibold" style={{ color: '#8B7FE8' }}>
+                <Link to="/store/forgot-password" className="text-xs font-semibold text-[var(--store-accent-text)]">
                   Forgot your password?
                 </Link>
               </div>
@@ -117,7 +117,7 @@ export default function StoreLoginPage() {
 
           <p className="mt-6 text-sm text-center text-[#17151f]/70">
             New here?{' '}
-            <Link to="/store/signup" state={location.state} className="font-semibold" style={{ color: '#8B7FE8' }}>
+            <Link to="/store/signup" state={location.state} className="font-semibold text-[var(--store-accent-text)]">
               Create an account
             </Link>
           </p>

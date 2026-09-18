@@ -15,7 +15,7 @@ import ScrollToTop from '../ui/ScrollToTop'
 function SectionLoader() {
   return (
     <div className="flex items-center justify-center py-32">
-      <div className="w-8 h-8 border-2 border-[#8B7FE8] border-t-transparent rounded-full animate-spin" />
+      <div className="w-8 h-8 border-2 border-[var(--store-accent)] border-t-transparent rounded-full animate-spin" />
     </div>
   )
 }
@@ -30,7 +30,7 @@ export default function StorePageShell({ children }) {
         </Suspense>
       </main>
       <StoreFooter />
-      <ScrollToTop accentClass="bg-[#8B7FE8] text-white shadow-[#8B7FE8]/30 hover:bg-[#7A6DE0]" />
+      <ScrollToTop accentClass="bg-[var(--store-accent)] text-white shadow-[var(--store-accent)]/30 hover:bg-[var(--store-accent-hover)]" />
     </div>
   )
 }
