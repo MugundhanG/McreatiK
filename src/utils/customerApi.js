@@ -55,7 +55,12 @@ export function configureAuth(refresh, onFailure) {
 async function rawRequest(path, options) {
   const headers = new Headers(options.headers)
   if (accessToken) headers.set('Authorization', `Bearer ${accessToken}`)
-  if (options.body && !headers.has('Content-Type')) headers.set('Content-Type', 'application/json')
+  // A FormData body (file uploads) must NOT get a manually-set Content-Type - the
+  // browser sets its own multipart/form-data; boundary=... header, which it can
+  // only do correctly if no Content-Type is set at all beforehand.
+  if (options.body && !(options.body instanceof FormData) && !headers.has('Content-Type')) {
+    headers.set('Content-Type', 'application/json')
+  }
 
   // credentials: 'include' is required for the httpOnly refresh cookie to be sent
   // cross-origin to the API's own origin.
@@ -151,5 +156,20 @@ export async function confirmPasswordReset({ token, newPassword }) {
   return customerApiFetch('/api/v1/customer/auth/password-reset/confirm', {
     method: 'POST',
     body: JSON.stringify({ token, newPassword }),
+  })
+}
+
+/**
+ * Uploads a buyer-selected image file for an "image"-type customization field.
+ * Returns { url } on success - that url becomes the field's value exactly like
+ * any other field, via the same onChange(name, value) contract every other
+ * field type already uses (see ProductForm.jsx).
+ */
+export async function uploadCustomerImage(file) {
+  const formData = new FormData()
+  formData.append('file', file)
+  return customerApiFetch('/api/v1/customer/uploads/image', {
+    method: 'POST',
+    body: formData,
   })
 }
