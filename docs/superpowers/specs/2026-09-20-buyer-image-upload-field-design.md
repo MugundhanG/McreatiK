@@ -88,11 +88,17 @@ rather than arbitrary buyer-supplied text.
   directly to `POST /api/v1/cart/items`, which would then get embedded in
   their generated document and rendered by our own PDF pipeline. Rejecting
   anything that isn't demonstrably one of our own uploaded objects closes
-  that hole. (openhtmltopdf's default `PdfRendererBuilder` configuration in
-  this codebase has no external URI resolver wired up, so this is
-  defense-in-depth rather than the only thing standing between a submitted
-  URL and an outbound fetch — but it should not be the *only* thing relied
-  upon, hence checking it explicitly here regardless.)
+  that hole. (openhtmltopdf's `PdfRendererBuilder` DOES fetch external image URLs over the
+  network by default at render time — verified against the library's own
+  `NaiveUserAgent`/`DefaultAccessController` behavior, not assumed. This makes
+  this field-value check the *actual, load-bearing* control against a
+  malicious external URL reaching this renderer, not defense-in-depth. A
+  companion fix wires `PdfRendererBuilder.useExternalResourceAccessControl`
+  in `TemplateHtmlPdfRenderer` to restrict every resource fetch, from any
+  field type, to our own R2 public host — closing the same class of risk for
+  a plain `"string"`-typed field misused as an `<img src="{{field}}">`
+  source, which this validator alone cannot cover since it only applies to
+  fields explicitly typed `"image"`.)
 
 **2. New upload endpoint.** `POST /api/v1/customer/uploads/image`,
 `multipart/form-data`, single file field. Added to the existing
