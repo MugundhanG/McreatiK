@@ -1,9 +1,10 @@
 /* ============================================
    McreatiK - Global Styles
    Imports Tailwind CSS and defines base styles
-   plus the two department theme systems:
+   plus the department theme systems:
      .theme-tech     — Tech & Creative Solutions
      .theme-studios  — McreatiK Studios
+     .theme-store    — McreatiK Digital Store
    ============================================ */
 
 @import "tailwindcss";
@@ -76,6 +77,35 @@
     --font-body: 'Work Sans', sans-serif;
     --font-mono: 'Space Mono', monospace;
   }
+  /* Store — light, product-forward identity: cool
+     lavender-tinted paper ground, near-black ink,
+     periwinkle accent (#8B7FE8, reserved on the home
+     page's Explore/nav placeholders). Visual direction:
+     minimal editorial, icon-forward — deliberately no
+     decorative motif object (unlike Tech's reg-marks or
+     Studios' film-sprockets), since Store sells digital
+     products broadly rather than one literal subject the
+     way Tech (technical/blueprint) and Studios
+     (photography/film) do. Tokens below replace the
+     literal #8B7FE8/#7A6DE0 hex this department used to
+     have hardcoded across ~12 files. */
+  .theme-store {
+    background: #f8f7fb;
+    color: #17151f;
+    --font-display: 'Archivo', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+    --store-accent: #8B7FE8;
+    --store-accent-hover: #7A6DE0;
+    --store-accent-soft: rgba(139, 127, 232, 0.1);
+    /* Darker than --store-accent specifically for small body-text (links,
+       labels) — #8B7FE8 direct on this background is roughly 3:1, fine for
+       fills/icons/borders but borderline for small text. Use this one for
+       anything read as text, --store-accent for anything read as a fill. */
+    --store-accent-text: #6A5DD0;
+    --store-ink: #17151f;
+    --store-surface: #ffffff;
+  }
   /* McreatiK master brand — the homepage's own identity, distinct from
      both departments, grounded in the real logo's navy + gold. */
   .theme-home {
@@ -114,6 +144,45 @@
   .glass-card-home {
     background: #121a3d;
     border: 1px solid rgba(216, 174, 85, 0.2);
+  }
+
+  /* ---------- Store card surface ----------
+     Flat white surface, hairline border, hover lift + deepened
+     shadow with a spring-ish ease — Store's whole "motif" is
+     confident restraint rather than a decorative object, so this
+     one class (used by StoreCard.jsx) is what every product card,
+     cart line, order-item row, and trust badge shares instead of
+     five separate copies of "border rounded-xl". */
+  .card-store {
+    background: var(--store-surface);
+    border: 1px solid rgba(23, 21, 31, 0.08);
+    border-radius: 12px;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+  .card-store-hover:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 32px rgba(23, 21, 31, 0.12);
+    border-color: rgba(23, 21, 31, 0.16);
+  }
+
+  /* Icon-in-a-tinted-container — the one recurring "object" this
+     department's icon-forward direction actually has, used by
+     StoreIconBadge.jsx everywhere an emoji used to stand in. */
+  .store-icon-badge {
+    border-radius: 12px;
+    background: var(--store-accent-soft);
+    color: var(--store-accent-text);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease;
+  }
+  .store-icon-badge:hover {
+    transform: scale(1.08);
+    background: rgba(139, 127, 232, 0.2);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card-store-hover:hover,
+    .store-icon-badge:hover {
+      transform: none;
+    }
   }
 
   /* ---------- Tech registration-mark motif ----------

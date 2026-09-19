@@ -1,18 +1,19 @@
 /* ============================================
    DepartmentSwitcher
-   Two-segment pill showing which McreatiK
+   Multi-segment pill showing which McreatiK
    department the current page belongs to, with
-   the other one as a one-tap way to flip over.
-   Reads as navigation, not a promotion. Uses
-   currentColor so it self-adapts to whichever
-   page (dark Tech / light Studios) it's dropped
-   into, without a theme prop.
+   the others as one-tap ways to flip over. Reads
+   as navigation, not a promotion. Uses currentColor
+   so it self-adapts to whichever page it's dropped
+   into, without a theme prop. Data-driven off
+   DEPARTMENTS so a future department only needs an
+   entry there, not a new block here.
    ============================================ */
 
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { FiCode, FiCamera } from 'react-icons/fi'
 import { triggerDepartmentTransition } from '../../utils/departmentTransition'
+import { DEPARTMENTS } from '../../utils/departments'
 
 /* Plain clicks switch departments through the wipe transition; a
    modifier click (open in new tab, middle-click, etc.) is left alone
@@ -26,7 +27,6 @@ const switchDepartment = (department, isActive) => (e) => {
 
 const DepartmentSwitcher = ({ compact = false, className = '' }) => {
   const { pathname } = useLocation()
-  const isTech = pathname.startsWith('/tech')
 
   const itemBase = `flex items-center justify-center gap-1.5 rounded-full transition-colors ${
     compact ? 'w-7 h-7' : 'px-3.5 py-1.5 text-sm font-medium'
@@ -34,26 +34,25 @@ const DepartmentSwitcher = ({ compact = false, className = '' }) => {
 
   return (
     <div className={`inline-flex items-center gap-0.5 rounded-full border border-current/10 p-0.5 ${className}`}>
-      <Link
-        to="/tech"
-        title="McreatiK Tech & Creative"
-        aria-current={isTech ? 'page' : undefined}
-        onClick={switchDepartment('tech', isTech)}
-        className={`${itemBase} ${isTech ? 'bg-[#1E4FD9] text-white' : 'text-current/50 hover:text-[#1E4FD9]'}`}
-      >
-        <FiCode className="w-3.5 h-3.5 shrink-0" />
-        {!compact && <span>Tech</span>}
-      </Link>
-      <Link
-        to="/studios"
-        title="McreatiK Studios"
-        aria-current={!isTech ? 'page' : undefined}
-        onClick={switchDepartment('studios', !isTech)}
-        className={`${itemBase} ${!isTech ? 'bg-[#C9971F] text-white' : 'text-current/50 hover:text-[#C9971F]'}`}
-      >
-        <FiCamera className="w-3.5 h-3.5 shrink-0" />
-        {!compact && <span>Studios</span>}
-      </Link>
+      {DEPARTMENTS.map(({ key, label, fullName, path, icon: Icon, accent }) => {
+        const isActive = pathname.startsWith(path)
+        return (
+          <Link
+            key={key}
+            to={path}
+            title={fullName}
+            aria-current={isActive ? 'page' : undefined}
+            onClick={switchDepartment(key, isActive)}
+            className={`${itemBase} ${isActive ? 'text-white' : 'text-current/50'}`}
+            style={isActive ? { backgroundColor: accent } : undefined}
+            onMouseEnter={!isActive ? (e) => (e.currentTarget.style.color = accent) : undefined}
+            onMouseLeave={!isActive ? (e) => (e.currentTarget.style.color = '') : undefined}
+          >
+            <Icon className="w-3.5 h-3.5 shrink-0" />
+            {!compact && <span>{label}</span>}
+          </Link>
+        )
+      })}
     </div>
   )
 }

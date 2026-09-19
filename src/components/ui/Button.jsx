@@ -27,6 +27,12 @@ const THEMES = {
     outline:
       'border border-[#D8AE55]/50 text-[#D8AE55] hover:bg-[#D8AE55]/10 hover:border-[#D8AE55]',
   },
+  store: {
+    primary:
+      'bg-[#8B7FE8] text-white border border-transparent shadow-sm shadow-[#8B7FE8]/25 hover:bg-[#7A6DE0]',
+    outline:
+      'border border-[#8B7FE8]/60 text-[#17151f] hover:bg-[#8B7FE8]/10 hover:border-[#8B7FE8]',
+  },
 }
 
 const Button = memo(function Button({
