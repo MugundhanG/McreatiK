@@ -1,6 +1,6 @@
 // src/pages/StoreProductPage.jsx
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiCheck } from 'react-icons/fi'
 import StorePageShell from '../components/layout/StorePageShell'
@@ -20,6 +20,7 @@ import { useRequireAuthOrRedirect } from '../hooks/useRequireAuthOrRedirect'
 import { fetchDigitalStoreProduct, fetchDigitalStoreCategories, formatDigitalStorePrice } from '../utils/digitalStoreApi'
 import { DIGITAL_STORE_EVENTS, trackDigitalStoreEvent } from '../utils/digitalStoreAnalytics'
 import { useSEO } from '../hooks/useSEO'
+import { useAuth } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
 import { CustomerApiError } from '../utils/customerApi'
 
@@ -29,7 +30,10 @@ const CTA_SECTION_ID = 'store-product-cta'
 export default function StoreProductPage() {
   const { productId } = useParams()
   const requireAuthOrRedirect = useRequireAuthOrRedirect()
+  const { customer, loading: authLoading } = useAuth()
   const { addItem } = useCart()
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const [product, setProduct] = useState(null)
   const [category, setCategory] = useState(null)
@@ -80,6 +84,15 @@ export default function StoreProductPage() {
 
   function scrollToAction() {
     document.getElementById(requiresCustomization ? FORM_SECTION_ID : CTA_SECTION_ID)?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  // Shared by the customization section's own prompt and (indirectly, via
+  // handleAddToCartClick below) the bottom Add to Cart button - both need the
+  // exact same "come back here after logging in" redirect, matching
+  // useRequireAuthOrRedirect's own state shape so StoreLoginPage's existing
+  // from-redirect handles either entry point identically.
+  function goToLogin() {
+    navigate('/store/login', { state: { from: `${location.pathname}${location.search}` } })
   }
 
   // A lightweight, non-exhaustive check: it only catches an obviously-incomplete form
@@ -148,7 +161,12 @@ export default function StoreProductPage() {
   // visitor to /store/login (carrying this page as `from`) and runs nothing -
   // browsing the product page itself stays public either way.
   function handleAddToCartClick() {
-    if (isFormObviouslyIncomplete()) {
+    // A logged-out visitor on a customization-required product never had the
+    // form to fill in (it's hidden behind the login gate below) - sending
+    // them to "please fill in the fields above" would point at nothing. Only
+    // apply the incomplete-form check once they're actually signed in and
+    // the form was genuinely there to fill in.
+    if (customer && isFormObviouslyIncomplete()) {
       setValidationMessage('Please fill in all required fields above before adding to cart.')
       return
     }
@@ -180,7 +198,31 @@ export default function StoreProductPage() {
         <ProductHero template={product} onGetStarted={scrollToAction} />
         <ProductStorySections marketingContent={product.marketingContent} />
 
-        {requiresCustomization ? (
+        {requiresCustomization && authLoading ? (
+          <section id={FORM_SECTION_ID} className="py-10 border-t border-black/5">
+            <StoreSectionHeading title="Customize your document" align="left" />
+            <div className="mt-6 h-40 rounded-lg bg-[var(--store-accent-soft)] animate-pulse" aria-hidden="true" />
+          </section>
+        ) : null}
+
+        {requiresCustomization && !authLoading && !customer ? (
+          <section id={FORM_SECTION_ID} className="py-10 border-t border-black/5">
+            <StoreSectionHeading title="Customize your document" align="left" />
+            <div className="mt-6">
+              <StoreCard hover={false} padding="lg" className="max-w-md mx-auto text-center">
+                <p className="text-[#17151f] font-medium mb-1">Log in to customize this document</p>
+                <p className="text-sm text-[#4b4a55] mb-5">
+                  Create a free account or log in to fill in your details and see a live preview before you buy.
+                </p>
+                <Button theme="store" onClick={goToLogin}>
+                  Log in / Sign up
+                </Button>
+              </StoreCard>
+            </div>
+          </section>
+        ) : null}
+
+        {requiresCustomization && !authLoading && customer ? (
           <>
             <section id={FORM_SECTION_ID} className="py-10 border-t border-black/5">
               <StoreSectionHeading title="Customize your document" align="left" />

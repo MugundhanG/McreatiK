@@ -104,9 +104,9 @@ afterEach(() => {
 })
 
 describe('StoreProductPage — branching on category.requiresCustomization', () => {
-  it('renders the customization form and preview panel for a product in a requiresCustomization category', async () => {
+  it('renders the customization form and preview panel for a signed-in customer on a requiresCustomization category', async () => {
     vi.spyOn(api, 'fetchDigitalStoreProduct').mockResolvedValue(CUSTOMIZABLE_PRODUCT)
-    renderPage('p1')
+    renderPage('p1', { fetchImpl: SIGNED_IN_RESPONSE })
 
     expect(await screen.findByLabelText("Bride's Name *")).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /see the exact pdf/i })).toBeInTheDocument()
@@ -114,7 +114,7 @@ describe('StoreProductPage — branching on category.requiresCustomization', () 
 
   it('shows the always-visible live preview immediately, updating as the buyer types - not gated behind any button', async () => {
     vi.spyOn(api, 'fetchDigitalStoreProduct').mockResolvedValue(CUSTOMIZABLE_PRODUCT)
-    renderPage('p1')
+    renderPage('p1', { fetchImpl: SIGNED_IN_RESPONSE })
 
     const nameInput = await screen.findByLabelText("Bride's Name *")
     const liveIframe = screen.getByTitle('Live document preview')
@@ -203,8 +203,10 @@ describe('StoreProductPage — add-to-cart is auth-gated on both branches', () =
     vi.spyOn(api, 'fetchDigitalStoreProduct').mockResolvedValue(CUSTOMIZABLE_PRODUCT)
     renderPage('p1', { fetchImpl: SIGNED_OUT_RESPONSE })
 
-    fireEvent.change(await screen.findByLabelText("Bride's Name *"), { target: { value: 'Jane' } })
-    fireEvent.click(screen.getByRole('button', { name: /add to cart/i }))
+    // No form to fill in here - it's hidden behind the login gate (see the
+    // describe block below) - so this goes straight for the bottom Add to
+    // Cart button, which stays visible on both branches regardless of auth.
+    fireEvent.click(await screen.findByRole('button', { name: /add to cart/i }))
 
     await waitFor(() => expect(screen.getByText('login page')).toBeInTheDocument())
     expect(screen.queryByText(/added .* to your cart/i)).not.toBeInTheDocument()
@@ -235,6 +237,35 @@ describe('StoreProductPage — add-to-cart is auth-gated on both branches', () =
       expect(screen.getByText(/added "social media template pack" to your cart/i)).toBeInTheDocument()
     )
     expect(cartApi.addCartItem).toHaveBeenCalledWith({ productId: 'p2', fieldValues: {} })
+  })
+})
+
+describe('StoreProductPage — customization form is login-gated on the requiresCustomization branch', () => {
+  it('shows a log-in prompt instead of the form/preview for a signed-out visitor', async () => {
+    vi.spyOn(api, 'fetchDigitalStoreProduct').mockResolvedValue(CUSTOMIZABLE_PRODUCT)
+    renderPage('p1', { fetchImpl: SIGNED_OUT_RESPONSE })
+
+    expect(await screen.findByText(/log in to customize this document/i)).toBeInTheDocument()
+    expect(screen.queryByLabelText("Bride's Name *")).not.toBeInTheDocument()
+    expect(screen.queryByTitle('Live document preview')).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /see the exact pdf/i })).not.toBeInTheDocument()
+  })
+
+  it('sends a signed-out visitor to /store/login when they click the prompt itself', async () => {
+    vi.spyOn(api, 'fetchDigitalStoreProduct').mockResolvedValue(CUSTOMIZABLE_PRODUCT)
+    renderPage('p1', { fetchImpl: SIGNED_OUT_RESPONSE })
+
+    fireEvent.click(await screen.findByRole('button', { name: /log in \/ sign up/i }))
+
+    await waitFor(() => expect(screen.getByText('login page')).toBeInTheDocument())
+  })
+
+  it('does not gate the non-customization branch behind login - browsing/adding stays public until the cart action itself', async () => {
+    vi.spyOn(api, 'fetchDigitalStoreProduct').mockResolvedValue(NON_CUSTOM_PRODUCT)
+    renderPage('p2', { fetchImpl: SIGNED_OUT_RESPONSE })
+
+    expect(await screen.findByText('Social Media Template Pack')).toBeInTheDocument()
+    expect(screen.queryByText(/log in to customize this document/i)).not.toBeInTheDocument()
   })
 })
 
