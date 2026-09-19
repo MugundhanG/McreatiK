@@ -248,10 +248,23 @@ describe('ProductForm — image field type', () => {
     const handleChange = vi.fn()
     render(<ProductForm fieldSchema={IMAGE_FIELD_SCHEMA} values={{}} onChange={handleChange} />)
 
+    const file = new File(['fake-bytes'], 'logo.png', { type: 'image/png' })
+    fireEvent.change(screen.getByLabelText(/your studio logo/i), { target: { files: [file] } })
+
+    expect(await screen.findByText(/file must be a png, jpeg, or webp image/i)).toBeInTheDocument()
+    expect(uploadCustomerImage).toHaveBeenCalledWith(file)
+    expect(handleChange).not.toHaveBeenCalled()
+  })
+
+  it('rejects a non-image file client-side without calling the upload endpoint at all', async () => {
+    const handleChange = vi.fn()
+    render(<ProductForm fieldSchema={IMAGE_FIELD_SCHEMA} values={{}} onChange={handleChange} />)
+
     const file = new File(['fake-bytes'], 'logo.txt', { type: 'text/plain' })
     fireEvent.change(screen.getByLabelText(/your studio logo/i), { target: { files: [file] } })
 
     expect(await screen.findByText(/must be a png, jpeg, or webp image/i)).toBeInTheDocument()
+    expect(uploadCustomerImage).not.toHaveBeenCalled()
     expect(handleChange).not.toHaveBeenCalled()
   })
 
