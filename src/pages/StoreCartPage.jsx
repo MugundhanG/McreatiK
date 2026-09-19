@@ -204,6 +204,13 @@ export default function StoreCartPage() {
                 {checkoutError.message || "We couldn't start checkout. Please try again."}
               </p>
             ) : null}
+            <p className="mt-3 text-xs text-center text-[#17151f]/50">
+              By paying you agree to our{' '}
+              <Link to="/store/refund-policy" className="font-semibold text-[var(--store-accent-text)]">
+                Refund & Cancellation Policy
+              </Link>
+              .
+            </p>
           </>
         )}
       </div>

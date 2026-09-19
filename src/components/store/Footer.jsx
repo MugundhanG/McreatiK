@@ -28,7 +28,12 @@ const StoreFooter = memo(function StoreFooter() {
             </Link>
             <span className="text-[#17151f]/50 text-sm">&copy; {year}</span>
           </div>
-          <DepartmentSwitcher className="text-[#17151f]/70 bg-white/70" />
+          <div className="flex items-center gap-6">
+            <Link to="/store/refund-policy" className="text-sm text-[#17151f]/70 hover:text-[var(--store-accent-text)] transition-colors">
+              Refund & Cancellation Policy
+            </Link>
+            <DepartmentSwitcher className="text-[#17151f]/70 bg-white/70" />
+          </div>
         </div>
       </div>
     </footer>

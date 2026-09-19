@@ -48,6 +48,7 @@ const StoreLoginPage = lazy(() => import('./pages/StoreLoginPage'))
 const StoreForgotPasswordPage = lazy(() => import('./pages/StoreForgotPasswordPage'))
 const StoreResetPasswordPage = lazy(() => import('./pages/StoreResetPasswordPage'))
 const StoreOrderPage = lazy(() => import('./pages/StoreOrderPage'))
+const StoreRefundPolicyPage = lazy(() => import('./pages/StoreRefundPolicyPage'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 /* Full-screen loading placeholder shown while a page chunk loads */
@@ -94,6 +95,7 @@ function App() {
           <Route path="/store/forgot-password" element={<StoreForgotPasswordPage />} />
           <Route path="/store/reset-password" element={<StoreResetPasswordPage />} />
           <Route path="/store/orders/:orderId" element={<StoreOrderPage />} />
+          <Route path="/store/refund-policy" element={<StoreRefundPolicyPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
