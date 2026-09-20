@@ -1,6 +1,12 @@
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import ProductForm from './ProductForm'
+
+vi.mock('../../utils/customerApi', () => ({
+  uploadCustomerImage: vi.fn(),
+}))
+
+import { uploadCustomerImage } from '../../utils/customerApi'
 
 const FIELD_SCHEMA = {
   fields: [
@@ -211,5 +217,79 @@ describe('ProductForm — non-editable fields (customerEditable: false)', () => 
 
     render(<ProductForm fieldSchema={implicit} values={{}} onChange={vi.fn()} />)
     expect(screen.getByLabelText('X')).not.toBeDisabled()
+  })
+})
+
+describe('ProductForm — image field type', () => {
+  const IMAGE_FIELD_SCHEMA = {
+    fields: [{ name: 'studioLogo', type: 'image', label: 'Your Studio Logo', required: true }],
+  }
+
+  it('renders a file picker instead of a text input for an image field', () => {
+    render(<ProductForm fieldSchema={IMAGE_FIELD_SCHEMA} values={{}} onChange={vi.fn()} />)
+
+    expect(screen.getByLabelText(/your studio logo/i)).toHaveAttribute('type', 'file')
+  })
+
+  it('uploads the selected file and reports the returned URL via onChange', async () => {
+    uploadCustomerImage.mockResolvedValue({ url: 'https://cdn.test/customer-uploads/abc/def.png' })
+    const handleChange = vi.fn()
+    render(<ProductForm fieldSchema={IMAGE_FIELD_SCHEMA} values={{}} onChange={handleChange} />)
+
+    const file = new File(['fake-bytes'], 'logo.png', { type: 'image/png' })
+    fireEvent.change(screen.getByLabelText(/your studio logo/i), { target: { files: [file] } })
+
+    await waitFor(() => expect(handleChange).toHaveBeenCalledWith('studioLogo', 'https://cdn.test/customer-uploads/abc/def.png'))
+    expect(uploadCustomerImage).toHaveBeenCalledWith(file)
+  })
+
+  it('shows an inline error and does not call onChange when the upload is rejected', async () => {
+    uploadCustomerImage.mockRejectedValue(new Error('file must be a PNG, JPEG, or WebP image'))
+    const handleChange = vi.fn()
+    render(<ProductForm fieldSchema={IMAGE_FIELD_SCHEMA} values={{}} onChange={handleChange} />)
+
+    const file = new File(['fake-bytes'], 'logo.png', { type: 'image/png' })
+    fireEvent.change(screen.getByLabelText(/your studio logo/i), { target: { files: [file] } })
+
+    expect(await screen.findByText(/file must be a png, jpeg, or webp image/i)).toBeInTheDocument()
+    expect(uploadCustomerImage).toHaveBeenCalledWith(file)
+    expect(handleChange).not.toHaveBeenCalled()
+  })
+
+  it('rejects a non-image file client-side without calling the upload endpoint at all', async () => {
+    const handleChange = vi.fn()
+    render(<ProductForm fieldSchema={IMAGE_FIELD_SCHEMA} values={{}} onChange={handleChange} />)
+
+    const file = new File(['fake-bytes'], 'logo.txt', { type: 'text/plain' })
+    fireEvent.change(screen.getByLabelText(/your studio logo/i), { target: { files: [file] } })
+
+    expect(await screen.findByText(/must be a png, jpeg, or webp image/i)).toBeInTheDocument()
+    expect(uploadCustomerImage).not.toHaveBeenCalled()
+    expect(handleChange).not.toHaveBeenCalled()
+  })
+
+  it('rejects an oversized file client-side without calling the upload endpoint at all', async () => {
+    const handleChange = vi.fn()
+    render(<ProductForm fieldSchema={IMAGE_FIELD_SCHEMA} values={{}} onChange={handleChange} />)
+
+    const oversized = new File([new Uint8Array(5_000_001)], 'huge.png', { type: 'image/png' })
+    fireEvent.change(screen.getByLabelText(/your studio logo/i), { target: { files: [oversized] } })
+
+    expect(await screen.findByText(/must be at most 5mb/i)).toBeInTheDocument()
+    expect(uploadCustomerImage).not.toHaveBeenCalled()
+    expect(handleChange).not.toHaveBeenCalled()
+  })
+
+  it('shows the uploaded image as a preview once set', () => {
+    render(
+      <ProductForm
+        fieldSchema={IMAGE_FIELD_SCHEMA}
+        values={{ studioLogo: 'https://cdn.test/customer-uploads/abc/def.png' }}
+        onChange={vi.fn()}
+      />
+    )
+
+    const preview = screen.getByAltText(/your studio logo/i)
+    expect(preview).toHaveAttribute('src', 'https://cdn.test/customer-uploads/abc/def.png')
   })
 })

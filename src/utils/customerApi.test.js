@@ -7,6 +7,7 @@ import {
   logout,
   requestPasswordReset,
   confirmPasswordReset,
+  uploadCustomerImage,
   setAccessToken,
   configureAuth,
   CustomerApiError,
@@ -181,5 +182,52 @@ describe('customerApiFetch auth header + 401 refresh-and-retry', () => {
 
     const [, options] = globalThis.fetch.mock.calls[0]
     expect(options.credentials).toBe('include')
+  })
+})
+
+describe('uploadCustomerImage', () => {
+  it('POSTs a FormData body to /api/v1/customer/uploads/image and returns the parsed response', async () => {
+    setAccessToken('token-123')
+    const file = new File(['fake-bytes'], 'logo.png', { type: 'image/png' })
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({ url: 'https://cdn.test/customer-uploads/abc/def.png' }),
+    })
+
+    const result = await uploadCustomerImage(file)
+
+    expect(result).toEqual({ url: 'https://cdn.test/customer-uploads/abc/def.png' })
+    const [calledUrl, calledOptions] = globalThis.fetch.mock.calls[0]
+    expect(calledUrl).toContain('/api/v1/customer/uploads/image')
+    expect(calledOptions.body).toBeInstanceOf(FormData)
+  })
+
+  it('does not force a JSON Content-Type header onto a FormData upload', async () => {
+    setAccessToken('token-123')
+    const file = new File(['fake-bytes'], 'logo.png', { type: 'image/png' })
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({ url: 'https://cdn.test/customer-uploads/abc/def.png' }),
+    })
+
+    await uploadCustomerImage(file)
+
+    const [, calledOptions] = globalThis.fetch.mock.calls[0]
+    const headers = new Headers(calledOptions.headers)
+    expect(headers.has('Content-Type')).toBe(false)
+  })
+
+  it('surfaces a rejection the same way other customerApiFetch calls do', async () => {
+    setAccessToken('token-123')
+    const file = new File(['fake-bytes'], 'logo.png', { type: 'image/png' })
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: false,
+      status: 400,
+      json: async () => ({ message: 'file must be a PNG, JPEG, or WebP image' }),
+    })
+
+    await expect(uploadCustomerImage(file)).rejects.toThrow('file must be a PNG, JPEG, or WebP image')
   })
 })
