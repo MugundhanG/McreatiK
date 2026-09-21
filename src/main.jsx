@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
+import { MotionConfig } from 'framer-motion'
 import './index.css'
 import App from './App.jsx'
 import { AuthProvider } from './context/AuthContext.jsx'
@@ -17,7 +18,14 @@ createRoot(document.getElementById('root')).render(
           useAuth() to know whose cart (if any) to fetch. */}
       <AuthProvider>
         <CartProvider>
-          <App />
+          {/* reducedMotion="user" makes every framer-motion component site-wide
+              respect prefers-reduced-motion automatically (transforms/layout
+              animations become instant, opacity fades stay) - the site's plain
+              CSS @media guard only ever covered CSS keyframes, not the
+              motion.* components almost every animated element here uses. */}
+          <MotionConfig reducedMotion="user">
+            <App />
+          </MotionConfig>
         </CartProvider>
       </AuthProvider>
     </BrowserRouter>

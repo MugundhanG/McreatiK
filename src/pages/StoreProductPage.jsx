@@ -43,6 +43,10 @@ export default function StoreProductPage() {
   const [cartMessage, setCartMessage] = useState(null)
   const [cartError, setCartError] = useState(null)
   const [addingToCart, setAddingToCart] = useState(false)
+  // Incremented on every successful add so the button's success pulse (keyed
+  // off this, not off cartMessage's text) replays even for two identical adds
+  // in a row.
+  const [successPulse, setSuccessPulse] = useState(0)
 
   // The public Product list carries only categoryId (ProductResponse.categoryId) -
   // requiresCustomization lives on the Category, so both lists have to be fetched
@@ -71,6 +75,15 @@ export default function StoreProductPage() {
       cancelled = true
     }
   }, [productId])
+
+  // Auto-dismiss the success line after a few seconds, matching this app's
+  // other transient-feedback patterns rather than leaving it on screen until
+  // some other action happens to clear it.
+  useEffect(() => {
+    if (!cartMessage) return
+    const timer = setTimeout(() => setCartMessage(null), 4000)
+    return () => clearTimeout(timer)
+  }, [cartMessage])
 
   function handleFieldChange(name, value) {
     setFieldValues((prev) => ({ ...prev, [name]: value }))
@@ -129,6 +142,7 @@ export default function StoreProductPage() {
     try {
       await addItem({ productId: product.id, fieldValues })
       setCartMessage(`Added "${product.name}" to your cart.`)
+      setSuccessPulse((n) => n + 1)
       trackDigitalStoreEvent(DIGITAL_STORE_EVENTS.ADD_TO_CART_CLICKED, { product_id: product.id })
     } catch (err) {
       // CartService.addItem's PurchasableProductResolver check answers "may this be
@@ -187,7 +201,21 @@ export default function StoreProductPage() {
   if (!product) {
     return (
       <StorePageShell>
-        <div className="max-w-2xl mx-auto px-4 pt-28 pb-20 text-center text-gray-500">Loading...</div>
+        {/* Matches StoreCatalogPage's CatalogSkeleton language (animate-pulse
+            blocks on the same surface tokens) instead of a bare "Loading..."
+            string - same department, same loading-state quality. */}
+        <div className="max-w-3xl mx-auto px-4 pt-28 pb-20" aria-hidden="true">
+          <div className="flex flex-col items-center gap-5 py-16 animate-pulse">
+            <div className="h-10 w-3/4 max-w-md bg-black/5 rounded" />
+            <div className="h-10 w-32 bg-black/5 rounded-full" />
+            <div className="h-11 w-40 bg-black/5 rounded-md" />
+          </div>
+          <div className="py-10 max-w-[65ch] mx-auto space-y-2 animate-pulse">
+            <div className="h-4 bg-black/5 rounded w-full" />
+            <div className="h-4 bg-black/5 rounded w-full" />
+            <div className="h-4 bg-black/5 rounded w-2/3" />
+          </div>
+        </div>
       </StorePageShell>
     )
   }
@@ -256,26 +284,45 @@ export default function StoreProductPage() {
             <span className="font-display text-3xl font-bold text-[#17151f]">
               {formatDigitalStorePrice(product.currency, product.price)}
             </span>
-            <Button theme="store" onClick={handleAddToCartClick} disabled={addingToCart} className="w-full">
-              <AnimatePresence mode="wait" initial={false}>
-                {addingToCart ? (
-                  <motion.span key="adding" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                    Adding...
-                  </motion.span>
-                ) : (
-                  <motion.span
-                    key="idle"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="inline-flex items-center gap-2"
-                  >
-                    {cartMessage ? <FiCheck /> : null}
-                    Add to Cart
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </Button>
+            {/* key={successPulse} forces a fresh mount (and therefore a fresh
+                `animate` run) on every successful add, including two
+                identical adds in a row where cartMessage's text wouldn't
+                otherwise change. */}
+            <motion.div
+              key={successPulse}
+              animate={successPulse > 0 ? { scale: [1, 1.05, 1] } : undefined}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full"
+            >
+              <Button theme="store" onClick={handleAddToCartClick} disabled={addingToCart} className="w-full">
+                <AnimatePresence mode="wait" initial={false}>
+                  {addingToCart ? (
+                    <motion.span key="adding" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                      Adding...
+                    </motion.span>
+                  ) : (
+                    <motion.span
+                      key="idle"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="inline-flex items-center gap-2"
+                    >
+                      {cartMessage ? (
+                        <motion.span
+                          initial={{ scale: 0, rotate: -45 }}
+                          animate={{ scale: 1, rotate: 0 }}
+                          transition={{ type: 'spring', stiffness: 500, damping: 20 }}
+                        >
+                          <FiCheck />
+                        </motion.span>
+                      ) : null}
+                      Add to Cart
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </Button>
+            </motion.div>
             {validationMessage ? <p className="text-red-600 text-sm">{validationMessage}</p> : null}
             {cartError ? <p className="text-red-600 text-sm">{cartError}</p> : null}
             {cartMessage ? (

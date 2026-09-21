@@ -78,7 +78,18 @@ const StoreNavbar = memo(function StoreNavbar() {
               </Link>
             )
           )}
-          <DepartmentSwitcher className="text-[#17151f]/70 bg-white/70" />
+          {/* Full pills (with labels) at sm+ fit comfortably; below that, the
+              auth cluster alone already claims most of a 375px row, so the
+              compact icon-only variant (already built for exactly this) keeps
+              the switcher usable instead of pushing off the right edge.
+              DepartmentSwitcher hardcodes "inline-flex" as a base class, and
+              Tailwind v4 orders generated CSS by first-appearance in scanned
+              source rather than a fixed category order - so a bare
+              "hidden sm:inline-flex" isn't guaranteed to win against it. The
+              `!` important-modifier forces the override regardless of
+              generation order. */}
+          <DepartmentSwitcher className="!hidden sm:!inline-flex text-[#17151f]/70 bg-white/70" />
+          <DepartmentSwitcher compact className="sm:!hidden text-[#17151f]/70 bg-white/70" />
         </div>
       </div>
     </motion.header>

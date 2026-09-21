@@ -17,7 +17,7 @@
     {
       "name": "mcreatik-backend-dev",
       "runtimeExecutable": "D:\\Websites\\mcreatik-backend\\mvnw.cmd",
-      "runtimeArgs": ["-f", "D:\\Websites\\mcreatik-backend\\pom.xml", "spring-boot:run"],
+      "runtimeArgs": ["-f", "D:\\Websites\\mcreatik-backend\\pom.xml", "spring-boot:run", "-Dspring-boot.run.arguments=--app.security.allowed-origins=http://localhost:5199,http://localhost:5200"],
       "port": 8080,
       "autoPort": false
     },
