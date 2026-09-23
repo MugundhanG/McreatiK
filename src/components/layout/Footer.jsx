@@ -107,8 +107,8 @@ const Footer = memo(function Footer() {
                 </a>
               </li>
               <li>
-                <a href="tel:+919600129267" className="hover:text-[#1E4FD9] transition-colors">
-                  +91 9600-129-267
+                <a href="tel:+919952758545" className="hover:text-[#1E4FD9] transition-colors">
+                  +91 9952 758545
                 </a>
               </li>
               <li>Remote — serving clients worldwide</li>

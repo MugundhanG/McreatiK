@@ -95,7 +95,7 @@ const Contact = memo(function Contact() {
           >
             {[
               { icon: FiMail,   label: 'Email',    value: 'connect@mcreatik.com', href: 'mailto:connect@mcreatik.com' },
-              { icon: FiPhone,  label: 'Phone',    value: '+91 9600-129-267',      href: 'tel:+919600129267' },
+              { icon: FiPhone,  label: 'Phone',    value: '+91 9952 758545',      href: 'tel:+919952758545' },
               { icon: FiMapPin, label: 'Location', value: 'Remote — Global',       href: null },
             ].map(({ icon: Icon, label, value, href }) => (
               <div key={label} className="glass-card rounded-lg p-6 flex items-start gap-4">
@@ -181,7 +181,7 @@ const Contact = memo(function Contact() {
                   id="phone"
                   name="phone"
                   type="tel"
-                  placeholder="+91 9600-129-267"
+                  placeholder="+91 9952 758545"
                   value={values.phone}
                   onChange={handleChange}
                   onBlur={handleBlur}

@@ -385,8 +385,8 @@ const HomeContact = memo(function HomeContact() {
           <a href="mailto:connect@mcreatik.com" className="inline-flex items-center gap-2 hover:text-[#D8AE55] transition-colors">
             <FiMail className="w-4 h-4" /> connect@mcreatik.com
           </a>
-          <a href="tel:+919600129267" className="inline-flex items-center gap-2 hover:text-[#D8AE55] transition-colors">
-            <FiPhone className="w-4 h-4" /> +91 9600-129-267
+          <a href="tel:+919952758545" className="inline-flex items-center gap-2 hover:text-[#D8AE55] transition-colors">
+            <FiPhone className="w-4 h-4" /> +91 9952 758545
           </a>
         </div>
       </div>

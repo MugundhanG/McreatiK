@@ -51,7 +51,7 @@ const StudiosFooter = memo(function StudiosFooter() {
             <h4 className="font-display italic text-[#1C1710] mb-3">Contact</h4>
             <ul className="space-y-2.5 text-sm font-body text-[#6B6153]">
               <li><a href="mailto:connect@mcreatik.com" className="hover:text-[#C9971F] transition-colors">connect@mcreatik.com</a></li>
-              <li><a href="tel:+919600129267" className="hover:text-[#C9971F] transition-colors">+91 9600-129-267</a></li>
+              <li><a href="tel:+919952758545" className="hover:text-[#C9971F] transition-colors">+91 9952 758545</a></li>
               <li>Based in Chennai, serving Tamil Nadu &amp; beyond</li>
             </ul>
             <div className="flex gap-3 mt-4">

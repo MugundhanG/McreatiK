@@ -56,7 +56,7 @@ import {
 } from 'react-icons/fi'
 
 /* Shared contact number used for WhatsApp CTAs across both departments */
-export const WHATSAPP_NUMBER = '919600129267'
+export const WHATSAPP_NUMBER = '919952758545'
 
 import photographyThumbnail from '../assets/photography_website_thumbnail.jpg'
 import adThumbnail from '../assets/ADthumbnail.jpg'
