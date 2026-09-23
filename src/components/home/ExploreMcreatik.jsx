@@ -14,7 +14,7 @@ import { FiArrowRight } from 'react-icons/fi'
 import { HOME_EXPLORE_AREAS } from '../../utils/constants'
 import SectionHeading from './SectionHeading'
 import techPhoto from '../../assets/tech-hero-photo.webp'
-import studiosPhoto from '../../assets/studios-hero-photo.webp'
+import studiosPhoto from '../../assets/studios-hero-photo.jpg'
 
 const CARD_PHOTOS = {
   tech: techPhoto,

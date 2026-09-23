@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FiArrowRight } from 'react-icons/fi'
 import Button from '../ui/Button'
-import studiosHeroPhoto from '../../assets/studios-hero-photo.webp'
+import studiosHeroPhoto from '../../assets/studios-hero-photo.jpg'
 
 const StudiosHero = memo(function StudiosHero() {
   return (
@@ -20,7 +20,7 @@ const StudiosHero = memo(function StudiosHero() {
         src={studiosHeroPhoto}
         alt=""
         aria-hidden="true"
-        className="absolute inset-0 h-full w-full scale-110 object-cover blur-md"
+        className="absolute inset-0 h-full w-full scale-110 object-cover"
       />
       <div className="film-grain" />
 
