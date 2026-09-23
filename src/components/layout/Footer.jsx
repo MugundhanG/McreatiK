@@ -121,7 +121,7 @@ const Footer = memo(function Footer() {
           <p className="text-stone-500 text-sm">
             &copy; {year} McreatiK. All rights reserved.
           </p>
-          <DepartmentSwitcher className="text-stone-500 bg-white" />
+          <DepartmentSwitcher excludeKeys={['store']} className="text-stone-500 bg-white" />
           <div className="flex gap-6 text-sm text-stone-500">
             <a href="#" className="hover:text-stone-800 transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-stone-800 transition-colors">Terms of Service</a>

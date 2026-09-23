@@ -25,16 +25,20 @@ const switchDepartment = (department, isActive) => (e) => {
   triggerDepartmentTransition(department)
 }
 
-const DepartmentSwitcher = ({ compact = false, className = '' }) => {
+const DepartmentSwitcher = ({ compact = false, className = '', excludeKeys = [] }) => {
   const { pathname } = useLocation()
 
   const itemBase = `flex items-center justify-center gap-1.5 rounded-full transition-colors ${
     compact ? 'w-7 h-7' : 'px-3.5 py-1.5 text-sm font-medium'
   }`
 
+  const visibleDepartments = excludeKeys.length
+    ? DEPARTMENTS.filter((department) => !excludeKeys.includes(department.key))
+    : DEPARTMENTS
+
   return (
     <div className={`inline-flex items-center gap-0.5 rounded-full border border-current/10 p-0.5 ${className}`}>
-      {DEPARTMENTS.map(({ key, label, fullName, path, icon: Icon, accent }) => {
+      {visibleDepartments.map(({ key, label, fullName, path, icon: Icon, accent }) => {
         const isActive = pathname.startsWith(path)
         return (
           <Link

@@ -50,7 +50,7 @@ const StudiosNavbar = memo(function StudiosNavbar() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
       >
-        <DepartmentSwitcher className="text-[#4A4438] bg-[#FAF7F0]/80 backdrop-blur-md shadow-lg shadow-black/10" />
+        <DepartmentSwitcher excludeKeys={['store']} className="text-[#4A4438] bg-[#FAF7F0]/80 backdrop-blur-md shadow-lg shadow-black/10" />
       </motion.div>
 
       <motion.header
@@ -129,7 +129,7 @@ const StudiosNavbar = memo(function StudiosNavbar() {
               </Link>
             ))}
             <div className="pt-3 pb-1 flex items-center justify-between gap-4">
-              <DepartmentSwitcher className="text-[#4A4438] border-black/10" />
+              <DepartmentSwitcher excludeKeys={['store']} className="text-[#4A4438] border-black/10" />
             </div>
             <Link
               to="/studios#book"

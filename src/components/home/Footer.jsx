@@ -25,7 +25,9 @@ const ICON_MAP = {
 const ECOSYSTEM_LINKS = [
   { label: 'McreatiK Tech', href: '/tech' },
   { label: 'McreatiK Studios', href: '/studios' },
-  { label: 'McreatiK Digital Store', href: '/store' },
+  // href: null renders as plain, non-clickable text (see the ternary below) -
+  // still fully live at /store, just not promoted from the homepage yet.
+  { label: 'McreatiK Digital Store (Coming Soon)', href: null },
 ]
 
 const Footer = memo(function Footer() {

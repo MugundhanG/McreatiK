@@ -72,7 +72,7 @@ const StudiosFooter = memo(function StudiosFooter() {
 
         <div className="border-t border-black/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-5">
           <p className="font-mono-label text-[11px] uppercase text-[#A89A88]">&copy; {year} McreatiK Studios</p>
-          <DepartmentSwitcher className="text-[#4A4438]" />
+          <DepartmentSwitcher excludeKeys={['store']} className="text-[#4A4438]" />
         </div>
       </div>
     </footer>

@@ -901,7 +901,7 @@ export const HOME_NAV_LINKS = [
   { label: 'Home', href: '#home', type: 'anchor' },
   { label: 'Tech', href: '/tech', type: 'route' },
   { label: 'Studios', href: '/studios', type: 'route' },
-  { label: 'Digital Store', href: '/store', type: 'route' },
+  { label: 'Digital Store', href: '/store', type: 'disabled' },
   { label: 'About', href: '#about', type: 'anchor' },
   { label: 'Contact', href: '#contact', type: 'anchor' },
 ]
@@ -939,9 +939,14 @@ export const HOME_EXPLORE_AREAS = [
     tagline: 'Digital products and creative resources to help you get moving faster.',
     longDescription: 'Digital products, templates and creative resources to help you create, launch and grow.',
     bullets: ['Templates', 'Digital downloads', 'Creative resources'],
-    cta: 'Explore Store',
+    cta: 'Coming Soon',
     href: '/store',
     accent: '#8B7FE8',
+    // Still fully built and reachable directly at /store - just not yet
+    // promoted from the homepage while the catalog is thin. ExploreMcreatik
+    // already renders `cta` as plain (unlinked) text whenever this is set,
+    // instead of the Link every other card gets.
+    comingSoon: true,
   },
 ]
 

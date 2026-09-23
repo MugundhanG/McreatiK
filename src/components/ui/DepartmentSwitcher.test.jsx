@@ -46,4 +46,16 @@ describe('DepartmentSwitcher', () => {
     expect(screen.queryByText('Store')).not.toBeInTheDocument()
     expect(screen.getAllByRole('link')).toHaveLength(DEPARTMENTS.length)
   })
+
+  it('omits a department entirely when its key is passed to excludeKeys, keeping the rest', () => {
+    render(
+      <MemoryRouter initialEntries={['/tech']}>
+        <DepartmentSwitcher excludeKeys={['store']} />
+      </MemoryRouter>
+    )
+
+    expect(screen.queryByRole('link', { name: /^store$/i })).not.toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /^tech$/i })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /^studios$/i })).toBeInTheDocument()
+  })
 })

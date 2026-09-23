@@ -75,7 +75,7 @@ const Navbar = memo(function Navbar() {
 
           {/* Desktop: switcher + CTA */}
           <div className="hidden lg:flex items-center gap-4 shrink-0 lg:w-full lg:justify-center xl:w-auto xl:justify-normal">
-            <DepartmentSwitcher className="text-stone-600 bg-stone-50/80" />
+            <DepartmentSwitcher excludeKeys={['store']} className="text-stone-600 bg-stone-50/80" />
             <Button href={WHATSAPP_HREF} className="text-xs px-4 py-2">
               Get Started
             </Button>
@@ -123,7 +123,7 @@ const Navbar = memo(function Navbar() {
                   </Link>
                 ))}
                 <div className="pt-3 flex items-center justify-between gap-4">
-                  <DepartmentSwitcher className="text-stone-600 bg-stone-50/80" />
+                  <DepartmentSwitcher excludeKeys={['store']} className="text-stone-600 bg-stone-50/80" />
                 </div>
                 <div className="pt-1">
                   <Button href={WHATSAPP_HREF} onClick={closeMobile} className="w-full text-center">
