@@ -281,7 +281,7 @@ export const TECH_PORTFOLIO_ITEMS = [
   },
   {
     id: 3,
-    title: 'Engeering Solutions Website',
+    title: 'Engineering Solutions Website',
     category: 'Website',
     industry: 'Professional Services',
     image: adThumbnail,
