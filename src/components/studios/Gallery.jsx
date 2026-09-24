@@ -7,7 +7,7 @@
    the CMS backend.
    ============================================ */
 
-import React, { memo, useEffect, useMemo, useState } from 'react'
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { FiAlertCircle, FiCamera, FiLayers } from 'react-icons/fi'
 import { fetchGalleryItems } from '../../utils/cmsApi'
@@ -53,6 +53,8 @@ const StudiosGallery = memo(function StudiosGallery() {
     () => (activeCategory === 'All' ? posts : posts.filter((post) => post.category === activeCategory)),
     [posts, activeCategory]
   )
+
+  const closeViewer = useCallback(() => setOpenIndex(null), [])
 
   return (
     <section id="gallery" className="relative bg-[#FAF8F3] py-20 lg:py-28 scroll-mt-28">
@@ -163,7 +165,7 @@ const StudiosGallery = memo(function StudiosGallery() {
             posts={visiblePosts}
             index={openIndex}
             onIndexChange={setOpenIndex}
-            onClose={() => setOpenIndex(null)}
+            onClose={closeViewer}
           />
         )}
       </AnimatePresence>

@@ -20,6 +20,7 @@ export default function GalleryPostViewer({ posts, index, onIndexChange, onClose
   const post = posts[index]
   const [photoIndex, setPhotoIndex] = useState(0)
   const touchStartX = useRef(null)
+  const closeButtonRef = useRef(null)
   const photos = post?.photos ?? []
   const hasManyPhotos = photos.length > 1
 
@@ -30,20 +31,29 @@ export default function GalleryPostViewer({ posts, index, onIndexChange, onClose
   const prevPhoto = useCallback(() => setPhotoIndex((i) => Math.max(i - 1, 0)), [])
   const nextPhoto = useCallback(() => setPhotoIndex((i) => Math.min(i + 1, photos.length - 1)), [photos.length])
 
+  // Mount-only: record focus, lock scroll, move focus into the dialog, and
+  // restore both on unmount. Kept separate from the keydown effect below so
+  // that navigating between posts (which changes onClose/nextPhoto/prevPhoto
+  // identities) doesn't re-run this teardown and yank focus back to the grid
+  // tile behind the modal on every post change.
   useEffect(() => {
     const previouslyFocused = document.activeElement
+    document.body.style.overflow = 'hidden'
+    closeButtonRef.current?.focus?.()
+    return () => {
+      document.body.style.overflow = ''
+      previouslyFocused?.focus?.()
+    }
+  }, [])
+
+  useEffect(() => {
     function handleKeyDown(e) {
       if (e.key === 'Escape') onClose()
       if (e.key === 'ArrowRight') nextPhoto()
       if (e.key === 'ArrowLeft') prevPhoto()
     }
     document.addEventListener('keydown', handleKeyDown)
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-      document.body.style.overflow = ''
-      previouslyFocused?.focus?.()
-    }
+    return () => document.removeEventListener('keydown', handleKeyDown)
   }, [onClose, nextPhoto, prevPhoto])
 
   if (!post) return null
@@ -81,6 +91,7 @@ export default function GalleryPostViewer({ posts, index, onIndexChange, onClose
       onClick={onClose}
     >
       <button
+        ref={closeButtonRef}
         onClick={onClose}
         aria-label="Close"
         className="fixed top-3 right-3 z-[102] w-10 h-10 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors"
