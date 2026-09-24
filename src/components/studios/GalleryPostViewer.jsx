@@ -47,7 +47,8 @@ export default function GalleryPostViewer({ posts, index, onIndexChange, onClose
   }, [onClose, nextPhoto, prevPhoto])
 
   if (!post) return null
-  const photo = photos[photoIndex]
+  const safeIndex = Math.min(photoIndex, photos.length - 1)
+  const photo = photos[safeIndex]
 
   function handleTouchStart(e) {
     touchStartX.current = e.touches[0].clientX
@@ -129,12 +130,12 @@ export default function GalleryPostViewer({ posts, index, onIndexChange, onClose
             draggable={false}
           />
 
-          {hasManyPhotos && photoIndex > 0 && (
+          {hasManyPhotos && safeIndex > 0 && (
             <button onClick={prevPhoto} aria-label="Previous photo" className={`${photoArrow} left-3`}>
               <FiChevronLeft className="w-5 h-5" />
             </button>
           )}
-          {hasManyPhotos && photoIndex < photos.length - 1 && (
+          {hasManyPhotos && safeIndex < photos.length - 1 && (
             <button onClick={nextPhoto} aria-label="Next photo" className={`${photoArrow} right-3`}>
               <FiChevronRight className="w-5 h-5" />
             </button>
@@ -143,7 +144,7 @@ export default function GalleryPostViewer({ posts, index, onIndexChange, onClose
           {hasManyPhotos && (
             <>
               <span className="absolute top-3 left-3 rounded-full bg-black/55 px-2.5 py-1 font-mono-label text-[11px] text-white">
-                {photoIndex + 1} / {photos.length}
+                {safeIndex + 1} / {photos.length}
               </span>
               <div className="absolute bottom-3 inset-x-0 flex justify-center gap-1.5 px-6 flex-wrap">
                 {photos.map((p, i) => (
@@ -151,9 +152,9 @@ export default function GalleryPostViewer({ posts, index, onIndexChange, onClose
                     key={p.media.id ?? i}
                     onClick={() => setPhotoIndex(i)}
                     aria-label={`Photo ${i + 1}`}
-                    aria-current={i === photoIndex}
+                    aria-current={i === safeIndex}
                     className={`h-1.5 w-1.5 rounded-full transition-colors ${
-                      i === photoIndex ? 'bg-white' : 'bg-white/40 hover:bg-white/70'
+                      i === safeIndex ? 'bg-white' : 'bg-white/40 hover:bg-white/70'
                     }`}
                   />
                 ))}
