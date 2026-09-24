@@ -717,6 +717,7 @@ export const STUDIOS_NAV_LINKS = [
   { label: 'Albums', href: '/studios/albums' },
   { label: 'Services', href: '/studios#offerings' },
   { label: 'Process', href: '/studios/experience' },
+  { label: 'Testimonials', href: '/studios/experience#testimonials' },
   { label: 'Blog', href: '/studios/blog' },
   { label: 'Contact', href: '/studios#book' },
 ]

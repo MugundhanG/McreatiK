@@ -70,7 +70,7 @@ function TestimonialCard({ quote, name, shootType }) {
 
 function Testimonials() {
   return (
-    <section className="relative py-24 lg:py-32 bg-[#F3EEE3]">
+    <section id="testimonials" className="relative py-24 lg:py-32 bg-[#F3EEE3]">
       <div className="max-w-5xl mx-auto px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
