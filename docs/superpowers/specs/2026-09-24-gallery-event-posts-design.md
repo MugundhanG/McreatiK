@@ -24,7 +24,7 @@ The local backend and production use **the same Supabase database** (see go-live
 
 1. **V30 must be purely additive.** The current live backend (which reads/writes `gallery_items.media_id` and knows nothing about photos) must keep working unchanged after V30 is applied.
 2. **The migration is validated on a throwaway Postgres first** (a disposable `postgres:16` container on the Oracle VM — no Docker locally), running V1–V30 from scratch, before any backend with V30 starts against the shared DB.
-3. **No new tests may write to the shared DB.** Backend tests for this feature are Mockito unit tests and `@WebMvcTest` slices only.
+3. **No new tests may write to the shared DB.** Backend tests for this feature are Mockito unit tests plus a controller test with the service mocked. The controller test follows the repo pattern (`@SpringBootTest` + `@AutoConfigureMockMvc`, the only setup that evaluates `@PreAuthorize`), which boots Flyway against the shared DB — so it must not run until V30 has passed the throwaway validation.
 
 ## 1. Backend (`mcreatik-backend`)
 
@@ -38,7 +38,7 @@ CREATE TABLE gallery_item_photos (
     gallery_item_id BIGINT NOT NULL REFERENCES gallery_items(id) ON DELETE CASCADE,
     media_id        BIGINT NOT NULL REFERENCES media(id),
     sort_order      INT NOT NULL DEFAULT 0,
-    alt_text        VARCHAR(255),
+    alt_text        VARCHAR(500),
     created_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
     UNIQUE (gallery_item_id, media_id)
@@ -58,10 +58,10 @@ FROM gallery_items gi JOIN media m ON m.id = gi.media_id;
 ### Entity / DTOs
 
 - New `GalleryItemPhoto` entity (mirrors `AlbumPhoto`): `galleryItem`, `media`, `sortOrder`, `altText`.
-- `GalleryItem` gains `location` and `@OneToMany(mappedBy, cascade = ALL, orphanRemoval = true) @OrderBy("sortOrder") List<GalleryItemPhoto> photos` with `@BatchSize(size = 50)` to avoid N+1 on list pages. `update(...)` replaces the photo list and resets `media` to the first photo.
+- `GalleryItem` gains `location` and `@OneToMany(mappedBy, cascade = ALL, orphanRemoval = true) @OrderBy("sortOrder") List<GalleryItemPhoto> photos`, fetched via `@EntityGraph(attributePaths = {"media", "photos", "photos.media"})` on every repository finder (same pattern as `AlbumRepository`). `update(...)` replaces the photo list and resets `media` to the first photo.
 - **`GalleryRequest`** (admin create/update):
   - new `String location`
-  - new `List<GalleryPhotoRequest> photos` where `GalleryPhotoRequest(@NotNull Long mediaId, @Size(max = 255) String altText)`
+  - new `List<GalleryPhotoRequest> photos` where `GalleryPhotoRequest(@NotNull Long mediaId, @Size(max = 500) String altText)`
   - `mediaId` becomes optional. **Backward compatibility:** if `photos` is null/empty and `mediaId` is present, it is treated as `photos = [{mediaId, altText: null}]`, so the live admin keeps working until the new admin ships.
   - Validation (service-level, 400 with a clear message): 1–20 photos, no duplicate `mediaId` within a post, every `mediaId` must exist.
 - **`GalleryResponse`** adds `location` and `photos: [{ media: MediaResponse, altText }]` in order. `media` (= cover) is **kept** so the currently live website keeps working. For items with no photo rows (see rollout gap), `photos` is synthesised as `[{ media, altText: media.altText }]`.
@@ -74,7 +74,7 @@ FROM gallery_items gi JOIN media m ON m.id = gi.media_id;
 ### Tests (no DB writes)
 
 - `GalleryServiceTest` (Mockito): create with N photos → order preserved, `media` = first; update replaces photos and reorders; 0 photos → 400; 21 photos → 400; duplicate mediaId → 400; unknown mediaId → 400; legacy `mediaId`-only request → one-photo post; item with no photo rows → response synthesises one photo.
-- `GalleryAdminController` `@WebMvcTest`: request with `photos` binds correctly; `altText` > 255 → 400.
+- `GalleryAdminControllerTest` (`@SpringBootTest` + MockMvc, `GalleryService` mocked): request with `photos` binds correctly; `altText` > 500 → 400 (matches `media.alt_text` VARCHAR(500), so the backfill can never overflow).
 
 ## 2. Admin (`mcreatik-admin`, `src/pages/gallery/`)
 
