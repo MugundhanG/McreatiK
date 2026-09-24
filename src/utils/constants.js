@@ -756,6 +756,24 @@ export const STUDIOS_EXPERIENCE_STEPS = [
   },
 ]
 
+/* Real client testimonials, added as they come in - see StudiosExperience's
+   Testimonials section, which renders exactly this list (no placeholder
+   padding to a fixed count). */
+export const STUDIOS_TESTIMONIALS = [
+  {
+    quote:
+      "We had a wonderful experience with McreatiK Studios for our son's 2nd birthday photoshoot! The photos turned out absolutely amazing — we were really happy with the quality and creativity. The pricing was also very reasonable and completely worth it. Thank you for capturing such beautiful memories for us! \u{1F4F8}",
+    name: 'Vignesh',
+    shootType: 'Birthday Photoshoot',
+  },
+  {
+    quote:
+      'McreatiK Studios captured our pre-wedding photos exactly the way we wanted and were always open to our ideas. On top of that, they gave us so many creative ideas of their own. Truly amazing photographers — highly recommended!',
+    name: 'Thamim & Swetha',
+    shootType: 'Pre-Wedding Shoot',
+  },
+]
+
 /* Pricing varies by shoot — these are the factors that shape a quote,
    not fixed tiers. Swap in real fixed packages once pricing is final. */
 export const STUDIOS_PRICING_FACTORS = [

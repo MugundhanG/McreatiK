@@ -1,15 +1,15 @@
 /* ============================================
    Experience Page — Studios
    What clients can expect: the shoot process as
-   a vertical rail, plus honest testimonial
-   placeholders (no invented quotes or names —
-   swap in real ones as they come in).
+   a vertical rail, plus real client testimonials
+   (STUDIOS_TESTIMONIALS in constants.js) - no
+   invented quotes or names, ever.
    ============================================ */
 
 import React, { memo } from 'react'
 import { motion } from 'framer-motion'
 import { FiUser } from 'react-icons/fi'
-import { STUDIOS_EXPERIENCE_STEPS } from '../../utils/constants'
+import { STUDIOS_EXPERIENCE_STEPS, STUDIOS_TESTIMONIALS } from '../../utils/constants'
 
 function ProcessSteps() {
   return (
@@ -56,13 +56,13 @@ function ProcessSteps() {
   )
 }
 
-function TestimonialCard() {
+function TestimonialCard({ quote, name, shootType }) {
   return (
     <div className="rounded-lg border border-black/10 bg-white/50 p-6">
-      <p className="font-body text-sm italic leading-relaxed text-[#6B6153]">Testimonial coming soon.</p>
+      <p className="font-body text-sm italic leading-relaxed text-[#6B6153]">{quote}</p>
       <div className="mt-5 flex items-center gap-3 border-t border-black/10 pt-4">
         <FiUser className="w-8 h-8 shrink-0 text-[#A89A88]" />
-        <p className="font-mono-label text-[11px] uppercase text-[#6B6153]">Client Name &middot; Shoot Type</p>
+        <p className="font-mono-label text-[11px] uppercase text-[#6B6153]">{name} &middot; {shootType}</p>
       </div>
     </div>
   )
@@ -82,14 +82,18 @@ function Testimonials() {
           <p className="font-mono-label text-xs uppercase text-[#C9971F] mb-3">In their words</p>
           <h2 className="font-display italic text-3xl sm:text-4xl lg:text-5xl text-[#1C1710]">What Clients Say</h2>
           <p className="font-body mt-4 text-[#6B6153] max-w-lg">
-            Real feedback from real clients, added here as it comes in.
+            Real feedback from real clients.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <TestimonialCard />
-          <TestimonialCard />
-          <TestimonialCard />
+        {/* max-w-2xl + 2 columns rather than the old fixed 3-slot grid - it
+            was sized for 3 placeholder cards, not however many real
+            testimonials exist at any given time. Grows to more columns
+            once there's enough content to fill a wider row. */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl">
+          {STUDIOS_TESTIMONIALS.map(({ quote, name, shootType }) => (
+            <TestimonialCard key={name} quote={quote} name={name} shootType={shootType} />
+          ))}
         </div>
       </div>
     </section>
