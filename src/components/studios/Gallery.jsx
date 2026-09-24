@@ -1,86 +1,106 @@
 /* ============================================
    Gallery Section — Studios
-   Portfolio grid, presented like a contact
-   sheet — each frame gets the film-frame border
-   and a frame-counter caption. Pulls published
-   photos from the CMS backend.
+   Instagram-style profile grid of event posts.
+   Each post (1-20 photos from one event) shows
+   its cover as a square tile; clicking opens
+   GalleryPostViewer. Pulls published posts from
+   the CMS backend.
    ============================================ */
 
 import React, { memo, useEffect, useMemo, useState } from 'react'
-import { motion } from 'framer-motion'
-import { FiCamera, FiAlertCircle } from 'react-icons/fi'
+import { AnimatePresence, motion } from 'framer-motion'
+import { FiAlertCircle, FiCamera, FiLayers } from 'react-icons/fi'
 import { fetchGalleryItems } from '../../utils/cmsApi'
+import { toPost, photoAlt } from './galleryPosts'
+import { GALLERY_SAMPLES } from './gallerySamples'
+import GalleryPostViewer from './GalleryPostViewer'
+
+// Local dev only — never ships sample posts to production.
+const SAMPLES = import.meta.env.DEV ? GALLERY_SAMPLES : []
 
 const StudiosGallery = memo(function StudiosGallery() {
-  const [items, setItems] = useState([])
+  const [posts, setPosts] = useState([])
   const [status, setStatus] = useState('loading') // 'loading' | 'ready' | 'error'
   const [activeCategory, setActiveCategory] = useState('All')
+  const [openIndex, setOpenIndex] = useState(null)
 
   useEffect(() => {
     let cancelled = false
     fetchGalleryItems()
       .then((data) => {
         if (!cancelled) {
-          setItems(data)
+          setPosts([...data, ...SAMPLES].map(toPost))
           setStatus('ready')
         }
       })
       .catch(() => {
-        if (!cancelled) setStatus('error')
+        if (cancelled) return
+        if (SAMPLES.length > 0) {
+          setPosts(SAMPLES.map(toPost))
+          setStatus('ready')
+        } else {
+          setStatus('error')
+        }
       })
     return () => {
       cancelled = true
     }
   }, [])
 
-  const categories = useMemo(() => {
-    const unique = [...new Set(items.map((item) => item.category))]
-    return ['All', ...unique]
-  }, [items])
+  const categories = useMemo(() => ['All', ...new Set(posts.map((post) => post.category))], [posts])
 
-  const visibleItems = activeCategory === 'All' ? items : items.filter((item) => item.category === activeCategory)
+  const visiblePosts = useMemo(
+    () => (activeCategory === 'All' ? posts : posts.filter((post) => post.category === activeCategory)),
+    [posts, activeCategory]
+  )
 
   return (
-    <section
-      id="gallery"
-      className="relative py-24 lg:py-32 scroll-mt-28 bg-[linear-gradient(135deg,#EDE7D3_0%,#E6B5AC_30%,#5FC7A8_62%,#163A3D_100%)]"
-    >
-      <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
+    <section id="gallery" className="relative bg-[#FAF8F3] py-20 lg:py-28 scroll-mt-28">
+      <div className="max-w-5xl mx-auto px-5 sm:px-8">
+        <motion.header
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6 }}
-          className="mb-14"
+          className="pb-10 mb-10 border-b border-[#1C1710]/10"
         >
-          <p className="font-mono-label text-xs uppercase text-[#C9971F] mb-3">Selected frames</p>
-          <h2 className="font-display italic text-3xl sm:text-4xl lg:text-5xl text-[#1C1710]">Gallery</h2>
-          <p className="font-body mt-4 text-[#6B6153] max-w-lg">
-            A hand-picked selection of moments from behind the lens.
+          <p className="font-mono-label text-xs uppercase tracking-wide text-[#C9971F] mb-4">Selected frames</p>
+          <h1 className="font-display italic text-4xl sm:text-5xl lg:text-6xl text-[#1C1710]">Gallery</h1>
+          <p className="font-body mt-5 text-[#6B6153] max-w-xl leading-relaxed">
+            Moments from recent events — open any post to see the full set.
           </p>
-        </motion.div>
+        </motion.header>
 
         {status === 'ready' && categories.length > 2 && (
-          <div className="flex flex-wrap gap-2 mb-10">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setActiveCategory(category)}
-                className={`px-4 py-1.5 rounded-full text-xs font-mono-label uppercase tracking-wide border transition-colors ${
-                  activeCategory === category
-                    ? 'bg-[#1C1710] text-white border-[#1C1710]'
-                    : 'border-black/15 text-[#6B6153] hover:border-[#1C1710]/40'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
+          <nav
+            aria-label="Filter by category"
+            className="-mx-5 sm:mx-0 px-5 sm:px-0 mb-10 flex gap-6 overflow-x-auto sm:flex-wrap sm:gap-x-7 sm:gap-y-3 [scrollbar-width:none]"
+          >
+            {categories.map((category) => {
+              const active = activeCategory === category
+              return (
+                <button
+                  key={category}
+                  onClick={() => setActiveCategory(category)}
+                  aria-pressed={active}
+                  className={`shrink-0 pb-1.5 font-mono-label text-xs uppercase tracking-wide border-b transition-colors ${
+                    active
+                      ? 'text-[#1C1710] border-[#1C1710]'
+                      : 'text-[#6B6153]/70 border-transparent hover:text-[#1C1710]'
+                  }`}
+                >
+                  {category}
+                </button>
+              )
+            })}
+          </nav>
         )}
 
         {status === 'loading' && (
-          <div className="py-20 flex justify-center">
-            <div className="w-8 h-8 border-2 border-[#C9971F] border-t-transparent rounded-full animate-spin" />
+          <div className="grid grid-cols-3 gap-1 sm:gap-2 lg:gap-4">
+            {Array.from({ length: 9 }, (_, i) => (
+              <div key={i} className="aspect-square bg-[#1C1710]/[0.06] animate-pulse" />
+            ))}
           </div>
         )}
 
@@ -91,43 +111,62 @@ const StudiosGallery = memo(function StudiosGallery() {
           </div>
         )}
 
-        {status === 'ready' && visibleItems.length === 0 && (
+        {status === 'ready' && visiblePosts.length === 0 && (
           <div className="py-20 flex flex-col items-center text-center gap-4">
             <FiCamera className="w-8 h-8 text-[#1C1710]/30" />
             <p className="font-body text-[#6B6153]">New frames are on their way — check back soon.</p>
           </div>
         )}
 
-        {status === 'ready' && visibleItems.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-16">
-            {visibleItems.map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-30px' }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
-              >
-                <div className="film-frame relative aspect-[4/5] overflow-hidden">
+        {status === 'ready' && visiblePosts.length > 0 && (
+          <div key={activeCategory} className="grid grid-cols-3 gap-1 sm:gap-2 lg:gap-4">
+            {visiblePosts.map((post, index) => {
+              const cover = post.photos[0]
+              const count = post.photos.length
+              return (
+                <motion.button
+                  key={post.id}
+                  type="button"
+                  onClick={() => setOpenIndex(index)}
+                  aria-label={`Open ${post.title}${count > 1 ? `, ${count} photos` : ''}`}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, margin: '-30px' }}
+                  transition={{ duration: 0.4, delay: (index % 3) * 0.05 }}
+                  className="group relative block aspect-square overflow-hidden bg-[#1C1710]/[0.06] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C9971F] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FAF8F3]"
+                >
                   <img
-                    src={item.media.url}
-                    alt={item.media.altText || item.title}
+                    src={cover.media.url}
+                    alt={photoAlt(post, cover)}
                     loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                   />
-                  <div className="film-grain" />
-                  <span className="absolute top-3 left-3 font-mono-label text-[10px] uppercase text-white/80 drop-shadow">
-                    {item.category}
-                  </span>
-                </div>
-                <p className="font-mono-label text-[11px] uppercase text-[#6B6153] mt-3">
-                  Frame {String(index + 1).padStart(2, '0')}/{String(visibleItems.length).padStart(2, '0')} — {item.title}
-                </p>
-              </motion.div>
-            ))}
+                  {count > 1 && (
+                    <FiLayers aria-hidden="true" className="absolute top-2 right-2 w-4 h-4 sm:w-5 sm:h-5 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]" />
+                  )}
+                  <div className="absolute inset-0 hidden sm:flex flex-col items-center justify-center gap-1 p-3 text-center bg-black/45 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-300">
+                    <p className="font-display italic text-base lg:text-lg text-white leading-snug line-clamp-2">{post.title}</p>
+                    <p className="font-mono-label text-[10px] uppercase tracking-wide text-white/80">
+                      {count} {count === 1 ? 'photo' : 'photos'}
+                    </p>
+                  </div>
+                </motion.button>
+              )
+            })}
           </div>
         )}
       </div>
+
+      <AnimatePresence>
+        {openIndex !== null && (
+          <GalleryPostViewer
+            posts={visiblePosts}
+            index={openIndex}
+            onIndexChange={setOpenIndex}
+            onClose={() => setOpenIndex(null)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   )
 })
