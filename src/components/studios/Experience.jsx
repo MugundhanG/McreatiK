@@ -8,7 +8,7 @@
 
 import React, { memo } from 'react'
 import { motion } from 'framer-motion'
-import { FiUser } from 'react-icons/fi'
+import { FiUser, FiMessageSquare } from 'react-icons/fi'
 import { STUDIOS_EXPERIENCE_STEPS, STUDIOS_TESTIMONIALS } from '../../utils/constants'
 
 function ProcessSteps() {
@@ -56,15 +56,39 @@ function ProcessSteps() {
   )
 }
 
-function TestimonialCard({ quote, name, shootType }) {
+function TestimonialCard({ quote, name, shootType, index }) {
   return (
-    <div className="rounded-lg border border-black/10 bg-white/50 p-6">
-      <p className="font-body text-sm italic leading-relaxed text-[#6B6153]">{quote}</p>
-      <div className="mt-5 flex items-center gap-3 border-t border-black/10 pt-4">
-        <FiUser className="w-8 h-8 shrink-0 text-[#A89A88]" />
+    <motion.div
+      className="group rounded-lg border border-black/10 bg-white/50 p-6"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-30px' }}
+      transition={{ duration: 0.5, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{
+        y: -6,
+        boxShadow: '0 20px 40px -12px rgba(28, 23, 16, 0.12)',
+        transition: { type: 'spring', stiffness: 400, damping: 25 },
+      }}
+    >
+      <FiMessageSquare className="w-5 h-5 text-[#C9971F]/50" aria-hidden="true" />
+      <p className="font-body text-sm italic leading-relaxed text-[#6B6153] mt-4">{quote}</p>
+      <div className="relative mt-5 flex items-center gap-3 pt-4">
+        {/* Divider draws in left-to-right on reveal instead of just being
+            static - scaleX (not width) so it's a transform, not a layout
+            property, and stays smooth on lower-end phones. */}
+        <motion.span
+          className="absolute top-0 left-0 right-0 h-px bg-black/10 origin-left"
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true, margin: '-30px' }}
+          transition={{ duration: 0.6, delay: index * 0.12 + 0.25, ease: [0.16, 1, 0.3, 1] }}
+        />
+        {/* group-hover (not its own whileHover) so it reacts to hovering
+            the whole card, not just this small icon specifically. */}
+        <FiUser className="w-8 h-8 shrink-0 text-[#A89A88] transition-all duration-300 group-hover:text-[#C9971F] group-hover:scale-110 group-hover:-rotate-6" />
         <p className="font-mono-label text-[11px] uppercase text-[#6B6153]">{name} &middot; {shootType}</p>
       </div>
-    </div>
+    </motion.div>
   )
 }
 
@@ -91,8 +115,8 @@ function Testimonials() {
             testimonials exist at any given time. Grows to more columns
             once there's enough content to fill a wider row. */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl">
-          {STUDIOS_TESTIMONIALS.map(({ quote, name, shootType }) => (
-            <TestimonialCard key={name} quote={quote} name={name} shootType={shootType} />
+          {STUDIOS_TESTIMONIALS.map(({ quote, name, shootType }, index) => (
+            <TestimonialCard key={name} quote={quote} name={name} shootType={shootType} index={index} />
           ))}
         </div>
       </div>
