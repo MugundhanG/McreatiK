@@ -85,13 +85,19 @@ const StudiosGallery = memo(function StudiosGallery() {
                   key={category}
                   onClick={() => setActiveCategory(category)}
                   aria-pressed={active}
-                  className={`shrink-0 pb-1.5 font-mono-label text-xs uppercase tracking-wide border-b transition-colors ${
-                    active
-                      ? 'text-[#1C1710] border-[#1C1710]'
-                      : 'text-[#6B6153]/70 border-transparent hover:text-[#1C1710]'
+                  className={`relative shrink-0 pb-1.5 font-mono-label text-xs uppercase tracking-wide transition-colors ${
+                    active ? 'text-[#1C1710]' : 'text-[#6B6153]/70 hover:text-[#1C1710]'
                   }`}
                 >
                   {category}
+                  {active && (
+                    // One shared underline that glides to whichever tab is active.
+                    <motion.span
+                      layoutId="gallery-category-underline"
+                      className="absolute inset-x-0 -bottom-px h-px bg-[#1C1710]"
+                      transition={{ type: 'spring', stiffness: 400, damping: 34 }}
+                    />
+                  )}
                 </button>
               )
             })}
@@ -99,7 +105,7 @@ const StudiosGallery = memo(function StudiosGallery() {
         )}
 
         {status === 'loading' && (
-          <div className="grid grid-cols-3 gap-1 sm:gap-2 lg:gap-4">
+          <div className="relative grid grid-cols-3 gap-1 sm:gap-2 lg:gap-4">
             {Array.from({ length: 9 }, (_, i) => (
               <div key={i} className="aspect-square bg-[#1C1710]/[0.06] animate-pulse" />
             ))}
@@ -121,20 +127,30 @@ const StudiosGallery = memo(function StudiosGallery() {
         )}
 
         {status === 'ready' && visiblePosts.length > 0 && (
-          <div key={activeCategory} className="grid grid-cols-3 gap-1 sm:gap-2 lg:gap-4">
+          <div className="relative grid grid-cols-3 gap-1 sm:gap-2 lg:gap-4">
+            {/* popLayout: tiles leaving the filter are pulled out of the grid
+                immediately, so the tiles that stay can glide (layout) into their
+                new positions while the leavers fade out and new ones fade in. */}
+            <AnimatePresence mode="popLayout">
             {visiblePosts.map((post, index) => {
               const cover = post.photos[0]
               const count = post.photos.length
+              const enterDelay = Math.min(index, 11) * 0.035
               return (
                 <motion.button
                   key={post.id}
                   type="button"
                   onClick={() => setOpenIndex(index)}
                   aria-label={`Open ${post.title}${count > 1 ? `, ${count} photos` : ''}`}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true, margin: '-30px' }}
-                  transition={{ duration: 0.4, delay: (index % 3) * 0.05 }}
+                  layout
+                  initial={{ opacity: 0, scale: 0.92 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.92, transition: { duration: 0.2 } }}
+                  transition={{
+                    layout: { type: 'spring', stiffness: 320, damping: 32 },
+                    opacity: { duration: 0.35, delay: enterDelay },
+                    scale: { duration: 0.35, delay: enterDelay, ease: 'easeOut' },
+                  }}
                   className="group relative block aspect-square overflow-hidden bg-[#1C1710]/[0.06] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C9971F] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FAF8F3]"
                 >
                   <img
@@ -155,6 +171,7 @@ const StudiosGallery = memo(function StudiosGallery() {
                 </motion.button>
               )
             })}
+            </AnimatePresence>
           </div>
         )}
       </div>

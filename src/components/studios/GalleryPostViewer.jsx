@@ -10,26 +10,65 @@
    ============================================ */
 
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { FiChevronLeft, FiChevronRight, FiMapPin, FiX } from 'react-icons/fi'
 import { photoAlt } from './galleryPosts'
 
-const SWIPE_THRESHOLD = 50
+// A drag counts as a swipe past this distance, or a shorter flick past this speed.
+const SWIPE_DISTANCE = 80
+const SWIPE_VELOCITY = 500
+
+// `dir` is +1 (next: new photo enters from the right), -1 (previous: enters
+// from the left) or 0 (no direction, e.g. first open) — passed as `custom`.
+const slideVariants = {
+  enter: (dir) => ({ x: dir > 0 ? '100%' : dir < 0 ? '-100%' : 0, opacity: dir === 0 ? 0 : 1 }),
+  center: { x: 0, opacity: 1 },
+  exit: (dir) => ({ x: dir > 0 ? '-100%' : dir < 0 ? '100%' : 0, opacity: dir === 0 ? 0 : 1 }),
+}
+
+// Reduced motion: a plain cross-fade, no sliding.
+const fadeVariants = {
+  enter: { opacity: 0 },
+  center: { opacity: 1 },
+  exit: { opacity: 0 },
+}
+
+const slideTransition = {
+  x: { type: 'spring', stiffness: 300, damping: 34 },
+  opacity: { duration: 0.2 },
+}
 
 export default function GalleryPostViewer({ posts, index, onIndexChange, onClose }) {
   const post = posts[index]
-  const [photoIndex, setPhotoIndex] = useState(0)
-  const touchStartX = useRef(null)
+  const reduceMotion = useReducedMotion()
+  // One piece of state so the photo index and slide direction always change
+  // together. `postIndex` remembers which post it belongs to: when the viewer
+  // moves to another post we reset to its cover *during render* (React's
+  // "adjust state when a prop changes" pattern), so the new post never renders
+  // even once with the previous post's photo index, and the slide direction
+  // follows the post navigation direction.
+  const [slide, setSlide] = useState({ postIndex: index, photo: 0, dir: 0 })
+  if (slide.postIndex !== index) {
+    setSlide({ postIndex: index, photo: 0, dir: Math.sign(index - slide.postIndex) })
+  }
   const closeButtonRef = useRef(null)
   const photos = post?.photos ?? []
   const hasManyPhotos = photos.length > 1
 
-  // Opening another post always starts from its cover.
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => setPhotoIndex(0), [post?.id])
-
-  const prevPhoto = useCallback(() => setPhotoIndex((i) => Math.max(i - 1, 0)), [])
-  const nextPhoto = useCallback(() => setPhotoIndex((i) => Math.min(i + 1, photos.length - 1)), [photos.length])
+  const goToPhoto = useCallback(
+    (target) => {
+      setSlide((s) => {
+        if (target < 0 || target >= photos.length || target === s.photo) return s
+        return { ...s, photo: target, dir: Math.sign(target - s.photo) }
+      })
+    },
+    [photos.length]
+  )
+  const prevPhoto = useCallback(() => setSlide((s) => (s.photo > 0 ? { ...s, photo: s.photo - 1, dir: -1 } : s)), [])
+  const nextPhoto = useCallback(
+    () => setSlide((s) => (s.photo < photos.length - 1 ? { ...s, photo: s.photo + 1, dir: 1 } : s)),
+    [photos.length]
+  )
 
   // Mount-only: record focus, lock scroll, move focus into the dialog, and
   // restore both on unmount. Kept separate from the keydown effect below so
@@ -57,19 +96,14 @@ export default function GalleryPostViewer({ posts, index, onIndexChange, onClose
   }, [onClose, nextPhoto, prevPhoto])
 
   if (!post) return null
-  const safeIndex = Math.min(photoIndex, photos.length - 1)
+  const safeIndex = Math.min(slide.photo, photos.length - 1)
   const photo = photos[safeIndex]
+  const dir = slide.dir
 
-  function handleTouchStart(e) {
-    touchStartX.current = e.touches[0].clientX
-  }
-
-  function handleTouchEnd(e) {
-    if (touchStartX.current === null) return
-    const delta = e.changedTouches[0].clientX - touchStartX.current
-    touchStartX.current = null
-    if (delta > SWIPE_THRESHOLD) prevPhoto()
-    if (delta < -SWIPE_THRESHOLD) nextPhoto()
+  function handleDragEnd(_event, { offset, velocity }) {
+    if (offset.x < -SWIPE_DISTANCE || velocity.x < -SWIPE_VELOCITY) nextPhoto()
+    else if (offset.x > SWIPE_DISTANCE || velocity.x > SWIPE_VELOCITY) prevPhoto()
+    // Otherwise dragConstraints spring the photo back to centre.
   }
 
   const stop = (e) => e.stopPropagation()
@@ -128,18 +162,28 @@ export default function GalleryPostViewer({ posts, index, onIndexChange, onClose
         onClick={stop}
         className="h-full w-full overflow-y-auto lg:overflow-hidden lg:h-[85vh] lg:max-w-6xl lg:flex lg:rounded-sm lg:bg-white"
       >
-        <div
-          className="relative h-[65vh] lg:h-full lg:flex-1 bg-[#0F0D0A] flex items-center justify-center"
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
-          <img
-            key={photo.media.id ?? photo.media.url}
-            src={photo.media.url}
-            alt={photoAlt(post, photo)}
-            className="max-w-full max-h-full object-contain select-none"
-            draggable={false}
-          />
+        <div className="relative h-[65vh] lg:h-full lg:flex-1 bg-[#0F0D0A] overflow-hidden">
+          <AnimatePresence initial={false} custom={dir}>
+            <motion.img
+              key={`${post.id}-${photo.media.id ?? photo.media.url}`}
+              src={photo.media.url}
+              alt={photoAlt(post, photo)}
+              custom={dir}
+              variants={reduceMotion ? fadeVariants : slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={slideTransition}
+              drag={hasManyPhotos && !reduceMotion ? 'x' : false}
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.6}
+              onDragEnd={handleDragEnd}
+              className={`absolute inset-0 w-full h-full object-contain select-none touch-pan-y ${
+                hasManyPhotos && !reduceMotion ? 'cursor-grab active:cursor-grabbing' : ''
+              }`}
+              draggable={false}
+            />
+          </AnimatePresence>
 
           {hasManyPhotos && safeIndex > 0 && (
             <button onClick={prevPhoto} aria-label="Previous photo" className={`${photoArrow} left-3`}>
@@ -161,7 +205,7 @@ export default function GalleryPostViewer({ posts, index, onIndexChange, onClose
                 {photos.map((p, i) => (
                   <button
                     key={p.media.id ?? i}
-                    onClick={() => setPhotoIndex(i)}
+                    onClick={() => goToPhoto(i)}
                     aria-label={`Photo ${i + 1}`}
                     aria-current={i === safeIndex}
                     className={`h-1.5 w-1.5 rounded-full transition-colors ${
@@ -175,6 +219,12 @@ export default function GalleryPostViewer({ posts, index, onIndexChange, onClose
         </div>
 
         <aside className="bg-white px-5 py-6 lg:w-[360px] lg:shrink-0 lg:overflow-y-auto lg:px-7 lg:py-8">
+          <motion.div
+            key={post.id}
+            initial={{ opacity: 0, x: reduceMotion ? 0 : dir * 24 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+          >
           <p className="font-mono-label text-[11px] uppercase tracking-wide text-[#C9971F]">{post.category}</p>
           <h2 className="font-display italic text-2xl lg:text-3xl text-[#1C1710] mt-2 leading-tight">{post.title}</h2>
           {post.location && (
@@ -188,6 +238,7 @@ export default function GalleryPostViewer({ posts, index, onIndexChange, onClose
               {post.description}
             </p>
           )}
+          </motion.div>
 
           <div className="mt-8 flex justify-between gap-3 lg:hidden">
             <button
