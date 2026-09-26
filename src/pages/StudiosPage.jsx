@@ -15,6 +15,7 @@ import { setFavicon } from '../utils/setFavicon'
 import { useScrollToHash } from '../hooks/useScrollToHash'
 import { useSEO } from '../hooks/useSEO'
 
+const StudiosGalleryPreview = lazy(() => import('../components/studios/GalleryPreview'))
 const StudiosOfferings = lazy(() => import('../components/studios/Offerings'))
 const StudiosPricing = lazy(() => import('../components/studios/Pricing'))
 const StudiosAbout = lazy(() => import('../components/studios/About'))
@@ -37,6 +38,7 @@ function StudiosPage() {
   return (
     <StudiosPageShell>
       <StudiosHero />
+      <StudiosGalleryPreview />
       <StudiosOfferings />
       <StudiosPricing />
       <StudiosAbout />

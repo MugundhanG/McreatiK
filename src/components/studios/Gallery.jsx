@@ -7,45 +7,15 @@
    the CMS backend.
    ============================================ */
 
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { FiAlertCircle, FiCamera, FiLayers } from 'react-icons/fi'
-import { fetchGalleryItems } from '../../utils/cmsApi'
-import { toPost, photoAlt } from './galleryPosts'
-import { GALLERY_SAMPLES } from './gallerySamples'
-import GalleryPostViewer from './GalleryPostViewer'
-
-// Local dev only — never ships sample posts to production.
-const SAMPLES = import.meta.env.DEV ? GALLERY_SAMPLES : []
+import React, { memo, useMemo, useState } from 'react'
+import { motion } from 'framer-motion'
+import { FiAlertCircle, FiCamera } from 'react-icons/fi'
+import { useGalleryPosts } from './useGalleryPosts'
+import GalleryGrid from './GalleryGrid'
 
 const StudiosGallery = memo(function StudiosGallery() {
-  const [posts, setPosts] = useState([])
-  const [status, setStatus] = useState('loading') // 'loading' | 'ready' | 'error'
+  const { posts, status } = useGalleryPosts()
   const [activeCategory, setActiveCategory] = useState('All')
-  const [openIndex, setOpenIndex] = useState(null)
-
-  useEffect(() => {
-    let cancelled = false
-    fetchGalleryItems()
-      .then((data) => {
-        if (!cancelled) {
-          setPosts([...data, ...SAMPLES].map(toPost))
-          setStatus('ready')
-        }
-      })
-      .catch(() => {
-        if (cancelled) return
-        if (SAMPLES.length > 0) {
-          setPosts(SAMPLES.map(toPost))
-          setStatus('ready')
-        } else {
-          setStatus('error')
-        }
-      })
-    return () => {
-      cancelled = true
-    }
-  }, [])
 
   const categories = useMemo(() => ['All', ...new Set(posts.map((post) => post.category))], [posts])
 
@@ -53,8 +23,6 @@ const StudiosGallery = memo(function StudiosGallery() {
     () => (activeCategory === 'All' ? posts : posts.filter((post) => post.category === activeCategory)),
     [posts, activeCategory]
   )
-
-  const closeViewer = useCallback(() => setOpenIndex(null), [])
 
   return (
     <section id="gallery" className="relative bg-[#FAF8F3] py-20 lg:py-28 scroll-mt-28">
@@ -126,66 +94,8 @@ const StudiosGallery = memo(function StudiosGallery() {
           </div>
         )}
 
-        {status === 'ready' && visiblePosts.length > 0 && (
-          <div className="relative grid grid-cols-3 gap-1 sm:gap-2 lg:gap-4">
-            {/* popLayout: tiles leaving the filter are pulled out of the grid
-                immediately, so the tiles that stay can glide (layout) into their
-                new positions while the leavers fade out and new ones fade in. */}
-            <AnimatePresence mode="popLayout">
-            {visiblePosts.map((post, index) => {
-              const cover = post.photos[0]
-              const count = post.photos.length
-              const enterDelay = Math.min(index, 11) * 0.035
-              return (
-                <motion.button
-                  key={post.id}
-                  type="button"
-                  onClick={() => setOpenIndex(index)}
-                  aria-label={`Open ${post.title}${count > 1 ? `, ${count} photos` : ''}`}
-                  layout
-                  initial={{ opacity: 0, scale: 0.92 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.92, transition: { duration: 0.2 } }}
-                  transition={{
-                    layout: { type: 'spring', stiffness: 320, damping: 32 },
-                    opacity: { duration: 0.35, delay: enterDelay },
-                    scale: { duration: 0.35, delay: enterDelay, ease: 'easeOut' },
-                  }}
-                  className="group relative block aspect-square overflow-hidden bg-[#1C1710]/[0.06] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C9971F] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FAF8F3]"
-                >
-                  <img
-                    src={cover.media.url}
-                    alt={photoAlt(post, cover)}
-                    loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-                  />
-                  {count > 1 && (
-                    <FiLayers aria-hidden="true" className="absolute top-2 right-2 w-4 h-4 sm:w-5 sm:h-5 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]" />
-                  )}
-                  <div className="absolute inset-0 hidden sm:flex flex-col items-center justify-center gap-1 p-3 text-center bg-black/45 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-300">
-                    <p className="font-display italic text-base lg:text-lg text-white leading-snug line-clamp-2">{post.title}</p>
-                    <p className="font-mono-label text-[10px] uppercase tracking-wide text-white/80">
-                      {count} {count === 1 ? 'photo' : 'photos'}
-                    </p>
-                  </div>
-                </motion.button>
-              )
-            })}
-            </AnimatePresence>
-          </div>
-        )}
+        {status === 'ready' && visiblePosts.length > 0 && <GalleryGrid posts={visiblePosts} />}
       </div>
-
-      <AnimatePresence>
-        {openIndex !== null && (
-          <GalleryPostViewer
-            posts={visiblePosts}
-            index={openIndex}
-            onIndexChange={setOpenIndex}
-            onClose={closeViewer}
-          />
-        )}
-      </AnimatePresence>
     </section>
   )
 })
