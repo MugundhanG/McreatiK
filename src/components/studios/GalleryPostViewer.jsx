@@ -13,6 +13,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { FiChevronLeft, FiChevronRight, FiMapPin, FiX } from 'react-icons/fi'
 import { photoAlt } from './galleryPosts'
+import ZoomableImage from './ZoomableImage'
 
 // A drag counts as a swipe past this distance, or a shorter flick past this speed.
 const SWIPE_DISTANCE = 80
@@ -51,6 +52,7 @@ export default function GalleryPostViewer({ posts, index, onIndexChange, onClose
   if (slide.postIndex !== index) {
     setSlide({ postIndex: index, photo: 0, dir: Math.sign(index - slide.postIndex) })
   }
+  const [zoomedKey, setZoomedKey] = useState(null)
   const closeButtonRef = useRef(null)
   const photos = post?.photos ?? []
   const hasManyPhotos = photos.length > 1
@@ -99,6 +101,9 @@ export default function GalleryPostViewer({ posts, index, onIndexChange, onClose
   const safeIndex = Math.min(slide.photo, photos.length - 1)
   const photo = photos[safeIndex]
   const dir = slide.dir
+  const photoKey = `${post.id}-${photo.media.id ?? photo.media.url}`
+  // Zoom belongs to one photo: moving to another photo (new key) is un-zoomed.
+  const zoomed = zoomedKey === photoKey
 
   function handleDragEnd(_event, { offset, velocity }) {
     if (offset.x < -SWIPE_DISTANCE || velocity.x < -SWIPE_VELOCITY) nextPhoto()
@@ -164,25 +169,27 @@ export default function GalleryPostViewer({ posts, index, onIndexChange, onClose
       >
         <div className="relative h-[65vh] lg:h-full lg:flex-1 bg-[#0F0D0A] overflow-hidden">
           <AnimatePresence initial={false} custom={dir}>
-            <motion.img
-              key={`${post.id}-${photo.media.id ?? photo.media.url}`}
-              src={photo.media.url}
-              alt={photoAlt(post, photo)}
+            <motion.div
+              key={photoKey}
               custom={dir}
               variants={reduceMotion ? fadeVariants : slideVariants}
               initial="enter"
               animate="center"
               exit="exit"
               transition={slideTransition}
-              drag={hasManyPhotos && !reduceMotion ? 'x' : false}
+              // While zoomed, drags pan inside the photo instead of swiping to the next one.
+              drag={hasManyPhotos && !reduceMotion && !zoomed ? 'x' : false}
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.6}
               onDragEnd={handleDragEnd}
-              className={`absolute inset-0 w-full h-full object-contain select-none touch-pan-y ${
-                hasManyPhotos && !reduceMotion ? 'cursor-grab active:cursor-grabbing' : ''
-              }`}
-              draggable={false}
-            />
+              className="absolute inset-0"
+            >
+              <ZoomableImage
+                src={photo.media.url}
+                alt={photoAlt(post, photo)}
+                onZoomChange={(isZoomed) => setZoomedKey(isZoomed ? photoKey : null)}
+              />
+            </motion.div>
           </AnimatePresence>
 
           {hasManyPhotos && safeIndex > 0 && (

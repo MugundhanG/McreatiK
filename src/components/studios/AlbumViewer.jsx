@@ -9,11 +9,17 @@
 
 import React, { forwardRef, useEffect, useLayoutEffect, useRef, useState, useCallback } from 'react'
 import HTMLFlipBook from 'react-pageflip'
-import { FiX, FiChevronLeft, FiChevronRight } from 'react-icons/fi'
+import { FiX, FiChevronLeft, FiChevronRight, FiZoomIn } from 'react-icons/fi'
+import ZoomableImage from './ZoomableImage'
 
-const Page = forwardRef(({ media }, ref) => (
+const Page = forwardRef(({ media, onOpenZoom }, ref) => (
   <div ref={ref} className="bg-[#0F0D0A] flex items-center justify-center">
-    <img src={media.url} alt={media.altText || ''} className="w-full h-full object-contain" />
+    <img
+      src={media.url}
+      alt={media.altText || ''}
+      onDoubleClick={onOpenZoom}
+      className="w-full h-full object-contain"
+    />
   </div>
 ))
 Page.displayName = 'AlbumViewerPage'
@@ -22,6 +28,9 @@ export default function AlbumViewer({ album, onClose }) {
   const bookRef = useRef(null)
   const containerRef = useRef(null)
   const [pageIndex, setPageIndex] = useState(0)
+  // Zooming inside the flip-book would fight its page-turn drag, so the
+  // current page opens in a separate full-screen zoom layer instead.
+  const [zoomOpen, setZoomOpen] = useState(false)
   // Measured for real against the 80vw/80vh container before the book ever
   // mounts — react-pageflip's underlying PageFlip instance is constructed
   // exactly once and locks in its width/height ratio at that point (later
@@ -54,17 +63,26 @@ export default function AlbumViewer({ album, onClose }) {
 
   useEffect(() => {
     function handleKeyDown(e) {
+      // With the zoom layer open, Escape closes just that layer and the
+      // arrow keys don't turn pages behind it.
+      if (zoomOpen) {
+        if (e.key === 'Escape') setZoomOpen(false)
+        return
+      }
       if (e.key === 'Escape') onClose()
       if (e.key === 'ArrowRight') bookRef.current?.pageFlip()?.flipNext()
       if (e.key === 'ArrowLeft') bookRef.current?.pageFlip()?.flipPrev()
     }
     document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [onClose, zoomOpen])
+
+  useEffect(() => {
     document.body.style.overflow = 'hidden'
     return () => {
-      document.removeEventListener('keydown', handleKeyDown)
       document.body.style.overflow = ''
     }
-  }, [onClose])
+  }, [])
 
   const handleFlip = useCallback((e) => setPageIndex(e.data), [])
 
@@ -111,7 +129,7 @@ export default function AlbumViewer({ album, onClose }) {
               className="shadow-2xl"
             >
               {pages.map((media) => (
-                <Page key={media.id} media={media} />
+                <Page key={media.id} media={media} onOpenZoom={() => setZoomOpen(true)} />
               ))}
             </HTMLFlipBook>
           )}
@@ -136,9 +154,47 @@ export default function AlbumViewer({ album, onClose }) {
         </button>
       </div>
 
-      <p className="mt-6 font-mono-label text-xs uppercase text-white/50">
-        Page {pageIndex + 1} / {pages.length}
-      </p>
+      <div className="mt-6 flex items-center gap-4">
+        <p className="font-mono-label text-xs uppercase text-white/50">
+          Page {pageIndex + 1} / {pages.length}
+        </p>
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation()
+            setZoomOpen(true)
+          }}
+          aria-label="Zoom this page"
+          className="inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3 py-1.5 font-mono-label text-[11px] uppercase text-white/70 hover:text-white hover:border-white/40 transition-colors"
+        >
+          <FiZoomIn className="w-3.5 h-3.5" />
+          Zoom
+        </button>
+      </div>
+
+      {zoomOpen && pages[pageIndex] && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Page ${pageIndex + 1}, zoom`}
+          className="fixed inset-0 z-[110] bg-black"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <ZoomableImage src={pages[pageIndex].url} alt={pages[pageIndex].altText || ''} />
+          <button
+            type="button"
+            onClick={() => setZoomOpen(false)}
+            aria-label="Close zoom"
+            autoFocus
+            className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full flex items-center justify-center bg-black/55 text-white hover:bg-black/75 transition-colors"
+          >
+            <FiX className="w-6 h-6" />
+          </button>
+          <p className="absolute top-6 left-6 font-mono-label text-xs uppercase text-white/60">
+            Page {pageIndex + 1} / {pages.length} · pinch, scroll or double-click to zoom
+          </p>
+        </div>
+      )}
     </div>
   )
 }
