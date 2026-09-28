@@ -21,6 +21,7 @@
 
 import React, { lazy, Suspense } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
+import ErrorBoundary from './components/ErrorBoundary'
 import WhatsAppButton from './components/ui/WhatsAppButton'
 import DepartmentTransitionOverlay from './components/ui/DepartmentTransitionOverlay'
 import { useScrollRestoration } from './hooks/useScrollRestoration'
@@ -71,6 +72,7 @@ function App() {
 
   return (
     <>
+      <ErrorBoundary resetKey={pathname}>
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<Landing />} />
@@ -99,6 +101,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
+      </ErrorBoundary>
       <WhatsAppButton />
       <DepartmentTransitionOverlay />
     </>
