@@ -4,28 +4,338 @@
     {
       "name": "mcreatik-dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--", "--port", "5199"],
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5199"
+      ],
       "port": 5199
     },
     {
       "name": "mcreatik-admin-dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["--prefix", "../mcreatik-admin", "run", "dev", "--", "--port", "5200"],
+      "runtimeArgs": [
+        "--prefix",
+        "../mcreatik-admin",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5200"
+      ],
       "port": 5200,
       "autoPort": false
     },
     {
       "name": "mcreatik-backend-dev",
       "runtimeExecutable": "D:\\Websites\\mcreatik-backend\\mvnw.cmd",
-      "runtimeArgs": ["-f", "D:\\Websites\\mcreatik-backend\\pom.xml", "spring-boot:run", "-Dspring-boot.run.arguments=--app.security.allowed-origins=http://localhost:5199,http://localhost:5200"],
+      "runtimeArgs": [
+        "-f",
+        "D:\\Websites\\mcreatik-backend\\pom.xml",
+        "spring-boot:run",
+        "-Dspring-boot.run.arguments=--app.security.allowed-origins=http://localhost:5199,http://localhost:5200"
+      ],
       "port": 8080,
+      "autoPort": false
+    },
+    {
+      "name": "card-preview",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5310",
+        "--directory",
+        "C:\\Users\\DELL\\AppData\\Local\\Temp\\claude\\D--Websites-mcreatik\\c7a9afbd-89a4-4477-ad5e-e6174debb29e\\scratchpad"
+      ],
+      "port": 5310,
       "autoPort": false
     },
     {
       "name": "la-hns-clinic-dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["--prefix", "../la-hns-clinic", "run", "dev", "--", "--port", "5300"],
+      "runtimeArgs": [
+        "--prefix",
+        "../la-hns-clinic",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5300"
+      ],
       "port": 5300,
+      "autoPort": false
+    },
+    {
+      "name": "dental-smile-studio",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "../demos/dental-smile-studio",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5201"
+      ],
+      "port": 5201,
+      "autoPort": false
+    },
+    {
+      "name": "dental-dentique",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "../demos/dental-dentique",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5202"
+      ],
+      "port": 5202,
+      "autoPort": false
+    },
+    {
+      "name": "dental-pearl-care",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "../demos/dental-pearl-care",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5203"
+      ],
+      "port": 5203,
+      "autoPort": false
+    },
+    {
+      "name": "skin-lumiere",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "../demos/skin-lumiere",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5204"
+      ],
+      "port": 5204,
+      "autoPort": false
+    },
+    {
+      "name": "skin-dermalab",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "../demos/skin-dermalab",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5205"
+      ],
+      "port": 5205,
+      "autoPort": false
+    },
+    {
+      "name": "skin-aarogya",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "../demos/skin-aarogya",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5206"
+      ],
+      "port": 5206,
+      "autoPort": false
+    },
+    {
+      "name": "interior-aalaya",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "../demos/interior-aalaya",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5207"
+      ],
+      "port": 5207,
+      "autoPort": false
+    },
+    {
+      "name": "interior-modulo",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "../demos/interior-modulo",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5208"
+      ],
+      "port": 5208,
+      "autoPort": false
+    },
+    {
+      "name": "interior-arcform",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "../demos/interior-arcform",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5209"
+      ],
+      "port": 5209,
+      "autoPort": false
+    },
+    {
+      "name": "edu-vertex",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "../demos/edu-vertex",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5210"
+      ],
+      "port": 5210,
+      "autoPort": false
+    },
+    {
+      "name": "edu-brightpath",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "../demos/edu-brightpath",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5211"
+      ],
+      "port": 5211,
+      "autoPort": false
+    },
+    {
+      "name": "edu-milestone",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "../demos/edu-milestone",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5212"
+      ],
+      "port": 5212,
+      "autoPort": false
+    },
+    {
+      "name": "photo-kadhai",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "../demos/photo-kadhai",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5213"
+      ],
+      "port": 5213,
+      "autoPort": false
+    },
+    {
+      "name": "photo-littlepebble",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "../demos/photo-littlepebble",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5214"
+      ],
+      "port": 5214,
+      "autoPort": false
+    },
+    {
+      "name": "photo-objekt",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "../demos/photo-objekt",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5215"
+      ],
+      "port": 5215,
+      "autoPort": false
+    },
+    {
+      "name": "fit-anvil",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "../demos/fit-anvil",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5216"
+      ],
+      "port": 5216,
+      "autoPort": false
+    },
+    {
+      "name": "fit-sway",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "../demos/fit-sway",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5217"
+      ],
+      "port": 5217,
+      "autoPort": false
+    },
+    {
+      "name": "fit-afterburn",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "../demos/fit-afterburn",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5218"
+      ],
+      "port": 5218,
       "autoPort": false
     }
   ]
