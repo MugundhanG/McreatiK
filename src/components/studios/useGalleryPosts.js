@@ -2,17 +2,12 @@
    useGalleryPosts — loads published gallery
    posts from the CMS, normalised with toPost().
    Shared by the full Gallery page and the
-   Studios home preview. In local dev, sample
-   posts are appended (see gallerySamples.js).
+   Studios home preview.
    ============================================ */
 
 import { useEffect, useState } from 'react'
 import { fetchGalleryItems } from '../../utils/cmsApi'
 import { toPost } from './galleryPosts'
-import { GALLERY_SAMPLES } from './gallerySamples'
-
-// Local dev only — never ships sample posts to production.
-const SAMPLES = import.meta.env.DEV ? GALLERY_SAMPLES : []
 
 export function useGalleryPosts() {
   const [posts, setPosts] = useState([])
@@ -23,18 +18,12 @@ export function useGalleryPosts() {
     fetchGalleryItems()
       .then((data) => {
         if (!cancelled) {
-          setPosts([...data, ...SAMPLES].map(toPost))
+          setPosts(data.map(toPost))
           setStatus('ready')
         }
       })
       .catch(() => {
-        if (cancelled) return
-        if (SAMPLES.length > 0) {
-          setPosts(SAMPLES.map(toPost))
-          setStatus('ready')
-        } else {
-          setStatus('error')
-        }
+        if (!cancelled) setStatus('error')
       })
     return () => {
       cancelled = true
