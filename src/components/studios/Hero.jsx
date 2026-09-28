@@ -35,8 +35,8 @@ const SLIDES = [
   { src: shorelineWalk, position: '32% 60%' },
 ]
 
-const SLIDE_MS = 6000
-const FADE_S = 1.6
+const SLIDE_MS = 2500
+const FADE_S = 1
 
 const StudiosHero = memo(function StudiosHero() {
   const [index, setIndex] = useState(0)
