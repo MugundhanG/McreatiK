@@ -53,6 +53,10 @@ import {
   FiUser,
   FiLayers,
   FiGrid,
+  FiGitMerge,
+  FiMonitor,
+  FiBookOpen,
+  FiHelpCircle,
 } from 'react-icons/fi'
 
 /* Shared contact number used for WhatsApp CTAs across both departments */
@@ -88,6 +92,40 @@ export const TECH_NAV_LINKS = [
   { label: 'Blog', href: '/tech/blog', type: 'page' },
   { label: 'FAQs', href: '/tech/faq', type: 'page' },
   { label: 'Contact Us', href: '/tech#contact', type: 'anchor' },
+]
+
+/* Grouped version of TECH_NAV_LINKS for the Tech navbar's dropdowns.
+   TECH_NAV_LINKS stays flat — the Tech footer and the Home navbar's Tech
+   menu still use it. A group's own label links to its first item. */
+export const TECH_NAV_GROUPS = [
+  { label: 'Home', href: '/tech' },
+  {
+    label: 'Services',
+    href: '/tech/services',
+    items: [
+      { label: 'Services', href: '/tech/services', type: 'page', icon: FiLayers, description: 'Websites, SEO, branding and more' },
+      { label: 'Industries We Serve', href: '/tech/industries', type: 'page', icon: FiBriefcase, description: 'Clinics, coaching, retail, travel & more' },
+      { label: 'Our Process', href: '/tech#process', type: 'anchor', icon: FiGitMerge, description: 'How we take you from idea to launch' },
+    ],
+  },
+  {
+    label: 'Work',
+    href: '/tech/work',
+    items: [
+      { label: 'Portfolio', href: '/tech/work', type: 'page', icon: FiGrid, description: 'Real websites we built for clients' },
+      { label: 'Website Concepts', href: '/tech/demos', type: 'page', icon: FiMonitor, description: '24 industry-ready demo sites to explore' },
+    ],
+  },
+  {
+    label: 'Resources',
+    href: '/tech/blog',
+    items: [
+      { label: 'Blog', href: '/tech/blog', type: 'page', icon: FiBookOpen, description: 'Guides on websites and online growth' },
+      { label: 'FAQs', href: '/tech/faq', type: 'page', icon: FiHelpCircle, description: 'Pricing, timelines and how we work' },
+    ],
+  },
+  { label: 'About Us', href: '/tech#about' },
+  { label: 'Contact Us', href: '/tech#contact' },
 ]
 
 export const TECH_TARGET_INDUSTRIES = [
