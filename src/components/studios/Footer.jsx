@@ -5,7 +5,7 @@
 import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { FiInstagram, FiLinkedin, FiTwitter, FiFacebook, FiYoutube } from 'react-icons/fi'
-import { STUDIOS_NAV_LINKS, SOCIAL_LINKS } from '../../utils/constants'
+import { STUDIOS_NAV_LINKS, SOCIAL_LINKS, STUDIOS_INSTAGRAM_URL } from '../../utils/constants'
 import DepartmentSwitcher from '../ui/DepartmentSwitcher'
 import studiosLogo from '../../assets/studios-logo-light-bg.png'
 
@@ -17,14 +17,19 @@ const ICON_MAP = {
   youtube: FiYoutube,
 }
 
-/* LinkedIn and Twitter aren't used for Studios — filtered out here
-   rather than removed from the shared SOCIAL_LINKS list, since Tech's
-   footer still uses all of them. */
-const HIDDEN_SOCIALS = ['linkedin', 'twitter']
+/* Studios only shows Instagram for now (Facebook/YouTube to be added
+   later) — filtered here rather than removed from the shared SOCIAL_LINKS
+   list, since Tech's footer still uses them. Studios' Instagram also points
+   at its own account, not the shared Tech one. */
+const HIDDEN_SOCIALS = ['linkedin', 'twitter', 'facebook', 'youtube']
+const STUDIOS_HREF_OVERRIDES = { instagram: STUDIOS_INSTAGRAM_URL }
 
 const StudiosFooter = memo(function StudiosFooter() {
   const year = new Date().getFullYear()
-  const visibleSocials = SOCIAL_LINKS.filter(({ icon }) => !HIDDEN_SOCIALS.includes(icon))
+  const visibleSocials = SOCIAL_LINKS.filter(({ icon }) => !HIDDEN_SOCIALS.includes(icon)).map((link) => ({
+    ...link,
+    href: STUDIOS_HREF_OVERRIDES[link.icon] ?? link.href,
+  }))
 
   return (
     <footer className="relative bg-[#F3EEE3] border-t border-black/10">

@@ -7,6 +7,7 @@
 
 import React, { lazy, useEffect } from 'react'
 import StudiosPageShell from '../components/layout/StudiosPageShell'
+import InstagramButton from '../components/ui/InstagramButton'
 import { setFavicon } from '../utils/setFavicon'
 import { useSEO } from '../hooks/useSEO'
 
@@ -28,6 +29,7 @@ function StudiosGalleryPage() {
       <div className="pt-28">
         <StudiosGallery />
       </div>
+      <InstagramButton />
     </StudiosPageShell>
   )
 }

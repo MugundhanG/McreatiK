@@ -904,6 +904,9 @@ export const TECH_BLOG_TOPICS = [
    SHARED
    ================================================= */
 
+// McreatiK Studios' own Instagram (the shared SOCIAL_LINKS entry is the Tech brand's).
+export const STUDIOS_INSTAGRAM_URL = 'https://www.instagram.com/mcreatik.studios/'
+
 export const SOCIAL_LINKS = [
   { label: 'Instagram', href: 'https://instagram.com/mcreatik', icon: 'instagram' },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/mcreatik', icon: 'linkedin' },
