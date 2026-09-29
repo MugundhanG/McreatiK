@@ -15,6 +15,7 @@ import { useSEO } from '../hooks/useSEO'
 
 const WhyChooseUs = lazy(() => import('../components/sections/WhyChooseUs'))
 const WhatYouGet = lazy(() => import('../components/sections/WhatYouGet'))
+const TechDemosTeaser = lazy(() => import('../components/sections/TechDemosTeaser'))
 const StudiosCrossSell = lazy(() => import('../components/sections/StudiosCrossSell'))
 const Packages = lazy(() => import('../components/sections/Packages'))
 const Process = lazy(() => import('../components/sections/Process'))
@@ -43,6 +44,7 @@ function TechPage() {
       <Hero />
       <WhyChooseUs />
       <WhatYouGet />
+      <TechDemosTeaser />
       <StudiosCrossSell />
       <Packages />
       <Process />

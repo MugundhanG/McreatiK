@@ -82,6 +82,7 @@ export const TECH_NAV_LINKS = [
   { label: 'Services', href: '/tech/services', type: 'page' },
   { label: 'Industries We Serve', href: '/tech/industries', type: 'page' },
   { label: 'Portfolio', href: '/tech/work', type: 'page' },
+  { label: 'Website Concepts', href: '/tech/demos', type: 'page' },
   { label: 'Our Process', href: '/tech#process', type: 'anchor' },
   { label: 'About Us', href: '/tech#about', type: 'anchor' },
   { label: 'Blog', href: '/tech/blog', type: 'page' },

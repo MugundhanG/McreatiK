@@ -32,6 +32,7 @@ const TechPage = lazy(() => import('./pages/TechPage'))
 const TechServicesPage = lazy(() => import('./pages/TechServicesPage'))
 const TechIndustriesPage = lazy(() => import('./pages/TechIndustriesPage'))
 const TechWorkPage = lazy(() => import('./pages/TechWorkPage'))
+const TechDemosPage = lazy(() => import('./pages/TechDemosPage'))
 const TechFAQPage = lazy(() => import('./pages/TechFAQPage'))
 const TechBlogPage = lazy(() => import('./pages/TechBlogPage'))
 const TechBlogPostPage = lazy(() => import('./pages/TechBlogPostPage'))
@@ -80,6 +81,7 @@ function App() {
           <Route path="/tech/services" element={<TechServicesPage />} />
           <Route path="/tech/industries" element={<TechIndustriesPage />} />
           <Route path="/tech/work" element={<TechWorkPage />} />
+          <Route path="/tech/demos" element={<TechDemosPage />} />
           <Route path="/tech/faq" element={<TechFAQPage />} />
           <Route path="/tech/blog" element={<TechBlogPage />} />
           <Route path="/tech/blog/:slug" element={<TechBlogPostPage />} />
