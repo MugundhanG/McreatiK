@@ -3,6 +3,8 @@
     { "source": "/admin", "destination": "https://mcreatik-admin.vercel.app/" },
     { "source": "/admin/", "destination": "https://mcreatik-admin.vercel.app/" },
     { "source": "/admin/:path*", "destination": "https://mcreatik-admin.vercel.app/:path*" },
+    { "source": "/demos/:slug/", "destination": "/demos/:slug/index.html" },
+    { "source": "/demos/:slug", "destination": "/demos/:slug/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
