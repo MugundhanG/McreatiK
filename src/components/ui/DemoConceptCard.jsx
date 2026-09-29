@@ -50,7 +50,7 @@ const DemoConceptCard = memo(function DemoConceptCard({ concept, compact = false
         >
           <img
             src={desktopShot}
-            alt=""
+            alt={`${name} website, desktop preview`}
             loading="lazy"
             decoding="async"
             className="absolute inset-x-0 top-0 w-full will-change-transform transition-transform ease-in-out duration-[6000ms] group-hover:-translate-y-[80%] group-focus-within:-translate-y-[80%] motion-reduce:transition-none motion-reduce:!translate-y-0"
@@ -60,7 +60,7 @@ const DemoConceptCard = memo(function DemoConceptCard({ concept, compact = false
           <div className="absolute -bottom-3 -right-3 w-16 sm:w-20 overflow-hidden rounded-[10px] border-[3px] border-white bg-stone-900 shadow-lg shadow-stone-900/20">
             <img
               src={mobileShot}
-              alt=""
+              alt={`${name} website, mobile preview`}
               loading="lazy"
               decoding="async"
               className="block w-full"

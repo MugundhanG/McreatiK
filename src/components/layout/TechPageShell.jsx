@@ -22,7 +22,7 @@ function SectionLoader() {
 
 export default function TechPageShell({ children }) {
   return (
-    <div className="theme-tech min-h-screen overflow-x-hidden w-full">
+    <div className="theme-tech min-h-screen overflow-x-clip w-full">
       <Navbar />
       <main>
         <Suspense fallback={<SectionLoader />}>
