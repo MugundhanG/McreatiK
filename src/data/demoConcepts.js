@@ -38,12 +38,36 @@ import photoLittlepebbleMobile from '../assets/demo-shots/photo-littlepebble-mob
 import photoObjektDesktop from '../assets/demo-shots/photo-objekt-desktop.webp';
 import photoObjektMobile from '../assets/demo-shots/photo-objekt-mobile.webp';
 
+import fitAnvilDesktop from '../assets/demo-shots/fit-anvil-desktop.webp';
+import fitAnvilMobile from '../assets/demo-shots/fit-anvil-mobile.webp';
+import fitSwayDesktop from '../assets/demo-shots/fit-sway-desktop.webp';
+import fitSwayMobile from '../assets/demo-shots/fit-sway-mobile.webp';
+import fitAfterburnDesktop from '../assets/demo-shots/fit-afterburn-desktop.webp';
+import fitAfterburnMobile from '../assets/demo-shots/fit-afterburn-mobile.webp';
+
+import bqZariDesktop from '../assets/demo-shots/bq-zari-desktop.webp';
+import bqZariMobile from '../assets/demo-shots/bq-zari-mobile.webp';
+import bqSequinDesktop from '../assets/demo-shots/bq-sequin-desktop.webp';
+import bqSequinMobile from '../assets/demo-shots/bq-sequin-mobile.webp';
+import bqSaffronDesktop from '../assets/demo-shots/bq-saffron-desktop.webp';
+import bqSaffronMobile from '../assets/demo-shots/bq-saffron-mobile.webp';
+
+import trBasecampDesktop from '../assets/demo-shots/tr-basecamp-desktop.webp';
+import trBasecampMobile from '../assets/demo-shots/tr-basecamp-mobile.webp';
+import trPostcardDesktop from '../assets/demo-shots/tr-postcard-desktop.webp';
+import trPostcardMobile from '../assets/demo-shots/tr-postcard-mobile.webp';
+import trPunyamDesktop from '../assets/demo-shots/tr-punyam-desktop.webp';
+import trPunyamMobile from '../assets/demo-shots/tr-punyam-mobile.webp';
+
 export const DEMO_INDUSTRIES = [
   { id: 'dental', label: 'Dental', description: 'Clinic sites built to book appointments — doctor bios, treatment plans and patient trust, front and centre.' },
   { id: 'skin', label: 'Skin & Hair', description: 'Cosmetic and dermatology sites that sell results — before/after proof, concern-led booking flows.' },
   { id: 'interior', label: 'Interior Design', description: 'Studio and modular-furniture sites that sell taste — portfolios, process and finish galleries.' },
   { id: 'coaching', label: 'Coaching & Tuition', description: 'Academy sites built around results and trust — batches, faculty, results walls and parent-facing proof.' },
   { id: 'photography', label: 'Photography', description: 'Studio sites that sell a feeling — galleries, films and real client stories that book the date.' },
+  { id: 'gyms', label: 'Gyms & Fitness', description: 'Gym and studio sites that convert visitors into trial sign-ups — class schedules, coaches and results, built to book.' },
+  { id: 'boutiques', label: 'Boutiques & Fashion', description: 'Fashion and boutique sites that sell the collection — lookbooks, fitting bookings and a WhatsApp-first cart.' },
+  { id: 'travel', label: 'Travel & Tours', description: 'Trek, holiday and pilgrimage sites that turn browsing into bookings — itineraries, batches and trip stories.' },
 ];
 
 export const DEMO_CONCEPTS = [
@@ -226,5 +250,113 @@ export const DEMO_CONCEPTS = [
     url: '/demos/photo-objekt/',
     desktopShot: photoObjektDesktop,
     mobileShot: photoObjektMobile,
+  },
+  {
+    slug: 'fit-anvil',
+    name: 'Anvil Barbell Club',
+    industry: 'gyms',
+    tagline: 'Strength · Powerlifting · Coached programmes',
+    features: ['1RM calculator', 'Coach profiles', 'Real member results'],
+    palette: ['#141413', '#FFD400', '#D7261E'],
+    fonts: ['Anton', 'Barlow'],
+    url: '/demos/fit-anvil/',
+    desktopShot: fitAnvilDesktop,
+    mobileShot: fitAnvilMobile,
+  },
+  {
+    slug: 'fit-sway',
+    name: 'The Sway Room',
+    industry: 'gyms',
+    tagline: 'Women-only Yoga, Dance & Strength Studio',
+    features: ['Find-your-class quiz', 'Weekly timetable', 'Student voices'],
+    palette: ['#3E4535', '#C97B5A', '#F3ECE2'],
+    fonts: ['Lora', 'Albert Sans'],
+    url: '/demos/fit-sway/',
+    desktopShot: fitSwayDesktop,
+    mobileShot: fitSwayMobile,
+  },
+  {
+    slug: 'fit-afterburn',
+    name: 'Afterburn Athletics',
+    industry: 'gyms',
+    tagline: 'CrossFit · Boxing · HIIT Classes',
+    features: ['Workout of the day', 'Members leaderboard', 'Calorie calculator'],
+    palette: ['#0B0C0A', '#C6FF3D', '#FF6A3D'],
+    fonts: ['Space Grotesk', 'Rubik'],
+    url: '/demos/fit-afterburn/',
+    desktopShot: fitAfterburnDesktop,
+    mobileShot: fitAfterburnMobile,
+  },
+  {
+    slug: 'bq-zari',
+    name: 'Zari & Zeal',
+    industry: 'boutiques',
+    tagline: 'Silk Sarees · Bridal Silks · Handlooms',
+    features: ['Saree finder by budget', 'Book a video call', 'Bridal edit lookbook'],
+    palette: ['#4A0E1C', '#C9A24B', '#FAF4E8'],
+    fonts: ['Marcellus', 'Work Sans'],
+    url: '/demos/bq-zari/',
+    desktopShot: bqZariDesktop,
+    mobileShot: bqZariMobile,
+  },
+  {
+    slug: 'bq-sequin',
+    name: 'Sequin & Silk',
+    industry: 'boutiques',
+    tagline: 'Reception Gowns · Lehengas · Party Wear',
+    features: ['Event countdown fittings', 'Personal stylist booking', 'Upcoming trunk shows'],
+    palette: ['#100E1C', '#E9D3A8', '#E39BAC'],
+    fonts: ['Italiana', 'Jost'],
+    url: '/demos/bq-sequin/',
+    desktopShot: bqSequinDesktop,
+    mobileShot: bqSequinMobile,
+  },
+  {
+    slug: 'bq-saffron',
+    name: 'Studio Saffron',
+    industry: 'boutiques',
+    tagline: 'Fusion Co-ords · Modern Kurtas · Dresses',
+    features: ['Shop the new drop', 'Size finder tool', 'WhatsApp cart checkout'],
+    palette: ['#171513', '#FF6B1A', '#F6F1EA'],
+    fonts: ['Gloock', 'Schibsted Grotesk'],
+    url: '/demos/bq-saffron/',
+    desktopShot: bqSaffronDesktop,
+    mobileShot: bqSaffronMobile,
+  },
+  {
+    slug: 'tr-basecamp',
+    name: 'Basecamp Tribe',
+    industry: 'travel',
+    tagline: 'Weekend Treks & Group Trips',
+    features: ['Find-your-trek quiz', 'Live batch calendar', 'Traveller stories'],
+    palette: ['#0E241B', '#FF6A13', '#ECE8DC'],
+    fonts: ['Big Shoulders Display', 'Onest'],
+    url: '/demos/tr-basecamp/',
+    desktopShot: trBasecampDesktop,
+    mobileShot: trBasecampMobile,
+  },
+  {
+    slug: 'tr-postcard',
+    name: 'Postcard Holidays',
+    industry: 'travel',
+    tagline: 'Honeymoon, Family & Friends Holiday Packages',
+    features: ['Instant trip estimator', 'Visa assistance info', 'Real traveller reviews'],
+    palette: ['#2B7BC0', '#FF6B57', '#FBF3E4'],
+    fonts: ['Shrikhand', 'Red Hat Text'],
+    url: '/demos/tr-postcard/',
+    desktopShot: trPostcardDesktop,
+    mobileShot: trPostcardMobile,
+  },
+  {
+    slug: 'tr-punyam',
+    name: 'Punyam Yatra',
+    industry: 'travel',
+    tagline: 'Group Pilgrimage Tours with Care',
+    features: ['Day-by-day itinerary', 'Accessibility & care info', 'Upcoming departures'],
+    palette: ['#B8321A', '#F2A71B', '#F5E9D3'],
+    fonts: ['Rozha One', 'Hind Madurai'],
+    url: '/demos/tr-punyam/',
+    desktopShot: trPunyamDesktop,
+    mobileShot: trPunyamMobile,
   },
 ];

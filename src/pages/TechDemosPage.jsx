@@ -125,8 +125,8 @@ function TechDemosPage() {
             Websites built for <span className="text-[#1E4FD9]">your industry</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-pretty text-base text-stone-600 sm:text-lg">
-            Real, fully-built concepts for dental, skin &amp; hair, interior design, coaching, and photography
-            businesses — browse one close to yours, then open it live.
+            Real, fully-built concepts for dental, skin &amp; hair, interior design, coaching, photography,
+            gyms, boutiques and travel businesses — browse one close to yours, then open it live.
           </p>
 
           <div className="mt-8 flex items-center justify-center gap-2 text-sm font-medium text-stone-500">

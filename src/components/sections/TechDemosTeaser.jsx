@@ -27,7 +27,7 @@ const TechDemosTeaser = memo(function TechDemosTeaser() {
         <SectionHeading
           label="Website Concepts"
           title="See it built for your industry"
-          subtitle={`${DEMO_CONCEPTS.length} fully-built concepts across dental, skin & hair, interior design, coaching, and photography — browse one close to your business.`}
+          subtitle={`${DEMO_CONCEPTS.length} fully-built concepts across dental, skin & hair, interior design, coaching, photography, gyms, boutiques and travel — browse one close to your business.`}
         />
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
