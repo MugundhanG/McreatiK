@@ -30,7 +30,6 @@ const SECTIONS = [
     ],
     list: [
       'Contact forms (Home, Tech and Studios): your name, email, phone number, message, and how you heard about us. These are sent to us by email through EmailJS.',
-      'Studios booking popup: your name, phone number and the service you’re interested in.',
       'Digital Store account: name, email and a password, which is stored hashed — we never store or see your plain-text password.',
       'Digital Store orders: the items you buy, the details you type into a document’s customization form, any images you upload into a document, and the order’s payment status.',
       'Payments: processed by Razorpay. McreatiK never sees or stores your card, UPI or bank account details — Razorpay handles those directly.',

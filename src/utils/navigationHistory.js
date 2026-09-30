@@ -15,7 +15,7 @@
    persists across client-side route changes within
    the same load, which is exactly the "came from
    elsewhere in the app vs. arrived fresh"
-   distinction some UI (like Studios' booking popup)
+   distinction some UI (e.g. a first-visit popup)
    needs to make.
    ============================================ */
 

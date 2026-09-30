@@ -9,7 +9,6 @@
 
 import React, { lazy, useEffect } from 'react'
 import StudiosHero from '../components/studios/Hero'
-import StudiosBookingModal from '../components/studios/BookingModal'
 import StudiosPageShell from '../components/layout/StudiosPageShell'
 import { setFavicon } from '../utils/setFavicon'
 import { useScrollToHash } from '../hooks/useScrollToHash'
@@ -43,7 +42,6 @@ function StudiosPage() {
       <StudiosPricing />
       <StudiosAbout />
       <StudiosContact />
-      <StudiosBookingModal />
     </StudiosPageShell>
   )
 }
