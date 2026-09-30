@@ -28,9 +28,15 @@ const StoreFooter = memo(function StoreFooter() {
             </Link>
             <span className="text-[#17151f]/50 text-sm">&copy; {year}</span>
           </div>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
             <Link to="/store/refund-policy" className="text-sm text-[#17151f]/70 hover:text-[var(--store-accent-text)] transition-colors">
               Refund & Cancellation Policy
+            </Link>
+            <Link to="/privacy" className="text-sm text-[#17151f]/70 hover:text-[var(--store-accent-text)] transition-colors">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="text-sm text-[#17151f]/70 hover:text-[var(--store-accent-text)] transition-colors">
+              Terms of Service
             </Link>
             <DepartmentSwitcher className="text-[#17151f]/70 bg-white/70" />
           </div>

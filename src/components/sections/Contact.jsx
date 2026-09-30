@@ -10,6 +10,7 @@
    ============================================ */
 
 import React, { memo, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FiSend, FiMail, FiPhone, FiMapPin } from 'react-icons/fi'
 import emailjs from '@emailjs/browser'
@@ -246,22 +247,31 @@ const Contact = memo(function Contact() {
             </div>
 
             {/* Submit button + status feedback */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-2">
-              <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
-                {isSubmitting ? (
-                  <>
-                    <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                    </svg>
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    Send Message <FiSend className="w-4 h-4" />
-                  </>
-                )}
-              </Button>
+            <div className="flex flex-col items-start gap-3 pt-2">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
+                  {isSubmitting ? (
+                    <>
+                      <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                      </svg>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Send Message <FiSend className="w-4 h-4" />
+                    </>
+                  )}
+                </Button>
+              </div>
+              <p className="text-xs text-stone-500">
+                By submitting, you agree to our{' '}
+                <Link to="/privacy" className="underline hover:text-[#1E4FD9] transition-colors">
+                  Privacy Policy
+                </Link>
+                .
+              </p>
 
               {submitStatus === 'success' && (
                 <motion.p

@@ -6,6 +6,7 @@
    ============================================ */
 
 import React, { memo, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FiSend, FiMail, FiPhone, FiMapPin } from 'react-icons/fi'
 import emailjs from '@emailjs/browser'
@@ -241,10 +242,19 @@ const StudiosContact = memo(function StudiosContact() {
               </select>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-1">
-              <Button theme="studios" type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
-                {isSubmitting ? 'Sending...' : <>Send Inquiry <FiSend className="w-4 h-4" /></>}
-              </Button>
+            <div className="flex flex-col items-start gap-3 pt-1">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <Button theme="studios" type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
+                  {isSubmitting ? 'Sending...' : <>Send Inquiry <FiSend className="w-4 h-4" /></>}
+                </Button>
+              </div>
+              <p className="font-body text-xs text-[#A89A88]">
+                By submitting, you agree to our{' '}
+                <Link to="/privacy" className="underline hover:text-[#C9971F] transition-colors">
+                  Privacy Policy
+                </Link>
+                .
+              </p>
               {submitStatus === 'success' && (
                 <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-sm text-[#4d7a3a]">
                   Inquiry sent — we'll be in touch soon.

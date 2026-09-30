@@ -130,8 +130,8 @@ const Footer = memo(function Footer() {
         <div className="border-t border-white/5 mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-gray-400 text-sm">McreatiK. All rights reserved.</p>
           <div className="flex gap-6 text-sm text-gray-400">
-            <a href="#" className="hover:text-gray-300 transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-gray-300 transition-colors">Terms of Service</a>
+            <Link to="/privacy" className="hover:text-gray-300 transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-gray-300 transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>

@@ -123,8 +123,8 @@ const Footer = memo(function Footer() {
           </p>
           <DepartmentSwitcher excludeKeys={['store']} className="text-stone-500 bg-white" />
           <div className="flex gap-6 text-sm text-stone-500">
-            <a href="#" className="hover:text-stone-800 transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-stone-800 transition-colors">Terms of Service</a>
+            <Link to="/privacy" className="hover:text-stone-800 transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-stone-800 transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>

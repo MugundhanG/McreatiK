@@ -14,6 +14,7 @@
    ============================================ */
 
 import React, { memo, useCallback, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiX } from 'react-icons/fi'
@@ -175,6 +176,13 @@ const StudiosBookingModal = memo(function StudiosBookingModal() {
                   <Button theme="studios" type="submit" disabled={isSubmitting} className="w-full justify-center">
                     {isSubmitting ? 'Sending...' : 'Book Now'}
                   </Button>
+                  <p className="font-body text-xs text-[#A89A88] text-center">
+                    By submitting, you agree to our{' '}
+                    <Link to="/privacy" className="underline hover:text-[#C9971F] transition-colors">
+                      Privacy Policy
+                    </Link>
+                    .
+                  </p>
                   {submitStatus === 'error' && (
                     <p className="text-center text-sm font-semibold text-[#DC2626]">Something went wrong. Please try again.</p>
                   )}

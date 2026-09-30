@@ -9,6 +9,7 @@
    ============================================ */
 
 import React, { memo, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiGlobe, FiCamera, FiCheck, FiMail, FiPhone } from 'react-icons/fi'
 import emailjs from '@emailjs/browser'
@@ -362,6 +363,13 @@ const HomeContact = memo(function HomeContact() {
                       <Button type="submit" theme="home" disabled={isSubmitting} className="w-full justify-center">
                         {isSubmitting ? 'Sending...' : 'Get Started'}
                       </Button>
+                      <p className="mt-3 text-xs text-gray-500">
+                        By submitting, you agree to our{' '}
+                        <Link to="/privacy" className="underline hover:text-[#D8AE55] transition-colors">
+                          Privacy Policy
+                        </Link>
+                        .
+                      </p>
                       {submitStatus === 'success' && (
                         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-3 text-sm text-green-400">
                           Message sent! We'll get back to you soon.
