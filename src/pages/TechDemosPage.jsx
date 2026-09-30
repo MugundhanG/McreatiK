@@ -152,7 +152,9 @@ function TechDemosPage() {
       {/* ===== Filters ===== */}
       <div className="sticky top-[65px] z-20 border-y border-stone-200 bg-white/90 backdrop-blur-md">
         <div className="mx-auto max-w-7xl px-4 py-3.5 sm:px-6 lg:px-8">
-          <div role="group" aria-label="Filter concepts by industry" className="flex gap-2 overflow-x-auto pb-0.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+          {/* Phones: one swipeable row, with a right-edge fade hinting there's more.
+              md+: wrap onto as many rows as needed so every industry is visible. */}
+          <div role="group" aria-label="Filter concepts by industry" className="flex gap-2 overflow-x-auto pb-0.5 pr-8 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden [mask-image:linear-gradient(to_right,black_85%,transparent)] md:flex-wrap md:overflow-visible md:pr-0 md:[mask-image:none]">
             <FilterPill
               label="All"
               count={DEMO_CONCEPTS.length}
