@@ -59,6 +59,27 @@ import trPostcardMobile from '../assets/demo-shots/tr-postcard-mobile.webp';
 import trPunyamDesktop from '../assets/demo-shots/tr-punyam-desktop.webp';
 import trPunyamMobile from '../assets/demo-shots/tr-punyam-mobile.webp';
 
+import rsVazhaiDesktop from '../assets/demo-shots/rs-vazhai-desktop.webp';
+import rsVazhaiMobile from '../assets/demo-shots/rs-vazhai-mobile.webp';
+import rsCoalstreetDesktop from '../assets/demo-shots/rs-coalstreet-desktop.webp';
+import rsCoalstreetMobile from '../assets/demo-shots/rs-coalstreet-mobile.webp';
+import rsDeccanDesktop from '../assets/demo-shots/rs-deccan-desktop.webp';
+import rsDeccanMobile from '../assets/demo-shots/rs-deccan-mobile.webp';
+
+import reKalpaDesktop from '../assets/demo-shots/re-kalpa-desktop.webp';
+import reKalpaMobile from '../assets/demo-shots/re-kalpa-mobile.webp';
+import reBhoomiDesktop from '../assets/demo-shots/re-bhoomi-desktop.webp';
+import reBhoomiMobile from '../assets/demo-shots/re-bhoomi-mobile.webp';
+import reDoorkeyDesktop from '../assets/demo-shots/re-doorkey-desktop.webp';
+import reDoorkeyMobile from '../assets/demo-shots/re-doorkey-mobile.webp';
+
+import b2bLoomwellDesktop from '../assets/demo-shots/b2b-loomwell-desktop.webp';
+import b2bLoomwellMobile from '../assets/demo-shots/b2b-loomwell-mobile.webp';
+import b2bAxlecraftDesktop from '../assets/demo-shots/b2b-axlecraft-desktop.webp';
+import b2bAxlecraftMobile from '../assets/demo-shots/b2b-axlecraft-mobile.webp';
+import b2bNeervelDesktop from '../assets/demo-shots/b2b-neervel-desktop.webp';
+import b2bNeervelMobile from '../assets/demo-shots/b2b-neervel-mobile.webp';
+
 export const DEMO_INDUSTRIES = [
   { id: 'dental', label: 'Dental', description: 'Clinic sites built to book appointments — doctor bios, treatment plans and patient trust, front and centre.' },
   { id: 'skin', label: 'Skin & Hair', description: 'Cosmetic and dermatology sites that sell results — before/after proof, concern-led booking flows.' },
@@ -68,6 +89,9 @@ export const DEMO_INDUSTRIES = [
   { id: 'gyms', label: 'Gyms & Fitness', description: 'Gym and studio sites that convert visitors into trial sign-ups — class schedules, coaches and results, built to book.' },
   { id: 'boutiques', label: 'Boutiques & Fashion', description: 'Fashion and boutique sites that sell the collection — lookbooks, fitting bookings and a WhatsApp-first cart.' },
   { id: 'travel', label: 'Travel & Tours', description: 'Trek, holiday and pilgrimage sites that turn browsing into bookings — itineraries, batches and trip stories.' },
+  { id: 'restaurants', label: 'Restaurants & Cafés', description: 'Kitchen and restaurant sites that sell the next order — live menus, combo builders and WhatsApp checkout, no app commission.' },
+  { id: 'realestate', label: 'Real Estate', description: 'Builder, layout and agency sites that move a sale forward — live inventory, EMI and price tools, and site-visit booking.' },
+  { id: 'b2b', label: 'B2B & Manufacturing', description: 'Factory and exporter sites that convert buyers into RFQs — capability specs, catalogues and quote forms built for procurement.' },
 ];
 
 export const DEMO_CONCEPTS = [
@@ -358,5 +382,113 @@ export const DEMO_CONCEPTS = [
     url: '/demos/tr-punyam/',
     desktopShot: trPunyamDesktop,
     mobileShot: trPunyamMobile,
+  },
+  {
+    slug: 'rs-vazhai',
+    name: 'Vazhai Ilai',
+    industry: 'restaurants',
+    tagline: 'Pure Veg · Tiffin · Meals · Catering',
+    features: ["Today's tiffin menu", 'Build your own leaf', 'Instant catering quote'],
+    palette: ['#3E8A2E', '#F4B41A', '#FBF8EF'],
+    fonts: ['Arima', 'Mukta Malar'],
+    url: '/demos/rs-vazhai/',
+    desktopShot: rsVazhaiDesktop,
+    mobileShot: rsVazhaiMobile,
+  },
+  {
+    slug: 'rs-coalstreet',
+    name: 'Coal Street',
+    industry: 'restaurants',
+    tagline: 'Shawarma · Rolls · Grills, Till 3 AM',
+    features: ['Beats app pricing live', 'Combo box builder', 'Party platter calculator'],
+    palette: ['#161413', '#E4312B', '#F0EBE0'],
+    fonts: ['Dela Gothic One', 'Chivo'],
+    url: '/demos/rs-coalstreet/',
+    desktopShot: rsCoalstreetDesktop,
+    mobileShot: rsCoalstreetMobile,
+  },
+  {
+    slug: 'rs-deccan',
+    name: 'Deccan Degh',
+    industry: 'restaurants',
+    tagline: 'Hyderabadi Dum Biryani · 12 Outlets',
+    features: ['90-minute dum tracker', 'Multi-outlet ordering', 'Party & office catering'],
+    palette: ['#2B1A12', '#9E1B32', '#F2A33A'],
+    fonts: ['Yeseva One', 'Poppins'],
+    url: '/demos/rs-deccan/',
+    desktopShot: rsDeccanDesktop,
+    mobileShot: rsDeccanMobile,
+  },
+  {
+    slug: 're-kalpa',
+    name: 'Kalpa Homes',
+    industry: 'realestate',
+    tagline: '2 & 3 BHK Apartments, Under Construction',
+    features: ['Interactive floor plans', 'EMI & price calculator', 'Live construction tracker'],
+    palette: ['#1C3437', '#B8925A', '#F4F1EB'],
+    fonts: ['Bellefair', 'Be Vietnam Pro'],
+    url: '/demos/re-kalpa/',
+    desktopShot: reKalpaDesktop,
+    mobileShot: reKalpaMobile,
+  },
+  {
+    slug: 're-bhoomi',
+    name: 'Bhoomi Layouts',
+    industry: 'realestate',
+    tagline: 'Approved Residential Plots & Layouts',
+    features: ['Live plot availability map', 'Clear-title document check', 'Free site visit pickup'],
+    palette: ['#A8492A', '#5C8A3A', '#F6EEDC'],
+    fonts: ['Zilla Slab', 'Atkinson Hyperlegible'],
+    url: '/demos/re-bhoomi/',
+    desktopShot: reBhoomiDesktop,
+    mobileShot: reBhoomiMobile,
+  },
+  {
+    slug: 're-doorkey',
+    name: 'DoorKey Realty',
+    industry: 'realestate',
+    tagline: 'Verified Homes to Buy & Rent',
+    features: ['Verified listings only', 'Rent vs buy calculator', 'List your property free'],
+    palette: ['#111418', '#0F8B7A', '#F7F5F0'],
+    fonts: ['Geologica', 'Geologica'],
+    url: '/demos/re-doorkey/',
+    desktopShot: reDoorkeyDesktop,
+    mobileShot: reDoorkeyMobile,
+  },
+  {
+    slug: 'b2b-loomwell',
+    name: 'Loomwell Knits',
+    industry: 'b2b',
+    tagline: 'Knitwear Manufacturer & Exporter',
+    features: ['Full style catalogue', 'Seven-stop process tour', 'One-page RFQ builder'],
+    palette: ['#19224A', '#C2452D', '#F2EFE8'],
+    fonts: ['Crimson Pro', 'Epilogue'],
+    url: '/demos/b2b-loomwell/',
+    desktopShot: b2bLoomwellDesktop,
+    mobileShot: b2bLoomwellMobile,
+  },
+  {
+    slug: 'b2b-axlecraft',
+    name: 'Axlecraft Precision',
+    industry: 'b2b',
+    tagline: 'CNC Turned & Milled Components, to Drawing',
+    features: ['Capability & tolerance list', 'Can-we-make-it checker', 'Drawing-based RFQ'],
+    palette: ['#15181C', '#D7263D', '#D5DADF'],
+    fonts: ['Saira', 'Martian Mono'],
+    url: '/demos/b2b-axlecraft/',
+    desktopShot: b2bAxlecraftDesktop,
+    mobileShot: b2bAxlecraftMobile,
+  },
+  {
+    slug: 'b2b-neervel',
+    name: 'Neervel Pumps',
+    industry: 'b2b',
+    tagline: 'Farm, Borewell, Solar & Domestic Pumps',
+    features: ['4-question pump finder', 'Dealer locator by district', 'Warranty registration'],
+    palette: ['#1D2B9E', '#F6C230', '#F4F2EE'],
+    fonts: ['Anek Tamil', 'Anek Tamil'],
+    url: '/demos/b2b-neervel/',
+    desktopShot: b2bNeervelDesktop,
+    mobileShot: b2bNeervelMobile,
   },
 ];

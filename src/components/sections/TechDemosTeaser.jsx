@@ -12,12 +12,18 @@ import { FiArrowRight } from 'react-icons/fi'
 import DemoConceptCard from '../ui/DemoConceptCard'
 import SectionHeading from '../ui/SectionHeading'
 import SectionDivider from '../ui/SectionDivider'
-import { DEMO_CONCEPTS } from '../../data/demoConcepts'
+import { DEMO_CONCEPTS, DEMO_INDUSTRIES } from '../../data/demoConcepts'
 
 const FEATURED_SLUGS = ['dental-smile-studio', 'interior-aalaya', 'photo-kadhai']
 const FEATURED_CONCEPTS = FEATURED_SLUGS
   .map((slug) => DEMO_CONCEPTS.find((c) => c.slug === slug))
   .filter(Boolean)
+
+const INDUSTRY_LABELS = DEMO_INDUSTRIES.map((ind) => ind.label)
+const INDUSTRY_LIST_COPY =
+  INDUSTRY_LABELS.length < 2
+    ? INDUSTRY_LABELS.join('')
+    : `${INDUSTRY_LABELS.slice(0, -1).join(', ')} and ${INDUSTRY_LABELS[INDUSTRY_LABELS.length - 1]}`
 
 const TechDemosTeaser = memo(function TechDemosTeaser() {
   return (
@@ -27,7 +33,7 @@ const TechDemosTeaser = memo(function TechDemosTeaser() {
         <SectionHeading
           label="Website Concepts"
           title="See it built for your industry"
-          subtitle={`${DEMO_CONCEPTS.length} fully-built concepts across dental, skin & hair, interior design, coaching, photography, gyms, boutiques and travel — browse one close to your business.`}
+          subtitle={`${DEMO_CONCEPTS.length} fully-built concepts across ${INDUSTRY_LIST_COPY} — browse one close to your business.`}
         />
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
