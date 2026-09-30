@@ -20,7 +20,7 @@
    ============================================ */
 
 import React, { lazy, Suspense } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import ErrorBoundary from './components/ErrorBoundary'
 import WhatsAppButton from './components/ui/WhatsAppButton'
 import DepartmentTransitionOverlay from './components/ui/DepartmentTransitionOverlay'
@@ -31,7 +31,6 @@ const Landing = lazy(() => import('./pages/Landing'))
 const TechPage = lazy(() => import('./pages/TechPage'))
 const TechServicesPage = lazy(() => import('./pages/TechServicesPage'))
 const TechIndustriesPage = lazy(() => import('./pages/TechIndustriesPage'))
-const TechWorkPage = lazy(() => import('./pages/TechWorkPage'))
 const TechDemosPage = lazy(() => import('./pages/TechDemosPage'))
 const TechFAQPage = lazy(() => import('./pages/TechFAQPage'))
 const TechBlogPage = lazy(() => import('./pages/TechBlogPage'))
@@ -82,7 +81,7 @@ function App() {
           <Route path="/tech" element={<TechPage />} />
           <Route path="/tech/services" element={<TechServicesPage />} />
           <Route path="/tech/industries" element={<TechIndustriesPage />} />
-          <Route path="/tech/work" element={<TechWorkPage />} />
+          <Route path="/tech/work" element={<Navigate to="/tech/demos" replace />} />
           <Route path="/tech/demos" element={<TechDemosPage />} />
           <Route path="/tech/faq" element={<TechFAQPage />} />
           <Route path="/tech/blog" element={<TechBlogPage />} />

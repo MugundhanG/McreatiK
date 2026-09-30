@@ -21,6 +21,15 @@ import { DEMO_INDUSTRIES } from '../../data/demoConcepts'
 
 const industryLabel = (id) => DEMO_INDUSTRIES.find((ind) => ind.id === id)?.label || id
 
+// External concepts (portfolio sites merged in) link to their real live
+// host instead of a /demos/<slug>/ path — show that real host + path in
+// the faux browser bar instead of the usual mcreatik.com/demos/<slug>.
+const displayUrl = (url, slug) => {
+  if (!/^https?:\/\//i.test(url)) return `mcreatik.com/demos/${slug}`
+  const { host, pathname } = new URL(url)
+  return `${host}${pathname === '/' ? '' : pathname}`
+}
+
 const DemoConceptCard = memo(function DemoConceptCard({ concept, compact = false }) {
   const {
     slug, name, industry, tagline, features, palette, fonts, url, desktopShot, mobileShot,
@@ -41,7 +50,7 @@ const DemoConceptCard = memo(function DemoConceptCard({ concept, compact = false
             <span className="h-2 w-2 rounded-full bg-stone-300" />
           </span>
           <span className="font-mono-label truncate text-[10px] text-stone-400">
-            mcreatik.com/demos/{slug}
+            {displayUrl(url, slug)}
           </span>
         </div>
 

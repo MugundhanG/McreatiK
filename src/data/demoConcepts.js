@@ -80,6 +80,17 @@ import b2bAxlecraftMobile from '../assets/demo-shots/b2b-axlecraft-mobile.webp';
 import b2bNeervelDesktop from '../assets/demo-shots/b2b-neervel-desktop.webp';
 import b2bNeervelMobile from '../assets/demo-shots/b2b-neervel-mobile.webp';
 
+// Portfolio sites merged into the showcase — these link to the real, live
+// business sites (external https URLs) rather than /demos/<slug>/.
+import heeswarPhotographyDesktop from '../assets/demo-shots/heeswar-photography-desktop.webp';
+import heeswarPhotographyMobile from '../assets/demo-shots/heeswar-photography-mobile.webp';
+import artificerDynamicsDesktop from '../assets/demo-shots/artificer-dynamics-desktop.webp';
+import artificerDynamicsMobile from '../assets/demo-shots/artificer-dynamics-mobile.webp';
+import muscleTownDesktop from '../assets/demo-shots/muscle-town-desktop.webp';
+import muscleTownMobile from '../assets/demo-shots/muscle-town-mobile.webp';
+import theDentalBoutiqueDesktop from '../assets/demo-shots/the-dental-boutique-desktop.webp';
+import theDentalBoutiqueMobile from '../assets/demo-shots/the-dental-boutique-mobile.webp';
+
 export const DEMO_INDUSTRIES = [
   { id: 'dental', label: 'Dental', description: 'Clinic sites built to book appointments — doctor bios, treatment plans and patient trust, front and centre.' },
   { id: 'skin', label: 'Skin & Hair', description: 'Cosmetic and dermatology sites that sell results — before/after proof, concern-led booking flows.' },
@@ -130,6 +141,18 @@ export const DEMO_CONCEPTS = [
     url: '/demos/dental-pearl-care/',
     desktopShot: dentalPearlCareDesktop,
     mobileShot: dentalPearlCareMobile,
+  },
+  {
+    slug: 'the-dental-boutique',
+    name: 'The Dental Boutique',
+    industry: 'dental',
+    tagline: 'Family & Cosmetic Dentistry',
+    features: ['Complete treatment list', 'Step-by-step visit guide', 'WhatsApp appointment booking'],
+    palette: ['#FBF8F3', '#0F6B5C', '#16241F'],
+    fonts: ['Cormorant Garamond', 'Manrope'],
+    url: 'https://the-dental-boutique-one.vercel.app/',
+    desktopShot: theDentalBoutiqueDesktop,
+    mobileShot: theDentalBoutiqueMobile,
   },
   {
     slug: 'skin-lumiere',
@@ -276,6 +299,18 @@ export const DEMO_CONCEPTS = [
     mobileShot: photoObjektMobile,
   },
   {
+    slug: 'heeswar-photography',
+    name: 'Heeswar Photography',
+    industry: 'photography',
+    tagline: 'Wedding, Portrait & Event Photography',
+    features: ['Wedding & event galleries', 'WhatsApp booking form', '500+ shoots delivered'],
+    palette: ['#0A0A0A', '#C9A84C', '#F5F3EF'],
+    fonts: ['Bebas Neue', 'DM Sans'],
+    url: 'https://mugundhang.github.io/Heeswar-photography/',
+    desktopShot: heeswarPhotographyDesktop,
+    mobileShot: heeswarPhotographyMobile,
+  },
+  {
     slug: 'fit-anvil',
     name: 'Anvil Barbell Club',
     industry: 'gyms',
@@ -310,6 +345,18 @@ export const DEMO_CONCEPTS = [
     url: '/demos/fit-afterburn/',
     desktopShot: fitAfterburnDesktop,
     mobileShot: fitAfterburnMobile,
+  },
+  {
+    slug: 'muscle-town',
+    name: 'Muscle Town Fitness',
+    industry: 'gyms',
+    tagline: 'Strength Training & Personal Coaching',
+    features: ['Programs & training plans', 'Compare membership plans', 'Free trial WhatsApp CTA'],
+    palette: ['#0B0B0D', '#D93607', '#F5F5F4'],
+    fonts: ['Barlow Condensed', 'Barlow'],
+    url: 'https://muscle-town-fitness.vercel.app/',
+    desktopShot: muscleTownDesktop,
+    mobileShot: muscleTownMobile,
   },
   {
     slug: 'bq-zari',
@@ -490,5 +537,17 @@ export const DEMO_CONCEPTS = [
     url: '/demos/b2b-neervel/',
     desktopShot: b2bNeervelDesktop,
     mobileShot: b2bNeervelMobile,
+  },
+  {
+    slug: 'artificer-dynamics',
+    name: 'Artificer Dynamics',
+    industry: 'b2b',
+    tagline: 'Engineering Design & FEA Analysis',
+    features: ['Capability & service list', 'Get-a-quote contact form', 'Vision, mission & values'],
+    palette: ['#0A152A', '#E8742B', '#FFFFFF'],
+    fonts: ['Poppins', 'Inter'],
+    url: 'https://mugundhang.github.io/ArtificerDynamics/',
+    desktopShot: artificerDynamicsDesktop,
+    mobileShot: artificerDynamicsMobile,
   },
 ];

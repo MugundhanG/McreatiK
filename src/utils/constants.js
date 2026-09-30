@@ -54,7 +54,6 @@ import {
   FiLayers,
   FiGrid,
   FiGitMerge,
-  FiMonitor,
   FiBookOpen,
   FiHelpCircle,
 } from 'react-icons/fi'
@@ -62,10 +61,6 @@ import {
 /* Shared contact number used for WhatsApp CTAs across both departments */
 export const WHATSAPP_NUMBER = '919952758545'
 
-import photographyThumbnail from '../assets/photography_website_thumbnail.jpg'
-import adThumbnail from '../assets/ADthumbnail.jpg'
-import fitnessStudioThumbnail from '../assets/fitness-studio-thumbnail.png'
-import dentalClinicThumbnail from '../assets/dental-clinic-thumbnail.png'
 import portraitSessionsPhoto from '../assets/offerings/portrait-sessions.jpg'
 import weddingPhotographyPhoto from '../assets/offerings/wedding-photography.jpg'
 import prePostWeddingPhoto from '../assets/offerings/pre-post-wedding.jpg'
@@ -85,7 +80,6 @@ export const TECH_NAV_LINKS = [
   { label: 'Home', href: '/tech', type: 'page' },
   { label: 'Services', href: '/tech/services', type: 'page' },
   { label: 'Industries We Serve', href: '/tech/industries', type: 'page' },
-  { label: 'Portfolio', href: '/tech/work', type: 'page' },
   { label: 'Website Concepts', href: '/tech/demos', type: 'page' },
   { label: 'Our Process', href: '/tech#process', type: 'anchor' },
   { label: 'About Us', href: '/tech#about', type: 'anchor' },
@@ -108,14 +102,7 @@ export const TECH_NAV_GROUPS = [
       { label: 'Our Process', href: '/tech#process', type: 'anchor', icon: FiGitMerge, description: 'How we take you from idea to launch' },
     ],
   },
-  {
-    label: 'Work',
-    href: '/tech/work',
-    items: [
-      { label: 'Portfolio', href: '/tech/work', type: 'page', icon: FiGrid, description: 'Real websites we built for clients' },
-      { label: 'Website Concepts', href: '/tech/demos', type: 'page', icon: FiMonitor, description: '24 industry-ready demo sites to explore' },
-    ],
-  },
+  { label: 'Our Work', href: '/tech/demos' },
   {
     label: 'Resources',
     href: '/tech/blog',
@@ -302,57 +289,6 @@ export const TECH_SERVICES = [
     description:
       "A sharper LinkedIn presence — photo, headline, and summary that reflect where you're headed.",
     category: 'Digital Design',
-  },
-]
-
-export const TECH_PORTFOLIO_ITEMS = [
-  {
-    id: 1,
-    title: 'Photography Business Website',
-    category: 'Website',
-    industry: 'Photography Studio',
-    image: photographyThumbnail,
-    link: 'https://mugundhang.github.io/Heeswar-photography/',
-    description: 'Fully responsive photography website with modern design and seamless user experience with contact form.',
-    challenge: 'Needed a professional home online to showcase their work and give potential clients an easy way to get in touch.',
-    result: 'A fully responsive site with a built-in enquiry form, live and ready to take visitor contact.',
-    features: ['Responsive Design', 'Contact Form', 'Portfolio Gallery'],
-  },
-  {
-    id: 3,
-    title: 'Engineering Solutions Website',
-    category: 'Website',
-    industry: 'Professional Services',
-    image: adThumbnail,
-    link: 'https://mugundhang.github.io/ArtificerDynamics/',
-    description: 'A modern business website built with clean design and seamless user experience.',
-    challenge: 'Needed a credible online presence that matched the quality of their engineering work.',
-    result: 'A clean, modern site that presents their services clearly to prospective clients.',
-    features: ['Responsive Design', 'Service Pages', 'Modern UI'],
-  },
-  {
-    id: 5,
-    title: 'Fitness Studio Website',
-    category: 'Website',
-    industry: 'Gym & Fitness Studio',
-    image: fitnessStudioThumbnail,
-    link: 'https://muscle-town-fitness.vercel.app/',
-    description: 'A high-energy fitness website with programs, trainer coaching, and a free-trial call to action.',
-    challenge: 'Needed a site that matched the studio\'s energy while making it easy for prospects to book a free trial.',
-    result: 'A conversion-focused site with clear programs, WhatsApp booking, and a free-trial CTA above the fold.',
-    features: ['Responsive Design', 'Program Pages', 'WhatsApp Booking'],
-  },
-  {
-    id: 6,
-    title: 'Dental Clinic Website',
-    category: 'Website',
-    industry: 'Dental Clinic',
-    image: dentalClinicThumbnail,
-    link: 'https://the-dental-boutique-one.vercel.app/',
-    description: 'A calming, patient-first website covering treatments, transparent pricing, and appointment booking.',
-    challenge: 'Needed a site that eased patient anxiety and made booking a consultation simple.',
-    result: 'A trust-building site with clear treatment pages and a one-tap appointment booking flow.',
-    features: ['Responsive Design', 'Treatment Pages', 'Appointment Booking'],
   },
 ]
 
