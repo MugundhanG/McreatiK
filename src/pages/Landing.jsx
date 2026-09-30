@@ -14,6 +14,7 @@ import Footer from '../components/home/Footer'
 import ScrollToTop from '../components/ui/ScrollToTop'
 import { setFavicon } from '../utils/setFavicon'
 import { useSEO } from '../hooks/useSEO'
+import { useScrollToHash } from '../hooks/useScrollToHash'
 
 const WhatIsMcreatik = lazy(() => import('../components/home/WhatIsMcreatik'))
 const ExploreMcreatik = lazy(() => import('../components/home/ExploreMcreatik'))
@@ -33,6 +34,9 @@ function SectionLoader() {
 }
 
 const Landing = function Landing() {
+  // Arriving as /#about or /#contact (e.g. from the navbar on /privacy)
+  // scrolls to that section once its lazy chunk has rendered.
+  useScrollToHash()
   useSEO({
     title: 'McreatiK | Digital & Creative Solutions — Tech, Studios & More',
     description:

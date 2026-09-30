@@ -10,7 +10,7 @@
    ============================================ */
 
 import React, { useState, useEffect, useCallback, memo } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiMenu, FiX, FiChevronDown } from 'react-icons/fi'
 import { HOME_NAV_LINKS, TECH_NAV_LINKS, STUDIOS_NAV_LINKS } from '../../utils/constants'
@@ -28,6 +28,7 @@ const DEPT_MENUS = {
 }
 
 function NavLink({ label, href, type, className, onClick }) {
+  const { pathname } = useLocation()
   if (type === 'disabled') {
     return (
       <span className={`${className} text-gray-400 cursor-not-allowed`}>
@@ -41,6 +42,16 @@ function NavLink({ label, href, type, className, onClick }) {
   if (type === 'route') {
     return (
       <Link to={href} onClick={onClick} className={className}>
+        {label}
+      </Link>
+    )
+  }
+  // Anchor links (#home / #about / #contact) point at sections of the Home
+  // page. On Home they stay in-page anchors; on any other page that reuses
+  // this navbar (e.g. /privacy, /terms) they must navigate back to Home first.
+  if (pathname !== '/') {
+    return (
+      <Link to={href === '#home' ? '/' : `/${href}`} onClick={onClick} className={className}>
         {label}
       </Link>
     )
@@ -186,7 +197,10 @@ const Navbar = memo(function Navbar() {
                           {menu.sections.map((section) => (
                             <Link
                               key={section.label}
-                              to={`${menu.basePath}${section.href}`}
+                              // Same guard as the desktop dropdown: department nav
+                              // lists store full paths (/tech/services), so only
+                              // prefix basePath for relative ones.
+                              to={section.href.startsWith('/') ? section.href : `${menu.basePath}${section.href}`}
                               onClick={closeMobile}
                               className="block px-4 py-2 text-gray-400 hover:text-[#D8AE55] rounded-md transition-colors text-sm"
                             >
