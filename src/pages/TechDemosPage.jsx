@@ -90,12 +90,6 @@ function TechDemosPage() {
       ? `${DEMO_CONCEPTS.length} concepts across ${DEMO_INDUSTRIES.length} industries — pick one close to your business and see it live.`
       : DEMO_INDUSTRIES.find((ind) => ind.id === activeIndustry)?.description
 
-  const industryListCopy = useMemo(() => {
-    const labels = DEMO_INDUSTRIES.map((ind) => ind.label)
-    if (labels.length < 2) return labels.join('')
-    return `${labels.slice(0, -1).join(', ')} and ${labels[labels.length - 1]}`
-  }, [])
-
   const selectIndustry = useCallback(
     (id) => {
       if (id === ALL_FILTER) {
@@ -131,8 +125,9 @@ function TechDemosPage() {
             Websites built for <span className="text-[#1E4FD9]">your industry</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-pretty text-base text-stone-600 sm:text-lg">
-            Real, fully-built concepts for {industryListCopy} businesses — browse one close to yours,
-            then open it live.
+            Real, fully-built websites across {DEMO_INDUSTRIES.length} industries, from clinics and
+            coaching centres to restaurants, real estate and manufacturers. Find one close to your
+            business and open it live.
           </p>
 
           <div className="mt-8 flex items-center justify-center gap-2 text-sm font-medium text-stone-500">
