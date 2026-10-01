@@ -10,6 +10,7 @@ import React, { memo } from 'react'
 import { motion } from 'framer-motion'
 import { TECH_PROCESS_STEPS } from '../../utils/constants'
 import SectionHeading from '../ui/SectionHeading'
+import { ScrollLine } from '../motion'
 
 const Process = memo(function Process() {
   return (
@@ -23,7 +24,7 @@ const Process = memo(function Process() {
 
         {/* Desktop — horizontal rail */}
         <div className="hidden lg:block relative">
-          <div className="absolute top-6 left-0 right-0 h-px bg-stone-200" />
+          <ScrollLine orientation="horizontal" className="absolute top-6 left-0 right-0 h-px" trackClassName="bg-stone-200" fillClassName="bg-[#1E4FD9]" />
           <div className="grid grid-cols-5 gap-6">
             {TECH_PROCESS_STEPS.map(({ icon: Icon, step, title, description }, index) => (
               <motion.div
@@ -46,7 +47,7 @@ const Process = memo(function Process() {
 
         {/* Mobile/tablet — vertical rail */}
         <div className="lg:hidden relative pl-6">
-          <div className="absolute top-1 bottom-1 left-0 w-px bg-stone-200" />
+          <ScrollLine className="absolute top-1 bottom-1 left-0 w-px" trackClassName="bg-stone-200" fillClassName="bg-[#1E4FD9]" />
           <div className="space-y-10">
             {TECH_PROCESS_STEPS.map(({ icon: Icon, step, title, description }, index) => (
               <motion.div

@@ -7,11 +7,15 @@
 
 import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { FiImage, FiBook } from 'react-icons/fi'
 import { STUDIOS_SERVICES } from '../../utils/constants'
+import { RevealText } from '../motion'
+
+const EASE = [0.22, 1, 0.36, 1]
 
 const StudiosOfferings = memo(function StudiosOfferings() {
+  const reduce = useReducedMotion()
   return (
     <section id="offerings" className="relative py-24 lg:py-32 bg-[#FAF7F0] scroll-mt-28">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
@@ -24,7 +28,7 @@ const StudiosOfferings = memo(function StudiosOfferings() {
         >
           <div>
             <p className="font-mono-label text-xs uppercase text-[#C9971F] mb-3">What we shoot</p>
-            <h2 className="font-display italic text-3xl sm:text-4xl lg:text-5xl text-[#1C1710]">Offerings</h2>
+            <RevealText as="h2" text="Offerings" className="font-display italic text-3xl sm:text-4xl lg:text-5xl text-[#1C1710]" />
           </div>
 
           <div className="flex flex-wrap gap-3">
@@ -47,10 +51,11 @@ const StudiosOfferings = memo(function StudiosOfferings() {
           {STUDIOS_SERVICES.map(({ icon: Icon, title, description, image }, index) => (
             <motion.div
               key={title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              /* Each card wipes up out of a mask, staggered across the row */
+              initial={reduce ? { opacity: 0 } : { opacity: 0, clipPath: 'inset(22% 0% 0% 0% round 12px)' }}
+              whileInView={reduce ? { opacity: 1 } : { opacity: 1, clipPath: 'inset(0% 0% 0% 0% round 12px)' }}
               viewport={{ once: true, margin: '-30px' }}
-              transition={{ duration: 0.5, delay: index * 0.06 }}
+              transition={{ duration: 0.9, delay: (index % 3) * 0.08, ease: EASE }}
               className="group relative min-h-[420px] overflow-hidden rounded-xl border border-black/10 transition-colors duration-300 hover:border-[#C9971F]/60"
             >
               <img

@@ -14,6 +14,7 @@ import { motion } from 'framer-motion'
 import { FiArrowRight } from 'react-icons/fi'
 import { useGalleryPosts } from './useGalleryPosts'
 import GalleryGrid from './GalleryGrid'
+import { RevealText } from '../motion'
 
 const PREVIEW_COUNT = 6
 
@@ -35,7 +36,7 @@ const StudiosGalleryPreview = memo(function StudiosGalleryPreview() {
         >
           <div>
             <p className="font-mono-label text-xs uppercase text-[#C9971F] mb-3">Recent frames</p>
-            <h2 className="font-display italic text-3xl sm:text-4xl lg:text-5xl text-[#1C1710]">Gallery</h2>
+            <RevealText as="h2" text="Gallery" className="font-display italic text-3xl sm:text-4xl lg:text-5xl text-[#1C1710]" />
             <p className="font-body mt-4 text-[#6B6153] max-w-lg">
               A look at our latest events — open any post to see the full set.
             </p>

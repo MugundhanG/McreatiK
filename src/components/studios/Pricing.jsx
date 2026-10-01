@@ -13,6 +13,7 @@ import { FaWhatsapp } from 'react-icons/fa'
 import { STUDIOS_PRICING_FACTORS } from '../../utils/constants'
 import { getWhatsAppHref } from '../../utils/whatsapp'
 import Button from '../ui/Button'
+import { RevealText } from '../motion'
 
 const ACCENT = '#C9971F'
 const WHATSAPP_HREF = getWhatsAppHref("Hi McreatiK Studios, I'd like a quote for a shoot.")
@@ -51,7 +52,7 @@ const StudiosPricing = memo(function StudiosPricing() {
           className="mb-14 text-center"
         >
           <p className="font-mono-label text-xs uppercase text-[#C9971F] mb-3">What it costs</p>
-          <h2 className="font-display italic text-3xl sm:text-4xl lg:text-5xl text-[#1C1710]">Pricing</h2>
+          <RevealText as="h2" text="Pricing" className="font-display italic text-3xl sm:text-4xl lg:text-5xl text-[#1C1710]" />
           <p className="font-body mt-4 text-[#6B6153] max-w-lg mx-auto">
             Every shoot is different — pricing depends on a few things. Here's what goes into a quote.
           </p>

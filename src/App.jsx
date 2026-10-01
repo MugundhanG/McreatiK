@@ -21,6 +21,7 @@
 
 import React, { lazy, Suspense } from 'react'
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import ErrorBoundary from './components/ErrorBoundary'
 import WhatsAppButton from './components/ui/WhatsAppButton'
 import DepartmentTransitionOverlay from './components/ui/DepartmentTransitionOverlay'
@@ -76,6 +77,15 @@ function App() {
     <>
       <ErrorBoundary resetKey={pathname}>
       <Suspense fallback={<PageLoader />}>
+        {/* Soft fade between pages. Opacity only — a transform here would
+            re-anchor every position:fixed child (navbars, floating buttons)
+            to this wrapper mid-animation. */}
+        <motion.div
+          key={pathname}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.35, ease: 'easeOut' }}
+        >
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/tech" element={<TechPage />} />
@@ -105,6 +115,7 @@ function App() {
           <Route path="/terms" element={<TermsPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </motion.div>
       </Suspense>
       </ErrorBoundary>
       <WhatsAppButton />

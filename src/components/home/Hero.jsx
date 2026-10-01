@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FiArrowRight } from 'react-icons/fi'
 import Button from '../ui/Button'
+import { Magnetic } from '../motion'
 import { getWhatsAppHref } from '../../utils/whatsapp'
 import { HOME_EXPLORE_AREAS } from '../../utils/constants'
 import mkMark from '../../assets/mcreatik-mk-mark.webp'
@@ -134,9 +135,11 @@ const Hero = memo(function Hero() {
               initial="hidden"
               animate="visible"
             >
-              <Button href="#explore" theme="home">
-                Explore McreatiK <FiArrowRight className="w-4 h-4" />
-              </Button>
+              <Magnetic>
+                <Button href="#explore" theme="home">
+                  Explore McreatiK <FiArrowRight className="w-4 h-4" />
+                </Button>
+              </Magnetic>
               <Button href={WHATSAPP_HREF} theme="home" variant="outline">
                 Start a Project
               </Button>

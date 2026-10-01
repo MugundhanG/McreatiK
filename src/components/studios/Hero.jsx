@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { FiArrowRight } from 'react-icons/fi'
 import Button from '../ui/Button'
+import { Magnetic } from '../motion'
 import studiosHeroPhoto from '../../assets/studios-hero-photo.webp'
 import coupleEmbraceMono from '../../assets/studios-hero/couple-embrace-mono.webp'
 import beachWalk from '../../assets/studios-hero/beach-walk.webp'
@@ -120,9 +121,11 @@ const StudiosHero = memo(function StudiosHero() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mt-9 flex flex-wrap gap-4"
         >
-          <Button theme="studios" href="#book">
-            Book a Session <FiArrowRight className="w-4 h-4" />
-          </Button>
+          <Magnetic>
+            <Button theme="studios" href="#book">
+              Book a Session <FiArrowRight className="w-4 h-4" />
+            </Button>
+          </Magnetic>
           <Link
             to="/studios/gallery"
             className="inline-flex items-center justify-center gap-2 rounded-md border border-white/40 px-7 py-3.5 text-sm font-semibold tracking-wide text-white transition-all duration-300 hover:border-white hover:bg-white/10"

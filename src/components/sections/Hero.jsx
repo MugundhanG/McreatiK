@@ -15,6 +15,7 @@ import { FaWhatsapp } from 'react-icons/fa'
 import { FiCheck } from 'react-icons/fi'
 import { TECH_STATS } from '../../utils/constants'
 import { getWhatsAppHref } from '../../utils/whatsapp'
+import { Magnetic } from '../motion'
 
 const TechHeroShaderPanel = lazy(() => import('./TechHeroShaderPanel'))
 
@@ -75,14 +76,16 @@ const Hero = memo(function Hero() {
             </p>
 
             <div className="mth-reveal mt-9 flex flex-wrap items-center gap-6" style={{ animationDelay: '0.28s' }}>
-              <a
-                href={WHATSAPP_HREF}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-neutral-950 px-6 py-3 text-sm font-semibold text-white transition-colors duration-150 hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1E4FD9] focus-visible:outline-offset-2"
-              >
-                <FaWhatsapp className="w-4 h-4" /> Get a Free Consultation
-              </a>
+              <Magnetic>
+                <a
+                  href={WHATSAPP_HREF}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-neutral-950 px-6 py-3 text-sm font-semibold text-white transition-colors duration-150 hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1E4FD9] focus-visible:outline-offset-2"
+                >
+                  <FaWhatsapp className="w-4 h-4" /> Get a Free Consultation
+                </a>
+              </Magnetic>
               <Link
                 to="/tech/services"
                 className="text-sm font-semibold text-stone-900 transition-colors duration-150 hover:text-[#1E4FD9]"

@@ -18,6 +18,7 @@ import { FiArrowUpRight } from 'react-icons/fi'
 import { FaWhatsapp } from 'react-icons/fa'
 import { getWhatsAppHref } from '../../utils/whatsapp'
 import { DEMO_INDUSTRIES } from '../../data/demoConcepts'
+import { Tilt } from '../motion'
 
 const industryLabel = (id) => DEMO_INDUSTRIES.find((ind) => ind.id === id)?.label || id
 
@@ -40,6 +41,7 @@ const DemoConceptCard = memo(function DemoConceptCard({ concept, compact = false
   )
 
   return (
+    <Tilt max={4} className="h-full rounded-xl" wrapperClassName="h-full">
     <div className="group relative flex h-full flex-col overflow-hidden rounded-xl glass-card transition-all duration-300 hover:shadow-lg hover:shadow-stone-900/5 hover:border-[#1E4FD9]/25">
       {/* ===== Browser-chrome preview ===== */}
       <div className="relative">
@@ -134,6 +136,7 @@ const DemoConceptCard = memo(function DemoConceptCard({ concept, compact = false
         </div>
       </div>
     </div>
+    </Tilt>
   )
 })
 

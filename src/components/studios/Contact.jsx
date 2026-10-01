@@ -15,6 +15,7 @@ import { useForm } from '../../hooks/useForm'
 import Button from '../ui/Button'
 import EventDatePicker from '../ui/EventDatePicker'
 import { formatDisplay } from '../../utils/eventDate'
+import { RevealText } from '../motion'
 
 const WEDDING_SERVICE = 'Wedding Photography'
 
@@ -89,7 +90,7 @@ const StudiosContact = memo(function StudiosContact() {
           className="mb-14"
         >
           <p className="font-mono-label text-xs uppercase text-[#C9971F] mb-3">Let's shoot</p>
-          <h2 className="font-display italic text-3xl sm:text-4xl lg:text-5xl text-[#1C1710]">Book a Session</h2>
+          <RevealText as="h2" text="Book a Session" className="font-display italic text-3xl sm:text-4xl lg:text-5xl text-[#1C1710]" />
           <p className="font-body mt-4 text-[#6B6153] max-w-lg">
             Tell us what you're planning and we'll get back to you within 24 hours.
           </p>

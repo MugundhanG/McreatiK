@@ -9,6 +9,7 @@
 import React, { memo } from 'react'
 import { motion } from 'framer-motion'
 import RegMark from './RegMark'
+import { RevealText } from '../motion'
 
 const SectionHeading = memo(function SectionHeading({ label, title, subtitle }) {
   return (
@@ -33,9 +34,17 @@ const SectionHeading = memo(function SectionHeading({ label, title, subtitle }) 
       )}
 
       {/* Main title — solid ink, no gradient */}
-      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display tracking-tight text-stone-900 leading-tight text-balance">
-        {title}
-      </h2>
+      {typeof title === 'string' ? (
+        <RevealText
+          as="h2"
+          text={title}
+          className="text-3xl md:text-4xl lg:text-5xl font-bold font-display tracking-tight text-stone-900 leading-tight text-balance"
+        />
+      ) : (
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display tracking-tight text-stone-900 leading-tight text-balance">
+          {title}
+        </h2>
+      )}
 
       {/* Optional subtitle */}
       {subtitle && (

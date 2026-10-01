@@ -10,6 +10,7 @@ import React, { memo } from 'react'
 import { motion } from 'framer-motion'
 import { FiUser, FiMessageSquare } from 'react-icons/fi'
 import { STUDIOS_EXPERIENCE_STEPS, STUDIOS_TESTIMONIALS } from '../../utils/constants'
+import { RevealText, ScrollLine } from '../motion'
 
 function ProcessSteps() {
   return (
@@ -23,14 +24,14 @@ function ProcessSteps() {
           className="mb-14"
         >
           <p className="font-mono-label text-xs uppercase text-[#C9971F] mb-3">What to expect</p>
-          <h2 className="font-display italic text-3xl sm:text-4xl lg:text-5xl text-[#1C1710]">The Process</h2>
+          <RevealText as="h2" text="The Process" className="font-display italic text-3xl sm:text-4xl lg:text-5xl text-[#1C1710]" />
           <p className="font-body mt-4 text-[#6B6153] max-w-lg">
             From your first message to the final delivery — here's how a shoot with us usually goes.
           </p>
         </motion.div>
 
         <div className="relative pl-6">
-          <div className="absolute top-1 bottom-1 left-0 w-px bg-black/10" />
+          <ScrollLine className="absolute top-1 bottom-1 left-0 w-px" trackClassName="bg-black/10" fillClassName="bg-[#C9971F]" />
           <div className="space-y-10">
             {STUDIOS_EXPERIENCE_STEPS.map(({ icon: Icon, step, title, description }, index) => (
               <motion.div
@@ -104,7 +105,7 @@ function Testimonials() {
           className="mb-14"
         >
           <p className="font-mono-label text-xs uppercase text-[#C9971F] mb-3">In their words</p>
-          <h2 className="font-display italic text-3xl sm:text-4xl lg:text-5xl text-[#1C1710]">What Clients Say</h2>
+          <RevealText as="h2" text="What Clients Say" className="font-display italic text-3xl sm:text-4xl lg:text-5xl text-[#1C1710]" />
           <p className="font-body mt-4 text-[#6B6153] max-w-lg">
             Real feedback from real clients.
           </p>

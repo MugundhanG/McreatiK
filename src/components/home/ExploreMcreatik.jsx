@@ -15,6 +15,7 @@ import { HOME_EXPLORE_AREAS } from '../../utils/constants'
 import SectionHeading from './SectionHeading'
 import techPhoto from '../../assets/tech-hero-photo.webp'
 import studiosPhoto from '../../assets/studios-hero-photo.webp'
+import { Tilt } from '../motion'
 
 const CARD_PHOTOS = {
   tech: techPhoto,
@@ -34,16 +35,16 @@ const ExploreMcreatik = memo(function ExploreMcreatik() {
           {HOME_EXPLORE_AREAS.map(({ key, icon: Icon, name, longDescription, cta, href, accent, comingSoon }, index) => {
             const photo = CARD_PHOTOS[key]
             return (
+              <Tilt key={key} max={5} className="h-full rounded-lg" wrapperClassName="h-full">
               <motion.div
-                key={key}
-                className="relative rounded-lg overflow-hidden h-80 flex flex-col justify-end p-6"
+                className="group relative rounded-lg overflow-hidden h-80 flex flex-col justify-end p-6"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-30px' }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 {photo && (
-                  <img src={photo} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover" />
+                  <img src={photo} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
                 )}
                 <div
                   className="absolute inset-0"
@@ -81,6 +82,7 @@ const ExploreMcreatik = memo(function ExploreMcreatik() {
                   )}
                 </div>
               </motion.div>
+              </Tilt>
             )
           })}
         </div>

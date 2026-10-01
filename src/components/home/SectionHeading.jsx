@@ -7,6 +7,7 @@
 
 import React, { memo } from 'react'
 import { motion } from 'framer-motion'
+import { RevealBlock } from '../motion'
 
 const SectionHeading = memo(function SectionHeading({ label, title, subtitle }) {
   return (
@@ -25,9 +26,13 @@ const SectionHeading = memo(function SectionHeading({ label, title, subtitle }) 
         </span>
       )}
 
-      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display gradient-text-home leading-tight">
-        {title}
-      </h2>
+      {/* Clip-path wipe rather than per-word motion: the gradient is
+          background-clipped to the text, which per-word transforms break. */}
+      <RevealBlock delay={0.1}>
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display gradient-text-home leading-tight">
+          {title}
+        </h2>
+      </RevealBlock>
 
       {subtitle && (
         <p className="mt-4 text-[#8890AE] text-lg max-w-2xl mx-auto leading-relaxed">
