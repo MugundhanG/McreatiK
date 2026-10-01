@@ -375,6 +375,20 @@
     }
   }
 
+  /* Loading shimmer — a soft highlight sweeping across placeholder blocks */
+  .shimmer {
+    background: linear-gradient(90deg, rgba(0,0,0,0.05) 25%, rgba(0,0,0,0.09) 37%, rgba(0,0,0,0.05) 63%);
+    background-size: 400% 100%;
+    animation: shimmer-sweep 1.4s ease infinite;
+  }
+  @keyframes shimmer-sweep {
+    from { background-position: 100% 50%; }
+    to { background-position: 0 50%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .shimmer { animation: none; }
+  }
+
   /* ViewCursor (src/components/motion/ViewCursor.jsx) replaces the system
      pointer over [data-cursor] targets — only while it's mounted and running. */
   .has-view-cursor [data-cursor],
