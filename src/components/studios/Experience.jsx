@@ -6,9 +6,8 @@
    invented quotes or names, ever.
    ============================================ */
 
-import React, { memo, useEffect, useState } from 'react'
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
+import React, { memo } from 'react'
+import { motion } from 'framer-motion'
 import { STUDIOS_EXPERIENCE_STEPS, STUDIOS_TESTIMONIALS } from '../../utils/constants'
 import { RevealText, ScrollLine } from '../motion'
 
@@ -57,28 +56,38 @@ function ProcessSteps() {
   )
 }
 
-const ROTATE_MS = 8000
-const EASE = [0.22, 1, 0.36, 1]
+/* Enough cards per strip copy to fill a wide screen, however few quotes exist */
+const MIN_CARDS_PER_COPY = 6
 
-/* One quote at a time, set large as an editorial pull-quote. Rotates on
-   its own (with a progress bar showing time to the next), pauses while
-   hovered, and can be stepped with the arrows or the dots. Reduced
-   motion: no autoplay. Only real client words — never invented ones. */
+function QuoteCard({ quote, name, shootType, hidden }) {
+  return (
+    <figure
+      aria-hidden={hidden || undefined}
+      className="flex w-[19rem] shrink-0 flex-col rounded-2xl border border-[#1C1710]/10 bg-[#FAF7F0] p-6 shadow-[0_18px_40px_-28px_rgba(28,23,16,0.45)] transition-[transform,border-color] duration-300 hover:-translate-y-1.5 hover:border-[#C9971F]/50 sm:w-[23rem] sm:p-7"
+    >
+      <span aria-hidden="true" className="font-display italic text-6xl leading-[0.6] text-[#C9971F]/40">&ldquo;</span>
+      <blockquote className="mt-3 flex-1 font-body text-[15px] italic leading-relaxed text-[#4A4438]">{quote}</blockquote>
+      <figcaption className="mt-6 flex items-center gap-3 border-t border-[#1C1710]/10 pt-4">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#C9971F] font-display text-lg italic text-white">
+          {name.charAt(0)}
+        </span>
+        <span>
+          <span className="block font-body text-sm font-semibold text-[#1C1710]">{name}</span>
+          <span className="block font-mono-label text-[10px] uppercase tracking-wide text-[#6B6153]">{shootType}</span>
+        </span>
+      </figcaption>
+    </figure>
+  )
+}
+
+/* Real client quotes drifting slowly sideways on the same marquee as the
+   home page's proof strip; pauses on hover. Each strip copy repeats the
+   quotes enough to fill the track; only the first appearance of each quote
+   is exposed to screen readers, so every quote is announced once. Reduced
+   motion: a still, swipeable row. Only real client words — never invented. */
 function Testimonials() {
-  const reduce = useReducedMotion()
-  const [index, setIndex] = useState(0)
-  const [paused, setPaused] = useState(false)
-  const count = STUDIOS_TESTIMONIALS.length
-  const t = STUDIOS_TESTIMONIALS[index]
-  const autoplay = !reduce && !paused && count > 1
-
-  useEffect(() => {
-    if (!autoplay) return undefined
-    const id = setTimeout(() => setIndex((i) => (i + 1) % count), ROTATE_MS)
-    return () => clearTimeout(id)
-  }, [index, autoplay, count])
-
-  const go = (dir) => setIndex((i) => (i + dir + count) % count)
+  const reps = Math.max(1, Math.ceil(MIN_CARDS_PER_COPY / STUDIOS_TESTIMONIALS.length))
+  const cards = Array.from({ length: reps }, () => STUDIOS_TESTIMONIALS).flat()
 
   return (
     <section id="testimonials" className="relative py-24 lg:py-32 bg-[#F3EEE3] overflow-hidden">
@@ -88,87 +97,31 @@ function Testimonials() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6 }}
-          className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
+          className="mb-12"
         >
-          <div>
-            <p className="font-mono-label text-xs uppercase text-[#C9971F] mb-3">In their words</p>
-            <RevealText as="h2" text="What Clients Say" className="font-display italic text-3xl sm:text-4xl lg:text-5xl text-[#1C1710]" />
-          </div>
-          {count > 1 && (
-            <div className="flex gap-2">
-              {[[-1, FiArrowLeft, 'Previous'], [1, FiArrowRight, 'Next']].map(([dir, Icon, label]) => (
-                <button
-                  key={label}
-                  type="button"
-                  onClick={() => go(dir)}
-                  aria-label={`${label} testimonial`}
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[#1C1710]/15 text-[#1C1710] transition-colors hover:border-[#C9971F] hover:bg-[#C9971F] hover:text-white"
-                >
-                  <Icon className="h-4 w-4" />
-                </button>
-              ))}
-            </div>
-          )}
+          <p className="font-mono-label text-xs uppercase text-[#C9971F] mb-3">In their words</p>
+          <RevealText as="h2" text="What Clients Say" className="font-display italic text-3xl sm:text-4xl lg:text-5xl text-[#1C1710]" />
+          <p className="font-body mt-4 text-[#6B6153] max-w-lg">Real feedback from real clients.</p>
         </motion.div>
+      </div>
 
-        <div
-          className="relative"
-          onPointerEnter={() => setPaused(true)}
-          onPointerLeave={() => setPaused(false)}
-        >
-          {/* Oversized quote mark as a background ornament */}
-          <span aria-hidden="true" className="pointer-events-none absolute -left-2 -top-16 font-display italic text-[12rem] leading-none text-[#C9971F]/15 select-none">
-            &ldquo;
-          </span>
-
-          <div aria-live="polite" className="relative min-h-[260px] sm:min-h-[220px]">
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.figure
-                key={index}
-                initial={{ opacity: 0, y: 24, filter: 'blur(6px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                exit={{ opacity: 0, y: -16, filter: 'blur(6px)' }}
-                transition={{ duration: 0.6, ease: EASE }}
-              >
-                <blockquote className="font-display italic text-2xl leading-snug text-[#1C1710] sm:text-3xl lg:text-[2.1rem]">
-                  {t.quote}
-                </blockquote>
-                <figcaption className="mt-8 flex items-center gap-4">
-                  <span className="h-px w-10 bg-[#C9971F]" />
-                  <span className="font-body font-semibold text-[#1C1710]">{t.name}</span>
-                  <span className="font-mono-label text-[11px] uppercase text-[#6B6153]">{t.shootType}</span>
-                </figcaption>
-              </motion.figure>
-            </AnimatePresence>
-          </div>
-
-          {count > 1 && (
-            <div className="mt-10 flex gap-2" role="group" aria-label="Choose a testimonial">
-              {STUDIOS_TESTIMONIALS.map((item, i) => (
-                <button
-                  key={item.name}
-                  type="button"
-                  onClick={() => setIndex(i)}
-                  aria-label={`Show testimonial from ${item.name}`}
-                  aria-pressed={i === index}
-                  className="relative h-1 w-16 overflow-hidden rounded-full bg-[#1C1710]/10"
-                >
-                  {/* The active bar fills over the time until the next quote */}
-                  {i === index && (
-                    <motion.span
-                      key={`${index}-${paused}`}
-                      className="absolute inset-y-0 left-0 bg-[#C9971F]"
-                      initial={{ width: autoplay ? '0%' : '100%' }}
-                      animate={{ width: '100%' }}
-                      transition={{ duration: autoplay ? ROTATE_MS / 1000 : 0, ease: 'linear' }}
-                    />
-                  )}
-                </button>
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, margin: '-50px' }}
+        transition={{ duration: 0.8, delay: 0.15 }}
+        className="marquee-mask group/marquee overflow-hidden py-3 motion-reduce:overflow-x-auto"
+      >
+        <div className="flex w-max items-stretch marquee-left [animation-duration:70s] group-hover/marquee:[animation-play-state:paused]">
+          {[0, 1].map((strip) => (
+            <div key={strip} className="flex items-stretch gap-5 pr-5">
+              {cards.map((t, i) => (
+                <QuoteCard key={`${strip}-${i}`} {...t} hidden={strip === 1 || i >= STUDIOS_TESTIMONIALS.length} />
               ))}
             </div>
-          )}
+          ))}
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }
