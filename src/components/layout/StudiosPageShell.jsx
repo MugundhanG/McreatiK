@@ -33,7 +33,7 @@ export default function StudiosPageShell({ children }) {
       <StudiosFooter />
       <ScrollToTop accentClass="bg-[#C9971F] text-white shadow-[#C9971F]/30 hover:bg-[#b3860f]" />
       {/* Cinematic layer: moving grain over everything, and the lens cursor
-          (a loupe over photos marked data-lens) */}
+          (labelled over photos marked data-cursor) */}
       <div className="film-grain-live" aria-hidden="true" />
       <LensCursor />
     </div>

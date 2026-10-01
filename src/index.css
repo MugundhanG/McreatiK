@@ -389,11 +389,11 @@
     .shimmer { animation: none; }
   }
 
-  /* LensCursor (src/components/motion/LensCursor.jsx) becomes a loupe over
-     [data-lens] photos and replaces the system pointer there — only while
-     it's mounted and running. */
-  .has-lens-cursor [data-lens],
-  .has-lens-cursor [data-lens] * {
+  /* LensCursor (src/components/motion/LensCursor.jsx) opens wide with a
+     label over [data-cursor] elements and replaces the system pointer
+     there — only while it's mounted and running. */
+  .has-lens-cursor [data-cursor],
+  .has-lens-cursor [data-cursor] * {
     cursor: none;
   }
 }

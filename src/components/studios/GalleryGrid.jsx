@@ -35,7 +35,6 @@ export default function GalleryGrid({ posts }) {
                 type="button"
                 onClick={() => setOpenIndex(index)}
                 data-cursor="View"
-                data-lens
                 aria-label={`Open ${post.title}${count > 1 ? `, ${count} photos` : ''}`}
                 layout
                 initial={{ opacity: 0, scale: 0.92 }}

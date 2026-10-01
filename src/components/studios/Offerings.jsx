@@ -56,7 +56,6 @@ const StudiosOfferings = memo(function StudiosOfferings() {
               whileInView={reduce ? { opacity: 1 } : { opacity: 1, clipPath: 'inset(0% 0% 0% 0% round 12px)' }}
               viewport={{ once: true, margin: '-30px' }}
               transition={{ duration: 0.9, delay: (index % 3) * 0.08, ease: EASE }}
-              data-lens
               className="group relative min-h-[420px] overflow-hidden rounded-xl border border-black/10 transition-colors duration-300 hover:border-[#C9971F]/60"
             >
               <img
