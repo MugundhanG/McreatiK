@@ -842,10 +842,6 @@ export const STUDIOS_SERVICES = [
   },
 ]
 
-export const STUDIOS_STATS = [
-  { value: '30+', label: 'Projects Delivered' },
-  { value: '25,000+', label: 'Images Captured' },
-]
 
 export const STUDIOS_SERVICE_OPTIONS = [
   'Portrait Session',

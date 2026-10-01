@@ -1,12 +1,10 @@
 /* ============================================
    About Section — Studios
-   The founding story + stats strip.
+   The founding story.
    ============================================ */
 
 import React, { memo } from 'react'
 import { motion } from 'framer-motion'
-import { STUDIOS_STATS } from '../../utils/constants'
-import AnimatedStat from '../ui/AnimatedStat'
 
 const StudiosAbout = memo(function StudiosAbout() {
   return (
@@ -49,23 +47,6 @@ const StudiosAbout = memo(function StudiosAbout() {
           and because there's nothing quite like turning someone's moment into a memory they'll
           keep forever. That's the difference people notice, and it's why they choose us.
         </motion.p>
-
-        <div className="mt-14 grid grid-cols-2 gap-6 sm:gap-10 max-w-sm mx-auto border-t border-black/10 pt-10">
-          {STUDIOS_STATS.map(({ value, label }, index) => (
-            <motion.div
-              key={label}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-            >
-              <div className="font-display italic text-2xl sm:text-3xl text-[#C9971F]">
-                <AnimatedStat value={value} />
-              </div>
-              <div className="font-mono-label text-[11px] uppercase text-[#6B6153] mt-1">{label}</div>
-            </motion.div>
-          ))}
-        </div>
       </div>
     </section>
   )
