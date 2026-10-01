@@ -8,7 +8,7 @@
 import React, { memo } from 'react'
 import { motion } from 'framer-motion'
 import { FiArrowRight } from 'react-icons/fi'
-import { TECH_STATS } from '../../utils/constants'
+import StatTiles from '../tech/StatTiles'
 import SectionHeading from '../ui/SectionHeading'
 
 const About = memo(function About() {
@@ -39,15 +39,8 @@ const About = memo(function About() {
               </a>
             </div>
 
-            {/* Stats — inline masthead numbers, not boxed tiles */}
-            <div className="flex flex-wrap gap-x-10 gap-y-4 mt-10 pt-8 border-t border-stone-200">
-              {TECH_STATS.map(({ value, label }) => (
-                <div key={label}>
-                  <div className="text-3xl font-bold text-[#1E4FD9] font-display">{value}</div>
-                  <div className="text-stone-500 text-xs mt-1">{label}</div>
-                </div>
-              ))}
-            </div>
+            {/* Stats — the same animated proof tiles as the hero */}
+            <StatTiles className="mt-10 pt-8 border-t border-stone-200" />
           </motion.div>
 
           {/* RIGHT — Mission & Vision, flowing text separated by a rule */}
