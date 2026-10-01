@@ -1,7 +1,8 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import PackageFinder, { recommendTier } from './PackageFinder'
+import PackageFinder from './PackageFinder'
+import { recommendTier } from './packageFinderLogic'
 
 describe('recommendTier', () => {
   it('returns null before anything is picked', () => {

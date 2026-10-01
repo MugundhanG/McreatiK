@@ -33,11 +33,12 @@ const CountUp = memo(function CountUp({
   useEffect(() => {
     if (reduce || started.current || !(onMount || inView)) return undefined
     started.current = true
-    setDisplay(format(0))
     const controls = animate(0, value, {
       duration,
       delay,
       ease: [0.16, 1, 0.3, 1],
+      /* Drop to 0 only once the count actually starts (after `delay`) */
+      onPlay: () => setDisplay(format(0)),
       onUpdate: (v) => setDisplay(format(v)),
       onComplete: () => setDisplay(format(value)),
     })

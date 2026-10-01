@@ -17,30 +17,7 @@ import { FaWhatsapp } from 'react-icons/fa'
 import { FiArrowDown, FiRotateCcw } from 'react-icons/fi'
 import { TECH_PACKAGES } from '../../utils/constants'
 import { getWhatsAppHref } from '../../utils/whatsapp'
-
-export const FINDER_QUESTIONS = [
-  {
-    id: 'pages',
-    question: 'How big is your site?',
-    options: ['Up to 5 pages', 'Around 8–10 pages', 'Up to 15 pages'],
-  },
-  {
-    id: 'goal',
-    question: 'What matters most?',
-    options: ['Look credible & get found', 'Bring in more enquiries', 'A premium, custom feel'],
-  },
-  {
-    id: 'features',
-    question: 'Any special features?',
-    options: ['No, keep it simple', 'Gallery, FAQ, testimonials', 'Catalogue & advanced forms'],
-  },
-]
-
-/* Highest tier any answer calls for, or null until something is picked */
-export function recommendTier(answers) {
-  const picked = Object.values(answers)
-  return picked.length ? Math.max(...picked) : null
-}
+import { FINDER_QUESTIONS, recommendTier } from './packageFinderLogic'
 
 const EASE = [0.22, 1, 0.36, 1]
 
