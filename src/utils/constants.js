@@ -900,6 +900,50 @@ export const HOME_NAV_LINKS = [
   { label: 'Contact', href: '#contact', type: 'anchor' },
 ]
 
+export const HOME_EXPLORE_AREAS = [
+  {
+    key: 'tech',
+    icon: FiGlobe,
+    kicker: 'Build Your Online Presence',
+    name: 'McreatiK Tech',
+    tagline: 'Digital solutions for businesses and professionals.',
+    longDescription: 'Websites, branding and digital solutions designed to build your online presence and grow your business.',
+    bullets: ['Websites', 'Branding', 'Digital services'],
+    cta: 'Explore Tech',
+    href: '/tech',
+    accent: '#5B5FEF',
+  },
+  {
+    key: 'studios',
+    icon: FiCamera,
+    kicker: 'Capture What Matters',
+    name: 'McreatiK Studios',
+    tagline: 'Photography, album design and visual experiences.',
+    longDescription: 'Photography and creative services that tell your story and create lasting impact.',
+    bullets: ['Photography', 'Albums', 'Event coverage'],
+    cta: 'Explore Studios',
+    href: '/studios',
+    accent: '#C9971F',
+  },
+  {
+    key: 'store',
+    icon: FiPackage,
+    kicker: 'Start With Something Ready',
+    name: 'McreatiK Digital Store',
+    tagline: 'Digital products and creative resources to help you get moving faster.',
+    longDescription: 'Digital products, templates and creative resources to help you create, launch and grow.',
+    bullets: ['Templates', 'Digital downloads', 'Creative resources'],
+    cta: 'Coming Soon',
+    href: '/store',
+    accent: '#8B7FE8',
+    // Still fully built and reachable directly at /store - just not yet
+    // promoted from the homepage while the catalog is thin. ExploreMcreatik
+    // already renders `cta` as plain (unlinked) text whenever this is set,
+    // instead of the Link every other card gets.
+    comingSoon: true,
+  },
+]
+
 
 
 
