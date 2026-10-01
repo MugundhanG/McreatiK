@@ -14,6 +14,7 @@ import { useScrollToHash } from '../hooks/useScrollToHash'
 import { useSEO } from '../hooks/useSEO'
 
 const WhyChooseUs = lazy(() => import('../components/sections/WhyChooseUs'))
+const BeforeAfter = lazy(() => import('../components/tech/BeforeAfter'))
 const WhatYouGet = lazy(() => import('../components/sections/WhatYouGet'))
 const TechDemosTeaser = lazy(() => import('../components/sections/TechDemosTeaser'))
 const StudiosCrossSell = lazy(() => import('../components/sections/StudiosCrossSell'))
@@ -43,12 +44,13 @@ function TechPage() {
     <TechPageShell>
       <Hero />
       <WhyChooseUs />
-      <WhatYouGet />
+      <BeforeAfter />
       <TechDemosTeaser />
-      <StudiosCrossSell />
+      <WhatYouGet />
       <Packages />
       <Process />
       <About />
+      <StudiosCrossSell />
       {/* <Testimonials /> — hidden until real client feedback replaces the placeholders */}
       <FinalCTA />
       <Contact />

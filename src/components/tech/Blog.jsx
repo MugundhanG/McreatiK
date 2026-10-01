@@ -43,7 +43,7 @@ const TechBlog = memo(function TechBlog() {
   return (
     <section className="relative py-24 lg:py-32 bg-white">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeading label="Notes & Insights" title="Blog" subtitle="Web design, SEO, and lessons from client projects." />
+        <SectionHeading crumb="Blog" label="Notes & Insights" title="Blog" subtitle="Web design, SEO, and lessons from client projects." />
 
         {status === 'loading' && (
           <div className="py-10 flex justify-center">

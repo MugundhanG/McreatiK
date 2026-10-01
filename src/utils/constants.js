@@ -654,10 +654,13 @@ export const LEAD_SOURCE_OPTIONS = [
   'Other',
 ]
 
+/* Verifiable proof only — every number here is something a visitor can
+   check on /tech/demos. Keep in sync with DEMO_CONCEPTS / DEMO_INDUSTRIES
+   (src/data/demoConcepts.js); a test asserts they match. */
 export const TECH_STATS = [
-  { value: '30+', label: 'Projects Delivered' },
-  { value: '2+', label: 'Years of Experience' },
-  { value: '99%', label: 'Client Satisfaction' },
+  { value: '37', label: 'Live website concepts' },
+  { value: '11', label: 'Industries covered' },
+  { value: 'Global', label: 'Clients served remotely' },
 ]
 
 export const TECH_SERVICE_OPTIONS = [

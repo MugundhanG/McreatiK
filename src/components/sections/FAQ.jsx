@@ -29,6 +29,7 @@ const FAQ = memo(function FAQ() {
       <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionDivider label="§ FAQ" />
         <SectionHeading
+          crumb="FAQ"
           label="Frequently Asked Questions"
           title="Questions You Might Have"
           subtitle="Straight answers before you reach out."

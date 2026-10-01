@@ -83,6 +83,7 @@ const TargetIndustries = memo(function TargetIndustries() {
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionDivider label="§ Industries" />
         <SectionHeading
+          crumb="Industries"
           label="Industries We Serve"
           title="Websites Designed for Businesses Like Yours"
           subtitle="Whatever your business, your website should make a strong first impression and make it easier to get enquiries."

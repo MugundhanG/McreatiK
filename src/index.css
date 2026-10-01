@@ -296,34 +296,18 @@
     background-size: 16px 16px;
   }
 
-  /* ---------- McreatiK Tech Hero (shader gradient hero) ----------
-     Staggered entrance fade for the hero content, plus a vertical
-     ticker that continuously scrolls the services list directly on
-     the shader panel. The list is rendered twice back-to-back and
-     the track scrolls exactly one copy's height (translateY -50%)
-     so the loop is seamless. A mask fades the ticker's top/bottom
-     edges into the panel instead of cutting rows off sharply. */
+  /* ---------- McreatiK Tech Hero ----------
+     Staggered CSS entrance fade for the hero's supporting copy
+     (the headline itself uses the RevealText motion component). */
   .mth-reveal {
     animation: mth-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-  .mth-ticker {
-    animation: mth-ticker 14s linear infinite;
-  }
-  .mth-ticker-mask {
-    mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
-    -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
   }
   @keyframes mth-reveal {
     from { opacity: 0; transform: translateY(14px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  @keyframes mth-ticker {
-    from { transform: translateY(0); }
-    to { transform: translateY(-50%); }
-  }
   @media (prefers-reduced-motion: reduce) {
-    .mth-reveal,
-    .mth-ticker {
+    .mth-reveal {
       animation: none;
     }
   }

@@ -19,7 +19,7 @@
    a lift, uniformly across all three.
    ============================================ */
 
-import React, { memo } from 'react'
+import React, { memo, useState } from 'react'
 import { motion } from 'framer-motion'
 import { FaWhatsapp } from 'react-icons/fa'
 import { FiCheck, FiLifeBuoy } from 'react-icons/fi'
@@ -27,6 +27,7 @@ import { TECH_PACKAGES, TECH_PACKAGES_FOOTNOTE } from '../../utils/constants'
 import { getWhatsAppHref } from '../../utils/whatsapp'
 import SectionHeading from '../ui/SectionHeading'
 import Button from '../ui/Button'
+import PackageFinder from '../tech/PackageFinder'
 
 const CARE_PLAN_WHATSAPP_HREF = getWhatsAppHref(
   "Hi McreatiK, I'd like to know more about your Care Plans for ongoing website support."
@@ -87,8 +88,11 @@ function PackageHeader({ pkg, index }) {
   )
 }
 
-const cardMotionProps = (index) => ({
-  className: 'group relative rounded-2xl border border-stone-200 bg-white p-8 transition-colors duration-300 hover:border-[#1E4FD9]',
+/* `picked` = this card is the PackageFinder's current recommendation */
+const cardMotionProps = (index, picked = false) => ({
+  className: `group relative scroll-mt-28 rounded-2xl border bg-white p-8 transition-[border-color,box-shadow] duration-300 hover:border-[#1E4FD9] ${
+    picked ? 'border-[#1E4FD9] ring-4 ring-[#1E4FD9]/10' : 'border-stone-200'
+  }`,
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: '-30px' },
@@ -98,6 +102,11 @@ const cardMotionProps = (index) => ({
 
 const Packages = memo(function Packages() {
   const [starter, professional, premium] = TECH_PACKAGES
+  const [recommended, setRecommended] = useState(null)
+  const cardProps = (index, pkg) => ({
+    ...cardMotionProps(index, recommended === pkg.name),
+    id: `package-${pkg.name.toLowerCase()}`,
+  })
 
   return (
     <section className="relative py-24 lg:py-32 bg-stone-100">
@@ -120,9 +129,13 @@ const Packages = memo(function Packages() {
           .
         </p>
 
+        <div className="mb-10">
+          <PackageFinder onRecommend={setRecommended} />
+        </div>
+
         {/* Starter + Professional — a wider two-column row */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:items-stretch">
-          <motion.div {...cardMotionProps(0)} className={`${cardMotionProps(0).className} flex flex-col`}>
+          <motion.div {...cardProps(0, starter)} className={`${cardProps(0, starter).className} flex flex-col`}>
             <PackageHeader pkg={starter} index={0} />
             <div className="mt-8 space-y-6 border-t border-stone-200 pt-6">
               {starter.categories.map((category) => (
@@ -131,7 +144,7 @@ const Packages = memo(function Packages() {
             </div>
           </motion.div>
 
-          <motion.div {...cardMotionProps(1)} className={`${cardMotionProps(1).className} flex flex-col`}>
+          <motion.div {...cardProps(1, professional)} className={`${cardProps(1, professional).className} flex flex-col`}>
             <PackageHeader pkg={professional} index={1} />
             <div className="mt-8 border-t border-stone-200 pt-6">
               <p className="mb-5 font-mono-label text-xs uppercase text-stone-500">
@@ -148,8 +161,8 @@ const Packages = memo(function Packages() {
 
         {/* Premium — its own full-width row: info sidebar + a wide feature grid */}
         <motion.div
-          {...cardMotionProps(2)}
-          className={`${cardMotionProps(2).className} mt-6 lg:grid lg:grid-cols-[280px_1fr] lg:gap-10`}
+          {...cardProps(2, premium)}
+          className={`${cardProps(2, premium).className} mt-6 lg:grid lg:grid-cols-[280px_1fr] lg:gap-10`}
         >
           <div className="flex flex-col lg:border-r lg:border-stone-200 lg:pr-10">
             <PackageHeader pkg={premium} index={2} />

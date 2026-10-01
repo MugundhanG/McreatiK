@@ -121,7 +121,8 @@ const Footer = memo(function Footer() {
                   +91 9952 758545
                 </a>
               </li>
-              <li>Based in Chennai, TN, India</li>
+              <li>Studios: Chennai, serving Tamil Nadu &amp; nearby states</li>
+              <li>Tech: remote, serving clients worldwide</li>
             </ul>
           </div>
         </div>

@@ -24,6 +24,7 @@ const Services = memo(function Services() {
       <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionDivider label="§ Services" />
         <SectionHeading
+          crumb="Services"
           label="What We Do"
           title="Services That Grow With Your Business"
           subtitle="Website development is our core focus — branding and digital design round out a complete online presence."

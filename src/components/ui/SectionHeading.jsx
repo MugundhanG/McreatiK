@@ -7,11 +7,19 @@
    ============================================ */
 
 import React, { memo } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import RegMark from './RegMark'
 import { RevealText } from '../motion'
 
-const SectionHeading = memo(function SectionHeading({ label, title, subtitle }) {
+/* `crumb` turns this into a page header: a "Tech / <crumb>" breadcrumb,
+   an <h1> at display size, and it animates on load instead of on scroll.
+   Used by the standalone Tech sub-pages (Services, Industries, FAQ, Blog). */
+const SectionHeading = memo(function SectionHeading({ label, title, subtitle, crumb }) {
+  const isPage = Boolean(crumb)
+  const headingClass = isPage
+    ? 'text-4xl md:text-5xl lg:text-6xl font-bold font-display tracking-tight text-stone-900 leading-[1.05] text-balance'
+    : 'text-3xl md:text-4xl lg:text-5xl font-bold font-display tracking-tight text-stone-900 leading-tight text-balance'
   return (
     <motion.div
       className="relative text-center mb-16"
@@ -21,6 +29,14 @@ const SectionHeading = memo(function SectionHeading({ label, title, subtitle }) 
       transition={{ duration: 0.6 }}
     >
       <RegMark position="top-left" className="left-1/2 -translate-x-1/2 -top-3" />
+
+      {isPage && (
+        <nav aria-label="Breadcrumb" className="mb-6 text-sm text-stone-500">
+          <Link to="/tech" className="hover:text-[#1E4FD9] transition-colors">Tech</Link>
+          <span className="mx-2 text-stone-300" aria-hidden="true">/</span>
+          <span aria-current="page" className="text-stone-900">{crumb}</span>
+        </nav>
+      )}
 
       {/* Eyebrow — a ruled tag, not a chip; matches the blueprint/spec-sheet register */}
       {label && (
@@ -35,15 +51,9 @@ const SectionHeading = memo(function SectionHeading({ label, title, subtitle }) 
 
       {/* Main title — solid ink, no gradient */}
       {typeof title === 'string' ? (
-        <RevealText
-          as="h2"
-          text={title}
-          className="text-3xl md:text-4xl lg:text-5xl font-bold font-display tracking-tight text-stone-900 leading-tight text-balance"
-        />
+        <RevealText as={isPage ? 'h1' : 'h2'} animateOnMount={isPage} text={title} className={headingClass} />
       ) : (
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display tracking-tight text-stone-900 leading-tight text-balance">
-          {title}
-        </h2>
+        React.createElement(isPage ? 'h1' : 'h2', { className: headingClass }, title)
       )}
 
       {/* Optional subtitle */}
