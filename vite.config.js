@@ -43,9 +43,6 @@ function demosDevMiddleware() {
 export default defineConfig({
   plugins: [react(), tailwindcss(), demosDevMiddleware()],
   base: '/',
-  optimizeDeps: {
-    include: ['shaders/react'],
-  },
   build: {
     rollupOptions: {
       output: {

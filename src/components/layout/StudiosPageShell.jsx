@@ -11,6 +11,7 @@ import React, { Suspense } from 'react'
 import StudiosNavbar from '../studios/Navbar'
 import StudiosFooter from '../studios/Footer'
 import ScrollToTop from '../ui/ScrollToTop'
+import ViewCursor from '../motion/ViewCursor'
 
 function SectionLoader() {
   return (
@@ -31,6 +32,10 @@ export default function StudiosPageShell({ children }) {
       </main>
       <StudiosFooter />
       <ScrollToTop accentClass="bg-[#C9971F] text-white shadow-[#C9971F]/30 hover:bg-[#b3860f]" />
+      {/* Cinematic layer: moving grain over everything, and a "View"
+          cursor over photos (elements marked data-cursor) */}
+      <div className="film-grain-live" aria-hidden="true" />
+      <ViewCursor />
     </div>
   )
 }

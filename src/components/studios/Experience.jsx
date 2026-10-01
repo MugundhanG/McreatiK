@@ -6,9 +6,9 @@
    invented quotes or names, ever.
    ============================================ */
 
-import React, { memo } from 'react'
-import { motion } from 'framer-motion'
-import { FiUser, FiMessageSquare } from 'react-icons/fi'
+import React, { memo, useEffect, useState } from 'react'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 import { STUDIOS_EXPERIENCE_STEPS, STUDIOS_TESTIMONIALS } from '../../utils/constants'
 import { RevealText, ScrollLine } from '../motion'
 
@@ -57,68 +57,116 @@ function ProcessSteps() {
   )
 }
 
-function TestimonialCard({ quote, name, shootType, index }) {
-  return (
-    <motion.div
-      className="group rounded-lg border border-black/10 bg-white/50 p-6"
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-30px' }}
-      transition={{ duration: 0.5, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{
-        y: -6,
-        boxShadow: '0 20px 40px -12px rgba(28, 23, 16, 0.12)',
-        transition: { type: 'spring', stiffness: 400, damping: 25 },
-      }}
-    >
-      <FiMessageSquare className="w-5 h-5 text-[#C9971F]/50" aria-hidden="true" />
-      <p className="font-body text-sm italic leading-relaxed text-[#6B6153] mt-4">{quote}</p>
-      <div className="relative mt-5 flex items-center gap-3 pt-4">
-        {/* Divider draws in left-to-right on reveal instead of just being
-            static - scaleX (not width) so it's a transform, not a layout
-            property, and stays smooth on lower-end phones. */}
-        <motion.span
-          className="absolute top-0 left-0 right-0 h-px bg-black/10 origin-left"
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true, margin: '-30px' }}
-          transition={{ duration: 0.6, delay: index * 0.12 + 0.25, ease: [0.16, 1, 0.3, 1] }}
-        />
-        {/* group-hover (not its own whileHover) so it reacts to hovering
-            the whole card, not just this small icon specifically. */}
-        <FiUser className="w-8 h-8 shrink-0 text-[#A89A88] transition-all duration-300 group-hover:text-[#C9971F] group-hover:scale-110 group-hover:-rotate-6" />
-        <p className="font-mono-label text-[11px] uppercase text-[#6B6153]">{name} &middot; {shootType}</p>
-      </div>
-    </motion.div>
-  )
-}
+const ROTATE_MS = 8000
+const EASE = [0.22, 1, 0.36, 1]
 
+/* One quote at a time, set large as an editorial pull-quote. Rotates on
+   its own (with a progress bar showing time to the next), pauses while
+   hovered, and can be stepped with the arrows or the dots. Reduced
+   motion: no autoplay. Only real client words — never invented ones. */
 function Testimonials() {
+  const reduce = useReducedMotion()
+  const [index, setIndex] = useState(0)
+  const [paused, setPaused] = useState(false)
+  const count = STUDIOS_TESTIMONIALS.length
+  const t = STUDIOS_TESTIMONIALS[index]
+  const autoplay = !reduce && !paused && count > 1
+
+  useEffect(() => {
+    if (!autoplay) return undefined
+    const id = setTimeout(() => setIndex((i) => (i + 1) % count), ROTATE_MS)
+    return () => clearTimeout(id)
+  }, [index, autoplay, count])
+
+  const go = (dir) => setIndex((i) => (i + dir + count) % count)
+
   return (
-    <section id="testimonials" className="relative py-24 lg:py-32 bg-[#F3EEE3]">
+    <section id="testimonials" className="relative py-24 lg:py-32 bg-[#F3EEE3] overflow-hidden">
       <div className="max-w-5xl mx-auto px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6 }}
-          className="mb-14"
+          className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
         >
-          <p className="font-mono-label text-xs uppercase text-[#C9971F] mb-3">In their words</p>
-          <RevealText as="h2" text="What Clients Say" className="font-display italic text-3xl sm:text-4xl lg:text-5xl text-[#1C1710]" />
-          <p className="font-body mt-4 text-[#6B6153] max-w-lg">
-            Real feedback from real clients.
-          </p>
+          <div>
+            <p className="font-mono-label text-xs uppercase text-[#C9971F] mb-3">In their words</p>
+            <RevealText as="h2" text="What Clients Say" className="font-display italic text-3xl sm:text-4xl lg:text-5xl text-[#1C1710]" />
+          </div>
+          {count > 1 && (
+            <div className="flex gap-2">
+              {[[-1, FiArrowLeft, 'Previous'], [1, FiArrowRight, 'Next']].map(([dir, Icon, label]) => (
+                <button
+                  key={label}
+                  type="button"
+                  onClick={() => go(dir)}
+                  aria-label={`${label} testimonial`}
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[#1C1710]/15 text-[#1C1710] transition-colors hover:border-[#C9971F] hover:bg-[#C9971F] hover:text-white"
+                >
+                  <Icon className="h-4 w-4" />
+                </button>
+              ))}
+            </div>
+          )}
         </motion.div>
 
-        {/* max-w-2xl + 2 columns rather than the old fixed 3-slot grid - it
-            was sized for 3 placeholder cards, not however many real
-            testimonials exist at any given time. Grows to more columns
-            once there's enough content to fill a wider row. */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl">
-          {STUDIOS_TESTIMONIALS.map(({ quote, name, shootType }, index) => (
-            <TestimonialCard key={name} quote={quote} name={name} shootType={shootType} index={index} />
-          ))}
+        <div
+          className="relative"
+          onPointerEnter={() => setPaused(true)}
+          onPointerLeave={() => setPaused(false)}
+        >
+          {/* Oversized quote mark as a background ornament */}
+          <span aria-hidden="true" className="pointer-events-none absolute -left-2 -top-16 font-display italic text-[12rem] leading-none text-[#C9971F]/15 select-none">
+            &ldquo;
+          </span>
+
+          <div aria-live="polite" className="relative min-h-[260px] sm:min-h-[220px]">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.figure
+                key={index}
+                initial={{ opacity: 0, y: 24, filter: 'blur(6px)' }}
+                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, y: -16, filter: 'blur(6px)' }}
+                transition={{ duration: 0.6, ease: EASE }}
+              >
+                <blockquote className="font-display italic text-2xl leading-snug text-[#1C1710] sm:text-3xl lg:text-[2.1rem]">
+                  {t.quote}
+                </blockquote>
+                <figcaption className="mt-8 flex items-center gap-4">
+                  <span className="h-px w-10 bg-[#C9971F]" />
+                  <span className="font-body font-semibold text-[#1C1710]">{t.name}</span>
+                  <span className="font-mono-label text-[11px] uppercase text-[#6B6153]">{t.shootType}</span>
+                </figcaption>
+              </motion.figure>
+            </AnimatePresence>
+          </div>
+
+          {count > 1 && (
+            <div className="mt-10 flex gap-2" role="group" aria-label="Choose a testimonial">
+              {STUDIOS_TESTIMONIALS.map((item, i) => (
+                <button
+                  key={item.name}
+                  type="button"
+                  onClick={() => setIndex(i)}
+                  aria-label={`Show testimonial from ${item.name}`}
+                  aria-pressed={i === index}
+                  className="relative h-1 w-16 overflow-hidden rounded-full bg-[#1C1710]/10"
+                >
+                  {/* The active bar fills over the time until the next quote */}
+                  {i === index && (
+                    <motion.span
+                      key={`${index}-${paused}`}
+                      className="absolute inset-y-0 left-0 bg-[#C9971F]"
+                      initial={{ width: autoplay ? '0%' : '100%' }}
+                      animate={{ width: '100%' }}
+                      transition={{ duration: autoplay ? ROTATE_MS / 1000 : 0, ease: 'linear' }}
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>
