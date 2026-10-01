@@ -14,7 +14,8 @@
 
 import React, { memo } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { Quote, UserCircle2 } from 'lucide-react'
+import { RiDoubleQuotesL } from 'react-icons/ri'
+import { FiUser } from 'react-icons/fi'
 import SectionHeading from '../ui/SectionHeading'
 
 /* Two placeholder cards per column; each column's list is rendered
@@ -30,10 +31,10 @@ function TestimonialCard() {
       transition={{ type: 'spring', stiffness: 400, damping: 20 }}
       className="w-full max-w-xs rounded-2xl border border-stone-200 bg-white p-7 shadow-sm"
     >
-      <Quote className="h-6 w-6 text-[#1E4FD9]/40" strokeWidth={2.5} />
+      <RiDoubleQuotesL className="h-6 w-6 text-[#1E4FD9]/40" />
       <p className="mt-3 text-sm italic leading-relaxed text-stone-500">Testimonial coming soon.</p>
       <div className="mt-6 flex items-center gap-3 border-t border-stone-100 pt-4">
-        <UserCircle2 className="h-10 w-10 shrink-0 text-stone-300" strokeWidth={1.5} />
+        <FiUser className="h-10 w-10 shrink-0 rounded-full border border-stone-300 p-2 text-stone-300" />
         <p className="font-mono-label text-xs text-stone-500">Client Name &middot; Business Type</p>
       </div>
     </motion.div>

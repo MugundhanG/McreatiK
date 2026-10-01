@@ -13,7 +13,7 @@ import { TECH_NAV_GROUPS } from '../../utils/constants'
 import { getWhatsAppHref } from '../../utils/whatsapp'
 import Button from '../ui/Button'
 import DepartmentSwitcher from '../ui/DepartmentSwitcher'
-import mcreatiKLogo from '../../assets/tech-logo-light-bg.png'
+import mcreatiKLogo from '../../assets/tech-logo-light-bg.webp'
 import NavDropdown from './NavDropdown'
 
 const WHATSAPP_HREF = getWhatsAppHref("Hi McreatiK, I'm interested in getting a website for my business.")

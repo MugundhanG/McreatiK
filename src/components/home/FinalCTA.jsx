@@ -10,7 +10,7 @@ import React, { memo } from 'react'
 import { motion } from 'framer-motion'
 import { FiArrowRight } from 'react-icons/fi'
 import { getWhatsAppHref } from '../../utils/whatsapp'
-import mkMark from '../../assets/mcreatik-mk-mark.png'
+import mkMark from '../../assets/mcreatik-mk-mark.webp'
 
 const WHATSAPP_HREF = getWhatsAppHref("Hi McreatiK, I have a project in mind — I'd like to talk.")
 

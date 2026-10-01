@@ -12,7 +12,7 @@ import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { FiInstagram, FiLinkedin, FiTwitter, FiFacebook, FiYoutube } from 'react-icons/fi'
 import { HOME_NAV_LINKS, SOCIAL_LINKS } from '../../utils/constants'
-import mcreatiKLogo from '../../assets/mcreatik-logo-dark-bg.png'
+import mcreatiKLogo from '../../assets/mcreatik-logo-dark-bg.webp'
 
 const ICON_MAP = {
   instagram: FiInstagram,
@@ -37,7 +37,7 @@ const Footer = memo(function Footer() {
     <footer className="relative bg-[#0A1128] border-t border-white/5">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-[#D8AE55]/50 to-transparent" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-24">
 
         {/* ---------- Top bar — logo, copyright, socials ---------- */}
         <div className="flex flex-wrap items-center justify-between gap-6">
@@ -48,7 +48,7 @@ const Footer = memo(function Footer() {
             <span className="text-gray-400 text-sm">&copy; {year}</span>
           </div>
           <div className="flex gap-3">
-            {SOCIAL_LINKS.map(({ label, href, icon }) => {
+            {SOCIAL_LINKS.filter(({ href }) => href && href !== '#').map(({ label, href, icon }) => {
               const Icon = ICON_MAP[icon]
               return (
                 <a
@@ -127,7 +127,7 @@ const Footer = memo(function Footer() {
         </div>
 
         {/* ---------- Bottom bar ---------- */}
-        <div className="border-t border-white/5 mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="border-t border-white/5 mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 sm:pr-20">
           <p className="text-gray-400 text-sm">McreatiK. All rights reserved.</p>
           <div className="flex gap-6 text-sm text-gray-400">
             <Link to="/privacy" className="hover:text-gray-300 transition-colors">Privacy Policy</Link>

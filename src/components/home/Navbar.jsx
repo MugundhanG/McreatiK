@@ -16,7 +16,7 @@ import { FiMenu, FiX, FiChevronDown } from 'react-icons/fi'
 import { HOME_NAV_LINKS, TECH_NAV_LINKS, STUDIOS_NAV_LINKS } from '../../utils/constants'
 import { getWhatsAppHref } from '../../utils/whatsapp'
 import Button from '../ui/Button'
-import mcreatiKLogo from '../../assets/mcreatik-logo-dark-bg.png'
+import mcreatiKLogo from '../../assets/mcreatik-logo-dark-bg.webp'
 
 const WHATSAPP_HREF = getWhatsAppHref("Hi McreatiK, I have a project in mind — I'd like to talk.")
 

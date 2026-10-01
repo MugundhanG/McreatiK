@@ -9,8 +9,8 @@
    ============================================ */
 
 import { FiCode, FiCamera, FiPackage } from 'react-icons/fi'
-import techLogo from '../assets/tech-logo-dark-bg.png'
-import studiosLogo from '../assets/studios-logo-dark-bg.png'
+import techLogo from '../assets/tech-logo-dark-bg.webp'
+import studiosLogo from '../assets/studios-logo-dark-bg.webp'
 
 export const DEPARTMENTS = [
   {

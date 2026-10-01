@@ -15,8 +15,8 @@ import { FiArrowRight } from 'react-icons/fi'
 import Button from '../ui/Button'
 import { getWhatsAppHref } from '../../utils/whatsapp'
 import { HOME_EXPLORE_AREAS } from '../../utils/constants'
-import mkMark from '../../assets/mcreatik-mk-mark.png'
-import homeHeroPhoto from '../../assets/home-hero-photo.png'
+import mkMark from '../../assets/mcreatik-mk-mark.webp'
+import homeHeroPhoto from '../../assets/home-hero-photo.webp'
 
 const WHATSAPP_HREF = getWhatsAppHref("Hi McreatiK, I have a project in mind — I'd like to talk.")
 

@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { FiInstagram, FiLinkedin, FiTwitter, FiFacebook, FiYoutube } from 'react-icons/fi'
 import { STUDIOS_NAV_LINKS, SOCIAL_LINKS, STUDIOS_INSTAGRAM_URL } from '../../utils/constants'
 import DepartmentSwitcher from '../ui/DepartmentSwitcher'
-import studiosLogo from '../../assets/studios-logo-light-bg.png'
+import studiosLogo from '../../assets/studios-logo-light-bg.webp'
 
 const ICON_MAP = {
   instagram: FiInstagram,
@@ -33,7 +33,7 @@ const StudiosFooter = memo(function StudiosFooter() {
 
   return (
     <footer className="relative bg-[#F3EEE3] border-t border-black/10">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-16 pb-8">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-16 pb-24">
         <div className="flex flex-col sm:flex-row justify-between gap-10 mb-12">
           <div>
             <Link to="/" className="flex items-center mb-4">
@@ -75,7 +75,7 @@ const StudiosFooter = memo(function StudiosFooter() {
           </div>
         </div>
 
-        <div className="border-t border-black/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-5">
+        <div className="border-t border-black/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-5 sm:pr-20">
           <p className="font-mono-label text-[11px] uppercase text-[#A89A88]">&copy; {year} McreatiK Studios</p>
           <div className="flex gap-6 text-sm font-body text-[#6B6153]">
             <Link to="/privacy" className="hover:text-[#C9971F] transition-colors">Privacy Policy</Link>

@@ -18,6 +18,13 @@ import { getWhatsAppHref } from '../../utils/whatsapp'
 
 const TechHeroShaderPanel = lazy(() => import('./TechHeroShaderPanel'))
 
+// The shader needs WebGPU, which many budget Android browsers lack. Without
+// it (or with reduced motion on) the panel keeps its static gradient instead.
+const canRenderShader = () =>
+  typeof navigator !== 'undefined' &&
+  'gpu' in navigator &&
+  !window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+
 const WHATSAPP_HREF = getWhatsAppHref("Hi McreatiK, I'd like a free consultation for my business.")
 
 const HERO_SERVICES_TICKER = [
@@ -99,10 +106,12 @@ const Hero = memo(function Hero() {
 
           {/* ===== RIGHT — Shader panel with an animated services ticker ===== */}
           <div className="mth-reveal relative h-100 sm:h-120 lg:h-140" style={{ animationDelay: '0.2s' }}>
-            <div className="absolute inset-y-0 left-4 right-0 rotate-3 overflow-hidden rounded-[2rem] bg-[#1E4FD9] shadow-2xl shadow-[#1E4FD9]/20 xl:-right-16 xl:rotate-6">
-              <Suspense fallback={null}>
-                <TechHeroShaderPanel />
-              </Suspense>
+            <div className="absolute inset-y-0 left-4 right-0 rotate-3 overflow-hidden rounded-[2rem] bg-[linear-gradient(135deg,#dbe6fb_0%,#1E4FD9_45%,#0a1660_100%)] shadow-2xl shadow-[#1E4FD9]/20 xl:-right-16 xl:rotate-6">
+              {canRenderShader() && (
+                <Suspense fallback={null}>
+                  <TechHeroShaderPanel />
+                </Suspense>
+              )}
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{

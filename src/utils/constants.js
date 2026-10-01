@@ -61,16 +61,16 @@ import {
 /* Shared contact number used for WhatsApp CTAs across both departments */
 export const WHATSAPP_NUMBER = '919952758545'
 
-import portraitSessionsPhoto from '../assets/offerings/portrait-sessions.jpg'
-import weddingPhotographyPhoto from '../assets/offerings/wedding-photography.jpg'
-import prePostWeddingPhoto from '../assets/offerings/pre-post-wedding.jpg'
-import babyKidsOutdoorShootsPhoto from '../assets/offerings/baby-kids-outdoor-shoots.jpg'
-import modelOutdoorShootsPhoto from '../assets/offerings/model-outdoor-shoots.jpg'
-import birthdayPartiesPhoto from '../assets/offerings/birthday-parties.jpg'
-import allTraditionalEventsPhoto from '../assets/offerings/all-traditional-events.jpg'
-import ringCeremonyPhoto from '../assets/offerings/ring-ceremony.jpg'
-import houseWarmingPhoto from '../assets/offerings/house-warming.jpg'
-import photoAlbumDesignPhoto from '../assets/offerings/photo-album-design.jpg'
+import portraitSessionsPhoto from '../assets/offerings/portrait-sessions.webp'
+import weddingPhotographyPhoto from '../assets/offerings/wedding-photography.webp'
+import prePostWeddingPhoto from '../assets/offerings/pre-post-wedding.webp'
+import babyKidsOutdoorShootsPhoto from '../assets/offerings/baby-kids-outdoor-shoots.webp'
+import modelOutdoorShootsPhoto from '../assets/offerings/model-outdoor-shoots.webp'
+import birthdayPartiesPhoto from '../assets/offerings/birthday-parties.webp'
+import allTraditionalEventsPhoto from '../assets/offerings/all-traditional-events.webp'
+import ringCeremonyPhoto from '../assets/offerings/ring-ceremony.webp'
+import houseWarmingPhoto from '../assets/offerings/house-warming.webp'
+import photoAlbumDesignPhoto from '../assets/offerings/photo-album-design.webp'
 
 /* =================================================
    MCREATIK TECH & CREATIVE SOLUTIONS

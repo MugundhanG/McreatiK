@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom'
 import { FiInstagram, FiLinkedin, FiTwitter, FiFacebook, FiYoutube } from 'react-icons/fi'
 import { TECH_NAV_LINKS, TECH_SERVICES, SOCIAL_LINKS } from '../../utils/constants'
 import DepartmentSwitcher from '../ui/DepartmentSwitcher'
-import mcreatiKLogo from '../../assets/tech-logo-light-bg.png'
+import mcreatiKLogo from '../../assets/tech-logo-light-bg.webp'
 
 /* Map icon name strings from constants to actual components */
 const ICON_MAP = {
@@ -29,7 +29,7 @@ const Footer = memo(function Footer() {
 
   return (
     <footer className="relative bg-stone-100 border-t border-stone-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 mb-12">
           {/* ---------- Brand Column ---------- */}
           <div className="lg:col-span-2">
@@ -45,7 +45,7 @@ const Footer = memo(function Footer() {
             </p>
             {/* Social icons */}
             <div className="flex gap-3">
-              {SOCIAL_LINKS.map(({ label, href, icon }) => {
+              {SOCIAL_LINKS.filter(({ href }) => href && href !== '#').map(({ label, href, icon }) => {
                 const Icon = ICON_MAP[icon]
                 return (
                   <a
@@ -117,7 +117,7 @@ const Footer = memo(function Footer() {
         </div>
 
         {/* ---------- Bottom Bar ---------- */}
-        <div className="border-t border-stone-200 pt-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="border-t border-stone-200 pt-8 flex flex-col sm:flex-row items-center justify-between gap-6 sm:pr-20">
           <p className="text-stone-500 text-sm">
             &copy; {year} McreatiK. All rights reserved.
           </p>

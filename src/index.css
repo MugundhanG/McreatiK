@@ -30,6 +30,15 @@
     --font-display: 'Archivo', sans-serif;
     --font-body: 'Inter', sans-serif;
     --font-mono: 'IBM Plex Mono', monospace;
+    /* Per-theme accent — drives the keyboard focus ring below.
+       Each .theme-* wrapper overrides it with its own brand color. */
+    --accent: #1E4FD9;
+  }
+
+  /* Visible keyboard-focus ring (mouse clicks don't trigger it). */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
   }
 
   body {
@@ -44,15 +53,16 @@
   ::-webkit-scrollbar {
     width: 8px;
   }
+  /* Neutral scrollbar — sits over light and dark themes alike. */
   ::-webkit-scrollbar-track {
-    background: #12141c;
+    background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: #5b5fef;
+    background: rgba(128, 132, 150, 0.45);
     border-radius: 4px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #7477f2;
+    background: rgba(128, 132, 150, 0.7);
   }
 }
 
@@ -65,6 +75,7 @@
      the dark Tech theme it replaces and McreatiK home's navy + gold. */
   .theme-tech {
     background: #faf9f6;
+    --accent: #1E4FD9;
     color: #14161c;
     --font-display: 'Space Grotesk', sans-serif;
     --font-body: 'Inter', sans-serif;
@@ -72,6 +83,7 @@
   }
   .theme-studios {
     background: #faf7f0;
+    --accent: #C9971F;
     color: #1c1710;
     --font-display: 'Fraunces', serif;
     --font-body: 'Work Sans', sans-serif;
@@ -91,6 +103,7 @@
      have hardcoded across ~12 files. */
   .theme-store {
     background: #f8f7fb;
+    --accent: #6A5DD0;
     color: #17151f;
     --font-display: 'Archivo', sans-serif;
     --font-body: 'Inter', sans-serif;
@@ -110,6 +123,7 @@
      both departments, grounded in the real logo's navy + gold. */
   .theme-home {
     background: #0a1128;
+    --accent: #D8AE55;
     color: #f4f2ea;
     --font-display: 'Archivo', sans-serif;
     --font-body: 'Inter', sans-serif;

@@ -9,7 +9,7 @@ import React, { memo } from 'react'
 import { motion } from 'framer-motion'
 import { HOME_HOW_IT_WORKS } from '../../utils/constants'
 import SectionHeading from './SectionHeading'
-import howItWorksBg from '../../assets/how-it-works-bg.png'
+import howItWorksBg from '../../assets/how-it-works-bg.webp'
 
 const HowItWorks = memo(function HowItWorks() {
   return (
