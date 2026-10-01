@@ -90,13 +90,13 @@ const StudiosAbout = memo(function StudiosAbout() {
         <div className="relative mx-auto h-[440px] w-full max-w-md sm:h-[520px]" aria-hidden="true">
           <Parallax speed={50} className="absolute left-0 top-0 w-[68%]">
             <ClipReveal hidden="inset(0% 0% 100% 0%)" className="rotate-[-3deg] bg-white p-2.5 pb-10 shadow-[0_30px_60px_-25px_rgba(28,23,16,0.45)]">
-              <ParallaxImage src={coupleEmbraceMono} className="aspect-[4/5]" strength={60} />
+              <div data-lens><ParallaxImage src={coupleEmbraceMono} className="aspect-[4/5]" strength={60} /></div>
             </ClipReveal>
           </Parallax>
 
           <Parallax speed={-90} className="absolute bottom-0 right-0 w-[58%]">
             <ClipReveal hidden="inset(100% 0% 0% 0%)" delay={0.2} className="rotate-[4deg] bg-white p-2.5 pb-10 shadow-[0_30px_60px_-25px_rgba(28,23,16,0.45)]">
-              <ParallaxImage src={shorelineWalk} className="aspect-[4/5]" strength={60} />
+              <div data-lens><ParallaxImage src={shorelineWalk} className="aspect-[4/5]" strength={60} /></div>
             </ClipReveal>
           </Parallax>
 
