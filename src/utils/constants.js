@@ -50,9 +50,7 @@ import {
   FiCompass,
   FiFeather,
   FiPackage,
-  FiUser,
   FiLayers,
-  FiGrid,
   FiGitMerge,
   FiBookOpen,
   FiHelpCircle,
@@ -902,128 +900,9 @@ export const HOME_NAV_LINKS = [
   { label: 'Contact', href: '#contact', type: 'anchor' },
 ]
 
-export const HOME_EXPLORE_AREAS = [
-  {
-    key: 'tech',
-    icon: FiGlobe,
-    kicker: 'Build Your Online Presence',
-    name: 'McreatiK Tech',
-    tagline: 'Digital solutions for businesses and professionals.',
-    longDescription: 'Websites, branding and digital solutions designed to build your online presence and grow your business.',
-    bullets: ['Websites', 'Branding', 'Digital services'],
-    cta: 'Explore Tech',
-    href: '/tech',
-    accent: '#5B5FEF',
-  },
-  {
-    key: 'studios',
-    icon: FiCamera,
-    kicker: 'Capture What Matters',
-    name: 'McreatiK Studios',
-    tagline: 'Photography, album design and visual experiences.',
-    longDescription: 'Photography and creative services that tell your story and create lasting impact.',
-    bullets: ['Photography', 'Albums', 'Event coverage'],
-    cta: 'Explore Studios',
-    href: '/studios',
-    accent: '#C9971F',
-  },
-  {
-    key: 'store',
-    icon: FiPackage,
-    kicker: 'Start With Something Ready',
-    name: 'McreatiK Digital Store',
-    tagline: 'Digital products and creative resources to help you get moving faster.',
-    longDescription: 'Digital products, templates and creative resources to help you create, launch and grow.',
-    bullets: ['Templates', 'Digital downloads', 'Creative resources'],
-    cta: 'Coming Soon',
-    href: '/store',
-    accent: '#8B7FE8',
-    // Still fully built and reachable directly at /store - just not yet
-    // promoted from the homepage while the catalog is thin. ExploreMcreatik
-    // already renders `cta` as plain (unlinked) text whenever this is set,
-    // instead of the Link every other card gets.
-    comingSoon: true,
-  },
-]
 
-export const HOME_WHO_WE_HELP = [
-  {
-    icon: FiBriefcase,
-    title: 'Businesses',
-    description: 'Build a professional digital presence and grow with confidence.',
-  },
-  {
-    icon: FiUser,
-    title: 'Professionals',
-    description: 'Present yourself better and unlock new opportunities.',
-  },
-  {
-    icon: FiCamera,
-    title: 'Creators',
-    description: 'Bring your ideas to life with powerful visual storytelling.',
-  },
-  {
-    icon: FiCalendar,
-    title: 'Event & Wedding',
-    description: 'Make your special moments beautiful, memorable and shareable.',
-  },
-  {
-    icon: FiShoppingBag,
-    title: 'Small & Local Brands',
-    description: 'Stand out in your local market with a modern digital identity.',
-  },
-]
 
-export const HOME_WHAT_WE_CREATE = [
-  {
-    category: 'Digital',
-    icon: FiCode,
-    accent: '#5B5FEF',
-    items: ['Website Development', 'Website Redesign', 'Landing Pages', 'Digital Solutions'],
-  },
-  {
-    category: 'Brand',
-    icon: FiPenTool,
-    accent: '#D8AE55',
-    items: ['Logo & Identity', 'Business Cards', 'Identity Cards'],
-  },
-  {
-    category: 'Creative',
-    icon: FiCamera,
-    accent: '#9B7FE8',
-    items: ['Photography', 'Portraits', 'Event Coverage', 'Albums & More'],
-  },
-  {
-    category: 'Products',
-    icon: FiShoppingBag,
-    accent: '#4FBFA0',
-    items: ['Templates', 'Digital Downloads', 'Creative Resources'],
-    comingSoon: true,
-  },
-]
 
-export const HOME_WHY_MCREATIK = [
-  {
-    icon: FiLayers,
-    title: 'Digital and creative, under one brand',
-    description: 'Your website and your photography can come from the same place, speaking the same language.',
-  },
-  {
-    icon: FiPenTool,
-    title: 'Modern, purposeful design',
-    description: "Nothing added just to look busy — every choice is there because it earns its place.",
-  },
-  {
-    icon: FiTarget,
-    title: 'Built around what you actually need',
-    description: 'No generic templates forced onto your business — the work is shaped around your goals.',
-  },
-  {
-    icon: FiGrid,
-    title: 'Comfortable across different kinds of work',
-    description: 'From a business website to a wedding shoot, the same care and standards apply.',
-  },
-]
 
 export const HOME_HOW_IT_WORKS = [
   {

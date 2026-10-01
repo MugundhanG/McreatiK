@@ -36,15 +36,24 @@ const RevealBlock = memo(function RevealBlock({
     return <Plain className={className}>{children}</Plain>
   }
 
+  /* The outer element is what's watched for "in view"; the clip lives on
+     an inner one. A fully clipped element has zero visible area, and the
+     browser never reports it as intersecting — so it would never reveal. */
   return (
     <Tag
       className={className}
-      initial={{ clipPath: HIDDEN[direction] ?? HIDDEN.up, y: direction === 'up' ? 24 : 0 }}
-      whileInView={{ clipPath: 'inset(0% 0% 0% 0%)', y: 0 }}
+      initial="hidden"
+      whileInView="visible"
       viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration, delay, ease: EASE }}
     >
-      {children}
+      <motion.div
+        variants={{
+          hidden: { clipPath: HIDDEN[direction] ?? HIDDEN.up, y: direction === 'up' ? 24 : 0 },
+          visible: { clipPath: 'inset(0% 0% 0% 0%)', y: 0, transition: { duration, delay, ease: EASE } },
+        }}
+      >
+        {children}
+      </motion.div>
     </Tag>
   )
 })

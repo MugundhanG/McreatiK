@@ -16,11 +16,8 @@ import { setFavicon } from '../utils/setFavicon'
 import { useSEO } from '../hooks/useSEO'
 import { useScrollToHash } from '../hooks/useScrollToHash'
 
-const WhatIsMcreatik = lazy(() => import('../components/home/WhatIsMcreatik'))
-const ExploreMcreatik = lazy(() => import('../components/home/ExploreMcreatik'))
-const WhoWeHelp = lazy(() => import('../components/home/WhoWeHelp'))
-const WhatWeCreate = lazy(() => import('../components/home/WhatWeCreate'))
-const WhyMcreatik = lazy(() => import('../components/home/WhyMcreatik'))
+const Crafts = lazy(() => import('../components/home/Crafts'))
+const ProofMarquee = lazy(() => import('../components/home/ProofMarquee'))
 const HowItWorks = lazy(() => import('../components/home/HowItWorks'))
 const FinalCTA = lazy(() => import('../components/home/FinalCTA'))
 const Contact = lazy(() => import('../components/home/Contact'))
@@ -54,11 +51,8 @@ const Landing = function Landing() {
       <main>
         <Hero />
         <Suspense fallback={<SectionLoader />}>
-          <WhatIsMcreatik />
-          <ExploreMcreatik />
-          <WhoWeHelp />
-          <WhatWeCreate />
-          <WhyMcreatik />
+          <Crafts />
+          <ProofMarquee />
           <HowItWorks />
           <FinalCTA />
           <Contact />

@@ -6,7 +6,7 @@
 
    Pass plain text as `text`. `as` picks the
    element (h1/h2/p…). Screen readers get the
-   whole string once via aria-label — the split
+   whole string once via sr-only text — the split
    word spans are aria-hidden.
 
    Not for gradient-clipped text (background-
@@ -58,11 +58,13 @@ const RevealText = memo(function RevealText({
   return (
     <Tag
       className={className}
-      aria-label={text}
       initial="hidden"
       {...trigger}
       transition={{ staggerChildren: stagger, delayChildren: delay }}
     >
+      {/* The readable copy for screen readers (aria-label is ignored on
+          plain spans); the animated word masks below are aria-hidden. */}
+      <span className="sr-only">{text}</span>
       {words.map((word, i) => (
         <React.Fragment key={i}>
           <span
