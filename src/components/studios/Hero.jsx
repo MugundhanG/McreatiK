@@ -23,10 +23,12 @@ import weddingRings from '../../assets/studios-hero/wedding-rings.webp'
 import seasideRocksSepia from '../../assets/studios-hero/seaside-rocks-sepia.webp'
 import sunsetDance from '../../assets/studios-hero/sunset-dance.webp'
 import shorelineWalk from '../../assets/studios-hero/shoreline-walk.webp'
+import weddingForeheadKiss from '../../assets/studios-hero/wedding-forehead-kiss.webp'
 
 // `position` is the object-position focal point, so the subjects stay in
 // frame when object-cover crops a landscape photo on a portrait phone.
 const SLIDES = [
+  { src: weddingForeheadKiss, position: '46% 42%' },
   { src: studiosHeroPhoto, position: '50% 50%' },
   { src: coupleEmbraceMono, position: '52% 40%' },
   { src: beachWalk, position: '62% 55%' },
