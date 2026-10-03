@@ -13,6 +13,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FiMenu, FiX, FiArrowRight } from 'react-icons/fi'
 import { STUDIOS_NAV_LINKS } from '../../utils/constants'
 import DepartmentSwitcher from '../ui/DepartmentSwitcher'
+import { BusinessCardNavButton } from './BusinessCardMenu'
 import studiosLogoLight from '../../assets/studios-logo-light-bg.webp'
 import studiosLogoDark from '../../assets/studios-logo-dark-bg.webp'
 
@@ -88,12 +89,15 @@ const StudiosNavbar = memo(function StudiosNavbar() {
               />
             </Link>
           ))}
-          <Link
-            to="/studios#book"
-            className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-md bg-[#C9971F] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#b3860f]"
-          >
-            Book a Session <FiArrowRight className="w-3.5 h-3.5" />
-          </Link>
+          <div className="flex items-center gap-3">
+            <BusinessCardNavButton transparent={isTransparent} />
+            <Link
+              to="/studios#book"
+              className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-md bg-[#C9971F] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#b3860f]"
+            >
+              Book a Session <FiArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
         </div>
 
         {/* Mobile toggle */}

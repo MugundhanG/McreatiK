@@ -12,6 +12,7 @@ import StudiosNavbar from '../studios/Navbar'
 import StudiosFooter from '../studios/Footer'
 import ScrollToTop from '../ui/ScrollToTop'
 import LensCursor from '../motion/LensCursor'
+import { BusinessCardFab } from '../studios/BusinessCardMenu'
 
 function SectionLoader() {
   return (
@@ -23,7 +24,7 @@ function SectionLoader() {
 
 export default function StudiosPageShell({ children }) {
   return (
-    <div className="theme-studios min-h-screen overflow-x-hidden w-full">
+    <div className="theme-studios min-h-screen overflow-x-clip w-full">
       <StudiosNavbar />
       <main>
         <Suspense fallback={<SectionLoader />}>
@@ -36,6 +37,7 @@ export default function StudiosPageShell({ children }) {
           (labelled over photos marked data-cursor) */}
       <div className="film-grain-live" aria-hidden="true" />
       <LensCursor />
+      <BusinessCardFab />
     </div>
   )
 }
