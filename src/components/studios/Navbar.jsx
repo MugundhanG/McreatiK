@@ -72,12 +72,12 @@ const StudiosNavbar = memo(function StudiosNavbar() {
         </Link>
 
         {/* Desktop links */}
-        <div className="hidden lg:flex items-center gap-5 xl:gap-8">
+        <div className="hidden lg:flex items-center gap-3 xl:gap-6">
           {STUDIOS_NAV_LINKS.map(({ label, href }) => (
             <Link
               key={label}
               to={href}
-              className={`group relative py-1.5 font-body text-sm transition-colors ${
+              className={`group relative py-1.5 font-body text-[13px] xl:text-sm whitespace-nowrap transition-colors ${
                 isTransparent ? 'text-white/90 hover:text-white' : 'text-[#4A4438] hover:text-[#C9971F]'
               }`}
             >
@@ -89,7 +89,7 @@ const StudiosNavbar = memo(function StudiosNavbar() {
               />
             </Link>
           ))}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 xl:gap-3">
             <BusinessCardNavButton transparent={isTransparent} />
             <Link
               to="/studios#book"
