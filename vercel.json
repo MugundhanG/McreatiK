@@ -1,4 +1,6 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "rewrites": [
     { "source": "/admin", "destination": "https://mcreatik-admin.vercel.app/" },
     { "source": "/admin/", "destination": "https://mcreatik-admin.vercel.app/" },
