@@ -66,15 +66,30 @@ function headTags(route, routePath, { SITE_URL, SITE_NAME, SHARE_IMAGES }, jsonL
   return lines.map((l) => `    ${l}`).join('\n')
 }
 
-/* Static first paint: the page's heading and summary plus the main links,
-   on the same dark ground as the app's own loading screen. */
-function staticBody(route) {
+/* Sub-pages to link from a page's static HTML, so crawlers can discover
+   every indexable page by following links (not only via the sitemap):
+   a Tech page links to all Tech sub-pages, a Studios page to all Studios
+   sub-pages, and the homepage / legal pages to both sets. */
+function sectionLinks(routes, route, currentPath) {
+  const sections = route.section === 'tech' || route.section === 'studios'
+    ? [route.section]
+    : ['tech', 'studios']
+  return Object.entries(routes)
+    .filter(([href, r]) => href !== currentPath && sections.includes(r.section) && r.crumb && r.sitemap && !r.noindex)
+    .map(([href, r]) => [href, r.section === 'studios' ? `Studios ${r.crumb}` : r.crumb])
+}
+
+/* Static first paint: the page's heading and summary plus the main and
+   section links, on the same dark ground as the app's loading screen. */
+function staticBody(route, routes, currentPath) {
   const link = (href, label) =>
-    `<a href="${href}" style="color:#D8AE55;text-decoration:none;margin:0 10px">${esc(label)}</a>`
+    `<a href="${href}" style="color:#D8AE55;text-decoration:none;margin:0 10px;display:inline-block">${esc(label)}</a>`
+  const subLinks = sectionLinks(routes, route, currentPath).map(([href, label]) => link(href, label)).join('')
   return `<div id="root"><main style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;background:#0a0b10;color:#f1f2f5;font-family:Inter,system-ui,sans-serif">` +
     `<h1 style="margin:0;font-size:28px;line-height:1.2;max-width:720px">${esc(route.h1)}</h1>` +
     `<p style="margin:0;max-width:560px;color:#8890ae;font-size:15px;line-height:1.6">${esc(route.intro)}</p>` +
-    `<nav style="font-size:14px">${link('/', 'McreatiK')}${link('/tech', 'McreatiK Tech')}${link('/studios', 'McreatiK Studios')}</nav>` +
+    `<nav aria-label="Main" style="font-size:14px">${link('/', 'McreatiK')}${link('/tech', 'McreatiK Tech')}${link('/studios', 'McreatiK Studios')}</nav>` +
+    (subLinks ? `<nav aria-label="Section" style="font-size:13px;max-width:720px;line-height:2">${subLinks}</nav>` : '') +
     `</main></div>`
 }
 
@@ -110,7 +125,7 @@ async function main() {
       const route = seo.ROUTES[routePath]
       const jsonLd = route.noindex ? null : structuredDataFor(routePath)
       let html = replaceSeoBlock(template, headTags(route, routePath, seo, jsonLd))
-      html = html.replace('<div id="root"></div>', staticBody(route))
+      html = html.replace('<div id="root"></div>', staticBody(route, seo.ROUTES, routePath))
 
       const out = routePath === '/'
         ? path.join(dist, 'index.html')
