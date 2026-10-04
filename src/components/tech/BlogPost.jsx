@@ -11,6 +11,7 @@ import DOMPurify from 'dompurify'
 import { FiArrowLeft, FiAlertCircle } from 'react-icons/fi'
 import { fetchBlogPost } from '../../utils/cmsApi'
 import { useSEO } from '../../hooks/useSEO'
+import { blogPostSeo, demoteHeadings } from '../../seo/blog'
 
 function formatDate(iso) {
   return new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
@@ -38,12 +39,14 @@ export default function BlogPost() {
     }
   }, [slug])
 
+  // Same values the build writes into this post's static HTML (src/seo/blog.js)
+  const seo = post ? blogPostSeo(post) : null
   useSEO({
-    title: post ? `${post.seoTitle || post.title} | McreatiK Tech & Creative` : null,
-    description: post ? post.seoDescription || post.excerpt || `${post.title} — from the McreatiK Tech blog.` : null,
+    title: seo?.title ?? null,
+    description: seo?.description ?? null,
     path: `/tech/blog/${slug}`,
     section: 'tech',
-    image: post?.cover?.url,
+    image: seo?.image,
   })
 
   if (status === 'loading') {
@@ -66,7 +69,7 @@ export default function BlogPost() {
     )
   }
 
-  const safeContent = DOMPurify.sanitize(post.content)
+  const safeContent = DOMPurify.sanitize(demoteHeadings(post.content))
 
   return (
     <article className="max-w-2xl mx-auto px-4 sm:px-6 pb-24">

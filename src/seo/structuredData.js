@@ -14,6 +14,7 @@
 
 import { TECH_FAQ, TECH_PACKAGES, SOCIAL_LINKS, STUDIOS_INSTAGRAM_URL } from '../utils/constants'
 import { ROUTES, SITE_URL, SITE_NAME, PHONE_E164, EMAIL, SHARE_IMAGES } from './routes'
+import { blogPostSeo, blogPostingSchema } from './blog'
 
 const ORG_ID = `${SITE_URL}/#organization`
 const TECH_ID = `${SITE_URL}/tech#business`
@@ -143,4 +144,30 @@ export function structuredDataFor(path) {
   if (crumbs) graph.push(crumbs)
   if (route.faq) graph.push(faqPage(path))
   return { '@context': 'https://schema.org', '@graph': graph }
+}
+
+/* The JSON-LD @graph for one published blog post: the organisation, the
+   article itself and a McreatiK > department > Blog > post breadcrumb. */
+export function blogPostStructuredData(post) {
+  const seo = blogPostSeo(post)
+  const dept = seo.section === 'studios'
+    ? { name: 'McreatiK Studios', url: `${SITE_URL}/studios` }
+    : { name: 'McreatiK Tech', url: `${SITE_URL}/tech` }
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      organization(),
+      website(),
+      blogPostingSchema(post, ORG_ID),
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: SITE_NAME, item: `${SITE_URL}/` },
+          { '@type': 'ListItem', position: 2, name: dept.name, item: dept.url },
+          { '@type': 'ListItem', position: 3, name: 'Blog', item: `${SITE_URL}${seo.blogPath}` },
+          { '@type': 'ListItem', position: 4, name: post.title, item: `${SITE_URL}${seo.path}` },
+        ],
+      },
+    ],
+  }
 }
