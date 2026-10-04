@@ -1,18 +1,21 @@
 /* ============================================
    useSEO
-   Sets title, meta description, canonical URL,
-   and Open Graph/Twitter tags for the current
-   route. index.html only ever describes the
-   homepage — without this, every shared link and
-   every search result for any other route shows
-   that same homepage title/description/image
-   instead of its own.
+   Sets title, meta description, robots,
+   canonical URL, and Open Graph/Twitter tags as
+   the user navigates between routes in the
+   browser.
+
+   The first page load is already right without
+   JavaScript: scripts/prerender-seo.mjs writes
+   the same tags into each route's static HTML
+   at build time. Both read src/seo/routes.js —
+   pages pass seoFor('/path') so the two never
+   drift. Dynamic pages (blog posts, store
+   products/orders) pass their own values.
    ============================================ */
 
 import { useEffect } from 'react'
-
-const SITE_URL = 'https://mcreatik.com'
-const DEFAULT_IMAGE = `${SITE_URL}/share-image.png`
+import { SITE_URL, SHARE_IMAGES } from '../seo/routes'
 
 function setMetaByName(name, content) {
   let tag = document.querySelector(`meta[name="${name}"]`)
@@ -45,18 +48,21 @@ function setCanonical(href) {
 }
 
 /**
- * @param {{ title: string, description: string, path: string, image?: string }} seo
+ * @param {{ title: string, description: string, path: string, image?: string,
+ *           section?: string, noindex?: boolean }} seo
  *   `path` is the route's path (e.g. '/tech/services'), used to build the
- *   canonical URL and og:url.
+ *   canonical URL and og:url. `section` picks the default share image.
+ *   `noindex` keeps the page out of search results.
  */
-export function useSEO({ title, description, path, image }) {
+export function useSEO({ title, description, path, image, section, noindex = false }) {
   useEffect(() => {
     if (!title || !description || !path) return
     const url = `${SITE_URL}${path}`
-    const resolvedImage = image || DEFAULT_IMAGE
+    const resolvedImage = image || SHARE_IMAGES[section] || SHARE_IMAGES.home
 
     document.title = title
     setMetaByName('description', description)
+    setMetaByName('robots', noindex ? 'noindex, follow' : 'index, follow')
     setCanonical(url)
 
     setMetaByProperty('og:title', title)
@@ -67,5 +73,5 @@ export function useSEO({ title, description, path, image }) {
     setMetaByName('twitter:title', title)
     setMetaByName('twitter:description', description)
     setMetaByName('twitter:image', resolvedImage)
-  }, [title, description, path, image])
+  }, [title, description, path, image, section, noindex])
 }

@@ -57,6 +57,9 @@ export default function StoreProductPage() {
     title: product ? `${product.name} | McreatiK Digital Store` : 'Digital Store | McreatiK',
     description: product?.marketingContent?.shortDescription || 'Customize, preview, and download instantly.',
     path: `/store/products/${productId}`,
+    section: 'store',
+    // Store isn't launched yet — keep products out of search until it is
+    noindex: true,
   })
 
   useEffect(() => {

@@ -13,6 +13,7 @@ import StudiosPageShell from '../components/layout/StudiosPageShell'
 import { setFavicon } from '../utils/setFavicon'
 import { useScrollToHash } from '../hooks/useScrollToHash'
 import { useSEO } from '../hooks/useSEO'
+import { seoFor } from '../seo/routes'
 
 const StudiosGalleryPreview = lazy(() => import('../components/studios/GalleryPreview'))
 const StudiosOfferings = lazy(() => import('../components/studios/Offerings'))
@@ -21,12 +22,7 @@ const StudiosAbout = lazy(() => import('../components/studios/About'))
 const StudiosContact = lazy(() => import('../components/studios/Contact'))
 
 function StudiosPage() {
-  useSEO({
-    title: 'McreatiK Studios | Wedding, Portrait & Event Photography in Chennai',
-    description:
-      'Professional wedding, portrait & event photography in Chennai, Tamil Nadu — including for NRI couples planning a wedding back home.',
-    path: '/studios',
-  })
+  useSEO(seoFor('/studios'))
 
   useEffect(() => {
     setFavicon('/favicon-studios.png')

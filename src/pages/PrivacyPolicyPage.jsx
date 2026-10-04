@@ -9,6 +9,7 @@
 import React from 'react'
 import LegalPage from '../components/legal/LegalPage'
 import { useSEO } from '../hooks/useSEO'
+import { seoFor } from '../seo/routes'
 
 const LAST_UPDATED = '30 September 2026'
 
@@ -165,11 +166,7 @@ const SECTIONS = [
 ]
 
 export default function PrivacyPolicyPage() {
-  useSEO({
-    title: 'Privacy Policy | McreatiK',
-    description: 'How McreatiK collects, uses, shares and protects your personal data across McreatiK Tech, McreatiK Studios and the McreatiK Digital Store.',
-    path: '/privacy',
-  })
+  useSEO(seoFor('/privacy'))
 
   return (
     <LegalPage

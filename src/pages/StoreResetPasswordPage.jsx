@@ -19,6 +19,7 @@ import Button from '../components/ui/Button'
 import { useForm } from '../hooks/useForm'
 import { confirmPasswordReset } from '../utils/customerApi'
 import { useSEO } from '../hooks/useSEO'
+import { seoFor } from '../seo/routes'
 
 const INITIAL_VALUES = { newPassword: '', confirmPassword: '' }
 
@@ -26,11 +27,7 @@ export default function StoreResetPasswordPage() {
   const [searchParams] = useSearchParams()
   const token = searchParams.get('token')
 
-  useSEO({
-    title: 'Reset Password | McreatiK Digital Store',
-    description: 'Set a new password for your McreatiK Digital Store account.',
-    path: '/store/reset-password',
-  })
+  useSEO(seoFor('/store/reset-password'))
 
   const onSubmit = useCallback(
     async (data) => {

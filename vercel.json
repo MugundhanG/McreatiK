@@ -1,43 +1,27 @@
 {
   "rewrites": [
-    {
-      "source": "/admin",
-      "destination": "https://mcreatik-admin.vercel.app/"
-    },
-    {
-      "source": "/admin/",
-      "destination": "https://mcreatik-admin.vercel.app/"
-    },
-    {
-      "source": "/admin/:path*",
-      "destination": "https://mcreatik-admin.vercel.app/:path*"
-    },
-    {
-      "source": "/demos/:slug/",
-      "destination": "/demos/:slug/index.html"
-    },
-    {
-      "source": "/demos/:slug",
-      "destination": "/demos/:slug/index.html"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)\\.vcf",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "text/vcard; charset=utf-8"
-        },
-        {
-          "key": "Content-Disposition",
-          "value": "attachment; filename=\"McreatiK-Studios.vcf\""
-        }
-      ]
-    }
+    { "source": "/admin", "destination": "https://mcreatik-admin.vercel.app/" },
+    { "source": "/admin/", "destination": "https://mcreatik-admin.vercel.app/" },
+    { "source": "/admin/:path*", "destination": "https://mcreatik-admin.vercel.app/:path*" },
+    { "source": "/demos/:slug/", "destination": "/demos/:slug/index.html" },
+    { "source": "/demos/:slug", "destination": "/demos/:slug/index.html" },
+
+    { "source": "/tech", "destination": "/tech/index.html" },
+    { "source": "/tech/services", "destination": "/tech/services/index.html" },
+    { "source": "/tech/industries", "destination": "/tech/industries/index.html" },
+    { "source": "/tech/demos", "destination": "/tech/demos/index.html" },
+    { "source": "/tech/faq", "destination": "/tech/faq/index.html" },
+    { "source": "/tech/blog", "destination": "/tech/blog/index.html" },
+    { "source": "/studios", "destination": "/studios/index.html" },
+    { "source": "/studios/gallery", "destination": "/studios/gallery/index.html" },
+    { "source": "/studios/albums", "destination": "/studios/albums/index.html" },
+    { "source": "/studios/experience", "destination": "/studios/experience/index.html" },
+    { "source": "/studios/blog", "destination": "/studios/blog/index.html" },
+    { "source": "/privacy", "destination": "/privacy/index.html" },
+    { "source": "/terms", "destination": "/terms/index.html" },
+    { "source": "/store", "destination": "/store/index.html" },
+    { "source": "/store/refund-policy", "destination": "/store/refund-policy/index.html" },
+
+    { "source": "/(.*)", "destination": "/spa.html" }
   ]
 }

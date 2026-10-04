@@ -10,6 +10,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import LegalPage from '../components/legal/LegalPage'
 import { useSEO } from '../hooks/useSEO'
+import { seoFor } from '../seo/routes'
 
 const LAST_UPDATED = '30 September 2026'
 
@@ -142,11 +143,7 @@ const SECTIONS = [
 ]
 
 export default function TermsPage() {
-  useSEO({
-    title: 'Terms of Service | McreatiK',
-    description: 'The terms governing your use of mcreatik.com and any service booked or bought from McreatiK Tech, McreatiK Studios or the McreatiK Digital Store.',
-    path: '/terms',
-  })
+  useSEO(seoFor('/terms'))
 
   return (
     <LegalPage

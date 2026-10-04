@@ -18,6 +18,7 @@ import Button from '../components/ui/Button'
 import { useForm } from '../hooks/useForm'
 import { useAuth } from '../context/AuthContext'
 import { useSEO } from '../hooks/useSEO'
+import { seoFor } from '../seo/routes'
 
 const INITIAL_VALUES = { email: '', password: '' }
 
@@ -27,11 +28,7 @@ export default function StoreLoginPage() {
   const location = useLocation()
   const from = location.state?.from || '/store'
 
-  useSEO({
-    title: 'Log In | McreatiK Digital Store',
-    description: 'Log in to your McreatiK Digital Store account.',
-    path: '/store/login',
-  })
+  useSEO(seoFor('/store/login'))
 
   // Already signed in — send them straight to wherever they were headed instead
   // of showing a login form they don't need.

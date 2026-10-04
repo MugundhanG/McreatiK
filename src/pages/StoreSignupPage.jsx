@@ -17,6 +17,7 @@ import Button from '../components/ui/Button'
 import { useForm } from '../hooks/useForm'
 import { useAuth } from '../context/AuthContext'
 import { useSEO } from '../hooks/useSEO'
+import { seoFor } from '../seo/routes'
 
 const INITIAL_VALUES = { name: '', email: '', password: '', confirmPassword: '' }
 
@@ -25,11 +26,7 @@ export default function StoreSignupPage() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  useSEO({
-    title: 'Create Your Account | McreatiK Digital Store',
-    description: 'Create a McreatiK Digital Store account to buy and download digital products.',
-    path: '/store/signup',
-  })
+  useSEO(seoFor('/store/signup'))
 
   // Already signed in (e.g. session cookie still valid) — nothing to do here.
   // Carries `from` forward the same way login does, in case this page was

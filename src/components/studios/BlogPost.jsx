@@ -42,6 +42,7 @@ export default function BlogPost() {
     title: post ? `${post.seoTitle || post.title} | McreatiK Studios` : null,
     description: post ? post.seoDescription || post.excerpt || `${post.title} — from the McreatiK Studios blog.` : null,
     path: `/studios/blog/${slug}`,
+    section: 'studios',
     image: post?.cover?.url,
   })
 

@@ -277,6 +277,8 @@ export default function StoreOrderPage() {
     title: 'Your Order | McreatiK Digital Store',
     description: 'Order status and downloads.',
     path: `/store/orders/${orderId}`,
+    section: 'store',
+    noindex: true,
   })
 
   useEffect(() => {

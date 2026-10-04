@@ -10,15 +10,12 @@ import StudiosPageShell from '../components/layout/StudiosPageShell'
 import InstagramButton from '../components/ui/InstagramButton'
 import { setFavicon } from '../utils/setFavicon'
 import { useSEO } from '../hooks/useSEO'
+import { seoFor } from '../seo/routes'
 
 const StudiosGallery = lazy(() => import('../components/studios/Gallery'))
 
 function StudiosGalleryPage() {
-  useSEO({
-    title: 'Gallery | McreatiK Studios',
-    description: 'Browse real wedding, portrait, and event photography by McreatiK Studios, Chennai.',
-    path: '/studios/gallery',
-  })
+  useSEO(seoFor('/studios/gallery'))
 
   useEffect(() => {
     setFavicon('/favicon-studios.png')

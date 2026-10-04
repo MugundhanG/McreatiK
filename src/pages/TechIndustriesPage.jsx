@@ -9,15 +9,12 @@ import React, { lazy, useEffect } from 'react'
 import TechPageShell from '../components/layout/TechPageShell'
 import { setFavicon } from '../utils/setFavicon'
 import { useSEO } from '../hooks/useSEO'
+import { seoFor } from '../seo/routes'
 
 const TargetIndustries = lazy(() => import('../components/sections/TargetIndustries'))
 
 function TechIndustriesPage() {
-  useSEO({
-    title: 'Industries We Serve | McreatiK Tech & Creative',
-    description: 'Web design, branding, and SEO for small businesses across industries — see who McreatiK Tech works with, wherever you are.',
-    path: '/tech/industries',
-  })
+  useSEO(seoFor('/tech/industries'))
 
   useEffect(() => {
     setFavicon('/favicon-tech.png')

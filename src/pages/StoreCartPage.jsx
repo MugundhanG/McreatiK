@@ -40,6 +40,7 @@ import { useRequireAuthOrRedirect } from '../hooks/useRequireAuthOrRedirect'
 import { useCheckout } from '../hooks/useCheckout'
 import { formatDigitalStorePrice } from '../utils/digitalStoreApi'
 import { useSEO } from '../hooks/useSEO'
+import { seoFor } from '../seo/routes'
 
 function CartSkeleton() {
   return (
@@ -65,11 +66,7 @@ export default function StoreCartPage() {
   const navigate = useNavigate()
   const [removingItemId, setRemovingItemId] = useState(null)
 
-  useSEO({
-    title: 'Your Cart | McreatiK Digital Store',
-    description: 'Review your items before checkout.',
-    path: '/store/cart',
-  })
+  useSEO(seoFor('/store/cart'))
 
   // The cart page has nothing to show a signed-out visitor - there's no cart
   // without a signed-in customer (the endpoint is auth-gated). Unlike

@@ -5,6 +5,7 @@ import ProductCard from '../components/digital-store/ProductCard'
 import StoreSectionHeading from '../components/store/StoreSectionHeading'
 import { fetchDigitalStoreCategories, fetchDigitalStoreProducts } from '../utils/digitalStoreApi'
 import { useSEO } from '../hooks/useSEO'
+import { seoFor } from '../seo/routes'
 
 const ALL_CATEGORIES_FILTER = 'all'
 const EASE = [0.22, 1, 0.36, 1]
@@ -85,11 +86,7 @@ export default function StoreCatalogPage() {
   const [error, setError] = useState(null)
   const [selectedCategoryId, setSelectedCategoryId] = useState(ALL_CATEGORIES_FILTER)
 
-  useSEO({
-    title: 'Digital Store | McreatiK',
-    description: 'Ready-to-buy and ready-to-customize digital products — fill in your details, preview instantly, and download.',
-    path: '/store',
-  })
+  useSEO(seoFor('/store'))
 
   useEffect(() => {
     let cancelled = false

@@ -13,6 +13,7 @@ import { motion } from 'framer-motion'
 import StorePageShell from '../components/layout/StorePageShell'
 import StoreSectionHeading from '../components/store/StoreSectionHeading'
 import { useSEO } from '../hooks/useSEO'
+import { seoFor } from '../seo/routes'
 
 const SECTIONS = [
   {
@@ -58,11 +59,7 @@ const SECTIONS = [
 ]
 
 export default function StoreRefundPolicyPage() {
-  useSEO({
-    title: 'Refund & Cancellation Policy | McreatiK Digital Store',
-    description: 'Refund and cancellation policy for McreatiK Digital Store’s instant-download document products.',
-    path: '/store/refund-policy',
-  })
+  useSEO(seoFor('/store/refund-policy'))
 
   return (
     <StorePageShell>

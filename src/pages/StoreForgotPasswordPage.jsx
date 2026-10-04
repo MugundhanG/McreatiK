@@ -18,15 +18,12 @@ import Button from '../components/ui/Button'
 import { useForm } from '../hooks/useForm'
 import { requestPasswordReset } from '../utils/customerApi'
 import { useSEO } from '../hooks/useSEO'
+import { seoFor } from '../seo/routes'
 
 const INITIAL_VALUES = { email: '' }
 
 export default function StoreForgotPasswordPage() {
-  useSEO({
-    title: 'Forgot Password | McreatiK Digital Store',
-    description: 'Reset the password for your McreatiK Digital Store account.',
-    path: '/store/forgot-password',
-  })
+  useSEO(seoFor('/store/forgot-password'))
 
   const onSubmit = useCallback(async (data) => {
     await requestPasswordReset(data.email)

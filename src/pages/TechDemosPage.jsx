@@ -15,6 +15,7 @@ import DemoConceptCard from '../components/ui/DemoConceptCard'
 import RegMark from '../components/ui/RegMark'
 import { setFavicon } from '../utils/setFavicon'
 import { useSEO } from '../hooks/useSEO'
+import { seoFor } from '../seo/routes'
 import { getWhatsAppHref } from '../utils/whatsapp'
 import { DEMO_INDUSTRIES, DEMO_CONCEPTS } from '../data/demoConcepts'
 
@@ -62,11 +63,7 @@ function TechDemosPage() {
   const rawIndustry = searchParams.get('industry')
   const activeIndustry = DEMO_INDUSTRIES.some((ind) => ind.id === rawIndustry) ? rawIndustry : ALL_FILTER
 
-  useSEO({
-    title: 'Website Concepts | McreatiK Tech',
-    description: `Browse ${DEMO_CONCEPTS.length} industry-ready website concepts across ${DEMO_INDUSTRIES.length} industries and open any of them as a live demo.`,
-    path: '/tech/demos',
-  })
+  useSEO(seoFor('/tech/demos'))
 
   useEffect(() => {
     setFavicon('/favicon-tech.png')

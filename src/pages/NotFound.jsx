@@ -1,11 +1,22 @@
 /* ============================================
-   NotFound — catch-all route
+   NotFound — catch-all route (noindex)
    ============================================ */
 
 import React, { memo } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+import { useSEO } from '../hooks/useSEO'
 
 const NotFound = memo(function NotFound() {
+  const { pathname } = useLocation()
+  // The server can't send a real 404 status for a single-page app, so tell
+  // search engines directly not to index this "soft 404".
+  useSEO({
+    title: 'Page not found | McreatiK',
+    description: "The page you're looking for isn't here.",
+    path: pathname,
+    noindex: true,
+  })
+
   return (
     <div className="min-h-screen bg-[#0e0e10] text-white flex flex-col items-center justify-center gap-4 px-6 text-center">
       <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">404</p>

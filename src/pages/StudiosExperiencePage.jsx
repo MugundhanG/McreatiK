@@ -10,15 +10,12 @@ import StudiosPageShell from '../components/layout/StudiosPageShell'
 import { setFavicon } from '../utils/setFavicon'
 import { useScrollToHash } from '../hooks/useScrollToHash'
 import { useSEO } from '../hooks/useSEO'
+import { seoFor } from '../seo/routes'
 
 const StudiosExperience = lazy(() => import('../components/studios/Experience'))
 
 function StudiosExperiencePage() {
-  useSEO({
-    title: 'Experience | McreatiK Studios',
-    description: 'What to expect working with McreatiK Studios, from enquiry to delivery.',
-    path: '/studios/experience',
-  })
+  useSEO(seoFor('/studios/experience'))
 
   useEffect(() => {
     setFavicon('/favicon-studios.png')
