@@ -749,6 +749,18 @@ export const STUDIOS_TESTIMONIALS = [
     name: 'Thamim & Swetha',
     shootType: 'Pre-Wedding Shoot',
   },
+  {
+    quote:
+      'We had a wonderful experience with McreatiK Studios for our family’s puberty ceremony. The team was very friendly, and made everyone feel comfortable throughout the event. Thank you, McreatiK Studios, for beautifully capturing these precious memories.',
+    name: 'Pooja',
+    shootType: 'Puberty Ceremony',
+  },
+  {
+    quote:
+      'We had a really good experience with McreatiK Studios for my sister’s post-wedding shoot. The team was friendly and made the shoot very comfortable. We loved the photos, especially the candid moments. Thank you for capturing these beautiful memories!',
+    name: 'Yoga',
+    shootType: 'Post-Wedding Shoot',
+  },
 ]
 
 /* Pricing varies by shoot — these are the factors that shape a quote,
