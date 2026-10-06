@@ -25,6 +25,6 @@
     { "source": "/store", "destination": "/store/index.html" },
     { "source": "/store/refund-policy", "destination": "/store/refund-policy/index.html" },
 
-    { "source": "/(.*)", "destination": "/spa.html" }
+    { "source": "/(.*)", "destination": "/spa" }
   ]
 }

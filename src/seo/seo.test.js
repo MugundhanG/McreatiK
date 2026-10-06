@@ -28,9 +28,11 @@ describe('SEO routes', () => {
     }
   })
 
-  it('the catch-all serves the neutral spa.html shell, and comes last', () => {
+  // With cleanUrls on, dist/spa.html is served at /spa — a rewrite to
+  // '/spa.html' finds nothing and 404s every non-prerendered URL.
+  it('the catch-all serves the neutral spa shell via its clean URL, and comes last', () => {
     const last = vercel.rewrites[vercel.rewrites.length - 1]
-    expect(last).toEqual({ source: '/(.*)', destination: '/spa.html' })
+    expect(last).toEqual({ source: '/(.*)', destination: '/spa' })
   })
 
   it('the website-concepts wording matches the real demo data', () => {
