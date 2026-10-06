@@ -737,29 +737,37 @@ export const STUDIOS_EXPERIENCE_STEPS = [
    Testimonials section, which renders exactly this list (no placeholder
    padding to a fixed count). */
 export const STUDIOS_TESTIMONIALS = [
+  // Real client feedback. Openings lightly varied so the strip doesn't read
+  // repetitively; each keeps only what the client actually said.
   {
     quote:
-      "We had a wonderful experience with McreatiK Studios for our son's 2nd birthday photoshoot! The photos turned out absolutely amazing — we were really happy with the quality and creativity. The pricing was also very reasonable and completely worth it. Thank you for capturing such beautiful memories for us! \u{1F4F8}",
+      "The photos from our son's 2nd birthday shoot turned out absolutely amazing — we were really happy with the quality and creativity. The pricing was very reasonable and completely worth it. Thank you for capturing such beautiful memories for us! \u{1F4F8}",
     name: 'Vignesh',
     shootType: 'Birthday Photoshoot',
   },
   {
     quote:
-      'McreatiK Studios captured our pre-wedding photos exactly the way we wanted and were always open to our ideas. On top of that, they gave us so many creative ideas of their own. Truly amazing photographers — highly recommended!',
+      'They captured our pre-wedding photos exactly the way we wanted and were always open to our ideas — and gave us so many creative ideas of their own. Truly amazing photographers. Highly recommended!',
     name: 'Thamim & Swetha',
     shootType: 'Pre-Wedding Shoot',
   },
   {
     quote:
-      'We had a wonderful experience with McreatiK Studios for our family’s puberty ceremony. The team was very friendly, and made everyone feel comfortable throughout the event. Thank you, McreatiK Studios, for beautifully capturing these precious memories.',
+      'The team made everyone feel comfortable throughout our family’s puberty ceremony — so friendly from start to finish. Thank you, McreatiK Studios, for beautifully capturing these precious memories.',
     name: 'Pooja',
     shootType: 'Puberty Ceremony',
   },
   {
     quote:
-      'We had a really good experience with McreatiK Studios for my sister’s post-wedding shoot. The team was friendly and made the shoot very comfortable. We loved the photos, especially the candid moments. Thank you for capturing these beautiful memories!',
+      'Those candid moments are our favourite! My sister’s post-wedding shoot felt very comfortable with such a friendly team, and we loved the photos. Thank you for capturing these beautiful memories!',
     name: 'Yoga',
     shootType: 'Post-Wedding Shoot',
+  },
+  {
+    quote:
+      'Beautiful and natural — that’s exactly how our baby shower photos turned out. The team was so friendly and captured our special moments perfectly. We loved our memories!',
+    name: 'Karthi & Soundarya',
+    shootType: 'Baby Shower',
   },
 ]
 
