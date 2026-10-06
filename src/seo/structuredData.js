@@ -102,7 +102,7 @@ function studiosBusiness() {
       { '@type': 'State', name: 'Andhra Pradesh' },
     ],
     sameAs: [STUDIOS_INSTAGRAM_URL],
-    knowsAbout: ['Wedding photography', 'Pre-wedding shoots', 'Portrait photography', 'Event photography', 'Photo album design'],
+    knowsAbout: ['Wedding photography', 'Event photography', 'Birthday photography', 'Portrait photography', 'Maternity photography', 'Pre-wedding shoots', 'Traditional event photography', 'Photo album design'],
   }
 }
 

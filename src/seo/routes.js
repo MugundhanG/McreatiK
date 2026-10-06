@@ -43,9 +43,9 @@ export const SHARE_IMAGES = {
 export const ROUTES = {
   '/': {
     section: 'home',
-    title: 'McreatiK | Web Design Worldwide & Photography in Chennai',
+    title: 'McreatiK | Websites Worldwide & Event Photography in Chennai',
     description:
-      'McreatiK builds websites, logos and branding for businesses worldwide (McreatiK Tech) and shoots weddings, portraits and events in Chennai (McreatiK Studios).',
+      'McreatiK designs and develops websites for businesses worldwide (McreatiK Tech) and photographs weddings, birthdays, portraits and events in Chennai (McreatiK Studios).',
     h1: 'McreatiK',
     intro:
       'One brand, two crafts: McreatiK Tech designs websites and branding for businesses anywhere, and McreatiK Studios photographs weddings, portraits and events in Chennai, Tamil Nadu and nearby states.',
@@ -57,9 +57,9 @@ export const ROUTES = {
   '/tech': {
     section: 'tech',
     crumb: null,
-    title: 'Website Design for Small Businesses | McreatiK Tech',
+    title: 'Website Design & Development for Businesses | McreatiK Tech',
     description:
-      'Custom websites, landing pages, logos and SEO for small businesses worldwide. Clear packages from ₹25,000 — and 37 live website concepts across 11 industries.',
+      'Website design and development, landing pages, branding and SEO for businesses worldwide. Clear packages from ₹25,000 — see 37 live concepts in 11 industries.',
     h1: 'Build a stronger digital presence for your business',
     intro:
       'Modern websites, branding and digital design that help businesses look professional online and get more customers — delivered remotely, wherever you are.',
@@ -69,7 +69,7 @@ export const ROUTES = {
   '/tech/services': {
     section: 'tech',
     crumb: 'Services',
-    title: 'Web Design, Logo & SEO Services | McreatiK Tech',
+    title: 'Website Design, Development & SEO Services | McreatiK Tech',
     description:
       'Website development and redesign, landing pages, logo and brand identity, SEO, Google Business Profile and WhatsApp setup for small businesses, worldwide.',
     h1: 'Services That Grow With Your Business',
@@ -130,9 +130,9 @@ export const ROUTES = {
   '/studios': {
     section: 'studios',
     crumb: null,
-    title: 'Wedding Photographer in Chennai | McreatiK Studios',
+    title: 'Wedding & Event Photographer in Chennai | McreatiK Studios',
     description:
-      'Wedding, pre-wedding, portrait and event photography in Chennai, serving Tamil Nadu and nearby states. Candid moments, custom albums and clear quotes.',
+      'Photography for every occasion in Chennai — weddings, birthdays, portraits, maternity, house warmings and traditional events, across Tamil Nadu and nearby states.',
     h1: 'Photographs worth keeping, made worth remembering.',
     intro:
       'McreatiK Studios captures weddings, pre and post-wedding shoots, portraits, birthdays and traditional events in Chennai, Tamil Nadu and nearby states.',
