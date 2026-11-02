@@ -40,6 +40,7 @@ const StudiosPage = lazy(() => import('./pages/StudiosPage'))
 const StudiosGalleryPage = lazy(() => import('./pages/StudiosGalleryPage'))
 const StudiosAlbumsPage = lazy(() => import('./pages/StudiosAlbumsPage'))
 const StudiosExperiencePage = lazy(() => import('./pages/StudiosExperiencePage'))
+const StudiosInstantMemoriesPage = lazy(() => import('./pages/StudiosInstantMemoriesPage'))
 const StudiosBlogPage = lazy(() => import('./pages/StudiosBlogPage'))
 const StudiosBlogPostPage = lazy(() => import('./pages/StudiosBlogPostPage'))
 const StoreCatalogPage = lazy(() => import('./pages/StoreCatalogPage'))
@@ -100,6 +101,7 @@ function App() {
           <Route path="/studios/gallery" element={<StudiosGalleryPage />} />
           <Route path="/studios/albums" element={<StudiosAlbumsPage />} />
           <Route path="/studios/experience" element={<StudiosExperiencePage />} />
+          <Route path="/studios/instant-memories" element={<StudiosInstantMemoriesPage />} />
           <Route path="/studios/blog" element={<StudiosBlogPage />} />
           <Route path="/studios/blog/:slug" element={<StudiosBlogPostPage />} />
           <Route path="/store" element={<StoreCatalogPage />} />

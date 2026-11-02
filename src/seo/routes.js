@@ -172,6 +172,17 @@ export const ROUTES = {
     sitemap: true,
     priority: 0.6,
   },
+  '/studios/instant-memories': {
+    section: 'studios',
+    crumb: 'Instant Memories',
+    title: 'Instant Memories — Live Wedding Photo Gallery | McreatiK',
+    description:
+      'Wedding photos on every guest\'s phone seconds after they\'re taken. Guests scan a QR code — no app. Branded live galleries for photography studios.',
+    h1: 'Instant Memories',
+    intro: 'A live wedding photo gallery: photos reach every guest\'s phone seconds after they are taken. For photography studios, couples and their guests.',
+    sitemap: true,
+    priority: 0.7,
+  },
   '/studios/blog': {
     section: 'studios',
     crumb: 'Blog',

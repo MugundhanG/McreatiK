@@ -62,8 +62,8 @@ const StudiosNavbar = memo(function StudiosNavbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
       >
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 h-20 flex items-center justify-between">
-        <Link to="/studios" className="flex items-center">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 h-20 flex items-center justify-between gap-4 xl:gap-6">
+        <Link to="/studios" className="flex shrink-0 items-center">
           <img
             src={isTransparent ? studiosLogoDark : studiosLogoLight}
             alt="McreatiK Studios"
@@ -72,8 +72,8 @@ const StudiosNavbar = memo(function StudiosNavbar() {
         </Link>
 
         {/* Desktop links */}
-        <div className="hidden lg:flex items-center gap-3 xl:gap-6">
-          {STUDIOS_NAV_LINKS.map(({ label, href }) => (
+        <div className="hidden lg:flex items-center gap-2 xl:gap-6">
+          {STUDIOS_NAV_LINKS.filter((l) => l.desktop !== false).map(({ label, href }) => (
             <Link
               key={label}
               to={href}

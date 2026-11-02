@@ -18,6 +18,7 @@ import { seoFor } from '../seo/routes'
 const StudiosGalleryPreview = lazy(() => import('../components/studios/GalleryPreview'))
 const StudiosOfferings = lazy(() => import('../components/studios/Offerings'))
 const StudiosPricing = lazy(() => import('../components/studios/Pricing'))
+const InstantMemoriesTeaser = lazy(() => import('../components/studios/instant-memories/Teaser'))
 const StudiosAbout = lazy(() => import('../components/studios/About'))
 const StudiosContact = lazy(() => import('../components/studios/Contact'))
 
@@ -35,6 +36,7 @@ function StudiosPage() {
       <StudiosHero />
       <StudiosGalleryPreview />
       <StudiosOfferings />
+      <InstantMemoriesTeaser />
       <StudiosPricing />
       <StudiosAbout />
       <StudiosContact />
