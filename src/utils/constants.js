@@ -54,6 +54,7 @@ import {
   FiGitMerge,
   FiBookOpen,
   FiHelpCircle,
+  FiImage,
 } from 'react-icons/fi'
 
 /* Shared contact number used for WhatsApp CTAs across both departments */
@@ -694,12 +695,43 @@ export const STUDIOS_NAV_LINKS = [
   { label: 'Instant Memories', href: '/studios/instant-memories' },
   { label: 'Services', href: '/studios#offerings' },
   { label: 'Process', href: '/studios/experience' },
-  /* Left out of the desktop bar (it has room for 9 links before the logo
-     gets squeezed); still in the mobile menu and footer. Process opens the
-     same page. */
-  { label: 'Testimonials', href: '/studios/experience#testimonials', desktop: false },
+  { label: 'Testimonials', href: '/studios/experience#testimonials' },
   { label: 'Blog', href: '/studios/blog' },
   { label: 'Contact', href: '/studios#book' },
+]
+
+/* Grouped version of STUDIOS_NAV_LINKS for the Studios navbar only (the
+   footer and the Home navbar keep the flat list). Items with `type: 'page'`
+   mark their group active when that page is open. */
+export const STUDIOS_NAV_GROUPS = [
+  { label: 'Home', href: '/studios' },
+  {
+    label: 'Portfolio',
+    href: '/studios/gallery',
+    items: [
+      { label: 'Gallery', href: '/studios/gallery', type: 'page', icon: FiImage, description: 'Our latest shoots, sorted by occasion' },
+      { label: 'Albums', href: '/studios/albums', type: 'page', icon: FiBook, description: 'Full event albums, page by page' },
+    ],
+  },
+  {
+    label: 'Services',
+    href: '/studios#offerings',
+    items: [
+      { label: 'Services', href: '/studios#offerings', type: 'anchor', icon: FiAperture, description: 'Weddings, kids, events and more' },
+      { label: 'Process', href: '/studios/experience', type: 'page', icon: FiGitMerge, description: 'How your shoot works, start to finish' },
+      { label: 'Testimonials', href: '/studios/experience#testimonials', type: 'anchor', icon: FiMessageSquare, description: 'What our clients say about us' },
+    ],
+  },
+  { label: 'Instant Memories', href: '/studios/instant-memories' },
+  { label: 'Blog', href: '/studios/blog' },
+  {
+    label: 'About',
+    href: '/studios#about',
+    items: [
+      { label: 'About Us', href: '/studios#about', type: 'anchor', icon: FiUsers, description: 'The people behind the camera' },
+      { label: 'Contact', href: '/studios#book', type: 'anchor', icon: FiSend, description: 'Book a session or ask a question' },
+    ],
+  },
 ]
 
 /* What clients can expect after they reach out — a standard shoot

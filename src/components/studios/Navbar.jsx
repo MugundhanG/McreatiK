@@ -10,17 +10,25 @@
 import React, { useState, useEffect, useCallback, memo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiMenu, FiX, FiArrowRight } from 'react-icons/fi'
-import { STUDIOS_NAV_LINKS } from '../../utils/constants'
+import { FiMenu, FiX, FiArrowRight, FiChevronDown } from 'react-icons/fi'
+import { STUDIOS_NAV_GROUPS } from '../../utils/constants'
+import NavDropdown from '../layout/NavDropdown'
 import DepartmentSwitcher from '../ui/DepartmentSwitcher'
 import { BusinessCardNavButton } from './BusinessCardMenu'
 import studiosLogoLight from '../../assets/studios-logo-light-bg.webp'
 import studiosLogoDark from '../../assets/studios-logo-dark-bg.webp'
 
+// A group is "active" when the current page is one of its (non-anchor) items.
+function isGroupActive(group, pathname) {
+  return (group.items ?? []).some(({ href, type }) => type === 'page' && href === pathname)
+}
+
 const StudiosNavbar = memo(function StudiosNavbar() {
   const { pathname } = useLocation()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const [openGroup, setOpenGroup] = useState(null) // desktop dropdown label
+  const [expandedGroup, setExpandedGroup] = useState(null) // mobile accordion label
 
   const isHome = pathname === '/studios'
   const isTransparent = isHome && !isScrolled
@@ -38,7 +46,11 @@ const StudiosNavbar = memo(function StudiosNavbar() {
     return () => { document.body.style.overflow = '' }
   }, [isMobileOpen])
 
-  const closeMobile = useCallback(() => setIsMobileOpen(false), [])
+  const closeMobile = useCallback(() => {
+    setIsMobileOpen(false)
+    setExpandedGroup(null)
+  }, [])
+  const closeGroup = useCallback(() => setOpenGroup(null), [])
 
   return (
     <>
@@ -72,23 +84,36 @@ const StudiosNavbar = memo(function StudiosNavbar() {
         </Link>
 
         {/* Desktop links */}
-        <div className="hidden lg:flex items-center gap-2 xl:gap-6">
-          {STUDIOS_NAV_LINKS.filter((l) => l.desktop !== false).map(({ label, href }) => (
+        <div className="hidden lg:flex items-center gap-4 xl:gap-7">
+          {STUDIOS_NAV_GROUPS.map((group) =>
+            group.items ? (
+              <NavDropdown
+                key={group.label}
+                group={group}
+                variant="studios"
+                transparent={isTransparent}
+                isOpen={openGroup === group.label}
+                isActive={isGroupActive(group, pathname)}
+                onOpen={() => setOpenGroup(group.label)}
+                onClose={closeGroup}
+              />
+            ) : (
             <Link
-              key={label}
-              to={href}
+              key={group.label}
+              to={group.href}
               className={`group relative py-1.5 font-body text-[13px] xl:text-sm whitespace-nowrap transition-colors ${
                 isTransparent ? 'text-white/90 hover:text-white' : 'text-[#4A4438] hover:text-[#C9971F]'
               }`}
             >
-              {label}
+              {group.label}
               <span
-                className={`absolute left-0 -bottom-0.5 h-px w-0 transition-all duration-200 group-hover:w-full ${
-                  isTransparent ? 'bg-white' : 'bg-[#C9971F]'
-                }`}
+                className={`absolute left-0 -bottom-0.5 h-px transition-all duration-200 ${
+                  pathname === group.href ? 'w-full' : 'w-0 group-hover:w-full'
+                } ${isTransparent ? 'bg-white' : 'bg-[#C9971F]'}`}
               />
             </Link>
-          ))}
+            )
+          )}
           <div className="flex items-center gap-2 xl:gap-3">
             <BusinessCardNavButton transparent={isTransparent} />
             <Link
@@ -122,16 +147,65 @@ const StudiosNavbar = memo(function StudiosNavbar() {
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
           >
-            {STUDIOS_NAV_LINKS.map(({ label, href }) => (
-              <Link
-                key={label}
-                to={href}
-                onClick={closeMobile}
-                className="block py-2.5 font-body text-[#4A4438] hover:text-[#C9971F] transition-colors text-sm"
-              >
-                {label}
-              </Link>
-            ))}
+            {STUDIOS_NAV_GROUPS.map((group) => {
+              if (!group.items) {
+                return (
+                  <Link
+                    key={group.label}
+                    to={group.href}
+                    onClick={closeMobile}
+                    className="block py-2.5 font-body text-[#4A4438] hover:text-[#C9971F] transition-colors text-sm"
+                  >
+                    {group.label}
+                  </Link>
+                )
+              }
+              const expanded = expandedGroup === group.label
+              return (
+                <div key={group.label}>
+                  <button
+                    type="button"
+                    onClick={() => setExpandedGroup(expanded ? null : group.label)}
+                    aria-expanded={expanded}
+                    className={`flex w-full items-center justify-between py-2.5 font-body text-sm transition-colors cursor-pointer ${
+                      expanded ? 'text-[#C9971F]' : 'text-[#4A4438] hover:text-[#C9971F]'
+                    }`}
+                  >
+                    {group.label}
+                    <FiChevronDown
+                      aria-hidden="true"
+                      className={`w-4 h-4 transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {expanded && (
+                      <motion.ul
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2, ease: 'easeOut' }}
+                        className="overflow-hidden pl-2"
+                      >
+                        {group.items.map(({ label, href, icon: Icon }) => (
+                          <li key={label}>
+                            <Link
+                              to={href}
+                              onClick={closeMobile}
+                              className="flex items-center gap-3 py-2 font-body text-sm text-[#6B6153] hover:text-[#C9971F] transition-colors"
+                            >
+                              <span className="flex h-7 w-7 items-center justify-center rounded-md bg-[#C9971F]/10 text-[#C9971F]">
+                                <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+                              </span>
+                              {label}
+                            </Link>
+                          </li>
+                        ))}
+                      </motion.ul>
+                    )}
+                  </AnimatePresence>
+                </div>
+              )
+            })}
             <div className="pt-3 pb-1 flex items-center justify-between gap-4">
               <DepartmentSwitcher excludeKeys={['store']} className="text-[#4A4438] border-black/10" />
             </div>
