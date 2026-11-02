@@ -7,18 +7,20 @@
    src/data/instantMemories.js.
    ============================================ */
 
-import React, { memo } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useReducedMotion } from 'framer-motion'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import {
   FiArrowRight, FiBarChart2, FiCamera, FiCheck, FiDownload, FiHeart, FiImage, FiLock, FiMail,
   FiMessageCircle, FiSliders, FiSmartphone, FiStar, FiUsers, FiWifi,
 } from 'react-icons/fi'
+import { BsQrCode } from 'react-icons/bs'
 import { RevealText } from '../../motion'
 import { getWhatsAppHref } from '../../../utils/whatsapp'
 import {
   IM_COUPLE_MESSAGE, IM_DEMO_MESSAGE, IM_FOR_COUPLES, IM_FOR_GUESTS, IM_FOR_STUDIOS, IM_PRIVACY, IM_STEPS,
 } from '../../../data/instantMemories'
+import studiosLogoDark from '../../../assets/studios-logo-dark-bg.webp'
 
 const EASE = [0.22, 1, 0.36, 1]
 const IMG = '/studios/instant-memories'
@@ -52,13 +54,153 @@ function Phone({ src, alt, className = '' }) {
   )
 }
 
+/* Hero phone: a live-gallery mock built from blurred Unsplash photos of
+   South Indian weddings (small crops in public/studios/instant-memories/live,
+   Unsplash licence). A new photo
+   drops in every few seconds so the "live" idea reads at a glance. */
+const LIVE = `${IMG}/live`
+const LIVE_POOL = ['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8'].map((n) => `${LIVE}/${n}.webp`)
+const LIVE_VISIBLE = 4
+const LIVE_START_COUNT = 18
+const LIVE_INTERVAL_MS = 3200
+
+function LivePhone() {
+  const reduce = useReducedMotion()
+  // Each tile gets a unique id so a photo can re-enter after the pool loops.
+  const [tiles, setTiles] = useState(() =>
+    LIVE_POOL.slice(0, LIVE_VISIBLE).map((src, i) => ({ id: i, src }))
+  )
+  const [count, setCount] = useState(LIVE_START_COUNT)
+  const [toast, setToast] = useState(false)
+
+  useEffect(() => {
+    if (reduce) return undefined
+    let next = LIVE_VISIBLE
+    let hideToast
+    const timer = setInterval(() => {
+      if (document.hidden) return
+      const id = next++
+      setTiles((prev) => [{ id, src: LIVE_POOL[id % LIVE_POOL.length] }, ...prev].slice(0, LIVE_VISIBLE))
+      setCount((c) => c + 1)
+      setToast(true)
+      clearTimeout(hideToast)
+      hideToast = setTimeout(() => setToast(false), 1600)
+    }, LIVE_INTERVAL_MS)
+    return () => {
+      clearInterval(timer)
+      clearTimeout(hideToast)
+    }
+  }, [reduce])
+
+  return (
+    <div
+      role="img"
+      aria-label="A live wedding gallery on a guest's phone, with new photos arriving"
+      className="relative rounded-[2.2rem] border-[6px] border-[#1C1710] bg-[#1C1710] shadow-2xl shadow-black/40"
+    >
+      <div aria-hidden="true" className="relative aspect-[9/17] overflow-hidden rounded-[1.7rem] bg-[#FAF7F0]">
+        {/* Cover */}
+        <div className="relative h-[40%]">
+          <img src={`${LIVE}/cover.webp`} alt="" width="600" height="560" className="absolute inset-0 h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/10 to-black/75" />
+          <img src={studiosLogoDark} alt="" className="absolute left-4 top-4 h-9 w-auto" />
+          <div className="absolute inset-x-4 bottom-7 text-white">
+            <p className="font-display italic text-[26px] leading-none">Wedding Day</p>
+            <p className="mt-1.5 font-body text-[11px] text-white/80">Live from the venue</p>
+          </div>
+        </div>
+
+        {/* Live bar */}
+        <div className="relative z-10 mx-3 -mt-4 flex items-center gap-2 rounded-xl bg-white px-3 py-2 shadow-md shadow-black/10">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#E5484D]/60 motion-reduce:animate-none" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-[#E5484D]" />
+          </span>
+          <span className="font-body text-[10px] font-bold tracking-[0.2em] text-[#1C1710]">LIVE</span>
+          <span className="truncate font-body text-[10px] text-[#6B6153]">New photos arriving</span>
+          <span className="ml-auto shrink-0 font-body text-[10px] tabular-nums text-[#6B6153]">{count} photos</span>
+        </div>
+
+        {/* Photo grid — newest first */}
+        <div className="grid grid-cols-2 gap-1.5 p-3">
+          <AnimatePresence initial={false} mode="popLayout">
+            {tiles.map((tile) => (
+              <motion.img
+                key={tile.id}
+                src={tile.src}
+                alt=""
+                width="400"
+                height="500"
+                layout
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.55, ease: EASE }}
+                className="aspect-[4/5] w-full rounded-lg object-cover"
+              />
+            ))}
+          </AnimatePresence>
+        </div>
+
+        {/* "Just arrived" toast */}
+        <AnimatePresence>
+          {toast && (
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 12 }}
+              transition={{ duration: 0.3, ease: EASE }}
+              className="absolute inset-x-0 bottom-4 flex justify-center"
+            >
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#1C1710]/90 px-3 py-1.5 font-body text-[10px] font-medium text-white shadow-lg">
+                <FiCamera className="h-3 w-3 text-[#E3C46F]" /> New photo just arrived
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </div>
+  )
+}
+
+/** Small card that floats beside the hero phone (gently bobs unless reduced motion). */
+function FloatCard({ children, className = '', delay = 0 }) {
+  const reduce = useReducedMotion()
+  return (
+    <motion.div
+      aria-hidden="true"
+      initial={{ opacity: 0, y: 16 }}
+      animate={reduce ? { opacity: 1, y: 0 } : { opacity: 1, y: [0, -8, 0] }}
+      transition={
+        reduce
+          ? { duration: 0.6, delay }
+          : { opacity: { duration: 0.6, delay }, y: { duration: 5, delay, repeat: Infinity, ease: 'easeInOut' } }
+      }
+      className={`absolute z-10 hidden sm:flex items-center gap-2.5 rounded-2xl border border-white/10 bg-white/95 px-3.5 py-2.5 shadow-xl shadow-black/30 ${className}`}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
 const demoHref = getWhatsAppHref(IM_DEMO_MESSAGE)
 const coupleHref = getWhatsAppHref(IM_COUPLE_MESSAGE)
 
 export const InstantMemoriesHero = memo(function InstantMemoriesHero() {
   const reduce = useReducedMotion()
   return (
-    <section className="relative overflow-hidden bg-[#1C1710] pt-32 pb-20 lg:pt-40 lg:pb-28 text-white">
+    <section className="relative overflow-hidden bg-[#3A0F1A] pt-32 pb-20 lg:pt-40 lg:pb-28 text-white">
+      {/* Deep maroon with warm out-of-focus venue lights, darkened on the left so the copy stays readable */}
+      <img
+        src={`${LIVE}/hero-bg.webp`}
+        alt=""
+        aria-hidden="true"
+        width="1600"
+        height="900"
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+      />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#3A0F1A] via-[#3A0F1A]/75 to-[#3A0F1A]/20" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#3A0F1A] to-transparent" />
       <div aria-hidden="true" className="pointer-events-none absolute -top-40 -right-40 h-[32rem] w-[32rem] rounded-full bg-[#C9971F]/15 blur-3xl" />
       <div className="relative max-w-6xl mx-auto px-5 sm:px-8 grid items-center gap-14 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
@@ -90,9 +232,27 @@ export const InstantMemoriesHero = memo(function InstantMemoriesHero() {
           initial={reduce ? { opacity: 0 } : { opacity: 0, y: 40, rotate: 2 }}
           animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0, rotate: 0 }}
           transition={{ duration: 1, ease: EASE, delay: 0.15 }}
-          className="mx-auto w-full max-w-[300px]"
+          className="relative mx-auto w-full max-w-[270px]"
         >
-          <Phone src={`${IMG}/guest-gallery.jpg`} alt="A live wedding gallery on a guest's phone, showing new photos arriving" />
+          <LivePhone />
+          <FloatCard className="-left-28 bottom-20" delay={0.9}>
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#1C1710] text-white">
+              <BsQrCode className="h-5 w-5" />
+            </span>
+            <span className="font-body leading-tight">
+              <span className="block text-xs font-semibold text-[#1C1710]">Scan the QR</span>
+              <span className="block text-[11px] text-[#6B6153]">Watch it live</span>
+            </span>
+          </FloatCard>
+          <FloatCard className="-right-24 top-28" delay={1.3}>
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#C9971F]/15 text-[#C9971F]">
+              <FiCamera className="h-4 w-4" />
+            </span>
+            <span className="font-body leading-tight">
+              <span className="block text-xs font-semibold text-[#1C1710]">Camera 1</span>
+              <span className="inline-flex items-center gap-1 text-[11px] text-[#2F855A]"><FiCheck className="h-3 w-3" /> Sent to guests</span>
+            </span>
+          </FloatCard>
         </motion.div>
       </div>
     </section>
