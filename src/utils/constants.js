@@ -694,7 +694,10 @@ export const STUDIOS_NAV_LINKS = [
   { label: 'Instant Memories', href: '/studios/instant-memories' },
   { label: 'Services', href: '/studios#offerings' },
   { label: 'Process', href: '/studios/experience' },
-  { label: 'Testimonials', href: '/studios/experience#testimonials' },
+  /* Left out of the desktop bar (it has room for 9 links before the logo
+     gets squeezed); still in the mobile menu and footer. Process opens the
+     same page. */
+  { label: 'Testimonials', href: '/studios/experience#testimonials', desktop: false },
   { label: 'Blog', href: '/studios/blog' },
   { label: 'Contact', href: '/studios#book' },
 ]

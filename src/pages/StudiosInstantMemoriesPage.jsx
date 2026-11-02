@@ -14,7 +14,7 @@ import { useSEO } from '../hooks/useSEO'
 import { seoFor } from '../seo/routes'
 import {
   InstantMemoriesHero, InstantMemoriesHowItWorks, InstantMemoriesForStudios,
-  InstantMemoriesForCouplesAndGuests, InstantMemoriesPrivacy, InstantMemoriesCTA,
+  InstantMemoriesForCouples, InstantMemoriesForGuests, InstantMemoriesPrivacy, InstantMemoriesCTA,
 } from '../components/studios/instant-memories/Sections'
 
 const InstantMemoriesFAQ = lazy(() => import('../components/studios/instant-memories/FAQ'))
@@ -33,7 +33,8 @@ function StudiosInstantMemoriesPage() {
       <InstantMemoriesHero />
       <InstantMemoriesHowItWorks />
       <InstantMemoriesForStudios />
-      <InstantMemoriesForCouplesAndGuests />
+      <InstantMemoriesForCouples />
+      <InstantMemoriesForGuests />
       <InstantMemoriesPrivacy />
       <Suspense fallback={null}>
         <InstantMemoriesFAQ />

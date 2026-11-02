@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import { InstantMemoriesHero, InstantMemoriesCTA } from './Sections'
+import { InstantMemoriesHero, InstantMemoriesCTA, InstantMemoriesForCouples, InstantMemoriesForGuests } from './Sections'
 import InstantMemoriesFAQ from './FAQ'
 import { IM_FAQ } from '../../../data/instantMemories'
 
@@ -36,5 +36,14 @@ describe('Instant Memories page', () => {
 
     fireEvent.click(screen.getByText(guestQs[1].question))
     expect(screen.getByText(guestQs[1].answer)).toBeInTheDocument()
+  })
+
+  it('gives couples and guests their own sections, with no Share promise to guests', () => {
+    render(<><InstantMemoriesForCouples /><InstantMemoriesForGuests /></>)
+    expect(screen.getByRole('heading', { level: 2, name: 'Your photos, your way' })).toBeInTheDocument()
+    const guests = document.getElementById('for-guests')
+    expect(guests).toHaveTextContent('Scan, watch, keep')
+    expect(guests.querySelector('img').getAttribute('src')).toMatch(/guest-viewer\.jpg$/)
+    expect(guests.textContent).not.toMatch(/share/i)
   })
 })

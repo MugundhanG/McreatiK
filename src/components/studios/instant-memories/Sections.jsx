@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import {
   FiArrowRight, FiBarChart2, FiCamera, FiCheck, FiDownload, FiHeart, FiImage, FiLock, FiMail,
-  FiMessageCircle, FiShare2, FiSliders, FiSmartphone, FiStar, FiUsers, FiWifi,
+  FiMessageCircle, FiSliders, FiSmartphone, FiStar, FiUsers, FiWifi,
 } from 'react-icons/fi'
 import { RevealText } from '../../motion'
 import { getWhatsAppHref } from '../../../utils/whatsapp'
@@ -177,7 +177,7 @@ export const InstantMemoriesForStudios = memo(function InstantMemoriesForStudios
 })
 
 const COUPLE_ICONS = [FiLock, FiHeart, FiDownload, FiUsers]
-const GUEST_ICONS = [FiSmartphone, FiShare2, FiLock]
+const GUEST_ICONS = [FiSmartphone, FiWifi, FiDownload, FiLock]
 
 function BenefitList({ items, icons }) {
   return (
@@ -198,22 +198,34 @@ function BenefitList({ items, icons }) {
   )
 }
 
-export const InstantMemoriesForCouplesAndGuests = memo(function InstantMemoriesForCouplesAndGuests() {
+export const InstantMemoriesForCouples = memo(function InstantMemoriesForCouples() {
   return (
     <section id="for-couples" className="relative py-20 lg:py-28 bg-[#FAF7F0] scroll-mt-28">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8 grid gap-12 lg:grid-cols-[1fr_auto_1fr] lg:items-start">
+      <div className="max-w-5xl mx-auto px-5 sm:px-8 grid gap-12 md:grid-cols-[1fr_260px] md:items-center lg:gap-20">
         <Rise>
           <Eyebrow>For couples</Eyebrow>
-          <h2 className="font-display italic text-3xl text-[#1C1710] mb-8">Your photos, your way</h2>
+          <h2 className="font-display italic text-3xl sm:text-4xl text-[#1C1710] mb-8">Your photos, your way</h2>
           <BenefitList items={IM_FOR_COUPLES} icons={COUPLE_ICONS} />
         </Rise>
-        <Rise delay={0.08} className="mx-auto w-full max-w-[260px]">
+        <Rise delay={0.1} className="mx-auto w-full max-w-[260px]">
           <Phone src={`${IMG}/couple-portal.jpg`} alt="The couple's private portal with album picks and download buttons" />
         </Rise>
-        <Rise delay={0.16}>
+      </div>
+    </section>
+  )
+})
+
+export const InstantMemoriesForGuests = memo(function InstantMemoriesForGuests() {
+  return (
+    <section id="for-guests" className="relative py-20 lg:py-28 bg-white scroll-mt-28">
+      <div className="max-w-5xl mx-auto px-5 sm:px-8 grid gap-12 md:grid-cols-[260px_1fr] md:items-center lg:gap-20">
+        <Rise className="md:order-2">
           <Eyebrow>For guests</Eyebrow>
-          <h2 className="font-display italic text-3xl text-[#1C1710] mb-8">Scan, watch, keep</h2>
+          <h2 className="font-display italic text-3xl sm:text-4xl text-[#1C1710] mb-8">Scan, watch, keep</h2>
           <BenefitList items={IM_FOR_GUESTS} icons={GUEST_ICONS} />
+        </Rise>
+        <Rise delay={0.1} className="mx-auto w-full max-w-[260px] md:order-1">
+          <Phone src={`${IMG}/guest-viewer.jpg`} alt="A guest viewing a wedding photo full screen, with Download and Request removal buttons" />
         </Rise>
       </div>
     </section>

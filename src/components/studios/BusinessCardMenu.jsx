@@ -120,8 +120,7 @@ export function BusinessCardNavButton({ transparent }) {
         <FiDownload className="h-4 w-4" aria-hidden="true" />
         {/* Full label where the navbar has room; shorter on compact laptops. */}
         <span className="xl:hidden">Business Card</span>
-        <span className="hidden xl:inline 2xl:hidden">Digital Business Card</span>
-        <span className="hidden 2xl:inline">Download Digital Business Card</span>
+        <span className="hidden xl:inline">Digital Business Card</span>
       </button>
       <AnimatePresence>
         {open && (
