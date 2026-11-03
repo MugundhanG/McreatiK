@@ -47,7 +47,7 @@ export const IM_FOR_COUPLES = [
 export const IM_FOR_GUESTS = [
   { title: 'Scan and open', body: 'Point your phone camera at the QR code. The gallery opens in your browser — nothing to install, no name or number asked.' },
   { title: 'Watch it live', body: 'New photos appear on their own while the page is open — no refreshing.' },
-  { title: 'Save your favourites', body: 'Download your favourite photos to your phone in one tap (on some iPhones, press and hold the photo to save it).' },
+  { title: 'Save and share your favourites', body: 'Download your favourite photos in one tap, or share them straight to WhatsApp and Instagram with the studio credited.' },
   { title: 'Your privacy respected', body: 'Location is removed from every photo, and anyone can ask for a photo of them to be taken down.' },
 ]
 
@@ -81,6 +81,6 @@ export const IM_FAQ = [
   /* Guests */
   { tab: 'Guests', question: 'Do I need an app?', answer: 'No. Scan the QR code and the gallery opens in your phone’s browser. No sign-up, no name or number.' },
   { tab: 'Guests', question: 'How soon do photos appear?', answer: 'Usually within seconds to a minute of being taken. Keep the page open and new photos appear on their own.' },
-  { tab: 'Guests', question: 'Can I save photos?', answer: 'Yes — download your favourite photos. Open a photo and tap Download. On some iPhones, press and hold the photo and tap “Save image”.' },
+  { tab: 'Guests', question: 'Can I save and share photos?', answer: 'Yes — open a photo and tap Download to keep it, or Share to send it to WhatsApp or Instagram. Only the photo is shared, never the gallery link, so the gallery stays private.' },
   { tab: 'Guests', question: 'I’m in a photo and want it removed.', answer: 'Open the photo and tap “Request removal”, or email connect@mcreatik.com with the gallery link. We aim to remove it within 3 working days.' },
 ]
