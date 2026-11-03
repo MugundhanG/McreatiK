@@ -38,12 +38,13 @@ describe('Instant Memories page', () => {
     expect(screen.getByText(guestQs[1].answer)).toBeInTheDocument()
   })
 
-  it('gives couples and guests their own sections, with no Share promise to guests', () => {
+  it('gives couples and guests their own sections, and tells guests they can share', () => {
     render(<><InstantMemoriesForCouples /><InstantMemoriesForGuests /></>)
     expect(screen.getByRole('heading', { level: 2, name: 'Your photos, your way' })).toBeInTheDocument()
     const guests = document.getElementById('for-guests')
     expect(guests).toHaveTextContent('Scan, watch, keep')
     expect(guests.querySelector('img').getAttribute('src')).toMatch(/guest-viewer\.jpg$/)
-    expect(guests.textContent).not.toMatch(/share/i)
+    // Guests can share photos again; the page says the gallery link itself is never shared.
+    expect(guests.textContent).toMatch(/share them straight to WhatsApp/i)
   })
 })
