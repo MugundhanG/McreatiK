@@ -722,7 +722,14 @@ export const STUDIOS_NAV_GROUPS = [
       { label: 'Testimonials', href: '/studios/experience#testimonials', type: 'anchor', icon: FiMessageSquare, description: 'What our clients say about us' },
     ],
   },
-  { label: 'Instant Memories', href: '/studios/instant-memories' },
+  {
+    label: 'Instant Memories',
+    href: '/studios/instant-memories',
+    items: [
+      { label: 'Overview', href: '/studios/instant-memories', type: 'page', icon: FiZap, description: 'Live photos on every guest’s phone' },
+      { label: 'How it works', href: '/studios/instant-memories/how-it-works', type: 'page', icon: FiGitMerge, description: 'From initial setup to album selection' },
+    ],
+  },
   { label: 'Blog', href: '/studios/blog' },
   {
     label: 'About',
