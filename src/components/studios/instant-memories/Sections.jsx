@@ -11,14 +11,15 @@ import React, { memo, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import {
-  FiArrowRight, FiBarChart2, FiCamera, FiCheck, FiDownload, FiHeart, FiImage, FiLock, FiMail,
-  FiMessageCircle, FiSliders, FiSmartphone, FiStar, FiUsers, FiWifi,
+  FiArrowRight, FiBarChart2, FiCamera, FiCheck, FiDownload, FiFileText, FiFolder, FiHeart, FiImage, FiLock, FiMail,
+  FiMessageCircle, FiPrinter, FiShare2, FiSliders, FiSmartphone, FiStar, FiUsers, FiWifi,
 } from 'react-icons/fi'
 import { BsQrCode } from 'react-icons/bs'
 import { RevealText } from '../../motion'
 import { getWhatsAppHref } from '../../../utils/whatsapp'
 import {
-  IM_COUPLE_MESSAGE, IM_DEMO_MESSAGE, IM_FOR_COUPLES, IM_FOR_GUESTS, IM_FOR_STUDIOS, IM_PRIVACY, IM_STEPS,
+  IM_DEMO_MESSAGE, IM_FOR_COUPLES, IM_FOR_GUESTS, IM_FOR_STUDIOS, IM_PRICE_NOTES, IM_PRICES,
+  IM_PRICING_URL, IM_PRIVACY, IM_STEPS,
 } from '../../../data/instantMemories'
 import studiosLogoDark from '../../../assets/studios-logo-dark-bg.webp'
 
@@ -184,7 +185,6 @@ function FloatCard({ children, className = '', delay = 0 }) {
 }
 
 const demoHref = getWhatsAppHref(IM_DEMO_MESSAGE)
-const coupleHref = getWhatsAppHref(IM_COUPLE_MESSAGE)
 
 export const InstantMemoriesHero = memo(function InstantMemoriesHero() {
   const reduce = useReducedMotion()
@@ -217,9 +217,9 @@ export const InstantMemoriesHero = memo(function InstantMemoriesHero() {
               className="inline-flex items-center gap-2 rounded-full bg-[#C9971F] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#C9971F]/25 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#b3860f]">
               <FiMessageCircle className="w-4 h-4" /> Book a demo
             </a>
-            <a href={coupleHref} target="_blank" rel="noreferrer"
+            <a href="#for-studios"
               className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white hover:bg-white/10">
-              Getting married? Have it at your wedding <FiArrowRight className="w-4 h-4" />
+              Put your brand on every phone <FiArrowRight className="w-4 h-4" />
             </a>
           </div>
           <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-2 font-body text-sm text-white/70">
@@ -291,7 +291,7 @@ export const InstantMemoriesHowItWorks = memo(function InstantMemoriesHowItWorks
   )
 })
 
-const STUDIO_ICONS = [FiStar, FiCamera, FiWifi, FiSliders, FiHeart, FiBarChart2]
+const STUDIO_ICONS = [FiStar, FiPrinter, FiCamera, FiSliders, FiHeart, FiFolder, FiFileText, FiBarChart2]
 
 export const InstantMemoriesForStudios = memo(function InstantMemoriesForStudios() {
   return (
@@ -337,7 +337,7 @@ export const InstantMemoriesForStudios = memo(function InstantMemoriesForStudios
 })
 
 const COUPLE_ICONS = [FiLock, FiHeart, FiDownload, FiUsers]
-const GUEST_ICONS = [FiSmartphone, FiWifi, FiDownload, FiLock]
+const GUEST_ICONS = [FiSmartphone, FiWifi, FiShare2, FiLock]
 
 function BenefitList({ items, icons }) {
   return (
@@ -421,6 +421,44 @@ export const InstantMemoriesPrivacy = memo(function InstantMemoriesPrivacy() {
   )
 })
 
+export const InstantMemoriesPricing = memo(function InstantMemoriesPricing() {
+  return (
+    <section id="pricing" className="relative py-20 lg:py-28 bg-[#FAF7F0] scroll-mt-28">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8">
+        <Rise className="mb-10 max-w-2xl">
+          <Eyebrow>Pricing</Eyebrow>
+          <RevealText as="h2" text="Simple prices, per event or by the month" className="font-display italic text-3xl sm:text-4xl lg:text-5xl text-[#1C1710]" />
+        </Rise>
+        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {IM_PRICES.map(({ name, price, unit, body }, i) => (
+            <li key={name}>
+              <Rise delay={i * 0.06} className="h-full">
+                <div className="h-full rounded-2xl border border-black/5 bg-white p-6 shadow-sm">
+                  <h3 className="font-body font-semibold text-[#1C1710]">{name}</h3>
+                  <p className="mt-3 font-display text-3xl text-[#1C1710] tabular-nums">{price}</p>
+                  <p className="mt-1 font-body text-xs text-[#6B6153]">{unit}</p>
+                  <p className="mt-4 font-body text-sm leading-relaxed text-[#4A4438]">{body}</p>
+                </div>
+              </Rise>
+            </li>
+          ))}
+        </ul>
+        <Rise className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <ul className="space-y-1.5 font-body text-sm text-[#4A4438]">
+            {IM_PRICE_NOTES.map((note) => (
+              <li key={note} className="flex items-start gap-2"><FiCheck className="mt-0.5 w-4 h-4 shrink-0 text-[#C9971F]" />{note}</li>
+            ))}
+          </ul>
+          <a href={IM_PRICING_URL} target="_blank" rel="noreferrer"
+            className="inline-flex shrink-0 items-center gap-2 font-body text-sm font-semibold text-[#C9971F] underline-offset-4 hover:underline">
+            Full pricing and packs <FiArrowRight className="w-4 h-4" />
+          </a>
+        </Rise>
+      </div>
+    </section>
+  )
+})
+
 export const InstantMemoriesCTA = memo(function InstantMemoriesCTA() {
   return (
     <section id="get-started" className="relative py-20 lg:py-28 bg-white scroll-mt-28">
@@ -428,8 +466,8 @@ export const InstantMemoriesCTA = memo(function InstantMemoriesCTA() {
         <FiImage className="mx-auto w-8 h-8 text-[#C9971F]" aria-hidden="true" />
         <h2 className="mt-4 font-display italic text-3xl sm:text-4xl text-[#1C1710]">See it live in ten minutes</h2>
         <p className="mt-4 font-body text-[#4A4438] leading-relaxed">
-          Pricing depends on how many events you shoot — per event or a monthly package. Message us for a quick demo on
-          your phone and a quote for your studio.
+          Message us for a quick demo on your phone. We set up your studio account and walk you through your first
+          event.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <a href={demoHref} target="_blank" rel="noreferrer"

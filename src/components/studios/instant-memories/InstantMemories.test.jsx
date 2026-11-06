@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import { InstantMemoriesHero, InstantMemoriesCTA, InstantMemoriesForCouples, InstantMemoriesForGuests } from './Sections'
+import { InstantMemoriesHero, InstantMemoriesCTA, InstantMemoriesForCouples, InstantMemoriesForGuests, InstantMemoriesPricing } from './Sections'
 import InstantMemoriesFAQ from './FAQ'
-import { IM_FAQ } from '../../../data/instantMemories'
+import { IM_FAQ, IM_PRICES, IM_PRICING_URL } from '../../../data/instantMemories'
 
 const inRouter = (ui) => render(<MemoryRouter>{ui}</MemoryRouter>)
 
@@ -13,7 +13,8 @@ describe('Instant Memories page', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'Instant Memories' })).toBeInTheDocument()
     const demo = screen.getByRole('link', { name: /book a demo/i })
     expect(demo.getAttribute('href')).toMatch(/^https:\/\/wa\.me\/919952758545\?text=.*demo/)
-    expect(screen.getByRole('link', { name: /getting married/i }).getAttribute('href')).toMatch(/wa\.me/)
+    expect(screen.getByRole('link', { name: /put your brand on every phone/i })).toHaveAttribute('href', '#for-studios')
+    expect(screen.queryByText(/getting married/i)).not.toBeInTheDocument()
   })
 
   it('offers WhatsApp and email in the closing call to action', () => {
@@ -38,12 +39,21 @@ describe('Instant Memories page', () => {
     expect(screen.getByText(guestQs[1].answer)).toBeInTheDocument()
   })
 
-  it('gives couples and guests their own sections, with no Share promise to guests', () => {
+  it('gives couples and guests their own sections, and tells guests they can share', () => {
     render(<><InstantMemoriesForCouples /><InstantMemoriesForGuests /></>)
     expect(screen.getByRole('heading', { level: 2, name: 'Your photos, your way' })).toBeInTheDocument()
     const guests = document.getElementById('for-guests')
     expect(guests).toHaveTextContent('Scan, watch, keep')
     expect(guests.querySelector('img').getAttribute('src')).toMatch(/guest-viewer\.jpg$/)
-    expect(guests.textContent).not.toMatch(/share/i)
+    expect(guests.textContent).toMatch(/share/i)
+  })
+
+  it('shows every price card and links to the full pricing page', () => {
+    render(<InstantMemoriesPricing />)
+    for (const { name, price } of IM_PRICES) {
+      expect(screen.getByRole('heading', { level: 3, name })).toBeInTheDocument()
+      expect(screen.getByText(price)).toBeInTheDocument()
+    }
+    expect(screen.getByRole('link', { name: /full pricing/i })).toHaveAttribute('href', IM_PRICING_URL)
   })
 })
