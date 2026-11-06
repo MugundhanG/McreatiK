@@ -148,17 +148,17 @@ export const STORY_ACTS = [
   {
     id: 'later',
     label: 'Act IV',
-    title: 'Six months on',
+    title: 'Three months on',
     sub: 'The gallery’s period ends, on the studio’s terms.',
     tone: 'sage',
     chapters: [
       {
         id: 'keep',
         who: 'photographer',
-        time: '6 months later',
+        time: '3 months later',
         title: ['Keep it open,', 'or let it close.'],
-        body: 'Every gallery stays open for six months. The studio can keep it open six more months, paid by the storage it uses. If not, it closes and is deleted 30 days later.',
-        tag: '6-month gallery period',
+        body: 'Every gallery stays open for three months (about 90 days). The studio can keep it open three more months, paid by the storage it uses. If not, it closes and is deleted 30 days later.',
+        tag: '3-month gallery period',
         mock: 'keep',
       },
     ],
@@ -171,7 +171,7 @@ export const STORY_MOMENTS = [
   { chapters: '03', name: 'Cameras connected', body: 'The uploader on Windows or Mac, up to 4 cameras per laptop.' },
   { chapters: '04 · 05 · 06', name: 'Live on every phone', body: 'Photos reach guests in seconds. They scan, watch, download and share.' },
   { chapters: '07 · 08', name: 'Studio in control', body: 'Pause a camera, hide a photo, and your brand on every phone.' },
-  { chapters: '09 – 12', name: 'Album selection', body: 'Album picks, full-quality ZIP downloads, guest insights and 6 months open.' },
+  { chapters: '09 – 12', name: 'Album selection', body: 'Album picks, full-quality ZIP downloads, guest insights and 3 months open.' },
 ]
 
 export const STORY_FAQ = [

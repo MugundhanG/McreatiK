@@ -58,7 +58,7 @@ export const IM_PRIVACY = [
   'Guests never sign up: we collect no names, phone numbers or emails.',
   'Anyone can request a photo removal; we aim to take it down within 3 working days, and the studio can hide it instantly.',
   'Photos are stored with Cloudflare and data with Supabase, encrypted.',
-  'Galleries stay open for 6 months (longer only if the studio extends them) and are deleted permanently 30 days after they close.',
+  'Galleries stay open for 3 months, about 90 days (longer only if the studio extends them) and are deleted permanently 30 days after they close.',
 ]
 
 export const IM_FAQ_TABS = ['Studios', 'Couples', 'Guests']
@@ -72,9 +72,9 @@ export const IM_FAQ = [
   { tab: 'Studios', question: 'Do my RAW files get uploaded?', answer: 'No. During the event only a light gallery copy is sent, so it stays fast. You can add full-quality JPEG originals from the dashboard later for the couple.' },
   { tab: 'Studios', question: 'Can I remove a photo from guests’ phones?', answer: 'Yes. Hide or delete it and it disappears from every open gallery immediately — one photo or many at once.' },
   { tab: 'Studios', question: 'Who owns the photos?', answer: 'You and your couple. We only store and show them for your event; we don’t use them for anything else, show ads or sell data.' },
-  { tab: 'Studios', question: 'How long are photos kept?', answer: 'Each gallery stays open for 6 months. Keep it 6 more months for ₹15 per GB stored; otherwise it closes and its photos are deleted 30 days later.' },
+  { tab: 'Studios', question: 'How long are photos kept?', answer: 'Each gallery stays open for 3 months (about 90 days). Keep it 3 more months at ₹15 per GB a month (₹45 per GB stored); otherwise it closes and its photos are deleted 30 days later.' },
   { tab: 'Studios', question: 'How much does it cost?', answer: 'A Main event (weddings, receptions, big events) is ₹2,499 and a Quick event (up to about 300 guests) is ₹1,499. Monthly packs start at ₹2,499 for 2 events, and unused events carry over one month.' },
-  { tab: 'Studios', question: 'How do I pay?', answer: 'From your dashboard, by card, netbanking, UPI or wallet, or by scanning a UPI QR. Events are added the moment the payment goes through.' },
+  { tab: 'Studios', question: 'How do I pay?', answer: 'From your dashboard: scan the UPI QR, pay, and enter the UPI transaction ID. Your events are added straight away, and we confirm the payment within a day.' },
   /* Couples */
   { tab: 'Couples', question: 'How do we get our photos?', answer: 'Your photographer sends you a private login. You see every photo by moment, pick album favourites and download full quality. For help with your login, ask your photographer.' },
   { tab: 'Couples', question: 'Can both of us use the login?', answer: 'Yes — one login for the two of you, on as many phones as you like.' },
@@ -95,9 +95,9 @@ export const IM_PRICES = [
   { name: 'Main event', price: '₹2,499', unit: 'per event', body: 'Weddings, receptions, big birthdays and large events.' },
   { name: 'Quick event', price: '₹1,499', unit: 'per event', body: 'Engagements, small birthdays and baby showers, up to about 300 guests.' },
   { name: 'Monthly packs', price: 'from ₹2,499', unit: 'per month', body: '2 or 4 events a month. Unused events carry over one month.' },
-  { name: 'Client gallery', price: '₹250', unit: 'setup + ₹15 per GB', body: 'A private branded gallery to deliver photos, without a live event.' },
+  { name: 'Client gallery', price: '₹250', unit: 'setup + ₹15 per GB a month', body: 'A private branded gallery to deliver photos, without a live event.' },
 ]
 export const IM_PRICE_NOTES = [
-  'Every live event includes 5 GB of storage; more is ₹15 per GB.',
-  'Pay online by card, netbanking, UPI or wallet, with no extra fee.',
+  'Every live event includes 5 GB of storage; more is ₹15 per GB a month. Galleries stay open 3 months (about 90 days).',
+  'Pay by UPI from your dashboard, with no extra fee.',
 ]

@@ -304,8 +304,8 @@ function KeepMock() {
       <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-black/10">
         <div className="h-full w-[96%] rounded-full bg-[#C9971F]" />
       </div>
-      <p className="mt-2 font-body text-[11px] text-[#6B6153]">6-month period · 6 days left</p>
-      <span className="mt-5 block rounded-full bg-[#1C1710] py-2.5 text-center font-body text-xs font-semibold text-white">Keep 6 more months</span>
+      <p className="mt-2 font-body text-[11px] text-[#6B6153]">3-month period · 6 days left</p>
+      <span className="mt-5 block rounded-full bg-[#1C1710] py-2.5 text-center font-body text-xs font-semibold text-white">Keep 3 more months</span>
       <p className="mt-3 text-center font-body text-[11px] text-[#6B6153]">Not kept? It closes, and is deleted 30 days later.</p>
     </div>
   )
