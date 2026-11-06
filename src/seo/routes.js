@@ -183,6 +183,17 @@ export const ROUTES = {
     sitemap: true,
     priority: 0.7,
   },
+  '/studios/instant-memories/how-it-works': {
+    section: 'studios',
+    crumb: 'How it works',
+    title: 'How Instant Memories Works: Setup to Album Selection',
+    description:
+      'Follow one event from initial setup to album selection: live uploads from up to 4 cameras, guests watching on their phones, and a private client gallery.',
+    h1: 'For all types of events, from initial setup to album selection',
+    intro: 'An illustrated walkthrough of Instant Memories for weddings, birthdays and every kind of event, chapter by chapter.',
+    sitemap: true,
+    priority: 0.6,
+  },
   '/studios/blog': {
     section: 'studios',
     crumb: 'Blog',

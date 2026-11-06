@@ -20,6 +20,7 @@
     { "source": "/studios/albums", "destination": "/studios/albums/index.html" },
     { "source": "/studios/experience", "destination": "/studios/experience/index.html" },
     { "source": "/studios/instant-memories", "destination": "/studios/instant-memories/index.html" },
+    { "source": "/studios/instant-memories/how-it-works", "destination": "/studios/instant-memories/how-it-works/index.html" },
     { "source": "/studios/blog", "destination": "/studios/blog/index.html" },
     { "source": "/privacy", "destination": "/privacy/index.html" },
     { "source": "/terms", "destination": "/terms/index.html" },

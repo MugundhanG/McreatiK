@@ -47,7 +47,7 @@ function Eyebrow({ children, light = false }) {
 }
 
 /** A screenshot shown inside a simple phone frame. */
-function Phone({ src, alt, className = '' }) {
+export function Phone({ src, alt, className = '' }) {
   return (
     <div className={`relative rounded-[2.2rem] border-[6px] border-[#1C1710] bg-[#1C1710] shadow-2xl shadow-black/30 ${className}`}>
       <img src={src} alt={alt} loading="lazy" width="390" height="844" className="block w-full rounded-[1.7rem]" />
@@ -65,7 +65,7 @@ const LIVE_VISIBLE = 4
 const LIVE_START_COUNT = 18
 const LIVE_INTERVAL_MS = 3200
 
-function LivePhone() {
+export function LivePhone() {
   const reduce = useReducedMotion()
   // Each tile gets a unique id so a photo can re-enter after the pool loops.
   const [tiles, setTiles] = useState(() =>
@@ -286,6 +286,12 @@ export const InstantMemoriesHowItWorks = memo(function InstantMemoriesHowItWorks
             )
           })}
         </ol>
+        <Rise className="mt-10 text-center">
+          <Link to="/studios/instant-memories/how-it-works"
+            className="inline-flex items-center gap-2 font-body text-sm font-semibold text-[#C9971F] underline-offset-4 hover:underline">
+            See it from setup to album selection <FiArrowRight className="w-4 h-4" />
+          </Link>
+        </Rise>
       </div>
     </section>
   )
