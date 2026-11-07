@@ -73,7 +73,7 @@ export const IM_FAQ = [
   { tab: 'Studios', question: 'Can I remove a photo from guests’ phones?', answer: 'Yes. Hide or delete it and it disappears from every open gallery immediately — one photo or many at once.' },
   { tab: 'Studios', question: 'Who owns the photos?', answer: 'You and your couple. We only store and show them for your event; we don’t use them for anything else, show ads or sell data.' },
   { tab: 'Studios', question: 'How long are photos kept?', answer: 'Each gallery stays open for 3 months (about 90 days). Keep it 3 more months at ₹15 per GB a month (₹45 per GB stored); otherwise it closes and its photos are deleted 30 days later.' },
-  { tab: 'Studios', question: 'How much does it cost?', answer: 'A Main event (weddings, receptions, big events) is ₹2,499 and a Quick event (up to about 300 guests) is ₹1,499. Monthly packs start at ₹2,499 for 2 events, and unused events carry over one month.' },
+  { tab: 'Studios', question: 'How much does it cost?', answer: 'A Main event (weddings, receptions, big events) is ₹2,499 and a Quick event (up to about 300 guests) is ₹1,499. Monthly packs start at ₹2,499 for 2 events, and unused events carry over one month. Need more events in a month? Extras cost less on a pack: from ₹799.' },
   { tab: 'Studios', question: 'How do I pay?', answer: 'From your dashboard: scan the UPI QR, pay, and enter the UPI transaction ID. Your events are added straight away, and we confirm the payment within a day.' },
   /* Couples */
   { tab: 'Couples', question: 'How do we get our photos?', answer: 'Your photographer sends you a private login. You see every photo by moment, pick album favourites and download full quality. For help with your login, ask your photographer.' },
@@ -94,7 +94,7 @@ export const IM_PRICING_URL = 'https://live.mcreatik.com/pricing'
 export const IM_PRICES = [
   { name: 'Main event', price: '₹2,499', unit: 'per event', body: 'Weddings, receptions, big birthdays and large events.' },
   { name: 'Quick event', price: '₹1,499', unit: 'per event', body: 'Engagements, small birthdays and baby showers, up to about 300 guests.' },
-  { name: 'Monthly packs', price: 'from ₹2,499', unit: 'per month', body: '2 or 4 events a month. Unused events carry over one month.' },
+  { name: 'Monthly packs', price: 'from ₹2,499', unit: 'per month', body: '2 or 4 events a month. Need more? Extra events from ₹799 while your pack is active. Unused events carry over one month.' },
   { name: 'Client gallery', price: '₹250', unit: 'setup + ₹15 per GB a month', body: 'A private branded gallery to deliver photos, without a live event.' },
 ]
 export const IM_PRICE_NOTES = [
