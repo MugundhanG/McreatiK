@@ -162,6 +162,32 @@ export function ImSteps() {
   )
 }
 
+/* Real studio dashboard screens (demo events), switchable. */
+const STUDIO_SCREENS = [
+  { id: 'events', label: 'Events', src: 'studio-events.jpg', alt: 'The studio’s events list: monthly pack usage and every event with its status and photo count' },
+  { id: 'overview', label: 'Event overview', src: 'studio-dashboard.jpg', alt: 'An event’s overview: photos, cameras online with Pause and Rename, storage, and the guest QR code with print files' },
+  { id: 'guests', label: 'Guest activity', src: 'studio-analytics.jpg', alt: 'Guest activity: people, QR scans, gallery visits, photo views, downloads and likes, per hour, with the most loved photos' },
+]
+
+function StudioScreens() {
+  const [shown, setShown] = useState('overview')
+  const screen = STUDIO_SCREENS.find((x) => x.id === shown)
+  return (
+    <div>
+      <div role="group" aria-label="Studio dashboard screens" className="mb-3 flex flex-wrap gap-2">
+        {STUDIO_SCREENS.map((x) => (
+          <button key={x.id} type="button" aria-pressed={shown === x.id} onClick={() => setShown(x.id)}
+            className={`cursor-pointer rounded-full border px-3 py-1.5 font-body text-sm transition-colors ${shown === x.id ? 'border-[#0E1116] bg-[#0E1116] text-white' : 'border-black/10 text-[#4A505C] hover:border-[#0E1116] hover:text-[#0E1116]'}`}>
+            {x.label}
+          </button>
+        ))}
+      </div>
+      <img key={screen.id} src={`${IM_IMG}/${screen.src}`} alt={screen.alt} loading="lazy" width="1380" height="1080"
+        className="w-full rounded-xl border border-black/10 shadow-xl shadow-black/10" />
+    </div>
+  )
+}
+
 const AUDIENCES = [
   { id: 'studios', label: 'For studios', title: 'Your work, live, under your name.', items: IM_FOR_STUDIOS, shot: 'dashboard' },
   { id: 'couples', label: 'For couples', title: 'Their photos, their way.', items: IM_FOR_COUPLES, shot: `${IM_IMG}/couple-portal.jpg` },
@@ -186,10 +212,10 @@ export function ImAudiences() {
             </button>
           ))}
         </div>
-        <div role="tabpanel" className="mt-10 grid items-start gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+        <div role="tabpanel" className={`mt-10 grid items-start gap-12 ${a.shot === 'dashboard' ? '' : 'lg:grid-cols-[1.1fr_0.9fr]'}`}>
           <div>
             <h3 className="font-display text-2xl font-bold text-[#0E1116]">{a.title}</h3>
-            <ul className="mt-6 grid gap-x-8 gap-y-6 sm:grid-cols-2">
+            <ul className={`mt-6 grid gap-x-8 gap-y-6 sm:grid-cols-2 ${a.shot === 'dashboard' ? 'lg:grid-cols-4' : ''}`}>
               {a.items.map(({ title, body }) => (
                 <li key={title} className="border-t border-black/10 pt-4">
                   <p className="font-body text-[17px] font-semibold text-[#0E1116]">{title}</p>
@@ -198,14 +224,9 @@ export function ImAudiences() {
               ))}
             </ul>
           </div>
-          <div className="lg:sticky lg:top-24">
+          <div className={a.shot === 'dashboard' ? 'mx-auto w-full max-w-5xl' : 'lg:sticky lg:top-24'}>
             {a.shot === 'dashboard' ? (
-              <div className="space-y-4">
-                <img src={`${IM_IMG}/studio-dashboard.jpg`} alt="The studio dashboard: cameras online, photo counts and the event's QR code" loading="lazy"
-                  width="1440" height="900" className="w-full rounded-xl border border-black/10 shadow-xl shadow-black/10" />
-                <img src={`${IM_IMG}/studio-analytics.jpg`} alt="Guest activity: people, QR scans, photo views and downloads per hour" loading="lazy"
-                  width="1440" height="900" className="w-full rounded-xl border border-black/10 shadow-xl shadow-black/10" />
-              </div>
+              <StudioScreens />
             ) : (
               <div className="mx-auto w-full max-w-[260px]">
                 <Phone src={a.shot} alt={a.id === 'couples'

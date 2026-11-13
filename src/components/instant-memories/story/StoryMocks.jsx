@@ -290,7 +290,7 @@ function ZipMock() {
 function InsightsMock() {
   return (
     <AppWindow url="live.mcreatik.com/events/meera-arun?tab=guests">
-      <img src={`${IMG}/studio-analytics.jpg`} alt="" loading="lazy" width="1440" height="900" className="block w-full" />
+      <img src={`${IMG}/studio-analytics.jpg`} alt="" loading="lazy" width="1380" height="1080" className="block w-full" />
     </AppWindow>
   )
 }
