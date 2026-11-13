@@ -36,7 +36,7 @@ export const SHARE_IMAGES = {
   home: `${SITE_URL}/share-image.png`,
   tech: `${SITE_URL}/share-tech.jpg`,
   studios: `${SITE_URL}/share-studios.jpg`,
-  memories: `${SITE_URL}/share-image.png`,
+  memories: `${SITE_URL}/share-instant-memories.jpg`,
   legal: `${SITE_URL}/share-image.png`,
   store: `${SITE_URL}/share-image.png`,
 }
@@ -46,10 +46,10 @@ export const ROUTES = {
     section: 'home',
     title: 'McreatiK | Websites Worldwide & Event Photography in Chennai',
     description:
-      'McreatiK designs and develops websites for businesses worldwide (McreatiK Tech) and photographs weddings, birthdays, portraits and events in Chennai (McreatiK Studios).',
+      'McreatiK builds websites for businesses worldwide (Tech), photographs weddings and events in Chennai (Studios), and makes Instant Memories, live galleries for studios.',
     h1: 'McreatiK',
     intro:
-      'One brand, two crafts: McreatiK Tech designs websites and branding for businesses anywhere, and McreatiK Studios photographs weddings, portraits and events in Chennai, Tamil Nadu and nearby states.',
+      'One brand, three companies: McreatiK Tech designs websites and branding for businesses anywhere, McreatiK Studios photographs weddings, portraits and events in Chennai, Tamil Nadu and nearby states, and Instant Memories gives photography studios live event galleries.',
     sitemap: true,
     priority: 1.0,
   },
