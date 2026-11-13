@@ -83,12 +83,12 @@ function headTags(route, routePath, { SITE_URL, SITE_NAME, SHARE_IMAGES }, jsonL
    a Tech page links to all Tech sub-pages, a Studios page to all Studios
    sub-pages, and the homepage / legal pages to both sets. */
 function sectionLinks(routes, route, currentPath) {
-  const sections = route.section === 'tech' || route.section === 'studios'
+  const sections = ['tech', 'studios', 'memories'].includes(route.section)
     ? [route.section]
-    : ['tech', 'studios']
+    : ['tech', 'studios', 'memories']
   return Object.entries(routes)
     .filter(([href, r]) => href !== currentPath && sections.includes(r.section) && r.crumb && r.sitemap && !r.noindex)
-    .map(([href, r]) => [href, r.section === 'studios' ? `Studios ${r.crumb}` : r.crumb])
+    .map(([href, r]) => [href, r.section === 'studios' ? `Studios ${r.crumb}` : r.section === 'memories' && href !== '/instant-memories' ? `Instant Memories: ${r.crumb}` : r.crumb])
 }
 
 /* Static first paint: the page's heading and summary plus the main and

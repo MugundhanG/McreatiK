@@ -25,7 +25,7 @@ const InstantMemoriesTeaser = memo(function InstantMemoriesTeaser() {
         </div>
         <Link to="/studios/instant-memories"
           className="inline-flex items-center gap-2 justify-self-start rounded-full bg-[#C9971F] px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#b3860f]">
-          See how it works <FiArrowRight className="w-4 h-4" />
+          Learn more <FiArrowRight className="w-4 h-4" />
         </Link>
       </RevealBlock>
     </section>

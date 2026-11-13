@@ -41,7 +41,8 @@ const StudiosGalleryPage = lazy(() => import('./pages/StudiosGalleryPage'))
 const StudiosAlbumsPage = lazy(() => import('./pages/StudiosAlbumsPage'))
 const StudiosExperiencePage = lazy(() => import('./pages/StudiosExperiencePage'))
 const StudiosInstantMemoriesPage = lazy(() => import('./pages/StudiosInstantMemoriesPage'))
-const StudiosInstantMemoriesHowItWorksPage = lazy(() => import('./pages/StudiosInstantMemoriesHowItWorksPage'))
+const InstantMemoriesPage = lazy(() => import('./pages/InstantMemoriesPage'))
+const InstantMemoriesHowItWorksPage = lazy(() => import('./pages/InstantMemoriesHowItWorksPage'))
 const StudiosBlogPage = lazy(() => import('./pages/StudiosBlogPage'))
 const StudiosBlogPostPage = lazy(() => import('./pages/StudiosBlogPostPage'))
 const StoreCatalogPage = lazy(() => import('./pages/StoreCatalogPage'))
@@ -103,7 +104,9 @@ function App() {
           <Route path="/studios/albums" element={<StudiosAlbumsPage />} />
           <Route path="/studios/experience" element={<StudiosExperiencePage />} />
           <Route path="/studios/instant-memories" element={<StudiosInstantMemoriesPage />} />
-          <Route path="/studios/instant-memories/how-it-works" element={<StudiosInstantMemoriesHowItWorksPage />} />
+          <Route path="/studios/instant-memories/how-it-works" element={<Navigate to="/instant-memories/how-it-works" replace />} />
+          <Route path="/instant-memories" element={<InstantMemoriesPage />} />
+          <Route path="/instant-memories/how-it-works" element={<InstantMemoriesHowItWorksPage />} />
           <Route path="/studios/blog" element={<StudiosBlogPage />} />
           <Route path="/studios/blog/:slug" element={<StudiosBlogPostPage />} />
           <Route path="/store" element={<StoreCatalogPage />} />

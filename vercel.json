@@ -2,6 +2,9 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/studios/instant-memories/how-it-works", "destination": "/instant-memories/how-it-works", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/admin", "destination": "https://mcreatik-admin.vercel.app/" },
     { "source": "/admin/", "destination": "https://mcreatik-admin.vercel.app/" },
@@ -20,7 +23,8 @@
     { "source": "/studios/albums", "destination": "/studios/albums/index.html" },
     { "source": "/studios/experience", "destination": "/studios/experience/index.html" },
     { "source": "/studios/instant-memories", "destination": "/studios/instant-memories/index.html" },
-    { "source": "/studios/instant-memories/how-it-works", "destination": "/studios/instant-memories/how-it-works/index.html" },
+    { "source": "/instant-memories", "destination": "/instant-memories/index.html" },
+    { "source": "/instant-memories/how-it-works", "destination": "/instant-memories/how-it-works/index.html" },
     { "source": "/studios/blog", "destination": "/studios/blog/index.html" },
     { "source": "/privacy", "destination": "/privacy/index.html" },
     { "source": "/terms", "destination": "/terms/index.html" },

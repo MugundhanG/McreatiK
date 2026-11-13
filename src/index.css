@@ -81,6 +81,17 @@
     --font-body: 'Inter', sans-serif;
     --font-mono: 'IBM Plex Mono', monospace;
   }
+  /* Instant Memories (SaaS) — the photographer's contact sheet: film-white
+     ground, ink type, film-black bands, grease-pencil red kept for picks and
+     the main action, signal green only for "live". */
+  .theme-im {
+    background: #f6f7f9;
+    --accent: #e5372b;
+    color: #0e1116;
+    --font-display: 'Bricolage Grotesque', sans-serif;
+    --font-body: 'IBM Plex Sans', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
   .theme-studios {
     background: #faf7f0;
     --accent: #C9971F;

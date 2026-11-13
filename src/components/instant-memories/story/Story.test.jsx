@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import StudiosInstantMemoriesHowItWorksPage from '../../../../pages/StudiosInstantMemoriesHowItWorksPage'
-import { STORY_ACTS, STORY_MOMENTS, STORY_ROLES } from '../../../../data/instantMemoriesStory'
+import InstantMemoriesHowItWorksPage from '../../../pages/InstantMemoriesHowItWorksPage'
+import { STORY_ACTS, STORY_MOMENTS, STORY_ROLES } from '../../../data/instantMemoriesStory'
 
 const chapters = STORY_ACTS.flatMap((act) => act.chapters)
 
@@ -16,7 +16,7 @@ describe('Instant Memories story page', () => {
   })
 
   it('renders the hero, every act and every chapter, numbered in order', () => {
-    render(<MemoryRouter><StudiosInstantMemoriesHowItWorksPage /></MemoryRouter>)
+    render(<MemoryRouter><InstantMemoriesHowItWorksPage /></MemoryRouter>)
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/from initial setup to album selection/i)
     for (const act of STORY_ACTS) {
       expect(screen.getByRole('heading', { level: 2, name: act.title })).toBeInTheDocument()
@@ -26,6 +26,6 @@ describe('Instant Memories story page', () => {
     expect(screen.getByText(`${chapters.length} / ${chapters.length}`)).toBeInTheDocument()
     expect(STORY_MOMENTS).toHaveLength(5)
     for (const m of STORY_MOMENTS) expect(screen.getByRole('heading', { level: 3, name: m.name })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /back to instant memories/i })).toHaveAttribute('href', '/studios/instant-memories')
+    expect(screen.getByRole('link', { name: /back to instant memories/i })).toHaveAttribute('href', '/instant-memories')
   })
 })

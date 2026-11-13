@@ -722,14 +722,7 @@ export const STUDIOS_NAV_GROUPS = [
       { label: 'Testimonials', href: '/studios/experience#testimonials', type: 'anchor', icon: FiMessageSquare, description: 'What our clients say about us' },
     ],
   },
-  {
-    label: 'Instant Memories',
-    href: '/studios/instant-memories',
-    items: [
-      { label: 'Overview', href: '/studios/instant-memories', type: 'page', icon: FiZap, description: 'Live photos on every guest’s phone' },
-      { label: 'How it works', href: '/studios/instant-memories/how-it-works', type: 'page', icon: FiGitMerge, description: 'From initial setup to album selection' },
-    ],
-  },
+  { label: 'Instant Memories', href: '/studios/instant-memories' },
   { label: 'Blog', href: '/studios/blog' },
   {
     label: 'About',
@@ -958,6 +951,7 @@ export const HOME_NAV_LINKS = [
   { label: 'Home', href: '#home', type: 'anchor' },
   { label: 'Tech', href: '/tech', type: 'route' },
   { label: 'Studios', href: '/studios', type: 'route' },
+  { label: 'Instant Memories', href: '/instant-memories', type: 'route' },
   { label: 'Digital Store', href: '/store', type: 'disabled' },
   { label: 'About', href: '#about', type: 'anchor' },
   { label: 'Contact', href: '#contact', type: 'anchor' },
@@ -987,6 +981,18 @@ export const HOME_EXPLORE_AREAS = [
     cta: 'Explore Studios',
     href: '/studios',
     accent: '#C9971F',
+  },
+  {
+    key: 'instant-memories',
+    icon: FiZap,
+    kicker: 'Live Event Galleries',
+    name: 'Instant Memories',
+    tagline: 'Live photo galleries for photography studios.',
+    longDescription: 'Every photo on every guest’s phone seconds after the shutter, with album selection and full-quality delivery in one place.',
+    bullets: ['Live galleries', 'Album selection', 'For studios'],
+    cta: 'Explore Instant Memories',
+    href: '/instant-memories',
+    accent: '#E5372B',
   },
   {
     key: 'store',

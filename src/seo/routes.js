@@ -20,7 +20,7 @@
    - h1 / intro: the page's real heading and a
      short summary, rendered as static content
    - section: 'home' | 'tech' | 'studios' |
-     'legal' | 'store' — picks share image,
+     'memories' | 'legal' | 'store' — picks share image,
      structured data and breadcrumb root
    - noindex: keep out of search results
    - sitemap: include in sitemap.xml
@@ -36,6 +36,7 @@ export const SHARE_IMAGES = {
   home: `${SITE_URL}/share-image.png`,
   tech: `${SITE_URL}/share-tech.jpg`,
   studios: `${SITE_URL}/share-studios.jpg`,
+  memories: `${SITE_URL}/share-image.png`,
   legal: `${SITE_URL}/share-image.png`,
   store: `${SITE_URL}/share-image.png`,
 }
@@ -53,6 +54,29 @@ export const ROUTES = {
     priority: 1.0,
   },
 
+  /* ---------- Instant Memories (SaaS for photography studios) ---------- */
+  '/instant-memories': {
+    section: 'memories',
+    crumb: 'Instant Memories',
+    title: 'Instant Memories — Live Event Photo Galleries for Studios',
+    description:
+      'Every photo on every guest’s phone seconds after the shutter. Live, branded event galleries for photography studios, with album selection and full-quality delivery.',
+    h1: 'Every photo on every guest’s phone, seconds after the shutter',
+    intro: 'Instant Memories by McreatiK connects a studio’s cameras to a live gallery with its name on it. Guests scan a QR code and watch the event; the couple pick their album in the same place.',
+    sitemap: true,
+    priority: 0.8,
+  },
+  '/instant-memories/how-it-works': {
+    section: 'memories',
+    crumb: 'How it works',
+    title: 'How Instant Memories Works: Setup to Album Selection',
+    description:
+      'Follow one event from initial setup to album selection: live uploads from up to 4 cameras, guests watching on their phones, and a private client gallery.',
+    h1: 'For all types of events, from initial setup to album selection',
+    intro: 'An illustrated walkthrough of Instant Memories for weddings, birthdays and every kind of event, chapter by chapter.',
+    sitemap: true,
+    priority: 0.6,
+  },
   /* ---------- Tech ---------- */
   '/tech': {
     section: 'tech',
@@ -175,22 +199,11 @@ export const ROUTES = {
   '/studios/instant-memories': {
     section: 'studios',
     crumb: 'Instant Memories',
-    title: 'Instant Memories — Live Wedding Photo Gallery | McreatiK',
+    title: 'Instant Memories — Our Live Photo Gallery | McreatiK Studios',
     description:
-      'Wedding photos on every guest\'s phone seconds after they\'re taken. Guests scan a QR code — no app. Branded live galleries for photography studios.',
-    h1: 'Instant Memories',
-    intro: 'A live wedding photo gallery: photos reach every guest\'s phone seconds after they are taken. For photography studios, couples and their guests.',
-    sitemap: true,
-    priority: 0.7,
-  },
-  '/studios/instant-memories/how-it-works': {
-    section: 'studios',
-    crumb: 'How it works',
-    title: 'How Instant Memories Works: Setup to Album Selection',
-    description:
-      'Follow one event from initial setup to album selection: live uploads from up to 4 cameras, guests watching on their phones, and a private client gallery.',
-    h1: 'For all types of events, from initial setup to album selection',
-    intro: 'An illustrated walkthrough of Instant Memories for weddings, birthdays and every kind of event, chapter by chapter.',
+      'McreatiK Studios built Instant Memories: at the events we shoot, guests see the photos on their phones seconds after they are taken, and couples pick their album online.',
+    h1: 'We built Instant Memories',
+    intro: 'McreatiK Studios is the team behind Instant Memories, a live photo gallery for events, used at every wedding and celebration we shoot.',
     sitemap: true,
     priority: 0.6,
   },

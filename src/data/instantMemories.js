@@ -101,3 +101,19 @@ export const IM_PRICE_NOTES = [
   'Every live event includes 5 GB of storage; more is ₹15 per GB a month. Galleries stay open 3 months (about 90 days).',
   'Pay by UPI from your dashboard, with no extra fee.',
 ]
+
+/* "The old way vs Instant Memories" rows for the SaaS landing page. */
+export const IM_PROBLEMS = [
+  { problem: 'Guests wait weeks.', problemBody: 'By the time photos arrive, the excitement is over.', fix: 'Photos on every phone in seconds.', fixBody: 'Guests see them while the event is still going on.' },
+  { problem: 'Your work is invisible.', problemBody: 'Guests share blurry phone shots on WhatsApp, with no credit to the studio.', fix: 'Your name on every photo.', fixBody: 'Your logo and Instagram are on the gallery, and guests are invited to follow you.' },
+  { problem: 'Album selection is a mess.', problemBody: 'File numbers sent on WhatsApp, spreadsheets, back-and-forth for days.', fix: 'The couple pick in their own gallery.', fixBody: 'You see every pick as they make it.' },
+  { problem: 'Delivery by pen drive or Drive link.', problemBody: 'Unbranded, hard to download, and links get forwarded anywhere.', fix: 'A private, branded gallery.', fixBody: 'Full-quality ZIP downloads in one tap.' },
+  { problem: 'Venue Wi-Fi lets you down.', problemBody: 'Uploading on the day feels too risky.', fix: 'Nothing is lost.', fixBody: 'Photos wait on the laptop and upload when the internet is back.' },
+  { problem: 'Privacy worries.', problemBody: 'Families don’t want photos public or searchable.', fix: 'Only people with the QR code see them.', fixBody: 'Hidden from Google, with location removed and photo removal on request.' },
+]
+
+export const IM_APP_URL = 'https://live.mcreatik.com'
+
+/* Site paths for the Instant Memories SaaS pages. */
+export const IM_HOME = '/instant-memories'
+export const IM_HOW = '/instant-memories/how-it-works'

@@ -6,5 +6,7 @@
 
 export function setFavicon(href) {
   const link = document.querySelector('link[rel="icon"]')
-  if (link) link.href = href
+  if (!link) return
+  link.type = href.endsWith('.svg') ? 'image/svg+xml' : 'image/png'
+  link.href = href
 }

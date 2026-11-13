@@ -111,7 +111,18 @@ function breadcrumbs(path) {
   if (!route.crumb) return null
   const root = route.section === 'tech'
     ? { name: 'McreatiK Tech', url: `${SITE_URL}/tech` }
-    : { name: 'McreatiK Studios', url: `${SITE_URL}/studios` }
+    : route.section === 'memories'
+      ? { name: 'Instant Memories', url: `${SITE_URL}/instant-memories` }
+      : { name: 'McreatiK Studios', url: `${SITE_URL}/studios` }
+  if (`${SITE_URL}${path}` === root.url) {
+    return {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: SITE_NAME, item: `${SITE_URL}/` },
+        { '@type': 'ListItem', position: 2, name: root.name, item: root.url },
+      ],
+    }
+  }
   return {
     '@type': 'BreadcrumbList',
     itemListElement: [
