@@ -81,11 +81,20 @@ export const STORY_ACTS = [
         mock: 'livePhone',
       },
       {
+        id: 'find',
+        who: 'guest',
+        time: '7:55 AM',
+        title: ['Finding their', 'own photos.'],
+        body: 'A guest taps Find my photos, takes one selfie, and sees only the photos they are in. New ones keep appearing on their own through the day.',
+        tag: 'Find my photos',
+        mock: 'findMyPhotos',
+      },
+      {
         id: 'share',
         who: 'guest',
-        time: '7:50 AM',
+        time: '8:05 AM',
         title: ['Sent to', 'family.'],
-        body: 'Guests open a photo and tap Share to send it to family who couldn’t come, or Download to keep it. The studio’s name is on the gallery they share from.',
+        body: 'Guests open a photo and tap Share to send it to family who couldn’t come, or Download to keep it. Every photo they share carries the studio’s logo in the corner.',
         tag: 'Save & share',
         mock: 'viewer',
       },
@@ -139,7 +148,7 @@ export const STORY_ACTS = [
         who: 'photographer',
         time: 'A week later',
         title: ['Proof that', 'it worked.'],
-        body: 'The dashboard shows how many guests opened the gallery, scanned the QR, viewed, saved and shared photos, hour by hour, and which photos they loved most.',
+        body: 'The dashboard shows how many guests opened the gallery, scanned the QR, viewed, saved and shared photos, hour by hour, and which photos they loved most. The studio downloads a one-page report, as an image or PDF, to send the couple.',
         tag: 'Guest insights',
         mock: 'insights',
       },
@@ -169,9 +178,9 @@ export const STORY_ACTS = [
 export const STORY_MOMENTS = [
   { chapters: '01 · 02', name: 'Initial setup', body: 'Create the event, get its QR code, and print the studio board and table cards.' },
   { chapters: '03', name: 'Cameras connected', body: 'The uploader on Windows or Mac, up to 4 cameras per laptop.' },
-  { chapters: '04 · 05 · 06', name: 'Live on every phone', body: 'Photos reach guests in seconds. They scan, watch, download and share.' },
-  { chapters: '07 · 08', name: 'Studio in control', body: 'Pause a camera, hide a photo, and your brand on every phone.' },
-  { chapters: '09 – 12', name: 'Album selection', body: 'Album picks, full-quality ZIP downloads, guest insights and 3 months open.' },
+  { chapters: '04 – 07', name: 'Live on every phone', body: 'Photos reach guests in seconds. They scan, watch, find their own photos with one selfie, download and share.' },
+  { chapters: '08 · 09', name: 'Studio in control', body: 'Pause a camera, hide a photo, and your brand on every phone.' },
+  { chapters: '10 – 13', name: 'Album selection', body: 'Album picks, full-quality ZIP downloads, guest insights and 3 months open.' },
 ]
 
 export const STORY_FAQ = [
@@ -179,6 +188,7 @@ export const STORY_FAQ = [
   { question: 'Do guests need to install anything?', answer: 'No. They scan the QR code and the gallery opens in their phone’s browser, with no sign-up and no name or number asked.' },
   { question: 'How soon do guests see a photo?', answer: 'Usually within seconds to a minute of it being taken. If the venue internet drops, photos wait on the laptop and upload when it’s back.' },
   { question: 'Do my RAW files get uploaded?', answer: 'No. During the event only a light gallery copy is sent. You add full-quality JPEGs for the client from the dashboard later.' },
+  { question: 'Can guests find their own photos?', answer: 'Yes, with Find my photos. A guest takes one selfie and sees only the photos they’re in, and new ones appear by themselves. ₹499 per Main event, ₹299 per Quick event, or with a monthly pack. Face data is processed in India and deleted with the gallery.' },
   { question: 'Is my studio’s branding on everything?', answer: 'Your studio name, logo and Instagram are on the guest gallery, the client’s gallery, the printed board and cards, and the guides you share.' },
   { question: 'Can I stop photos going live during private moments?', answer: 'Yes. Pause a camera from the uploader or the dashboard, and hide or delete any photo; it disappears from every open gallery immediately.' },
 ]

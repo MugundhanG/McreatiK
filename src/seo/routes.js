@@ -60,7 +60,7 @@ export const ROUTES = {
     crumb: 'Instant Memories',
     title: 'Instant Memories — Live Event Photo Galleries for Studios',
     description:
-      'Every photo on every guest’s phone seconds after the shutter. Live, branded event galleries for photography studios, with album selection and full-quality delivery.',
+      'Live, branded event galleries for photography studios: photos on every guest’s phone in seconds, your logo on every share, and AI face search for guests.',
     h1: 'Every photo on every guest’s phone, seconds after the shutter',
     intro: 'Instant Memories by McreatiK connects a studio’s cameras to a live gallery with its name on it. Guests scan a QR code and watch the event; the couple pick their album in the same place.',
     sitemap: true,

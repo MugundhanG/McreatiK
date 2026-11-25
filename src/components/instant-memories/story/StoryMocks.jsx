@@ -9,7 +9,7 @@
 import React from 'react'
 import { BsQrCode } from 'react-icons/bs'
 import { FiCamera, FiCheck, FiDownload, FiEyeOff, FiInstagram, FiPause, FiPlus, FiWifiOff } from 'react-icons/fi'
-import { LivePhone, Phone } from '../Phones'
+import { FindPhone, LivePhone, Phone } from '../Phones'
 import { STORY_STUDIO } from '../../../data/instantMemoriesStory'
 
 const IMG = '/studios/instant-memories'
@@ -316,6 +316,7 @@ const MOCKS = {
   uploader: UploaderMock,
   uploads: UploadsMock,
   livePhone: LivePhoneMock,
+  findMyPhotos: () => <div className="mx-auto w-full max-w-[250px]"><FindPhone /></div>,
   viewer: ViewerMock,
   control: ControlMock,
   follow: FollowMock,

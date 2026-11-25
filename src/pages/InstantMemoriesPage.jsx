@@ -11,7 +11,7 @@
 import React, { useEffect } from 'react'
 import ImShell from '../components/instant-memories/ImShell'
 import {
-  ImAudiences, ImCta, ImFaq, ImHero, ImPricing, ImPrivacy, ImProblems, ImSteps,
+  ImAudiences, ImCta, ImFaq, ImFindMyPhotos, ImHero, ImPricing, ImPrivacy, ImProblems, ImSteps,
 } from '../components/instant-memories/Landing'
 import { setFavicon } from '../utils/setFavicon'
 import { useScrollToHash } from '../hooks/useScrollToHash'
@@ -32,6 +32,7 @@ function InstantMemoriesPage() {
       <ImHero />
       <ImProblems />
       <ImSteps />
+      <ImFindMyPhotos />
       <ImAudiences />
       <ImPricing />
       <ImPrivacy />
