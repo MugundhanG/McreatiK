@@ -83,7 +83,7 @@ function Hero() {
         <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
           <a href={demoHref} target="_blank" rel="noreferrer"
             className="inline-flex items-center gap-2 rounded-lg bg-[#E5372B] px-5 py-3 font-body text-sm font-semibold text-white shadow-sm shadow-[#E5372B]/30 transition-colors hover:bg-[#C92B20]">
-            <FiMessageCircle className="h-4 w-4" /> Book a demo
+            <FiMessageCircle className="h-4 w-4" /> Try your first wedding free
           </a>
           <a href="#story" className="inline-flex items-center gap-1.5 font-body text-sm font-semibold text-[#0E1116] hover:underline underline-offset-4">
             See the story <FiArrowDown className="h-4 w-4" />
@@ -231,7 +231,7 @@ function Closing() {
         <div className="mt-9 flex flex-wrap justify-center gap-3">
           <a href={demoHref} target="_blank" rel="noreferrer"
             className="inline-flex items-center gap-2 rounded-lg bg-[#E5372B] px-5 py-3 font-body text-sm font-semibold text-white transition-colors hover:bg-[#C92B20]">
-            <FiMessageCircle className="h-4 w-4" /> Book a demo
+            <FiMessageCircle className="h-4 w-4" /> Try your first wedding free
           </a>
           <Link to={IM_HOME}
             className="inline-flex items-center gap-2 rounded-lg border border-white/30 px-5 py-3 font-body text-sm font-semibold text-white transition-colors hover:border-white hover:bg-white/10">

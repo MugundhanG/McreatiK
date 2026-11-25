@@ -94,7 +94,7 @@ function Navbar() {
           <a href={IM_APP_URL} target="_blank" rel="noreferrer" className="font-body text-sm text-[#4A505C] hover:text-[#0E1116]">Log in</a>
           <a href={imDemoHref} target="_blank" rel="noreferrer"
             className="rounded-lg bg-[#0E1116] px-4 py-2 font-body text-sm font-medium text-white transition-colors hover:bg-[#E5372B]">
-            Book a demo
+            Try it free
           </a>
         </div>
         <button type="button" onClick={() => setOpen((o) => !o)} aria-label="Toggle menu" aria-expanded={open}
@@ -114,7 +114,7 @@ function Navbar() {
               <a href={IM_APP_URL} target="_blank" rel="noreferrer" className="block py-2.5 font-body text-[15px] text-[#0E1116]">Log in</a>
               <a href={imDemoHref} target="_blank" rel="noreferrer" onClick={close}
                 className="mt-3 block rounded-lg bg-[#E5372B] py-3 text-center font-body text-sm font-semibold text-white">
-                Book a demo
+                Try your first wedding free
               </a>
             </div>
           </motion.nav>

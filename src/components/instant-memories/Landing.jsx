@@ -12,11 +12,11 @@ import {
   FiArrowRight, FiCamera, FiCheck, FiMail, FiMinus, FiPlus, FiSmartphone, FiWifi, FiX,
 } from 'react-icons/fi'
 import ContactSheet from './ContactSheet'
-import { IM_IMG, Phone } from './Phones'
+import { FindPhone, IM_IMG, Phone } from './Phones'
 import { getWhatsAppHref } from '../../utils/whatsapp'
 import {
-  IM_DEMO_MESSAGE, IM_FAQ, IM_FAQ_TABS, IM_FOR_COUPLES, IM_HOW, IM_FOR_GUESTS, IM_FOR_STUDIOS, IM_PRICE_NOTES, IM_PRICES,
-  IM_PRICING_URL, IM_PRIVACY, IM_PROBLEMS, IM_STEPS,
+  IM_DEMO_MESSAGE, IM_FAQ, IM_FAQ_TABS, IM_FIND_POINTS, IM_FIND_PRICE, IM_FOR_COUPLES, IM_HOW, IM_FOR_GUESTS, IM_FOR_STUDIOS,
+  IM_PRICE_NOTES, IM_PRICES, IM_PRICING_URL, IM_PRIVACY, IM_PROBLEMS, IM_STEPS,
 } from '../../data/instantMemories'
 
 const EASE = [0.22, 1, 0.36, 1]
@@ -64,7 +64,7 @@ export function ImHero() {
             and watch the event unfold. Afterwards, the couple pick their album in the same place.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <PrimaryButton>Book a demo</PrimaryButton>
+            <PrimaryButton>Try your first wedding free</PrimaryButton>
             <Link to={IM_HOW}
               className="inline-flex items-center gap-2 rounded-lg border border-[#0E1116]/15 px-5 py-3 font-body text-sm font-semibold text-[#0E1116] transition-colors hover:border-[#0E1116]">
               See how it works <FiArrowRight className="h-4 w-4" />
@@ -162,6 +162,34 @@ export function ImSteps() {
   )
 }
 
+export function ImFindMyPhotos() {
+  return (
+    <section id="find-my-photos" className="border-t border-black/[0.07] bg-white py-20 lg:py-28 scroll-mt-16">
+      <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+        <Rise>
+          <Eyebrow>Find my photos</Eyebrow>
+          <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-[#0E1116] sm:text-5xl">Guests find their own photos with one selfie.</h2>
+          <p className="mt-5 max-w-xl font-body text-lg leading-relaxed text-[#4A505C]">
+            400 guests, 3,000 photos, and everyone wants theirs. With Find my photos, a guest takes one selfie in the
+            gallery and sees only the photos they’re in. New ones appear by themselves through the event. No app, no sign-up.
+          </p>
+          <ul className="mt-8 space-y-4">
+            {IM_FIND_POINTS.map((point) => (
+              <li key={point} className="flex items-start gap-3 font-body text-base leading-relaxed text-[#2E333C]">
+                <FiCheck className="mt-1 h-4 w-4 shrink-0 text-[#19C37D]" aria-hidden="true" />{point}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-8 border-t border-black/10 pt-5 font-body text-[15px] font-semibold text-[#0E1116]">{IM_FIND_PRICE}</p>
+        </Rise>
+        <Rise delay={0.1} className="mx-auto w-full max-w-[260px]">
+          <FindPhone />
+        </Rise>
+      </div>
+    </section>
+  )
+}
+
 /* Real studio dashboard screens (demo events), switchable. */
 const STUDIO_SCREENS = [
   { id: 'events', label: 'Events', src: 'studio-events.jpg', alt: 'The studio’s events list: monthly pack usage and every event with its status and photo count' },
@@ -249,9 +277,9 @@ export function ImPricing() {
           <Eyebrow>Pricing</Eyebrow>
           <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-[#0E1116] sm:text-5xl">Pay per event, or by the month.</h2>
         </Rise>
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
           {IM_PRICES.map(({ name, price, unit, body }, i) => (
-            <li key={name}>
+            <li key={name} className={i < 3 ? 'lg:col-span-2' : 'lg:col-span-3'}>
               <Rise delay={i * 0.05} className="h-full">
                 <div className={`h-full rounded-2xl border p-6 ${i === 0 ? 'border-[#0E1116] bg-[#0E1116] text-white' : 'border-black/10 bg-white text-[#0E1116]'}`}>
                   <h3 className="font-body font-semibold">{name}</h3>
@@ -351,7 +379,11 @@ export function ImCta() {
           through your first event.
         </p>
         <div className="mt-9 flex flex-wrap justify-center gap-3">
-          <PrimaryButton>Book a demo</PrimaryButton>
+          <PrimaryButton>Try your first wedding free</PrimaryButton>
+          <Link to={IM_HOW}
+            className="inline-flex items-center gap-2 rounded-lg border border-[#0E1116]/15 px-5 py-3 font-body text-sm font-semibold text-[#0E1116] transition-colors hover:border-[#0E1116]">
+            See how it works <FiArrowRight className="h-4 w-4" />
+          </Link>
           <a href="mailto:connect@mcreatik.com?subject=Instant%20Memories%20demo"
             className="inline-flex items-center gap-2 rounded-lg border border-[#0E1116]/15 px-5 py-3 font-body text-sm font-semibold text-[#0E1116] transition-colors hover:border-[#0E1116]">
             <FiMail className="h-4 w-4" /> connect@mcreatik.com
